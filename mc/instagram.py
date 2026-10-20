@@ -43,8 +43,9 @@ def publicar_reel(video: Path, caption: str) -> str:
     # 1. Crear el contenedor del Reel con subida directa del archivo
     contenedor = _revisar(requests.post(
         f"{GRAPH}/{ig_id}/media",
-        data={"media_type": "REELS", "upload_type": "resumable", "caption": caption,
-              "share_to_feed": "true", "access_token": token},
+        # Instagram lee upload_type solo de la dirección, no del cuerpo
+        params={"media_type": "REELS", "upload_type": "resumable", "caption": caption,
+                "share_to_feed": "true", "access_token": token},
         timeout=60,
     ))
     contenedor_id = contenedor["id"]

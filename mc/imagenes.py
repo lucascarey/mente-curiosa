@@ -1,13 +1,15 @@
 """Fotos reales de la web: Wikimedia Commons, Pixabay (https://pixabay.com/api/docs/) o Pexels.
 
-`foto()` busca la foto de una toma: primero en Wikimedia Commons, que tiene fotos exactas
-de lugares, animales y objetos puntuales, y después en Pixabay. `buscar()` es el respaldo
-de las ilustraciones cuando Cloudflare no responde.
+`del_articulo()` junta las fotos del artículo de Wikipedia que respalda el dato (la `fuente`
+del guion, en su idioma y en inglés): son las más fieles al tema. `foto()` busca la foto de
+una toma: primero entre esas, después en Wikimedia Commons y por último en Pixabay, siempre
+pidiendo que la foto tenga que ver con la búsqueda. `buscar()` es el último respaldo.
 """
 
 import html
 import os
 import re
+from urllib.parse import unquote, urlparse
 from pathlib import Path
 
 import requests
@@ -18,7 +20,8 @@ RESPALDO = "abstract texture"
 AGENTE = "mente-curiosa/1.0 (https://github.com/lucascarey/mente-curiosa)"
 
 
-def _buscar_pixabay(consulta: str, usados: set[str], clave: str, orientaciones=("vertical", "all")) -> str | None:
+def _buscar_pixabay(consulta: str, usados: set[str], clave: str, orientaciones=("vertical", "all"),
+                    relevante: bool = False) -> str | None:
     for orientacion in orientaciones:
         r = requests.get(
             "https://pixabay.com/api/",
@@ -29,6 +32,8 @@ def _buscar_pixabay(consulta: str, usados: set[str], clave: str, orientaciones=(
         r.raise_for_status()
         for foto in r.json().get("hits", []):
             url = foto.get("largeImageURL")
+            if relevante and not claves(consulta) & claves(foto.get("tags", "")):
+                continue
             if url and url not in usados and min(foto.get("imageWidth", 0), foto.get("imageHeight", 0)) >= 900:
                 return url
     return None
@@ -61,6 +66,82 @@ def _sin_html(texto: str) -> str:
     return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", texto)).split())
 
 
+COMUNES = set("""a an and the of on in at to with from for by into over under near its his her their this that
+these those some many few one two three small large big tiny old new view photo image picture close closeup
+up side front back top showing shows shown made very file jpg png""".split())
+
+
+def claves(texto: str) -> set[str]:
+    """Palabras que importan de un texto en inglés, sin plurales simples."""
+    palabras = re.findall(r"[a-záéíóúüñ0-9]+", texto.lower())
+    return {p[:-1] if len(p) > 4 and p.endswith("s") else p for p in palabras if len(p) > 2 and p not in COMUNES}
+
+
+def _info(api: str, archivos: list[str]) -> list[dict]:
+    """Datos (url, tamaño, autor, licencia, descripción) de archivos de imagen, de a 40."""
+    salida = []
+    for k in range(0, len(archivos), 40):
+        r = requests.get(api, params={"action": "query", "format": "json", "titles": "|".join(archivos[k:k + 40]),
+                                      "prop": "imageinfo", "iiprop": "url|mime|size|extmetadata", "iiurlwidth": 1280},
+                         headers={"User-Agent": AGENTE}, timeout=30)
+        r.raise_for_status()
+        salida += r.json().get("query", {}).get("pages", {}).values()
+    return salida
+
+
+def _candidata(pagina: dict, usados: set[str]) -> dict | None:
+    info = (pagina.get("imageinfo") or [{}])[0]
+    url = info.get("thumburl") or info.get("url")
+    ancho, alto = info.get("width", 0), info.get("height", 0)
+    if info.get("mime") not in ("image/jpeg", "image/png") or not url or url in usados:
+        return None
+    if ancho < 700 or not 0.6 <= ancho / max(1, alto) <= 2.4:
+        return None
+    meta = info.get("extmetadata", {})
+    autor = _sin_html(meta.get("Artist", {}).get("value", ""))[:60] or "autor desconocido"
+    licencia = _sin_html(meta.get("LicenseShortName", {}).get("value", ""))
+    texto = pagina.get("title", "") + " " + _sin_html(meta.get("ImageDescription", {}).get("value", ""))[:300]
+    return {"url": url, "credito": f"{autor} ({licencia}, Wikimedia Commons)", "claves": claves(texto)}
+
+
+def del_articulo(fuente: str) -> list[dict]:
+    """Fotos del artículo de Wikipedia de la fuente y de su versión en inglés. Lista vacía si no es Wikipedia."""
+    partes = urlparse(fuente)
+    if not partes.netloc.endswith("wikipedia.org") or "/wiki/" not in partes.path:
+        return []
+    articulos = [(partes.netloc.split(".")[0], unquote(partes.path.split("/wiki/", 1)[1]))]
+    try:
+        api = f"https://{articulos[0][0]}.wikipedia.org/w/api.php"
+        r = requests.get(api, params={"action": "query", "format": "json", "titles": articulos[0][1], "redirects": 1,
+                                      "prop": "langlinks", "lllang": "en"}, headers={"User-Agent": AGENTE}, timeout=30)
+        for pagina in r.json().get("query", {}).get("pages", {}).values():
+            for enlace in pagina.get("langlinks", []):
+                articulos.append(("en", enlace["*"]))
+        fotos, vistas = [], set()
+        for idioma, titulo in articulos:
+            api = f"https://{idioma}.wikipedia.org/w/api.php"
+            r = requests.get(api, params={"action": "query", "format": "json", "titles": titulo, "redirects": 1,
+                                          "prop": "images", "imlimit": 60}, headers={"User-Agent": AGENTE}, timeout=30)
+            archivos = [i["title"] for p in r.json().get("query", {}).get("pages", {}).values() for i in p.get("images", [])]
+            for pagina in _info(api, [a for a in archivos if a not in vistas]):
+                vistas.add(pagina.get("title"))
+                if c := _candidata(pagina, set()):
+                    fotos.append(c)
+        print(f"Fotos del artículo {fuente}: {len(fotos)}")
+        return fotos
+    except (requests.RequestException, ValueError, KeyError) as e:
+        print(f"::warning::No pude leer las fotos de {fuente}: {e}")
+        return []
+
+
+def _mejor(fotos: list[dict], consulta: str, usados: set[str], minimo: int) -> dict | None:
+    """La foto que más palabras comparte con la consulta (al menos `minimo`)."""
+    buscadas = claves(consulta)
+    puntaje = lambda f: len(buscadas & f["claves"])
+    libres = [f for f in fotos if f["url"] not in usados and puntaje(f) >= minimo]
+    return max(libres, key=puntaje) if libres else None
+
+
 def _buscar_wikimedia(consulta: str, usados: set[str]) -> tuple[str, str] | None:
     """(url, crédito) de la mejor foto de Wikimedia Commons para la consulta, apaisada y grande."""
     r = requests.get(
@@ -73,31 +154,34 @@ def _buscar_wikimedia(consulta: str, usados: set[str]) -> tuple[str, str] | None
     )
     r.raise_for_status()
     paginas = sorted(r.json().get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
-    for pagina in paginas:
-        info = (pagina.get("imageinfo") or [{}])[0]
-        url = info.get("thumburl") or info.get("url")
-        ancho, alto = info.get("width", 0), info.get("height", 0)
-        if info.get("mime") not in ("image/jpeg", "image/png") or not url or url in usados:
-            continue
-        if ancho < 900 or not 0.8 <= ancho / max(1, alto) <= 2.2:
-            continue
-        meta = info.get("extmetadata", {})
-        autor = _sin_html(meta.get("Artist", {}).get("value", ""))[:60] or "autor desconocido"
-        licencia = _sin_html(meta.get("LicenseShortName", {}).get("value", ""))
-        return url, f"{autor} ({licencia}, Wikimedia Commons)"
+    candidatas = [c for p in paginas if (c := _candidata(p, usados))]
+    # Respeta el orden de relevancia del buscador, pero pide que comparta al menos una palabra
+    buscadas = claves(consulta)
+    for c in candidatas:
+        if buscadas & c["claves"]:
+            return c["url"], c["credito"]
     return None
 
 
-def foto(consulta: str, usados: set[str]) -> tuple[str, str] | None:
+def foto(consulta: str, usados: set[str], articulo: list[dict] = ()) -> tuple[str, str] | None:
     """(url, crédito) de una foto real para la consulta, o None si no aparece ninguna."""
+    if elegida := _mejor(list(articulo), consulta, usados, minimo=2 if len(claves(consulta)) > 2 else 1):
+        return elegida["url"], elegida["credito"]
     try:
         if encontrada := _buscar_wikimedia(consulta, usados):
             return encontrada
     except requests.RequestException as e:
         print(f"::warning::Wikimedia Commons falló: {e}")
     if clave := os.environ.get("PIXABAY_API_KEY"):
-        if url := _buscar_pixabay(consulta, usados, clave, ("horizontal", "all")):
+        if url := _buscar_pixabay(consulta, usados, clave, ("horizontal", "all"), relevante=True):
             return url, "Pixabay"
+    return None
+
+
+def del_tema(articulo: list[dict], consulta: str, usados: set[str]) -> tuple[str, str] | None:
+    """Respaldo: la foto del artículo que más se parece a la consulta, aunque no comparta palabras."""
+    if elegida := _mejor(articulo, consulta, usados, minimo=0):
+        return elegida["url"], elegida["credito"]
     return None
 
 

@@ -123,7 +123,11 @@ def del_articulo(fuente: str) -> list[dict]:
             r = requests.get(api, params={"action": "query", "format": "json", "titles": titulo, "redirects": 1,
                                           "prop": "images", "imlimit": 60}, headers={"User-Agent": AGENTE}, timeout=30)
             archivos = [i["title"] for p in r.json().get("query", {}).get("pages", {}).values() for i in p.get("images", [])]
-            for pagina in _info(api, [a for a in archivos if a not in vistas]):
+            datos = _info(api, [a for a in archivos if a not in vistas])
+            print(f"  {idioma}:{titulo}: {len(archivos)} archivos, {len(datos)} con datos")
+            if datos[:1]:
+                print(f"  ejemplo: {str(datos[0])[:300]}")
+            for pagina in datos:
                 vistas.add(pagina.get("title"))
                 if c := _candidata(pagina, set()):
                     fotos.append(c)

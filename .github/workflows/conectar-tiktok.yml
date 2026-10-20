@@ -1,0 +1,32 @@
+name: Conectar TikTok
+
+# Después de autorizar la app, pegá acá la dirección a la que te mandó TikTok.
+# El código sirve una sola vez y vence en minutos, así que no importa que quede a la vista.
+on:
+  workflow_dispatch:
+    inputs:
+      direccion:
+        description: "Dirección completa a la que volviste después de autorizar (empieza con https://github.com/lucascarey/mente-curiosa?code=)"
+        type: string
+        required: true
+
+jobs:
+  conectar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Pedir el token a TikTok
+        env:
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          MC_TOKENS_DIR: ${{ runner.temp }}/tokens
+          DIRECCION: ${{ inputs.direccion }}
+        run: python herramientas/conectar_tiktok.py "$DIRECCION"
+      - name: Guardar el token
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: gh secret set TIKTOK_REFRESH_TOKEN --repo "$GITHUB_REPOSITORY" < "${{ runner.temp }}/tokens/TIKTOK_REFRESH_TOKEN"

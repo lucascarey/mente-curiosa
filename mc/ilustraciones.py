@@ -90,6 +90,8 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
     usados: set[str] = set()
     resultado: list[str | None] = []
     planos = [(parte, plano) for parte in guion.partes for plano in parte.planos]
+    # Las fotos del artículo que respalda el dato son las más fieles al tema
+    articulo = [] if config.MOCK else imagenes.del_articulo(guion.fuente)
     for i, (parte, plano) in enumerate(planos):
         if plano["visual"].get("tipo", "ilustracion") not in CON_ILUSTRACION:
             resultado.append(None)
@@ -98,7 +100,7 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
         encontrada = None
         if plano.get("foto") and not config.MOCK:
             # Foto real de la web: solo si aparece una; si no, se dibuja
-            encontrada = imagenes.foto(plano["foto"], usados)
+            encontrada = imagenes.foto(plano["foto"], usados, articulo)
             print(f"Foto {i + 1}: {plano['foto']} -> {encontrada[0] if encontrada else 'no encontrada, la dibujo'}")
         if encontrada:
             usados.add(encontrada[0])
@@ -113,14 +115,21 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
                 _generar(prompt(plano["dibujo"], guion.protagonista), destino, *credenciales)
             except RuntimeError:
                 # Por ejemplo si se acabó la cuota gratis del día: mejor una foto que no publicar
-                print("::warning::Cloudflare no respondió: uso una foto de Pixabay para esta toma")
+                print("::warning::Cloudflare no respondió: desde acá uso fotos del tema")
                 credenciales = None
         if not encontrada and not config.MOCK and not credenciales:
-            url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
-            if not url:
-                raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")
-            usados.add(url)
-            imagenes.descargar(url, destino)
+            # Sin dibujos: la foto del artículo más parecida, y si no hay, una de Pixabay
+            encontrada = imagenes.del_tema(articulo, plano["dibujo"], usados)
+            if encontrada:
+                if encontrada[1] not in guion.creditos:
+                    guion.creditos.append(encontrada[1])
+            else:
+                url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
+                if not url:
+                    raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")
+                encontrada = (url, "Pixabay")
+            usados.add(encontrada[0])
+            imagenes.descargar(encontrada[0], destino)
         a_paleta(destino)
         resultado.append(destino.name)
     return resultado

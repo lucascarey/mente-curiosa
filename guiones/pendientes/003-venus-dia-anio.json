@@ -4,23 +4,129 @@
   "partes": [
     {
       "texto": "En Venus, *un día dura más que un año*.",
-      "busqueda": "planet space"
+      "busqueda": "planet space",
+      "dibujo": "The planet Venus covered in thick yellow clouds, glowing in space next to a distant Sun",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A single glowing ball made of thick swirling clouds floating alone in black space, a small bright star far away"
+        },
+        {
+          "desde": "un",
+          "dibujo": "A big hourglass with a tiny sun inside the top bulb and a stack of calendar pages piling up at the bottom"
+        }
+      ]
     },
     {
       "texto": "Venus gira sobre sí mismo tan lento que una vuelta completa le lleva unos 243 días terrestres.",
-      "busqueda": "venus planet"
+      "busqueda": "venus planet",
+      "visual": {
+        "tipo": "numero",
+        "valor": 243,
+        "etiqueta": "días dura un día"
+      },
+      "tomas": [
+        {
+          "dibujo": "A single round ball made of swirling clouds, with a small curved arrow on its right side showing it turns"
+        },
+        {
+          "desde": "tan",
+          "dibujo": "A small cute snail slowly crawling across the curved surface of a planet"
+        },
+        {
+          "desde": "unos",
+          "visual": {
+            "tipo": "numero",
+            "valor": 243,
+            "etiqueta": "días dura un día"
+          }
+        }
+      ]
     },
     {
       "texto": "Pero da la vuelta al Sol en solo unos 225 días.",
-      "busqueda": "sun space"
+      "busqueda": "sun space",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "En Venus",
+        "unidad": "días",
+        "a": {
+          "etiqueta": "Un día",
+          "valor": 243,
+          "icono": "rotate-cw"
+        },
+        "b": {
+          "etiqueta": "Un año",
+          "valor": 225,
+          "icono": "orbit"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "Simple diagram: a bright Sun in the center and one small round planet without rings on a circular orbit line around it"
+        },
+        {
+          "desde": "solo",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "En Venus",
+            "unidad": "días",
+            "a": {
+              "etiqueta": "Un día",
+              "valor": 243,
+              "icono": "rotate-cw"
+            },
+            "b": {
+              "etiqueta": "Un año",
+              "valor": 225,
+              "icono": "orbit"
+            }
+          }
+        }
+      ]
     },
     {
       "texto": "Y encima gira *al revés* que casi todos los planetas: allá el Sol sale por el oeste.",
-      "busqueda": "sunrise clouds"
+      "busqueda": "sunrise clouds",
+      "dibujo": "A sunrise on the rocky surface of Venus, the Sun rising on the west horizon, orange clouds",
+      "visual": {
+        "tipo": "ilustracion",
+        "texto": "gira al revés"
+      },
+      "tomas": [
+        {
+          "dibujo": "The planet Venus as a plain round sphere without rings, with one curved arrow beside it pointing clockwise, spinning backwards"
+        },
+        {
+          "desde": "casi",
+          "dibujo": "The solar system with several small planets in a row, each with a curved spin arrow, all pointing the same way"
+        },
+        {
+          "desde": "allá",
+          "dibujo": "A sunrise on the rocky surface of Venus, the Sun rising on the horizon",
+          "texto": "sale por el oeste"
+        }
+      ]
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
-      "busqueda": "stars night sky"
+      "busqueda": "stars night sky",
+      "visual": {
+        "tipo": "seguir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A big glowing question mark floating in space surrounded by small stars"
+        },
+        {
+          "desde": "seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "En Venus un día dura más que un año 🪐",

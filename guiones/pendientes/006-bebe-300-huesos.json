@@ -4,23 +4,127 @@
   "partes": [
     {
       "texto": "Cuando naciste tenías casi *cien huesos más* que ahora.",
-      "busqueda": "newborn baby"
+      "busqueda": "newborn baby",
+      "dibujo": "A cute sleeping newborn baby wrapped in a blanket",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A cute sleeping newborn baby wrapped in a blanket"
+        },
+        {
+          "desde": "cien",
+          "dibujo": "A friendly cartoon baby skeleton made of many small separate bones, simple medical illustration",
+          "texto": "100 huesos más"
+        }
+      ]
     },
     {
       "texto": "Un bebé tiene alrededor de 300 huesos y partes de cartílago que después se convierten en hueso.",
-      "busqueda": "baby feet"
+      "busqueda": "baby feet",
+      "visual": {
+        "tipo": "numero",
+        "valor": 300,
+        "etiqueta": "huesos al nacer",
+        "prefijo": "~"
+      },
+      "tomas": [
+        {
+          "dibujo": "A friendly x-ray of a whole baby's body showing many small bones"
+        },
+        {
+          "desde": "alrededor",
+          "visual": {
+            "tipo": "numero",
+            "valor": 300,
+            "etiqueta": "huesos al nacer",
+            "prefijo": "~"
+          }
+        },
+        {
+          "desde": "cartílago",
+          "dibujo": "Soft bluish cartilage slowly turning into white bone, simple medical diagram"
+        }
+      ]
     },
     {
       "texto": "Con el tiempo, muchos de ellos se van *fusionando*, como los del cráneo.",
-      "busqueda": "x ray skeleton"
+      "busqueda": "x ray skeleton",
+      "dibujo": "A friendly simple skeleton x-ray of a baby skull with soft spots, medical diagram",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Two small bones slowly joining together into one larger bone, simple medical diagram",
+          "texto": "se fusionan"
+        },
+        {
+          "desde": "cráneo",
+          "dibujo": "A friendly simple skeleton x-ray of a baby skull with soft spots, medical diagram"
+        }
+      ]
     },
     {
       "texto": "Así, un adulto termina con 206 huesos.",
-      "busqueda": "human skeleton"
+      "busqueda": "human skeleton",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Cantidad de huesos",
+        "unidad": "",
+        "a": {
+          "etiqueta": "Bebé",
+          "valor": 300,
+          "icono": "baby"
+        },
+        "b": {
+          "etiqueta": "Adulto",
+          "valor": 206,
+          "icono": "user"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "A friendly full adult human skeleton standing upright, simple medical illustration"
+        },
+        {
+          "desde": "termina",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Cantidad de huesos",
+            "unidad": "",
+            "a": {
+              "etiqueta": "Bebé",
+              "valor": 300,
+              "icono": "baby"
+            },
+            "b": {
+              "etiqueta": "Adulto",
+              "valor": 206,
+              "icono": "user"
+            }
+          }
+        }
+      ]
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para más datos raros.",
-      "busqueda": "child running"
+      "busqueda": "child running",
+      "visual": {
+        "tipo": "seguir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A smiling toddler looking curiously at a big glowing question mark"
+        },
+        {
+          "desde": "seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "Naciste con casi 100 huesos más que ahora 🦴",

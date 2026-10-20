@@ -1,26 +1,112 @@
 {
   "id": "009-banana-baya",
   "tema": "Comida",
+  "protagonista": "a cute smiling yellow banana",
   "partes": [
     {
       "texto": "Para la botánica, la *banana es una baya*. Y la frutilla no.",
-      "busqueda": "banana"
+      "busqueda": "banana",
+      "dibujo": "A yellow banana with a small label tag shaped like a berry, botanical illustration",
+      "visual": {
+        "tipo": "ilustracion",
+        "texto": "es una baya"
+      },
+      "tomas": [
+        {
+          "dibujo": "A botanist with a magnifying glass studying plants in a sunny greenhouse"
+        },
+        {
+          "desde": "banana",
+          "dibujo": "A cute smiling banana next to a small bunch of blueberries",
+          "texto": "es una baya"
+        },
+        {
+          "desde": "frutilla",
+          "dibujo": "A red strawberry with a confused face",
+          "texto": "la frutilla no"
+        }
+      ]
     },
     {
       "texto": "Una baya es un fruto carnoso que nace de una sola flor y tiene las semillas adentro.",
-      "busqueda": "fruit market"
+      "busqueda": "fruit market",
+      "dibujo": "A single flower turning into a fleshy fruit with seeds inside, botanical diagram",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A ripe grape cut in half showing its juicy flesh"
+        },
+        {
+          "desde": "flor",
+          "dibujo": "A single flower on a branch with a small round green fruit growing in its center"
+        },
+        {
+          "desde": "semillas",
+          "dibujo": "A kiwi cut in half showing small black seeds inside"
+        }
+      ]
     },
     {
       "texto": "La banana cumple con eso. La frutilla tiene las semillas *por fuera*.",
-      "busqueda": "strawberries"
+      "busqueda": "strawberries",
+      "dibujo": "A red strawberry with seeds on the outside next to a banana cut open",
+      "visual": {
+        "tipo": "ilustracion",
+        "texto": "no es baya"
+      },
+      "tomas": [
+        {
+          "dibujo": "A peeled banana sliced open showing tiny dark seeds in its center"
+        },
+        {
+          "desde": "frutilla",
+          "dibujo": "A red strawberry with seeds on the outside next to a banana cut open",
+          "texto": "semillas por fuera"
+        }
+      ]
     },
     {
       "texto": "Y en realidad esos puntitos de la frutilla son sus verdaderos frutos.",
-      "busqueda": "strawberry close up"
+      "busqueda": "strawberry close up",
+      "dibujo": "Close up of a strawberry showing tiny seed fruits on its surface, magnifying glass",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Close up of a strawberry showing tiny seed fruits on its surface, magnifying glass"
+        },
+        {
+          "desde": "verdaderos",
+          "dibujo": "One tiny strawberry seed under a magnifying glass, shown as a little dry fruit",
+          "texto": "verdaderos frutos"
+        }
+      ]
     },
     {
       "texto": "El tomate y la sandía también son bayas. ¿Lo sabías? Seguime para más.",
-      "busqueda": "watermelon"
+      "busqueda": "watermelon",
+      "visual": {
+        "tipo": "seguir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A ripe red tomato on a wooden table"
+        },
+        {
+          "desde": "sandía",
+          "dibujo": "A slice of watermelon next to a red tomato",
+          "texto": "también son bayas"
+        },
+        {
+          "desde": "Seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "La banana es una baya y la frutilla no 🍌",

@@ -13,6 +13,10 @@ on:
         description: "Solo armar el video, sin publicar"
         type: boolean
         default: true
+      guion:
+        description: "Probar un guion puntual (principio del nombre, por ejemplo 003). Vacío: el próximo"
+        type: string
+        default: ""
 
 concurrency:
   group: publicar
@@ -26,7 +30,7 @@ jobs:
     # El horario automático solo corre con la variable PUBLICACION_ACTIVA=true
     if: github.event_name == 'workflow_dispatch' || vars.PUBLICACION_ACTIVA == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -40,12 +44,15 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
           pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
 
       - name: Revisar guiones
         run: python -m mc.main --validar
 
       - name: Armar y publicar
         env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -54,6 +61,9 @@ jobs:
           TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
           TIKTOK_PRIVACIDAD: ${{ vars.TIKTOK_PRIVACIDAD || 'SELF_ONLY' }}
           MC_TOKENS_DIR: ${{ runner.temp }}/tokens
+          MC_GUION: ${{ inputs.solo_video == true && inputs.guion || '' }}
+          # Primer día de publicación automática (hora de Argentina)
+          MC_DESDE: "2026-10-21"
         run: |
           if [ "${{ inputs.solo_video }}" = "true" ]; then
             python -m mc.main --solo-video
@@ -69,6 +79,22 @@ jobs:
           path: salida/*.mp4
           retention-days: 7
           if-no-files-found: ignore
+
+      - name: Guardar cuadros de vista previa
+        if: ${{ inputs.solo_video == true }}
+        run: |
+          f=$(ls salida/*.mp4 | head -1)
+          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+          mkdir -p /tmp/vista
+          ffmpeg -v error -i "$f" -vf "fps=8/$dur,scale=360:-1,tile=8x1" -frames:v 1 /tmp/vista/cuadros.jpg
+          cp "$f" /tmp/vista/video.mp4
+          cd /tmp/vista
+          git init -q -b vista-previa
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cuadros.jpg video.mp4
+          git commit -qm "Vista previa de $(basename "$f")"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" vista-previa
 
       - name: Actualizar tokens renovados
         if: always()

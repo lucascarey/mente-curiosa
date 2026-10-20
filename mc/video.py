@@ -1,48 +1,28 @@
-"""Arma el video final: un clip por parte, subtítulos y voz."""
+"""Arma el video final: voz, ilustraciones, animación y sonido."""
 
 import subprocess
-from pathlib import Path
 
-from . import clips, config, subtitulos, voz
+from . import animacion, config, ilustraciones, sonido, temas, voz
 from .guion import Guion
 
 
-def _segmento(clip: Path, segundos: float, destino: Path) -> Path:
-    filtro = (
-        f"scale={config.ANCHO}:{config.ALTO}:force_original_aspect_ratio=increase,"
-        f"crop={config.ANCHO}:{config.ALTO},setsar=1,fps={config.FPS},"
-        "eq=brightness=-0.06:saturation=1.1,format=yuv420p"
-    )
-    subprocess.run(
-        ["ffmpeg", "-y", "-v", "error", "-stream_loop", "-1", "-i", str(clip), "-t", f"{segundos:.3f}",
-         "-vf", filtro, "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", str(destino)],
-        check=True,
-    )
-    return destino
-
-
-def armar(guion: Guion) -> Path:
+def armar(guion: Guion):
     trabajo = config.CACHE / guion.id
     trabajo.mkdir(parents=True, exist_ok=True)
     config.SALIDA.mkdir(parents=True, exist_ok=True)
+    tema = temas.tema(guion.tema)
 
-    audio, palabras, duraciones = voz.generar(guion.partes, trabajo / "voz")
-    rutas_clips = clips.conseguir([p.busqueda for p in guion.partes], trabajo / "clips")
+    audio_voz, palabras, duraciones = voz.generar(guion.partes, trabajo / "voz")
+    dibujos = ilustraciones.conseguir(guion, trabajo / "escena")
+    datos, eventos = animacion.linea_de_tiempo(guion, tema, palabras, duraciones, dibujos)
 
-    segmentos = [_segmento(c, d, trabajo / f"seg{i}.mp4")
-                 for i, (c, d) in enumerate(zip(rutas_clips, duraciones))]
-    lista = trabajo / "segmentos.txt"
-    lista.write_text("".join(f"file '{s.resolve()}'\n" for s in segmentos))
+    mudo = animacion.renderizar(datos, trabajo / "escena", trabajo / "mudo.mp4")
+    audio = sonido.mezclar(audio_voz, datos["duracion"], eventos, tema["tonalidad"], trabajo / "audio.m4a")
 
-    total = sum(duraciones)
-    ass = subtitulos.escribir(palabras, total, trabajo / "subs.ass")
     final = config.SALIDA / f"{guion.id}.mp4"
-    filtro = f"ass={ass.as_posix()}:fontsdir={config.FUENTE.parent.as_posix()}"
     subprocess.run(
-        ["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(lista), "-i", str(audio),
-         "-vf", filtro, "-map", "0:v", "-map", "1:a", "-t", f"{total:.3f}",
-         "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-profile:v", "high", "-pix_fmt", "yuv420p",
-         "-r", str(config.FPS), "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", str(final)],
+        ["ffmpeg", "-y", "-v", "error", "-i", str(mudo), "-i", str(audio), "-map", "0:v", "-map", "1:a",
+         "-c:v", "copy", "-c:a", "copy", "-shortest", "-movflags", "+faststart", str(final)],
         check=True,
     )
     return final

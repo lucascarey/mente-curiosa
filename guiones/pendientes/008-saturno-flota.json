@@ -4,23 +4,101 @@
   "partes": [
     {
       "texto": "Saturno es gigante, pero *flotaría en el agua*.",
-      "busqueda": "saturn planet"
+      "busqueda": "saturn planet",
+      "dibujo": "The planet Saturn with its rings floating in a giant bathtub of water in space",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "The giant planet Saturn with its wide rings glowing in space"
+        },
+        {
+          "desde": "flotaría",
+          "dibujo": "The planet Saturn with its rings floating in a giant bathtub of water in space"
+        }
+      ]
     },
     {
       "texto": "Es casi todo hidrógeno y helio, así que su densidad es menor que la del agua.",
-      "busqueda": "gas planet space"
+      "busqueda": "gas planet space",
+      "dibujo": "Saturn as a giant gas ball made of hydrogen and helium clouds, light as a balloon",
+      "visual": {
+        "tipo": "ilustracion",
+        "texto": "más liviano que el agua"
+      },
+      "tomas": [
+        {
+          "dibujo": "Saturn as a giant gas ball made of hydrogen and helium clouds, light as a balloon",
+          "texto": "hidrógeno y helio"
+        },
+        {
+          "desde": "densidad",
+          "dibujo": "A balance scale with a fluffy cloud ball on one side rising higher than a bucket of water on the other side",
+          "texto": "más liviano que el agua"
+        }
+      ]
     },
     {
       "texto": "Si existiera una pileta lo bastante grande para meterlo, *quedaría flotando*.",
-      "busqueda": "swimming pool water"
+      "busqueda": "swimming pool water",
+      "dibujo": "Saturn floating in an enormous swimming pool, with a rubber duck nearby",
+      "visual": {
+        "tipo": "ilustracion",
+        "texto": "flotaría"
+      },
+      "tomas": [
+        {
+          "dibujo": "An enormous blue swimming pool floating in outer space among the stars"
+        },
+        {
+          "desde": "quedaría",
+          "dibujo": "Saturn floating in an enormous swimming pool, with a rubber duck nearby",
+          "texto": "flotaría"
+        }
+      ]
     },
     {
       "texto": "Y eso que entrarían unas setecientas Tierras dentro de él.",
-      "busqueda": "earth from space"
+      "busqueda": "earth from space",
+      "visual": {
+        "tipo": "numero",
+        "valor": 700,
+        "etiqueta": "Tierras entrarían adentro",
+        "prefijo": "~"
+      },
+      "tomas": [
+        {
+          "dibujo": "The giant planet Saturn next to a tiny planet Earth, showing the huge size difference"
+        },
+        {
+          "desde": "unas",
+          "visual": {
+            "tipo": "numero",
+            "valor": 700,
+            "etiqueta": "Tierras entrarían adentro",
+            "prefijo": "~"
+          }
+        }
+      ]
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
-      "busqueda": "galaxy"
+      "busqueda": "galaxy",
+      "visual": {
+        "tipo": "seguir"
+      },
+      "tomas": [
+        {
+          "dibujo": "The planet Saturn with its rings next to a big question mark made of stars"
+        },
+        {
+          "desde": "seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "Saturno flotaría en el agua 🪐",

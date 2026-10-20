@@ -1,0 +1,119 @@
+@font-face { font-family: "Inter"; src: url("Inter.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Mono"; src: url("JetBrainsMono.ttf"); font-weight: 100 800; }
+
+/* Zona segura de Reels y TikTok: todo lo importante entre x 60-930 e y 220-1470 */
+:root { --borde: rgba(255, 255, 255, .14); --tenue: rgba(255, 255, 255, .55); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1080px; height: 1920px; overflow: hidden; background: #000;
+  font-family: "Inter", sans-serif; font-weight: 400; color: #fff;
+}
+
+#video { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+
+/* Grilla de puntos muy suave, como papel técnico */
+#grilla {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .07) 1.2px, transparent 1.6px);
+  background-size: 45px 45px; background-position: 15px 0;
+}
+
+/* Tarjeta de la escena */
+#escenas { position: absolute; inset: 0; }
+.escena { position: absolute; left: 85px; top: 305px; width: 820px; height: 640px; display: none; transform-origin: 50% 100%; }
+.visual { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+.marco { position: absolute; inset: 0; border: 2px solid var(--borde); border-radius: 36px; pointer-events: none; }
+.escena .visual { border-radius: 36px; background: #000; }
+.marco i { position: absolute; width: 44px; height: 44px; border: 0 solid var(--color); }
+.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 36px; }
+.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 36px; }
+.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 36px; }
+.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 36px; }
+
+/* Ilustración */
+.ilus { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; background: #000; }
+.ilus .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.etiqueta {
+  position: absolute; left: 28px; bottom: 28px; max-width: 800px;
+  font-family: "Mono"; font-size: 30px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+  padding: 12px 20px; background: rgba(0, 0, 0, .8); border-left: 3px solid var(--color);
+}
+
+/* Número */
+.numero-caja { position: relative; width: 600px; height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.numero-caja svg { position: absolute; inset: 0; transform: rotate(-90deg); overflow: visible; }
+.numero { font-size: 220px; font-weight: 200; line-height: 1; white-space: nowrap; letter-spacing: -6px; font-variant-numeric: tabular-nums; }
+.numero.l3 { font-size: 190px; }
+.numero.l4 { font-size: 150px; }
+.numero.l5 { font-size: 122px; }
+.numero-etiqueta { font-family: "Mono"; font-size: 32px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; text-align: center; max-width: 440px; margin-top: 18px; color: var(--color); }
+
+/* Comparación */
+.comparacion { width: 760px; display: flex; flex-direction: column; gap: 70px; }
+.comp-titulo { font-family: "Mono"; font-size: 30px; letter-spacing: 3px; text-transform: uppercase; color: var(--tenue); }
+.fila { display: flex; flex-direction: column; gap: 22px; }
+.fila-cabeza { display: flex; align-items: center; gap: 22px; font-size: 50px; font-weight: 500; }
+.icono { width: 64px; height: 64px; flex: none; color: var(--color); }
+.icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
+.valor { margin-left: auto; font-weight: 300; color: var(--color); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pista { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.relleno { height: 100%; border-radius: 3px; background: var(--color); }
+.fila.b .relleno { background: #fff; }
+.fila.b .icono, .fila.b .valor { color: #fff; }
+
+/* Línea de tiempo */
+.linea { position: relative; width: 760px; height: 600px; }
+.eje { position: absolute; left: 100px; top: 0; bottom: 0; width: 2px; background: rgba(255, 255, 255, .16); }
+.eje-relleno { width: 100%; background: var(--color); }
+.hito { position: absolute; left: 0; width: 760px; display: flex; align-items: center; transform: translateY(-50%); }
+.punto { width: 24px; height: 24px; border-radius: 50%; background: #000; border: 2.5px solid var(--color); margin-left: 89px; flex: none; }
+.hito-texto { margin-left: 36px; }
+.hito-anio { font-family: "Mono"; font-size: 30px; color: var(--color); letter-spacing: 1px; }
+.hito-nombre { font-size: 48px; font-weight: 400; }
+
+/* Seguir */
+.seguir { display: flex; flex-direction: column; align-items: center; gap: 40px; position: relative; }
+.avatar { width: 260px; height: 260px; border-radius: 50%; overflow: hidden; border: 2px solid var(--color); position: relative; background: #000; }
+.avatar img { position: absolute; width: 330px; left: -38px; top: -6px; }
+.seguir-nombre { font-size: 46px; font-weight: 500; }
+.boton {
+  font-size: 44px; font-weight: 600; padding: 22px 76px; border-radius: 999px;
+  border: 2px solid var(--color); color: var(--color); display: flex; align-items: center; gap: 14px;
+}
+.boton.hecho { background: var(--color); color: #000; }
+.boton svg { width: 44px; height: 44px; }
+.onda { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--color); left: 50%; bottom: 28px; margin-left: -55px; opacity: 0; }
+
+/* Cabecera: barra de progreso del video y tema */
+#progreso { position: absolute; top: 222px; left: 60px; width: 870px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .12); }
+#barra { position: relative; height: 100%; width: 0; border-radius: 4px; background: var(--color); }
+#barra::after {
+  content: ""; position: absolute; right: -7px; top: -3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 12px 2px var(--color);
+}
+#cabecera {
+  position: absolute; top: 250px; left: 60px; width: 870px; display: flex; justify-content: space-between;
+  font-family: "Mono"; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; color: var(--tenue);
+}
+#tema::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--color); margin-right: 14px; vertical-align: 3px; }
+#usuario { text-transform: none; letter-spacing: 0; }
+
+/* Conductora, abajo a la derecha */
+#personaje {
+  position: absolute; left: 380px; top: 1085px; width: 590px; height: 608px; transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
+}
+#personaje img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+
+/* Subtítulos: pocas palabras grandes y centradas debajo de la imagen; la que se dice se subraya en celeste */
+#subtitulo {
+  position: absolute; left: 60px; width: 870px; top: 975px; height: 160px;
+  display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 22px;
+}
+.palabra { display: inline-block; font-size: 68px; font-weight: 600; line-height: 1.2; letter-spacing: -0.5px; color: rgba(255, 255, 255, .35); }
+.palabra.dicha { color: #fff; }
+.palabra.destacada.dicha { color: var(--color); }
+#subrayado { position: absolute; height: 5px; border-radius: 3px; background: var(--color); opacity: 0; }

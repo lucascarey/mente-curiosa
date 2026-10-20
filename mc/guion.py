@@ -24,11 +24,13 @@ class Parte:
     def planos(self) -> list[dict]:
         """Las tomas de la parte: cada una con la palabra donde arranca, su visual y qué dibujar."""
         if not self.tomas:
-            return [{"desde": "", "visual": self.visual or {"tipo": "ilustracion"}, "dibujo": self.dibujo or self.busqueda}]
+            return [{"desde": "", "visual": self.visual or {"tipo": "ilustracion"}, "foto": "",
+                     "dibujo": self.dibujo or self.busqueda}]
         planos = []
         for t in self.tomas:
             visual = t.get("visual") or {"tipo": "ilustracion", **({"texto": t["texto"]} if t.get("texto") else {})}
-            planos.append({"desde": t.get("desde", ""), "visual": visual, "dibujo": t.get("dibujo") or self.busqueda})
+            planos.append({"desde": t.get("desde", ""), "visual": visual, "foto": t.get("foto", ""),
+                           "dibujo": t.get("dibujo") or t.get("foto") or self.busqueda})
         return planos
 
     @property
@@ -46,11 +48,15 @@ class Guion:
     hashtags: list[str]
     fuente: str
     ruta: Path
+    creditos: list[str] = field(default_factory=list)  # autores de las fotos usadas (se completa al armar el video)
     protagonista: str = ""  # cómo se ve el protagonista de las ilustraciones, en inglés (igual en todas)
 
     @property
     def caption(self) -> str:
-        return f"{self.descripcion}\n\n{' '.join(self.hashtags)}"
+        texto = f"{self.descripcion}\n\n{' '.join(self.hashtags)}"
+        if self.creditos:
+            texto += "\n\nFotos: " + "; ".join(self.creditos)
+        return texto
 
 
 def normalizar(palabra: str) -> str:
@@ -101,8 +107,8 @@ def validar_tomas(tomas: list[dict], texto: str) -> list[str]:
     palabras = [normalizar(w) for w in PALABRA.findall(texto)]
     posicion = 0
     for k, t in enumerate(tomas):
-        if not t.get("dibujo") and not t.get("visual"):
-            errores.append(f"la toma {k + 1} necesita 'dibujo' o 'visual'")
+        if not t.get("dibujo") and not t.get("foto") and not t.get("visual"):
+            errores.append(f"la toma {k + 1} necesita 'foto', 'dibujo' o 'visual'")
         errores += [f"toma {k + 1}: {e}" for e in validar_visual(t.get("visual") or {})]
         if k == 0:
             continue

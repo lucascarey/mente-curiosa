@@ -95,7 +95,17 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
             resultado.append(None)
             continue
         destino = carpeta / f"ilustracion{i}.jpg"
-        if config.MOCK:
+        encontrada = None
+        if plano.get("foto") and not config.MOCK:
+            # Foto real de la web: solo si aparece una; si no, se dibuja
+            encontrada = imagenes.foto(plano["foto"], usados)
+            print(f"Foto {i + 1}: {plano['foto']} -> {encontrada[0] if encontrada else 'no encontrada, la dibujo'}")
+        if encontrada:
+            usados.add(encontrada[0])
+            imagenes.descargar(encontrada[0], destino)
+            if encontrada[1] not in guion.creditos:
+                guion.creditos.append(encontrada[1])
+        elif config.MOCK:
             _mock(i, destino)
         elif credenciales:
             print(f"Ilustración {i + 1}: {plano['dibujo']}")
@@ -105,7 +115,7 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
                 # Por ejemplo si se acabó la cuota gratis del día: mejor una foto que no publicar
                 print("::warning::Cloudflare no respondió: uso una foto de Pixabay para esta toma")
                 credenciales = None
-        if not config.MOCK and not credenciales:
+        if not encontrada and not config.MOCK and not credenciales:
             url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
             if not url:
                 raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")

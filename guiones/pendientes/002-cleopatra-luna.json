@@ -4,23 +4,61 @@
   "partes": [
     {
       "texto": "Cleopatra vivió más cerca de la *llegada a la Luna* que de la construcción de la Gran Pirámide.",
-      "busqueda": "egypt pyramids"
+      "busqueda": "egypt pyramids",
+      "visual": {
+        "tipo": "linea",
+        "hitos": [
+          {
+            "anio": -2560,
+            "fecha": "2560 a.C.",
+            "etiqueta": "Gran Pirámide"
+          },
+          {
+            "anio": -69,
+            "fecha": "69 a.C.",
+            "etiqueta": "Cleopatra"
+          },
+          {
+            "anio": 1969,
+            "fecha": "1969",
+            "etiqueta": "Llegada a la Luna"
+          }
+        ]
+      }
     },
     {
       "texto": "La Gran Pirámide de Guiza se terminó hace unos cuatro mil quinientos años.",
-      "busqueda": "giza pyramid"
+      "busqueda": "giza pyramid",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "🔺"
+      }
     },
     {
       "texto": "Cleopatra nació unos *dos mil quinientos años después*.",
-      "busqueda": "ancient egypt temple"
+      "busqueda": "ancient egypt temple",
+      "visual": {
+        "tipo": "numero",
+        "valor": 2500,
+        "etiqueta": "años después"
+      }
     },
     {
       "texto": "Y desde Cleopatra hasta que el hombre pisó la Luna pasaron unos dos mil años.",
-      "busqueda": "moon surface"
+      "busqueda": "moon surface",
+      "visual": {
+        "tipo": "numero",
+        "valor": 2000,
+        "etiqueta": "años hasta la Luna",
+        "sufijo": ""
+      }
     },
     {
       "texto": "O sea, para ella las pirámides ya eran ruinas antiguas. ¿Lo sabías? Seguime para más.",
-      "busqueda": "desert sunset"
+      "busqueda": "desert sunset",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "Cleopatra está más cerca de nosotros que de las pirámides 🏛️",

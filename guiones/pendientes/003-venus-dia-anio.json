@@ -4,23 +4,55 @@
   "partes": [
     {
       "texto": "En Venus, *un día dura más que un año*.",
-      "busqueda": "planet space"
+      "busqueda": "planet space",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "🪐"
+      }
     },
     {
       "texto": "Venus gira sobre sí mismo tan lento que una vuelta completa le lleva unos 243 días terrestres.",
-      "busqueda": "venus planet"
+      "busqueda": "venus planet",
+      "visual": {
+        "tipo": "numero",
+        "valor": 243,
+        "etiqueta": "días dura un día"
+      }
     },
     {
       "texto": "Pero da la vuelta al Sol en solo unos 225 días.",
-      "busqueda": "sun space"
+      "busqueda": "sun space",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "En Venus",
+        "unidad": "días",
+        "a": {
+          "etiqueta": "Un día",
+          "valor": 243,
+          "emoji": "🌗"
+        },
+        "b": {
+          "etiqueta": "Un año",
+          "valor": 225,
+          "emoji": "☀️"
+        }
+      }
     },
     {
       "texto": "Y encima gira *al revés* que casi todos los planetas: allá el Sol sale por el oeste.",
-      "busqueda": "sunrise clouds"
+      "busqueda": "sunrise clouds",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "🔄",
+        "texto": "gira al revés"
+      }
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
-      "busqueda": "stars night sky"
+      "busqueda": "stars night sky",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "En Venus un día dura más que un año 🪐",

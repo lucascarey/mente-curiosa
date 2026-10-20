@@ -5,9 +5,10 @@ Fábrica automática de videos de curiosidades para Instagram (@mentecuriosa.tv)
 Cuatro veces por día, GitHub Actions toma el próximo guion de `guiones/pendientes`, arma el video y lo publica:
 
 1. **Voz:** voz IA gratuita (edge-tts, `es-MX-JorgeNeural`).
-2. **Imágenes:** un clip de [Pixabay](https://pixabay.com) (o Pexels) por cada parte del guion, recortado a vertical.
-3. **Subtítulos:** grandes, de 3 palabras, con las palabras clave en amarillo y el usuario de la cuenta abajo.
-4. **Publicación:** Reels con la API oficial de Instagram y, si está configurado, TikTok con su API oficial.
+2. **Fotos:** una de [Pixabay](https://pixabay.com) (o Pexels) por escena, nítida en una tarjeta y desenfocada de fondo.
+3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro con gráficos animados (números, comparaciones, líneas de tiempo, emojis), subtítulos palabra por palabra y el color del tema. Chromium la captura a 30 cuadros por segundo.
+4. **Sonido:** efectos (whoosh, pop, ding) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz.
+5. **Publicación:** Reels con la API oficial de Instagram y, si está configurado, TikTok con su API oficial.
 
 Después mueve el guion a `guiones/publicados` con el resultado. Los guiones nuevos se agregan una vez por semana.
 
@@ -30,7 +31,7 @@ La publicación automática corre solo si existe la variable `PUBLICACION_ACTIVA
 
 En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto.
 
-En local, sin internet: `MC_MOCK=1 python -m mc.main --solo-video` (voz muda y fondos de color).
+En local, sin internet: `MC_MOCK=1 python -m mc.main --solo-video` (voz muda y fondos de color). Si Playwright no encuentra Chromium, indicar la ruta con `MC_CHROMIUM`.
 
 ## Formato de un guion
 
@@ -41,7 +42,8 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
   "id": "001-pulpos-tres-corazones",
   "tema": "Animales",
   "partes": [
-    {"texto": "Los pulpos tienen *tres corazones*. Y eso no es lo más raro.", "busqueda": "octopus"}
+    {"texto": "Los pulpos tienen *tres corazones*. Y eso no es lo más raro.", "busqueda": "octopus",
+     "visual": {"tipo": "numero", "valor": 3, "etiqueta": "corazones"}}
   ],
   "descripcion": "Los pulpos tienen tres corazones 🐙",
   "hashtags": ["#curiosidades", "#datoscuriosos", "#sabiasque", "#animales"],
@@ -51,6 +53,17 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 
 - `partes`: entre 3 y 8; cada una lleva un clip distinto. Gancho, dato, giro y cierre.
 - Las palabras entre `*asteriscos*` salen en amarillo.
-- `busqueda`: en inglés, lo que se busca en Pixabay o Pexels.
+- `busqueda`: en inglés, la foto que se busca en Pixabay o Pexels.
+- `visual` (opcional, por defecto `foto`): el gráfico de la escena.
+
+| Tipo | Campos | Ejemplo |
+| --- | --- | --- |
+| `foto` | `emoji` opcional (sticker) | `{"tipo": "foto", "emoji": "🫀"}` |
+| `emoji` | `emoji`, `texto` opcional | `{"tipo": "emoji", "emoji": "🐙", "texto": "sangre azul"}` |
+| `numero` | `valor`, `etiqueta`, `prefijo`/`sufijo` opcionales | `{"tipo": "numero", "valor": 243, "etiqueta": "días"}` |
+| `comparacion` | `a` y `b` con `etiqueta`, `valor`, `emoji`; `titulo`, `unidad` | ver `003-venus-dia-anio.json` |
+| `linea` | `hitos`: 2 a 4 con `anio` (número, negativo antes de Cristo), `fecha`, `etiqueta` | ver `002-cleopatra-luna.json` |
+| `seguir` | nada (botón de seguir animado, va al final) | `{"tipo": "seguir"}` |
+
 - Entre 50 y 160 palabras en total (20 a 60 segundos).
 - `python -m mc.main --validar` revisa todos los pendientes.

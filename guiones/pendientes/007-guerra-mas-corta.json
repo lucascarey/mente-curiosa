@@ -4,23 +4,45 @@
   "partes": [
     {
       "texto": "La guerra más corta de la historia duró *menos de una hora*.",
-      "busqueda": "old clock"
+      "busqueda": "old clock",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "⏱️",
+        "texto": "menos de 1 hora"
+      }
     },
     {
       "texto": "Fue en 1896, entre el Reino Unido y Zanzíbar, una isla frente a la costa de África.",
-      "busqueda": "zanzibar beach"
+      "busqueda": "zanzibar beach",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "🏝️"
+      }
     },
     {
       "texto": "Los barcos británicos bombardearon el palacio del sultán.",
-      "busqueda": "old warship"
+      "busqueda": "old warship",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "💥"
+      }
     },
     {
       "texto": "Y en unos *38 minutos*, Zanzíbar se rindió.",
-      "busqueda": "cannon"
+      "busqueda": "cannon",
+      "visual": {
+        "tipo": "numero",
+        "valor": 38,
+        "etiqueta": "minutos",
+        "sufijo": "'"
+      }
     },
     {
       "texto": "Menos de lo que dura un capítulo de serie. ¿Lo sabías? Seguime para más.",
-      "busqueda": "watching tv"
+      "busqueda": "watching tv",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "La guerra más corta de la historia duró menos de una hora ⏱️",

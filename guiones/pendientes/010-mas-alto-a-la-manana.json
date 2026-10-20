@@ -4,23 +4,46 @@
   "partes": [
     {
       "texto": "A la mañana sos *más alto* que a la noche.",
-      "busqueda": "waking up morning"
+      "busqueda": "waking up morning",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "📏",
+        "texto": "más alto de mañana"
+      }
     },
     {
       "texto": "Durante el día, la gravedad aprieta los discos que tenés entre las vértebras.",
-      "busqueda": "walking city"
+      "busqueda": "walking city",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "⬇️"
+      }
     },
     {
       "texto": "Esos discos pierden un poco de líquido y la columna se acorta.",
-      "busqueda": "spine"
+      "busqueda": "spine",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "💧",
+        "texto": "los discos se aplastan"
+      }
     },
     {
       "texto": "Mientras dormís se recuperan, y podés ganar *alrededor de un centímetro*.",
-      "busqueda": "sleeping bed"
+      "busqueda": "sleeping bed",
+      "visual": {
+        "tipo": "numero",
+        "valor": 1,
+        "etiqueta": "centímetro más",
+        "prefijo": "+"
+      }
     },
     {
       "texto": "Si querés medirte, hacelo a la mañana. Seguime para un dato raro cada día.",
-      "busqueda": "measuring height"
+      "busqueda": "measuring height",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "A la mañana sos más alto que a la noche 📏",

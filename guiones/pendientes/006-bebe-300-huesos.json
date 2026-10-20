@@ -4,23 +4,55 @@
   "partes": [
     {
       "texto": "Cuando naciste tenías casi *cien huesos más* que ahora.",
-      "busqueda": "newborn baby"
+      "busqueda": "newborn baby",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "👶"
+      }
     },
     {
       "texto": "Un bebé tiene alrededor de 300 huesos y partes de cartílago que después se convierten en hueso.",
-      "busqueda": "baby feet"
+      "busqueda": "baby feet",
+      "visual": {
+        "tipo": "numero",
+        "valor": 300,
+        "etiqueta": "huesos al nacer",
+        "prefijo": "~"
+      }
     },
     {
       "texto": "Con el tiempo, muchos de ellos se van *fusionando*, como los del cráneo.",
-      "busqueda": "x ray skeleton"
+      "busqueda": "x ray skeleton",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "💀"
+      }
     },
     {
       "texto": "Así, un adulto termina con 206 huesos.",
-      "busqueda": "human skeleton"
+      "busqueda": "human skeleton",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Cantidad de huesos",
+        "unidad": "",
+        "a": {
+          "etiqueta": "Bebé",
+          "valor": 300,
+          "emoji": "👶"
+        },
+        "b": {
+          "etiqueta": "Adulto",
+          "valor": 206,
+          "emoji": "🧑"
+        }
+      }
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para más datos raros.",
-      "busqueda": "child running"
+      "busqueda": "child running",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "Naciste con casi 100 huesos más que ahora 🦴",

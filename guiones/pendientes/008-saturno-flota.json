@@ -4,23 +4,46 @@
   "partes": [
     {
       "texto": "Saturno es gigante, pero *flotaría en el agua*.",
-      "busqueda": "saturn planet"
+      "busqueda": "saturn planet",
+      "visual": {
+        "tipo": "foto",
+        "emoji": "🪐"
+      }
     },
     {
       "texto": "Es casi todo hidrógeno y helio, así que su densidad es menor que la del agua.",
-      "busqueda": "gas planet space"
+      "busqueda": "gas planet space",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "🎈",
+        "texto": "más liviano que el agua"
+      }
     },
     {
       "texto": "Si existiera una pileta lo bastante grande para meterlo, *quedaría flotando*.",
-      "busqueda": "swimming pool water"
+      "busqueda": "swimming pool water",
+      "visual": {
+        "tipo": "emoji",
+        "emoji": "🏊",
+        "texto": "flotaría"
+      }
     },
     {
       "texto": "Y eso que entrarían unas setecientas Tierras dentro de él.",
-      "busqueda": "earth from space"
+      "busqueda": "earth from space",
+      "visual": {
+        "tipo": "numero",
+        "valor": 700,
+        "etiqueta": "Tierras entrarían adentro",
+        "prefijo": "~"
+      }
     },
     {
       "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
-      "busqueda": "galaxy"
+      "busqueda": "galaxy",
+      "visual": {
+        "tipo": "seguir"
+      }
     }
   ],
   "descripcion": "Saturno flotaría en el agua 🪐",

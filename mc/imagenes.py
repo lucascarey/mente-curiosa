@@ -114,7 +114,16 @@ def del_articulo(fuente: str) -> list[dict]:
         api = f"https://{articulos[0][0]}.wikipedia.org/w/api.php"
         r = requests.get(api, params={"action": "query", "format": "json", "titles": articulos[0][1], "redirects": 1,
                                       "prop": "langlinks", "lllang": "en"}, headers={"User-Agent": AGENTE}, timeout=30)
-        for pagina in r.json().get("query", {}).get("pages", {}).values():
+        paginas = list(r.json().get("query", {}).get("pages", {}).values())
+        if not paginas or "missing" in paginas[0]:
+            # La dirección no existe tal cual (por ejemplo le falta un acento): busco el artículo más parecido
+            r = requests.get(api, params={"action": "query", "format": "json", "generator": "search", "gsrlimit": 1,
+                                          "gsrsearch": articulos[0][1].replace("_", " "), "prop": "langlinks",
+                                          "lllang": "en"}, headers={"User-Agent": AGENTE}, timeout=30)
+            paginas = list(r.json().get("query", {}).get("pages", {}).values())
+            if paginas:
+                articulos[0] = (articulos[0][0], paginas[0]["title"])
+        for pagina in paginas:
             for enlace in pagina.get("langlinks", []):
                 articulos.append(("en", enlace["*"]))
         fotos, vistas = [], set()
@@ -124,14 +133,11 @@ def del_articulo(fuente: str) -> list[dict]:
                                           "prop": "images", "imlimit": 60}, headers={"User-Agent": AGENTE}, timeout=30)
             archivos = [i["title"] for p in r.json().get("query", {}).get("pages", {}).values() for i in p.get("images", [])]
             datos = _info(api, [a for a in archivos if a not in vistas])
-            print(f"  {idioma}:{titulo}: {len(archivos)} archivos, {len(datos)} con datos")
-            if datos[:1]:
-                print(f"  ejemplo: {str(datos[0])[:300]}")
             for pagina in datos:
                 vistas.add(pagina.get("title"))
                 if c := _candidata(pagina, set()):
                     fotos.append(c)
-        print(f"Fotos del artículo {fuente}: {len(fotos)}")
+        print(f"Fotos de {', '.join(t for _, t in articulos)}: {len(fotos)}")
         return fotos
     except (requests.RequestException, ValueError, KeyError) as e:
         print(f"::warning::No pude leer las fotos de {fuente}: {e}")

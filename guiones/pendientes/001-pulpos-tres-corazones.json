@@ -13,6 +13,7 @@
       },
       "tomas": [
         {
+          "foto": "Octopus vulgaris",
           "dibujo": "A cute octopus waving its eight tentacles in the clear blue ocean"
         },
         {
@@ -56,6 +57,7 @@
       },
       "tomas": [
         {
+          "foto": "octopus swimming",
           "dibujo": "A cute octopus swimming fast through open blue water, tentacles trailing behind"
         },
         {
@@ -65,6 +67,7 @@
         },
         {
           "desde": "Por",
+          "foto": "octopus crawling seabed",
           "dibujo": "A cute octopus crawling on the sandy sea floor among rocks and seaweed",
           "texto": "prefiere arrastrarse"
         }
@@ -89,6 +92,7 @@
         },
         {
           "desde": "cobre",
+          "foto": "copper wire coil",
           "dibujo": "Shiny copper coins and a coil of copper wire next to a rusty iron nail",
           "texto": "cobre, no hierro"
         }

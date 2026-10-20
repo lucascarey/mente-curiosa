@@ -27,10 +27,12 @@
       },
       "tomas": [
         {
+          "foto": "Cleopatra bust Altes Museum",
           "dibujo": "Cleopatra, the ancient Egyptian queen, with black braided hair and a golden headdress, royal portrait"
         },
         {
           "desde": "llegada",
+          "foto": "Apollo 11 Aldrin Moon",
           "dibujo": "An astronaut in a white spacesuit standing on the grey Moon surface next to a small lunar lander"
         },
         {
@@ -67,6 +69,7 @@
       },
       "tomas": [
         {
+          "foto": "Great Pyramid of Giza",
           "dibujo": "The Great Pyramid of Giza under a starry desert night sky"
         },
         {
@@ -113,6 +116,7 @@
         },
         {
           "desde": "hombre",
+          "foto": "Apollo 11 bootprint",
           "dibujo": "An astronaut's boot pressing a footprint into grey Moon dust"
         },
         {
@@ -134,6 +138,7 @@
       },
       "tomas": [
         {
+          "foto": "Giza pyramids ruins",
           "dibujo": "Cleopatra in royal Egyptian clothes standing in front of a weathered, crumbling ancient pyramid",
           "texto": "ya eran ruinas"
         },

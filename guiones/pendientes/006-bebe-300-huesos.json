@@ -11,6 +11,7 @@
       },
       "tomas": [
         {
+          "foto": "newborn baby sleeping",
           "dibujo": "A cute sleeping newborn baby wrapped in a blanket"
         },
         {
@@ -62,6 +63,7 @@
         },
         {
           "desde": "cráneo",
+          "foto": "infant skull fontanelle",
           "dibujo": "A friendly simple skeleton x-ray of a baby skull with soft spots, medical diagram"
         }
       ]
@@ -86,6 +88,7 @@
       },
       "tomas": [
         {
+          "foto": "human skeleton",
           "dibujo": "A friendly full adult human skeleton standing upright, simple medical illustration"
         },
         {
@@ -116,6 +119,7 @@
       },
       "tomas": [
         {
+          "foto": "toddler smiling",
           "dibujo": "A smiling toddler looking curiously at a big glowing question mark"
         },
         {

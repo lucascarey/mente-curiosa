@@ -66,6 +66,7 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 - Las palabras entre `*asteriscos*` salen en celeste y la conductora levanta el dedo.
 - `protagonista` (opcional): en inglés, cómo se ve el personaje principal de las ilustraciones, para que sea el mismo en todas las escenas.
 - `dibujo`: en inglés, qué tiene que mostrar la ilustración (un sujeto claro, sin texto). El estilo se agrega solo.
+- `tomas` (opcional, recomendado): varias imágenes seguidas dentro de la parte, para que cambien cada uno o dos segundos al ritmo de lo que se dice. Cada toma lleva `dibujo` (y opcional `texto`, una etiqueta corta) o un `visual`, y desde la segunda toma `desde`: la palabra del texto donde entra. Ejemplo: `[{"dibujo": "A snail..."}, {"desde": "unos", "visual": {"tipo": "numero", "valor": 243}}]`. Describí los objetos en positivo: Flux ignora los "sin" ("without rings" igual le pone anillos).
 - `busqueda`: en inglés, la foto de respaldo en Pixabay; si falta `dibujo`, también se usa para la ilustración.
 - `visual` (opcional, por defecto `ilustracion`): qué muestra la tarjeta de la escena.
 

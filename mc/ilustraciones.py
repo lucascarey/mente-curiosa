@@ -99,8 +99,13 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
             _mock(i, destino)
         elif credenciales:
             print(f"Ilustración {i + 1}: {plano['dibujo']}")
-            _generar(prompt(plano["dibujo"], guion.protagonista), destino, *credenciales)
-        else:
+            try:
+                _generar(prompt(plano["dibujo"], guion.protagonista), destino, *credenciales)
+            except RuntimeError:
+                # Por ejemplo si se acabó la cuota gratis del día: mejor una foto que no publicar
+                print("::warning::Cloudflare no respondió: uso una foto de Pixabay para esta toma")
+                credenciales = None
+        if not config.MOCK and not credenciales:
             url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
             if not url:
                 raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")

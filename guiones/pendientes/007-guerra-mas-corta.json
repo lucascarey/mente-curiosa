@@ -9,7 +9,17 @@
       "visual": {
         "tipo": "ilustracion",
         "texto": "menos de 1 hora"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "Old 19th century cannons firing from a coastal fortress, clouds of smoke in the air"
+        },
+        {
+          "desde": "duró",
+          "dibujo": "A vintage brass pocket watch with its lid open",
+          "texto": "menos de 1 hora"
+        }
+      ]
     },
     {
       "texto": "Fue en 1896, entre el Reino Unido y Zanzíbar, una isla frente a la costa de África.",
@@ -17,7 +27,21 @@
       "dibujo": "A tropical island off the coast of Africa with an old palace and palm trees, year 1896",
       "visual": {
         "tipo": "ilustracion"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "A Victorian-era harbor in the 1890s with old steamships, sepia old photograph style"
+        },
+        {
+          "desde": "Reino",
+          "dibujo": "A British Royal Navy steam warship from the 1890s with tall funnels sailing on the ocean"
+        },
+        {
+          "desde": "isla",
+          "dibujo": "A tropical island off the coast of Africa with an old white palace and palm trees, seen from the sea",
+          "texto": "Zanzíbar"
+        }
+      ]
     },
     {
       "texto": "Los barcos británicos bombardearon el palacio del sultán.",
@@ -25,7 +49,17 @@
       "dibujo": "Old British steam warships firing at a palace on a tropical coast, smoke clouds",
       "visual": {
         "tipo": "ilustracion"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "Old British steam warships firing at a palace on a tropical coast, smoke clouds"
+        },
+        {
+          "desde": "palacio",
+          "dibujo": "An old white palace with wooden balconies on a tropical shore hit by cannon fire, smoke rising",
+          "texto": "palacio del sultán"
+        }
+      ]
     },
     {
       "texto": "Y en unos *38 minutos*, Zanzíbar se rindió.",
@@ -35,14 +69,40 @@
         "valor": 38,
         "etiqueta": "minutos",
         "sufijo": "'"
-      }
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 38,
+            "etiqueta": "minutos",
+            "sufijo": "'"
+          }
+        },
+        {
+          "desde": "Zanzíbar",
+          "dibujo": "A white surrender flag waving above an old palace on a tropical shore",
+          "texto": "se rindió"
+        }
+      ]
     },
     {
       "texto": "Menos de lo que dura un capítulo de serie. ¿Lo sabías? Seguime para más.",
       "busqueda": "watching tv",
       "visual": {
         "tipo": "seguir"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "A family on a couch watching a TV show with a bowl of popcorn"
+        },
+        {
+          "desde": "Seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "La guerra más corta de la historia duró menos de una hora ⏱️",

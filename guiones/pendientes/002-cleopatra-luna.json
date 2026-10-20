@@ -24,7 +24,39 @@
             "etiqueta": "Llegada a la Luna"
           }
         ]
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "Cleopatra, the ancient Egyptian queen, with black braided hair and a golden headdress, royal portrait"
+        },
+        {
+          "desde": "llegada",
+          "dibujo": "An astronaut in a white spacesuit standing on the grey Moon surface next to a small lunar lander"
+        },
+        {
+          "desde": "que",
+          "visual": {
+            "tipo": "linea",
+            "hitos": [
+              {
+                "anio": -2560,
+                "fecha": "2560 a.C.",
+                "etiqueta": "Gran Pirámide"
+              },
+              {
+                "anio": -69,
+                "fecha": "69 a.C.",
+                "etiqueta": "Cleopatra"
+              },
+              {
+                "anio": 1969,
+                "fecha": "1969",
+                "etiqueta": "Llegada a la Luna"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "texto": "La Gran Pirámide de Guiza se terminó hace unos cuatro mil quinientos años.",
@@ -32,7 +64,17 @@
       "dibujo": "The Great Pyramid of Giza under a starry desert night sky",
       "visual": {
         "tipo": "ilustracion"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "The Great Pyramid of Giza under a starry desert night sky"
+        },
+        {
+          "desde": "terminó",
+          "dibujo": "Ancient Egyptian workers dragging huge stone blocks on wooden sledges up a ramp beside a nearly finished pyramid",
+          "texto": "hace 4.500 años"
+        }
+      ]
     },
     {
       "texto": "Cleopatra nació unos *dos mil quinientos años después*.",
@@ -41,7 +83,20 @@
         "tipo": "numero",
         "valor": 2500,
         "etiqueta": "años después"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "A baby sleeping in a woven basket inside an ancient Egyptian palace with stone columns and palm leaves"
+        },
+        {
+          "desde": "dos",
+          "visual": {
+            "tipo": "numero",
+            "valor": 2500,
+            "etiqueta": "años después"
+          }
+        }
+      ]
     },
     {
       "texto": "Y desde Cleopatra hasta que el hombre pisó la Luna pasaron unos dos mil años.",
@@ -51,14 +106,44 @@
         "valor": 2000,
         "etiqueta": "años hasta la Luna",
         "sufijo": ""
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "Cleopatra, the ancient Egyptian queen, sitting on a golden throne and gazing up at the full Moon in the night sky"
+        },
+        {
+          "desde": "hombre",
+          "dibujo": "An astronaut's boot pressing a footprint into grey Moon dust"
+        },
+        {
+          "desde": "pasaron",
+          "visual": {
+            "tipo": "numero",
+            "valor": 2000,
+            "etiqueta": "años hasta la Luna",
+            "sufijo": ""
+          }
+        }
+      ]
     },
     {
       "texto": "O sea, para ella las pirámides ya eran ruinas antiguas. ¿Lo sabías? Seguime para más.",
       "busqueda": "desert sunset",
       "visual": {
         "tipo": "seguir"
-      }
+      },
+      "tomas": [
+        {
+          "dibujo": "Cleopatra in royal Egyptian clothes standing in front of a weathered, crumbling ancient pyramid",
+          "texto": "ya eran ruinas"
+        },
+        {
+          "desde": "Seguime",
+          "visual": {
+            "tipo": "seguir"
+          }
+        }
+      ]
     }
   ],
   "descripcion": "Cleopatra está más cerca de nosotros que de las pirámides 🏛️",

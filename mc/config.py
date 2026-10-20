@@ -14,7 +14,7 @@ PERSONAJE = RAIZ / "assets" / "personaje"  # los 12 dibujos de la conductora
 ANCHO, ALTO, FPS = 1080, 1920, 30
 
 USUARIO = os.environ.get("MC_USUARIO", "@mente.curiosatv")
-VOZ = os.environ.get("MC_VOZ", "en-US-EmmaMultilingualNeural")  # multilingüe: lee el español con naturalidad
+VOZ = os.environ.get("MC_VOZ", "en-US-AvaMultilingualNeural")  # multilingüe: lee el español con naturalidad
 VELOCIDAD_VOZ = os.environ.get("MC_VELOCIDAD_VOZ", "+0%")
 TONO_VOZ = os.environ.get("MC_TONO_VOZ", "+0Hz")
 PAUSA_ENTRE_PARTES = 0.25  # segundos de silencio entre partes del guion

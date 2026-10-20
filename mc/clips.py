@@ -1,4 +1,7 @@
-"""Clips de video gratis desde Pexels (https://www.pexels.com/api/)."""
+"""Clips de video gratis desde Pixabay (https://pixabay.com/api/docs/) o Pexels.
+
+Usa Pixabay si está PIXABAY_API_KEY; si no, Pexels con PEXELS_API_KEY.
+"""
 
 import os
 import subprocess
@@ -8,37 +11,65 @@ import requests
 
 from . import config
 
-API = "https://api.pexels.com/videos/search"
 RESPALDO = "abstract background"
 
 
-def _elegir_archivo(video: dict) -> dict | None:
-    verticales = [f for f in video.get("video_files", [])
-                  if f.get("width") and f.get("height") and f["height"] > f["width"] and f["height"] >= 1280]
-    if not verticales:
-        return None
-    # El más cercano a 1920 de alto, para no bajar archivos 4K enormes
-    return min(verticales, key=lambda f: abs(f["height"] - config.ALTO))
+def _vertical(ancho: int, alto: int) -> bool:
+    return alto > ancho
 
 
-def buscar(consulta: str, usados: set[int]) -> tuple[int, str] | None:
-    clave = os.environ.get("PEXELS_API_KEY")
-    if not clave:
-        raise RuntimeError("Falta PEXELS_API_KEY")
+def _buscar_pixabay(consulta: str, usados: set[str], clave: str) -> tuple[str, str] | None:
     r = requests.get(
-        API,
+        "https://pixabay.com/api/videos/",
+        params={"key": clave, "q": consulta, "per_page": 30, "safesearch": "true"},
+        timeout=30,
+    )
+    r.raise_for_status()
+    candidatos = []
+    for video in r.json().get("hits", []):
+        vid = f"pixabay-{video['id']}"
+        if vid in usados or video.get("duration", 0) < 3:
+            continue
+        versiones = [v for v in video.get("videos", {}).values() if v.get("url") and v.get("width")]
+        # La más chica que siga siendo nítida en 1080x1920
+        nitidas = [v for v in versiones if max(v["width"], v["height"]) >= 1280]
+        if not nitidas:
+            continue
+        elegida = min(nitidas, key=lambda v: v["width"] * v["height"])
+        candidatos.append((not _vertical(elegida["width"], elegida["height"]), vid, elegida["url"]))
+    if not candidatos:
+        return None
+    # Primero los verticales, después los horizontales (se recortan al centro)
+    candidatos.sort(key=lambda c: c[0])
+    _, vid, url = candidatos[0]
+    return vid, url
+
+
+def _buscar_pexels(consulta: str, usados: set[str], clave: str) -> tuple[str, str] | None:
+    r = requests.get(
+        "https://api.pexels.com/videos/search",
         headers={"Authorization": clave},
         params={"query": consulta, "orientation": "portrait", "per_page": 15},
         timeout=30,
     )
     r.raise_for_status()
     for video in r.json().get("videos", []):
-        if video["id"] in usados or video.get("duration", 0) < 3:
+        vid = f"pexels-{video['id']}"
+        if vid in usados or video.get("duration", 0) < 3:
             continue
-        archivo = _elegir_archivo(video)
-        if archivo:
-            return video["id"], archivo["link"]
+        verticales = [f for f in video.get("video_files", [])
+                      if f.get("width") and f.get("height") and _vertical(f["width"], f["height"]) and f["height"] >= 1280]
+        if verticales:
+            return vid, min(verticales, key=lambda f: abs(f["height"] - config.ALTO))["link"]
     return None
+
+
+def buscar(consulta: str, usados: set[str]) -> tuple[str, str] | None:
+    if clave := os.environ.get("PIXABAY_API_KEY"):
+        return _buscar_pixabay(consulta, usados, clave)
+    if clave := os.environ.get("PEXELS_API_KEY"):
+        return _buscar_pexels(consulta, usados, clave)
+    raise RuntimeError("Falta PIXABAY_API_KEY (o PEXELS_API_KEY)")
 
 
 def descargar(url: str, destino: Path) -> Path:
@@ -64,7 +95,7 @@ def _mock(i: int, destino: Path) -> Path:
 def conseguir(consultas: list[str], carpeta: Path) -> list[Path]:
     """Un clip distinto por cada parte del guion."""
     carpeta.mkdir(parents=True, exist_ok=True)
-    usados: set[int] = set()
+    usados: set[str] = set()
     rutas = []
     for i, consulta in enumerate(consultas):
         destino = carpeta / f"clip{i}.mp4"

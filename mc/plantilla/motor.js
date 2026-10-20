@@ -18,6 +18,8 @@ const crear = (tag, clase, padre, html) => {
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const prog = (t, inicio, dur) => clamp((t - inicio) / dur);
 const suave = x => 1 - Math.pow(1 - x, 3);
+const entrada = x => 1 + 2.2 * Math.pow(x - 1, 3) + 1.2 * Math.pow(x - 1, 2); // frena con un leve pasarse
+const acelera = x => x * x * x;
 const suaveDoble = x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 const mezclar = (a, b, p) => a + (b - a) * p;
 const formatear = n => Math.round(n).toLocaleString("es-AR");
@@ -46,9 +48,12 @@ function ilustracion(esc, caja, texto) {
   const img = crear("div", "img", marco);
   img.style.backgroundImage = `url(${esc.dibujo})`;
   const etiqueta = texto ? crear("div", "etiqueta", marco, texto) : null;
+  // Se acerca despacio y se corre apenas hacia un lado, alternando entre escenas
+  const lado = esc.indice % 2 ? -1 : 1;
   return (tl) => {
-    img.style.transform = `scale(${1.02 + tl * 0.012})`;
-    if (etiqueta) entrar(etiqueta, tl, 0.5);
+    const p = clamp(tl / Math.max(1, esc.fin - esc.inicio + D.transicion));
+    img.style.transform = `scale(${1.04 + 0.07 * p}) translateX(${lado * 18 * p}px)`;
+    if (etiqueta) entrar(etiqueta, tl, 0.35);
   };
 }
 
@@ -150,13 +155,14 @@ const constructores = {
   },
 };
 
-const escenas = D.escenas.map((esc) => {
+const escenas = D.escenas.map((esc, indice) => {
+  esc.indice = indice;
   const el = crear("div", "escena", $("#escenas"));
   const caja = crear("div", "visual", el);
   const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "ilustracion";
   const dibujar = constructores[tipo](esc.visual, caja, esc);
-  crear("div", "marco", el, "<i></i><i></i><i></i><i></i>");
-  return { ...esc, el, tipo, dibujar };
+  const marco = crear("div", "marco", el, "<i></i><i></i><i></i><i></i>");
+  return { ...esc, el, marco, tipo, dibujar };
 });
 
 // ---------- Subtítulos: la palabra que se dice se subraya ----------
@@ -168,12 +174,13 @@ let spans = [];
 
 function mostrarGrupo(i) {
   sub.innerHTML = "";
+  sub.appendChild(subrayado); // vive dentro del subtítulo, así se mueve con él
   spans = D.grupos[i].palabras.map((p) => crear("span", "palabra" + (p.destacada ? " destacada" : ""), sub, p.texto));
   grupoActual = i;
 }
 
-// Posición del subrayado debajo de una palabra, en coordenadas del video
-const caja = (el) => ({ x: sub.offsetLeft + el.offsetLeft, y: sub.offsetTop + el.offsetTop + el.offsetHeight - 2, w: el.offsetWidth });
+// Posición del subrayado debajo de una palabra, dentro del subtítulo
+const caja = (el) => ({ x: el.offsetLeft, y: el.offsetTop + el.offsetHeight - 2, w: el.offsetWidth });
 
 function subrayar(t, grupo) {
   const k = grupo.palabras.findLastIndex((p) => t >= p.inicio - 0.03);
@@ -214,34 +221,44 @@ vinetas.forEach((v, k) => {
   else v.pose = HABLANDO[k % HABLANDO.length];
 });
 
+// Devuelve [pose, segundo en que empezó], así el personaje puede dar un saltito en cada cambio
 function poseActual(t) {
   const v = vinetas.findLast((x) => t >= x.inicio - 0.05);
-  if (!v) return 1;
+  if (!v) return [1, 0];
   // Cuando termina de hablar cierra la boca, y en silencios largos parpadea
   const fin = D.grupos[D.grupos.length - 1].fin;
-  if (t > fin) return (t - fin) % 2.4 < 0.15 ? 7 : 1;
-  return v.pose;
+  if (t > fin) return [(t - fin) % 2.4 < 0.15 ? 7 : 1, fin];
+  return [v.pose, v.inicio - 0.05];
 }
 
 // ---------- Render ----------
 
+const ANCHO_TARJETA = 980;
+
 window.render = function (t) {
-  const actual = escenas.findLastIndex((e) => t >= e.inicio);
+  // Carrusel: la tarjeta nueva entra desde la derecha mientras la anterior sale por la izquierda
   escenas.forEach((e, i) => {
-    const sale = i === actual - 1 && t - escenas[actual].inicio < D.transicion;
-    const visible = i === actual || sale;
+    const ultima = i === escenas.length - 1;
+    const visible = t >= e.inicio && (ultima || t < e.fin + D.transicion);
     e.el.style.display = visible ? "block" : "none";
     if (!visible) return;
     const tl = t - e.inicio;
-    if (sale) {
-      const p = suaveDoble(prog(t, escenas[actual].inicio, D.transicion * 0.6));
-      e.el.style.opacity = 1 - p;
-      e.el.style.transform = `translateY(${-16 * p}px)`;
-    } else if (i > 0) {
-      const p = suave(prog(tl, D.transicion * 0.3, D.transicion * 0.7));
-      e.el.style.opacity = p;
-      e.el.style.transform = `translateY(${mezclar(28, 0, p)}px)`;
+    const pe = i === 0 ? 1 : prog(tl, 0, D.transicion);
+    const ps = ultima ? 0 : prog(t, e.fin, D.transicion);
+    let x = (1 - entrada(pe)) * ANCHO_TARJETA - acelera(ps) * ANCHO_TARJETA;
+    let giro = (1 - suave(pe)) * 4 - acelera(ps) * 3;
+    let escala = 1 - 0.06 * acelera(ps);
+    if (i === 0) {
+      // La primera aparece en su lugar, creciendo
+      const p = prog(tl, 0, 0.5);
+      escala *= mezclar(0.86, 1, entrada(p));
+      e.el.style.opacity = suave(p);
+    } else {
+      e.el.style.opacity = 1 - 0.4 * ps;
     }
+    e.el.style.transform = `translateX(${x}px) rotate(${giro}deg) scale(${escala})`;
+    // El borde se enciende en celeste al llegar y se apaga solo
+    e.marco.style.borderColor = `rgba(79, 195, 247, ${0.9 * (1 - suave(prog(tl, D.transicion * 0.6, 0.6)))})`;
     e.dibujar(tl);
   });
 
@@ -249,15 +266,18 @@ window.render = function (t) {
   const g = D.grupos.findLastIndex((gr) => t >= gr.inicio - 0.05);
   if (g >= 0 && t < D.grupos[g].fin) {
     if (g !== grupoActual) mostrarGrupo(g);
+    const p = prog(t, D.grupos[g].inicio - 0.05, 0.16);
     sub.style.display = "flex";
-    sub.style.opacity = suave(prog(t, D.grupos[g].inicio - 0.05, 0.12));
+    sub.style.opacity = suave(p);
+    sub.style.transform = `scale(${mezclar(0.9, 1, entrada(p))})`;
     subrayar(t, D.grupos[g]);
   } else {
     sub.style.display = "none";
     subrayado.style.opacity = 0;
   }
 
-  mostrarPersonaje(t, poseActual(t));
+  const [pose, desde] = poseActual(t);
+  mostrarPersonaje(t, pose, desde);
 
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;

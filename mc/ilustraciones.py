@@ -82,23 +82,24 @@ def a_paleta(ruta: Path) -> None:
 
 
 def conseguir(guion, carpeta: Path) -> list[str | None]:
-    """Devuelve, por escena, el nombre del archivo de la ilustración dentro de `carpeta` (o None)."""
+    """Devuelve, por toma (en orden, todas las partes seguidas), el archivo de su ilustración dentro de `carpeta` (o None)."""
     carpeta.mkdir(parents=True, exist_ok=True)
     credenciales = _credenciales()
     if not credenciales and not config.MOCK:
         print("::warning::Faltan CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN: uso fotos de Pixabay")
     usados: set[str] = set()
     resultado: list[str | None] = []
-    for i, parte in enumerate(guion.partes):
-        if (parte.visual or {}).get("tipo", "ilustracion") not in CON_ILUSTRACION:
+    planos = [(parte, plano) for parte in guion.partes for plano in parte.planos]
+    for i, (parte, plano) in enumerate(planos):
+        if plano["visual"].get("tipo", "ilustracion") not in CON_ILUSTRACION:
             resultado.append(None)
             continue
         destino = carpeta / f"ilustracion{i}.jpg"
         if config.MOCK:
             _mock(i, destino)
         elif credenciales:
-            print(f"Ilustración {i + 1}: {parte.dibujo or parte.busqueda}")
-            _generar(prompt(parte.dibujo or parte.busqueda, guion.protagonista), destino, *credenciales)
+            print(f"Ilustración {i + 1}: {plano['dibujo']}")
+            _generar(prompt(plano["dibujo"], guion.protagonista), destino, *credenciales)
         else:
             url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
             if not url:

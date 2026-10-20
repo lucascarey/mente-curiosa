@@ -22,18 +22,19 @@ html, body {
 
 /* Tarjeta de la escena */
 #escenas { position: absolute; inset: 0; }
-.escena { position: absolute; left: 60px; top: 300px; width: 870px; height: 700px; display: none; }
+.escena { position: absolute; left: 85px; top: 305px; width: 820px; height: 640px; display: none; transform-origin: 50% 100%; }
 .visual { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 
-.marco { position: absolute; inset: 0; border: 1.5px solid var(--borde); border-radius: 32px; pointer-events: none; }
+.marco { position: absolute; inset: 0; border: 2px solid var(--borde); border-radius: 36px; pointer-events: none; }
+.escena .visual { border-radius: 36px; background: #000; }
 .marco i { position: absolute; width: 44px; height: 44px; border: 0 solid var(--color); }
-.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 32px; }
-.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 32px; }
-.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 32px; }
-.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 32px; }
+.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 36px; }
+.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 36px; }
+.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 36px; }
+.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 36px; }
 
 /* Ilustración */
-.ilus { position: absolute; inset: 0; border-radius: 32px; overflow: hidden; background: #000; }
+.ilus { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; background: #000; }
 .ilus .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
 .etiqueta {
   position: absolute; left: 28px; bottom: 28px; max-width: 800px;
@@ -86,29 +87,33 @@ html, body {
 .boton svg { width: 44px; height: 44px; }
 .onda { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--color); left: 50%; bottom: 28px; margin-left: -55px; opacity: 0; }
 
-/* Cabecera */
-#progreso { position: absolute; top: 226px; left: 60px; width: 870px; height: 2px; background: rgba(255, 255, 255, .15); }
-#barra { height: 100%; width: 0; background: var(--color); }
+/* Cabecera: barra de progreso del video y tema */
+#progreso { position: absolute; top: 222px; left: 60px; width: 870px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .12); }
+#barra { position: relative; height: 100%; width: 0; border-radius: 4px; background: var(--color); }
+#barra::after {
+  content: ""; position: absolute; right: -7px; top: -3px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 12px 2px var(--color);
+}
 #cabecera {
-  position: absolute; top: 246px; left: 60px; width: 870px; display: flex; justify-content: space-between;
+  position: absolute; top: 250px; left: 60px; width: 870px; display: flex; justify-content: space-between;
   font-family: "Mono"; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; color: var(--tenue);
 }
 #tema::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--color); margin-right: 14px; vertical-align: 3px; }
 #usuario { text-transform: none; letter-spacing: 0; }
 
-/* Conductora */
+/* Conductora, abajo a la derecha */
 #personaje {
-  position: absolute; left: 0; top: 1022px; width: 450px; height: 463px;
-  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+  position: absolute; left: 445px; top: 1120px; width: 490px; height: 505px; transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
 }
 #personaje img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 
-/* Subtítulos finos: la palabra que se dice se subraya en celeste */
+/* Subtítulos: pocas palabras grandes y centradas debajo de la imagen; la que se dice se subraya en celeste */
 #subtitulo {
-  position: absolute; left: 470px; width: 460px; top: 1070px; height: 380px;
-  display: flex; flex-wrap: wrap; align-content: center; gap: 6px 18px;
+  position: absolute; left: 60px; width: 870px; top: 975px; height: 160px;
+  display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 22px;
 }
-.palabra { display: inline-block; font-size: 56px; font-weight: 500; line-height: 1.3; color: rgba(255, 255, 255, .35); }
+.palabra { display: inline-block; font-size: 68px; font-weight: 600; line-height: 1.2; letter-spacing: -0.5px; color: rgba(255, 255, 255, .35); }
 .palabra.dicha { color: #fff; }
 .palabra.destacada.dicha { color: var(--color); }
-#subrayado { position: absolute; height: 4px; border-radius: 2px; background: var(--color); opacity: 0; }
+#subrayado { position: absolute; height: 5px; border-radius: 3px; background: var(--color); opacity: 0; }

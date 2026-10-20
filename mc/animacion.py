@@ -12,11 +12,12 @@ import subprocess
 from pathlib import Path
 
 from . import config, ilustraciones
-from .guion import Guion
+from .guion import Guion, normalizar
 from .voz import Palabra
 
 PLANTILLA = Path(__file__).parent / "plantilla"
-TRANSICION = 0.45
+TRANSICION = 0.4  # entrada y salida de cada tarjeta
+ADELANTO = 0.12  # la imagen nueva entra apenas antes de la palabra
 PALABRAS_POR_PANTALLA = 3
 
 
@@ -84,18 +85,39 @@ def _visual(visual: dict) -> dict:
     return v
 
 
+def _inicios(planos: list[dict], palabras: list[Palabra], inicio: float) -> list[float]:
+    """Segundo en que arranca cada toma: la primera con la parte, las demás un poco antes de su palabra `desde`."""
+    inicios, k = [inicio], 0
+    for plano in planos[1:]:
+        desde = normalizar(plano["desde"])
+        while k < len(palabras) and normalizar(palabras[k].texto) != desde:
+            k += 1
+        if k == len(palabras):
+            raise ValueError(f"No encontré la palabra '{plano['desde']}' en la voz")
+        inicios.append(max(inicios[-1] + 0.5, palabras[k].inicio - ADELANTO))
+        k += 1
+    return inicios
+
+
 def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duraciones: list[float],
                     dibujos: list[str | None]) -> tuple[dict, list[tuple[float, str]]]:
+    """Una escena por toma. Las imágenes cambian cada uno o dos segundos, al ritmo de lo que se dice."""
     escenas, sonidos = [], []
-    reloj = 0.0
-    for i, (parte, dur, dibujo) in enumerate(zip(guion.partes, duraciones, dibujos)):
-        visual = _visual(parte.visual or {"tipo": "ilustracion"})
-        m, sonidos_escena = marcas(visual, dur)
-        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo,
-                        "visual": visual, "marcas": m})
-        if i > 0:
-            sonidos.append((reloj - 0.15, "swoosh"))
-        sonidos += [(reloj + t, nombre) for t, nombre in sonidos_escena]
+    reloj, n = 0.0, 0
+    for parte, dur in zip(guion.partes, duraciones):
+        planos = parte.planos
+        propias = [p for p in palabras if reloj <= p.inicio < reloj + dur]
+        inicios = _inicios(planos, propias, reloj) + [reloj + dur]
+        for k, plano in enumerate(planos):
+            ini, fin = inicios[k], inicios[k + 1]
+            visual = _visual(plano["visual"])
+            m, sonidos_escena = marcas(visual, fin - ini)
+            escenas.append({"inicio": round(ini, 3), "fin": round(fin, 3), "dibujo": dibujos[n],
+                            "visual": visual, "marcas": m})
+            if n > 0:
+                sonidos.append((ini - 0.1, "swoosh"))
+            sonidos += [(ini + t, nombre) for t, nombre in sonidos_escena]
+            n += 1
         reloj += dur
     datos = {
         "duracion": round(reloj, 3),

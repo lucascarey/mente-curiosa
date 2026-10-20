@@ -133,18 +133,3 @@ def mezclar(voz: Path, duracion: float, eventos: list[tuple[float, str]], tonali
                     "-c:a", "aac", "-b:a", "192k", str(destino)], input=estereo.tobytes(), check=True)
     return destino
 
-
-def boca(voz: Path, duracion: float, fps: int) -> list[float]:
-    """Apertura del pico del personaje (0 a 1) en cada cuadro, según el volumen de la voz."""
-    v = _leer(voz)
-    paso = SR // fps
-    cuadros = int(duracion * fps)
-    v = np.pad(v, (0, max(0, cuadros * paso - len(v))))[: cuadros * paso]
-    rms = np.sqrt((v.reshape(cuadros, paso) ** 2).mean(axis=1))
-    tope = np.percentile(rms, 95)
-    if tope < 1e-4:
-        return [0.0] * cuadros
-    nivel = np.clip((rms / tope - 0.12) / 0.88, 0, 1)
-    # Suaviza un poco para que el pico no tiemble
-    nivel = np.convolve(nivel, [0.25, 0.5, 0.25], mode="same")
-    return [round(float(x), 2) for x in nivel]

@@ -6,15 +6,15 @@ Cuatro veces por día, GitHub Actions toma el próximo guion de `guiones/pendien
 
 Estética: fondo negro, técnica y mínima, en negro, blanco y celeste (`#4FC3F7`). Todo lo importante queda dentro de la zona segura de Reels y TikTok (x 60-930, y 220-1470).
 
-1. **Voz:** voz IA gratuita femenina (edge-tts, `es-AR-ElenaNeural`, un poco más rápida y aguda).
+1. **Voz:** voz IA gratuita femenina (edge-tts). Para comparar voces: el workflow "Muestras de voces" deja un mp3 por voz en la rama `voces`.
 2. **Ilustraciones:** una ilustración de línea por escena (blanco y celeste sobre negro), generada con IA en [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) (modelo Flux, plan gratis). Sin credenciales de Cloudflare usa una foto de Pixabay.
-3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora que habla con la voz y los subtítulos, que se van subrayando palabra por palabra. Chromium la captura a 30 cuadros por segundo.
+3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora, que cambia de pose cada uno o dos segundos como en un cómic, y los subtítulos, que se van subrayando palabra por palabra. Chromium la captura a 30 cuadros por segundo.
 4. **Sonido:** efectos suaves (soplido, clic, nota) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz.
 5. **Publicación:** Reels con la API oficial de Instagram y, si está configurado, TikTok con su API oficial.
 
 ## La conductora
 
-`assets/personaje` tiene 12 dibujos con fondo transparente, recortados de `planilla.jpg` con `python herramientas/recortar_personaje.py planilla.jpg assets/personaje`. El orden: 1-5 boca (cerrada, apenas abierta, a medias, bien abierta, redonda), 6-7 parpadeo, 8 mira arriba a la derecha, 9-10 señala (boca cerrada y abierta), 11-12 saluda. La boca sigue el volumen de la voz, señala en las palabras destacadas, mira la tarjeta al cambiar de escena y saluda en el cierre.
+`assets/personaje` tiene 12 dibujos con fondo transparente, recortados de `planilla.jpg` con `python herramientas/recortar_personaje.py planilla.jpg assets/personaje`. El orden: 1-5 boca (cerrada, apenas abierta, a medias, bien abierta, redonda), 6-7 parpadeo, 8 mira arriba a la derecha, 9-10 señala (boca cerrada y abierta), 11-12 saluda. Cambia de pose cada uno o dos segundos: habla, señala en las palabras destacadas, mira la tarjeta al cambiar de escena y saluda en el cierre.
 
 Después mueve el guion a `guiones/publicados` con el resultado. Los guiones nuevos se agregan una vez por semana.
 
@@ -36,7 +36,7 @@ La publicación automática corre solo si existe la variable `PUBLICACION_ACTIVA
 
 ## Probar
 
-En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto. En "guion" se puede poner el número de un guion (por ejemplo `003`) para probar ese en vez del próximo.
+En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto y en la rama `vista-previa` (`video.mp4` y `cuadros.jpg`). En "guion" se puede poner el número de un guion (por ejemplo `003`) para probar ese en vez del próximo.
 
 En local, sin internet: `MC_MOCK=1 python -m mc.main --solo-video` (voz muda e ilustraciones de color). Si Playwright no encuentra Chromium, indicar la ruta con `MC_CHROMIUM`.
 

@@ -6,7 +6,6 @@ así imagen y sonido usan exactamente los mismos tiempos.
 """
 
 import json
-import math
 import os
 import shutil
 import subprocess
@@ -56,22 +55,6 @@ def marcas(visual: dict, duracion: float) -> tuple[dict, list[tuple[float, str]]
     return m, sonidos
 
 
-def entrada_foto(visual: dict, m: dict, duracion: float) -> float | None:
-    """Cuándo entra la foto de la escena: a mitad de una ilustración, o cuando termina la infografía."""
-    tipo = visual.get("tipo", "ilustracion")
-    if tipo in ("ilustracion", "foto", "emoji"):
-        entra = duracion * 0.45
-    elif tipo == "numero":
-        entra = m["cuenta_fin"] + 1.2
-    elif tipo == "comparacion":
-        entra = m["fila_b"] + 2.0
-    elif tipo == "linea":
-        entra = m["linea_fin"] + 1.2
-    else:
-        return None
-    return round(entra, 3) if duracion - entra >= 1.5 else None
-
-
 def agrupar(palabras: list[Palabra]) -> list[dict]:
     grupos, actual = [], []
     for p in palabras:
@@ -92,16 +75,6 @@ def agrupar(palabras: list[Palabra]) -> list[dict]:
     return salida
 
 
-def boca_por_palabras(palabras: list[Palabra], duracion: float) -> list[float]:
-    """Movimiento del pico cuando no hay audio real (modo de prueba): abre y cierra en cada palabra."""
-    valores = []
-    for n in range(int(duracion * config.FPS)):
-        t = n / config.FPS
-        hablando = any(p.inicio <= t < p.fin for p in palabras)
-        valores.append(round(abs(math.sin(t * 14)) * 0.8, 2) if hablando else 0.0)
-    return valores
-
-
 def _visual(visual: dict) -> dict:
     """Copia del visual con los íconos de línea ya resueltos a SVG."""
     v = dict(visual)
@@ -112,18 +85,13 @@ def _visual(visual: dict) -> dict:
 
 
 def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duraciones: list[float],
-                    imagenes: list[tuple[str | None, str | None]]) -> tuple[dict, list[tuple[float, str]]]:
+                    dibujos: list[str | None]) -> tuple[dict, list[tuple[float, str]]]:
     escenas, sonidos = [], []
     reloj = 0.0
-    for i, (parte, dur, (dibujo, foto)) in enumerate(zip(guion.partes, duraciones, imagenes)):
+    for i, (parte, dur, dibujo) in enumerate(zip(guion.partes, duraciones, dibujos)):
         visual = _visual(parte.visual or {"tipo": "ilustracion"})
         m, sonidos_escena = marcas(visual, dur)
-        if foto and (entra := entrada_foto(visual, m, dur)) is not None:
-            m["foto"] = entra
-            sonidos_escena.append((entra, "swoosh"))
-        else:
-            foto = None
-        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo, "foto": foto,
+        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo,
                         "visual": visual, "marcas": m})
         if i > 0:
             sonidos.append((reloj - 0.15, "swoosh"))
@@ -137,7 +105,6 @@ def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duracione
         "usuario": config.USUARIO,
         "escenas": escenas,
         "grupos": agrupar(palabras),
-        "boca": [],
     }
     return datos, sorted(sonidos)
 

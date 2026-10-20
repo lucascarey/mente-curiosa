@@ -155,13 +155,8 @@ const escenas = D.escenas.map((esc) => {
   const caja = crear("div", "visual", el);
   const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "ilustracion";
   const dibujar = constructores[tipo](esc.visual, caja, esc);
-  // Foto que entra a mitad de escena: recuadro chico sobre la ilustración, o grande después de la infografía
-  const conDibujo = ["ilustracion", "foto", "emoji"].includes(tipo);
-  const foto = esc.foto
-    ? crear("div", "recuadro " + (conDibujo ? "chico" : "grande"), el, `<div class="img" style="background-image:url(${esc.foto})"></div>`)
-    : null;
   crear("div", "marco", el, "<i></i><i></i><i></i><i></i>");
-  return { ...esc, el, tipo, dibujar, caja, foto, conDibujo };
+  return { ...esc, el, tipo, dibujar };
 });
 
 // ---------- Subtítulos: la palabra que se dice se subraya ----------
@@ -196,17 +191,36 @@ function subrayar(t, grupo) {
 
 // ---------- Conductora ----------
 
-const animarPersonaje = personaje($("#personaje"));
-const destacadas = D.grupos.flatMap((g) => g.palabras.filter((p) => p.destacada).map((p) => p.inicio));
+const mostrarPersonaje = personaje($("#personaje"));
+const HABLANDO = [3, 2, 4, 5, 3, 4, 2];
+const POSE_MINIMA = 1.2; // segundos que dura cada pose, como mínimo
 
-function estadoPersonaje(t, escena, i) {
-  const tl = t - escena.inicio;
-  return {
-    boca: D.boca[Math.round(t * D.fps)] || 0,
-    mira: i > 0 && tl < 0.6,
-    senala: destacadas.some((d) => t >= d - 0.1 && t < d + 0.9),
-    saluda: escena.tipo === "seguir" && tl > 0.3,
-  };
+// Una pose por "viñeta": empieza con un grupo de subtítulos y dura al menos POSE_MINIMA
+const vinetas = [];
+D.grupos.forEach((g) => {
+  const ultima = vinetas[vinetas.length - 1];
+  if (ultima && g.inicio - ultima.inicio < POSE_MINIMA) {
+    ultima.destacada ||= g.palabras.some((p) => p.destacada);
+    return;
+  }
+  const escena = escenas.findLastIndex((e) => g.inicio >= e.inicio - 0.05);
+  const primera = !ultima || escenas.findLastIndex((e) => ultima.inicio >= e.inicio - 0.05) !== escena;
+  vinetas.push({ inicio: g.inicio, escena, primera, destacada: g.palabras.some((p) => p.destacada) });
+});
+vinetas.forEach((v, k) => {
+  if (escenas[v.escena].tipo === "seguir") v.pose = k % 2 ? 12 : 11;
+  else if (v.destacada) v.pose = k % 2 ? 9 : 10;
+  else if (v.primera && v.escena % 2) v.pose = 8; // mira la tarjeta nueva
+  else v.pose = HABLANDO[k % HABLANDO.length];
+});
+
+function poseActual(t) {
+  const v = vinetas.findLast((x) => t >= x.inicio - 0.05);
+  if (!v) return 1;
+  // Cuando termina de hablar cierra la boca, y en silencios largos parpadea
+  const fin = D.grupos[D.grupos.length - 1].fin;
+  if (t > fin) return (t - fin) % 2.4 < 0.15 ? 7 : 1;
+  return v.pose;
 }
 
 // ---------- Render ----------
@@ -229,13 +243,6 @@ window.render = function (t) {
       e.el.style.transform = `translateY(${mezclar(28, 0, p)}px)`;
     }
     e.dibujar(tl);
-    if (e.foto) {
-      const p = suave(prog(tl, e.marcas.foto, 0.5));
-      e.foto.style.opacity = p;
-      e.foto.style.transform = `translateY(${mezclar(36, 0, p)}px) scale(${mezclar(0.96, 1, p)})`;
-      e.foto.firstChild.style.transform = `scale(${1.04 + Math.max(0, tl - e.marcas.foto) * 0.015})`;
-      if (!e.conDibujo) e.caja.style.opacity = 1 - p;
-    }
   });
 
   // Subtítulo: el grupo aparece entero y se va subrayando palabra por palabra
@@ -250,8 +257,7 @@ window.render = function (t) {
     subrayado.style.opacity = 0;
   }
 
-  const i = Math.max(0, actual);
-  animarPersonaje(t, estadoPersonaje(t, escenas[i], i));
+  mostrarPersonaje(t, poseActual(t));
 
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;

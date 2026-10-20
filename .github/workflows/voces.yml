@@ -2,6 +2,10 @@ name: Muestras de voces
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - herramientas/muestras_voces.py
+      - .github/workflows/voces.yml
 
 permissions:
   contents: write

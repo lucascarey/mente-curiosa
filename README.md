@@ -6,7 +6,7 @@ Cuatro veces por día, GitHub Actions toma el próximo guion de `guiones/pendien
 
 Estética: fondo negro, técnica y mínima, en negro, blanco y celeste (`#4FC3F7`). Todo lo importante queda dentro de la zona segura de Reels y TikTok (x 60-930, y 220-1470).
 
-1. **Voz:** voz IA gratuita femenina (edge-tts). Para comparar voces: el workflow "Muestras de voces" deja un mp3 por voz en la rama `voces`.
+1. **Voz:** voz IA gratuita femenina (edge-tts, `en-US-EmmaMultilingualNeural`, que habla español). Para comparar voces: el workflow "Muestras de voces" deja un mp3 por voz en la rama `voces`.
 2. **Ilustraciones:** una ilustración de línea por escena (blanco y celeste sobre negro), generada con IA en [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) (modelo Flux, plan gratis). Sin credenciales de Cloudflare usa una foto de Pixabay.
 3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora, que cambia de pose cada uno o dos segundos como en un cómic, y los subtítulos, que se van subrayando palabra por palabra. Chromium la captura a 30 cuadros por segundo.
 4. **Sonido:** efectos suaves (soplido, clic, nota) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz.

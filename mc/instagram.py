@@ -5,6 +5,9 @@ Necesita IG_ACCESS_TOKEN de una cuenta profesional (creador o empresa).
 """
 
 import os
+import shutil
+import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -40,7 +43,7 @@ def publicar_reel(video: Path, caption: str) -> str:
     ig_id = usuario()["user_id"]
 
     # 1. Crear el contenedor del Reel. Con el inicio de sesión de Instagram la API solo acepta
-    # el video desde una dirección pública, así que primero va a un alojamiento temporal.
+    # el video desde una dirección pública, así que primero va a una rama del repo.
     contenedor_id = _revisar(requests.post(
         f"{GRAPH}/{ig_id}/media",
         data={"media_type": "REELS", "video_url": _alojar(video), "caption": caption,
@@ -73,22 +76,27 @@ def publicar_reel(video: Path, caption: str) -> str:
 
 
 def _alojar(video: Path) -> str:
-    """Sube el video a Litterbox (gratis, sin cuenta), que lo borra a las 24 h."""
-    for intento in range(3):
-        with video.open("rb") as f:
-            r = requests.post(
-                "https://litterbox.catbox.moe/resources/internals/api.php",
-                data={"reqtype": "fileupload", "time": "24h"},
-                files={"fileToUpload": (video.name, f, "video/mp4")},
-                headers={"User-Agent": "curl/8.5.0"},  # rechaza el agente por defecto de requests (412)
-                timeout=600,
-            )
-        url = r.text.strip()
-        if r.ok and url.startswith("https://"):
+    """Deja el video solo en la rama `video-publico` del repo (público) y devuelve su dirección.
+    Cada publicación pisa la anterior, así que la rama nunca crece."""
+    repo, token = os.environ.get("GITHUB_REPOSITORY"), os.environ.get("GH_TOKEN")
+    if not repo or not token:
+        raise ErrorInstagram("Faltan GITHUB_REPOSITORY o GH_TOKEN para alojar el video")
+    with tempfile.TemporaryDirectory() as tmp:
+        shutil.copy(video, Path(tmp) / video.name)
+        git = ["git", "-C", tmp, "-c", "user.name=mente-curiosa-bot",
+               "-c", "user.email=github-actions[bot]@users.noreply.github.com"]
+        for paso in (["init", "-q", "-b", "video-publico"], ["add", video.name],
+                     ["commit", "-qm", f"Video {video.name}"],
+                     ["push", "-qf", f"https://x-access-token:{token}@github.com/{repo}.git", "video-publico"]):
+            subprocess.run(git + paso, check=True)
+    url = f"https://raw.githubusercontent.com/{repo}/video-publico/{video.name}"
+    for _ in range(12):  # el CDN de GitHub tarda unos segundos en servirlo
+        r = requests.head(url, timeout=30)
+        if r.ok:
             print(f"Video alojado en {url}")
             return url
-        time.sleep(10 * (intento + 1))
-    raise ErrorInstagram(f"No pude alojar el video: {r.status_code} {url[:200]}")
+        time.sleep(5)
+    raise ErrorInstagram(f"El video no quedó público ({r.status_code}): ¿el repo es público?")
 
 
 def renovar_token() -> str:

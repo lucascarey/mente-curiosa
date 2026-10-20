@@ -155,8 +155,13 @@ const escenas = D.escenas.map((esc) => {
   const caja = crear("div", "visual", el);
   const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "ilustracion";
   const dibujar = constructores[tipo](esc.visual, caja, esc);
+  // Foto que entra a mitad de escena: recuadro chico sobre la ilustración, o grande después de la infografía
+  const conDibujo = ["ilustracion", "foto", "emoji"].includes(tipo);
+  const foto = esc.foto
+    ? crear("div", "recuadro " + (conDibujo ? "chico" : "grande"), el, `<div class="img" style="background-image:url(${esc.foto})"></div>`)
+    : null;
   crear("div", "marco", el, "<i></i><i></i><i></i><i></i>");
-  return { ...esc, el, tipo, dibujar };
+  return { ...esc, el, tipo, dibujar, caja, foto, conDibujo };
 });
 
 // ---------- Subtítulos: la palabra que se dice se subraya ----------
@@ -224,6 +229,13 @@ window.render = function (t) {
       e.el.style.transform = `translateY(${mezclar(28, 0, p)}px)`;
     }
     e.dibujar(tl);
+    if (e.foto) {
+      const p = suave(prog(tl, e.marcas.foto, 0.5));
+      e.foto.style.opacity = p;
+      e.foto.style.transform = `translateY(${mezclar(36, 0, p)}px) scale(${mezclar(0.96, 1, p)})`;
+      e.foto.firstChild.style.transform = `scale(${1.04 + Math.max(0, tl - e.marcas.foto) * 0.015})`;
+      if (!e.conDibujo) e.caja.style.opacity = 1 - p;
+    }
   });
 
   // Subtítulo: el grupo aparece entero y se va subrayando palabra por palabra

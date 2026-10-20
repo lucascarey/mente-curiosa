@@ -56,6 +56,22 @@ def marcas(visual: dict, duracion: float) -> tuple[dict, list[tuple[float, str]]
     return m, sonidos
 
 
+def entrada_foto(visual: dict, m: dict, duracion: float) -> float | None:
+    """Cuándo entra la foto de la escena: a mitad de una ilustración, o cuando termina la infografía."""
+    tipo = visual.get("tipo", "ilustracion")
+    if tipo in ("ilustracion", "foto", "emoji"):
+        entra = duracion * 0.45
+    elif tipo == "numero":
+        entra = m["cuenta_fin"] + 1.2
+    elif tipo == "comparacion":
+        entra = m["fila_b"] + 2.0
+    elif tipo == "linea":
+        entra = m["linea_fin"] + 1.2
+    else:
+        return None
+    return round(entra, 3) if duracion - entra >= 1.5 else None
+
+
 def agrupar(palabras: list[Palabra]) -> list[dict]:
     grupos, actual = [], []
     for p in palabras:
@@ -96,13 +112,18 @@ def _visual(visual: dict) -> dict:
 
 
 def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duraciones: list[float],
-                    dibujos: list[str | None]) -> tuple[dict, list[tuple[float, str]]]:
+                    imagenes: list[tuple[str | None, str | None]]) -> tuple[dict, list[tuple[float, str]]]:
     escenas, sonidos = [], []
     reloj = 0.0
-    for i, (parte, dur, dibujo) in enumerate(zip(guion.partes, duraciones, dibujos)):
+    for i, (parte, dur, (dibujo, foto)) in enumerate(zip(guion.partes, duraciones, imagenes)):
         visual = _visual(parte.visual or {"tipo": "ilustracion"})
         m, sonidos_escena = marcas(visual, dur)
-        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo,
+        if foto and (entra := entrada_foto(visual, m, dur)) is not None:
+            m["foto"] = entra
+            sonidos_escena.append((entra, "swoosh"))
+        else:
+            foto = None
+        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo, "foto": foto,
                         "visual": visual, "marcas": m})
         if i > 0:
             sonidos.append((reloj - 0.15, "swoosh"))

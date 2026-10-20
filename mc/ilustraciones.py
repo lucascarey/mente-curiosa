@@ -81,33 +81,53 @@ def a_paleta(ruta: Path) -> None:
     Image.fromarray((salida * 255).astype(np.uint8)).save(ruta, quality=92)
 
 
-def conseguir(guion, carpeta: Path) -> list[str | None]:
-    """Devuelve, por escena, el nombre del archivo de la ilustración dentro de `carpeta` (o None)."""
+def _foto(consulta: str, destino: Path, usados: set[str], i: int) -> bool:
+    """Baja una foto de Pixabay (o Pexels). Devuelve False si no hay clave o no encontró nada."""
+    if config.MOCK:
+        _mock(i + 3, destino)
+        return True
+    if not (os.environ.get("PIXABAY_API_KEY") or os.environ.get("PEXELS_API_KEY")):
+        return False
+    url = imagenes.buscar(consulta, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
+    if not url:
+        return False
+    usados.add(url)
+    imagenes.descargar(url, destino)
+    return True
+
+
+def conseguir(guion, carpeta: Path) -> list[tuple[str | None, str | None]]:
+    """Devuelve, por escena, (ilustración, foto): nombres de archivo dentro de `carpeta`, o None.
+
+    Las escenas con ilustración la llevan siempre; todas menos el cierre suman además una foto
+    que entra a mitad de escena, así hay más cambios de imagen.
+    """
     carpeta.mkdir(parents=True, exist_ok=True)
     credenciales = _credenciales()
     if not credenciales and not config.MOCK:
         print("::warning::Faltan CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN: uso fotos de Pixabay")
     usados: set[str] = set()
-    resultado: list[str | None] = []
+    resultado = []
     for i, parte in enumerate(guion.partes):
-        if (parte.visual or {}).get("tipo", "foto") not in CON_ILUSTRACION:
-            resultado.append(None)
-            continue
-        destino = carpeta / f"ilustracion{i}.jpg"
-        if config.MOCK:
-            _mock(i, destino)
-        elif credenciales:
-            texto = prompt(parte.dibujo or parte.busqueda, guion.protagonista)
-            print(f"Ilustración {i + 1}: {parte.dibujo or parte.busqueda}")
-            _generar(texto, destino, *credenciales)
-        else:
-            url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
-            if not url:
-                raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")
-            usados.add(url)
-            imagenes.descargar(url, destino)
-        a_paleta(destino)
-        resultado.append(destino.name)
+        tipo = (parte.visual or {}).get("tipo", "ilustracion")
+        dibujo = foto = None
+        if tipo in CON_ILUSTRACION:
+            destino = carpeta / f"ilustracion{i}.jpg"
+            if config.MOCK:
+                _mock(i, destino)
+            elif credenciales:
+                print(f"Ilustración {i + 1}: {parte.dibujo or parte.busqueda}")
+                _generar(prompt(parte.dibujo or parte.busqueda, guion.protagonista), destino, *credenciales)
+            elif not _foto(parte.busqueda, destino, usados, i):
+                raise RuntimeError(f"No pude conseguir imagen para '{parte.busqueda}'")
+            a_paleta(destino)
+            dibujo = destino.name
+        if tipo != "seguir" and (credenciales or config.MOCK):
+            destino = carpeta / f"foto{i}.jpg"
+            if _foto(parte.busqueda, destino, usados, i):
+                a_paleta(destino)
+                foto = destino.name
+        resultado.append((dibujo, foto))
     return resultado
 
 

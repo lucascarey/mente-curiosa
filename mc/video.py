@@ -13,8 +13,8 @@ def armar(guion: Guion):
     tema = temas.tema(guion.tema)
 
     audio_voz, palabras, duraciones = voz.generar(guion.partes, trabajo / "voz")
-    dibujos = ilustraciones.conseguir(guion, trabajo / "escena")
-    datos, eventos = animacion.linea_de_tiempo(guion, tema, palabras, duraciones, dibujos)
+    imagenes = ilustraciones.conseguir(guion, trabajo / "escena")
+    datos, eventos = animacion.linea_de_tiempo(guion, tema, palabras, duraciones, imagenes)
     boca = sonido.boca(audio_voz, datos["duracion"], config.FPS)
     datos["boca"] = boca if any(boca) else animacion.boca_por_palabras(palabras, datos["duracion"])
 

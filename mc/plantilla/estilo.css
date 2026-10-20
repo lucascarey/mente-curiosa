@@ -25,21 +25,30 @@ html, body {
 .escena { position: absolute; left: 60px; top: 300px; width: 870px; height: 700px; display: none; }
 .visual { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 
-.marco { position: absolute; inset: 0; border: 1.5px solid var(--borde); border-radius: 18px; pointer-events: none; }
-.marco i { position: absolute; width: 30px; height: 30px; border: 0 solid var(--color); }
-.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 18px; }
-.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 18px; }
-.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 18px; }
-.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 18px; }
+.marco { position: absolute; inset: 0; border: 1.5px solid var(--borde); border-radius: 32px; pointer-events: none; }
+.marco i { position: absolute; width: 44px; height: 44px; border: 0 solid var(--color); }
+.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 32px; }
+.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 32px; }
+.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 32px; }
+.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 32px; }
 
 /* Ilustración */
-.ilus { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: #000; }
+.ilus { position: absolute; inset: 0; border-radius: 32px; overflow: hidden; background: #000; }
 .ilus .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
 .etiqueta {
   position: absolute; left: 28px; bottom: 28px; max-width: 800px;
   font-family: "Mono"; font-size: 30px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
   padding: 12px 20px; background: rgba(0, 0, 0, .8); border-left: 3px solid var(--color);
 }
+
+/* Foto en recuadro redondeado */
+.recuadro {
+  position: absolute; border-radius: 32px; overflow: hidden; background: #000; opacity: 0;
+  border: 2px solid rgba(255, 255, 255, .22); box-shadow: 0 24px 60px rgba(0, 0, 0, .7);
+}
+.recuadro .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.recuadro.chico { right: 28px; bottom: 28px; width: 380px; height: 380px; }
+.recuadro.grande { inset: 0; border-color: transparent; }
 
 /* Número */
 .numero-caja { position: relative; width: 600px; height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; }

@@ -7,7 +7,7 @@ Uso (en GitHub Actions, workflow "Conectar TikTok"): python herramientas/conecta
 import os
 import sys
 from pathlib import Path
-from urllib.parse import parse_qs, unquote, urlparse
+from urllib.parse import parse_qs, urlparse
 
 import requests
 
@@ -17,13 +17,20 @@ REDIRECCION = "https://lucascarey.github.io/mente-curiosa/conectar.html"
 def main() -> int:
     entrada = sys.argv[1].strip()
     # Acepta la dirección completa a la que volvió el navegador o solo el código
-    codigo = parse_qs(urlparse(entrada).query).get("code", [entrada])[0]
+    codigo = parse_qs(urlparse(entrada).query).get("code", [entrada])[0]  # parse_qs ya lo decodifica
+    clave, secreto = os.environ.get("TIKTOK_CLIENT_KEY", ""), os.environ.get("TIKTOK_CLIENT_SECRET", "")
+    # Diagnóstico sin mostrar el secreto: el client key no es secreto
+    print(f"Client key: {clave[:4]}... ({len(clave)} caracteres); client secret: {len(secreto)} caracteres; "
+          f"código: {len(codigo)} caracteres")
+    if not clave or not secreto:
+        print("Faltan los secretos TIKTOK_CLIENT_KEY o TIKTOK_CLIENT_SECRET en GitHub")
+        return 1
     r = requests.post(
         "https://open.tiktokapis.com/v2/oauth/token/",
         headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={"client_key": os.environ["TIKTOK_CLIENT_KEY"],
-              "client_secret": os.environ["TIKTOK_CLIENT_SECRET"],
-              "code": unquote(codigo),
+        data={"client_key": clave,
+              "client_secret": secreto,
+              "code": codigo,
               "grant_type": "authorization_code",
               "redirect_uri": REDIRECCION},
         timeout=30,

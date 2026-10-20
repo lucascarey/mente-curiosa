@@ -9,6 +9,7 @@ import base64
 import os
 import subprocess
 import time
+import zlib
 from pathlib import Path
 
 import requests
@@ -30,16 +31,19 @@ def _credenciales() -> tuple[str, str] | None:
     return (cuenta, token) if cuenta and token else None
 
 
-def prompt(tema: str, paleta: str) -> str:
-    return f"{tema.rstrip('. ')}. " + ESTILO.format(paleta=paleta)
+def prompt(tema: str, paleta: str, protagonista: str = "") -> str:
+    texto = f"{tema.rstrip('. ')}. "
+    if protagonista:
+        texto += f"The main character looks exactly like this: {protagonista.rstrip('. ')}. "
+    return texto + ESTILO.format(paleta=paleta)
 
 
-def _generar(texto: str, destino: Path, cuenta: str, token: str) -> None:
+def _generar(texto: str, destino: Path, cuenta: str, token: str, semilla: int) -> None:
     for intento in range(3):
         r = requests.post(
             f"https://api.cloudflare.com/client/v4/accounts/{cuenta}/ai/run/{MODELO}",
             headers={"Authorization": f"Bearer {token}"},
-            json={"prompt": texto, "steps": 8},
+            json={"prompt": texto, "steps": 8, "seed": semilla},
             timeout=120,
         )
         if r.ok and r.json().get("result", {}).get("image"):
@@ -60,7 +64,7 @@ def _mock(i: int, destino: Path) -> None:
     )
 
 
-def conseguir(partes, tema: dict, carpeta: Path) -> list[str | None]:
+def conseguir(guion, tema: dict, carpeta: Path) -> list[str | None]:
     """Devuelve, por escena, el nombre del archivo de la ilustración dentro de `carpeta` (o None)."""
     carpeta.mkdir(parents=True, exist_ok=True)
     credenciales = _credenciales()
@@ -68,7 +72,9 @@ def conseguir(partes, tema: dict, carpeta: Path) -> list[str | None]:
         print("::warning::Faltan CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN: uso fotos de Pixabay")
     usados: set[str] = set()
     resultado: list[str | None] = []
-    for i, parte in enumerate(partes):
+    # La misma semilla en todo el video ayuda a que los dibujos se parezcan entre sí
+    semilla = zlib.crc32(guion.id.encode())
+    for i, parte in enumerate(guion.partes):
         if (parte.visual or {}).get("tipo", "foto") not in CON_ILUSTRACION:
             resultado.append(None)
             continue
@@ -76,9 +82,9 @@ def conseguir(partes, tema: dict, carpeta: Path) -> list[str | None]:
         if config.MOCK:
             _mock(i, destino)
         elif credenciales:
-            texto = prompt(parte.dibujo or parte.busqueda, tema["paleta"])
+            texto = prompt(parte.dibujo or parte.busqueda, tema["paleta"], guion.protagonista)
             print(f"Ilustración {i + 1}: {parte.dibujo or parte.busqueda}")
-            _generar(texto, destino, *credenciales)
+            _generar(texto, destino, *credenciales, semilla)
         else:
             url = imagenes.buscar(parte.busqueda, usados) or imagenes.buscar(imagenes.RESPALDO, usados)
             if not url:

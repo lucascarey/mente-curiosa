@@ -34,6 +34,7 @@ class Guion:
     hashtags: list[str]
     fuente: str
     ruta: Path
+    protagonista: str = ""  # cómo se ve el protagonista de las ilustraciones, en inglés (igual en todas)
 
     @property
     def caption(self) -> str:
@@ -57,6 +58,7 @@ def cargar(ruta: Path) -> Guion:
         hashtags=datos["hashtags"],
         fuente=datos["fuente"],
         ruta=ruta,
+        protagonista=datos.get("protagonista", ""),
     )
 
 

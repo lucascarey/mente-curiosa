@@ -1,6 +1,7 @@
 {
   "id": "001-pulpos-tres-corazones",
   "tema": "Animales",
+  "protagonista": "a cute round purple octopus with big friendly eyes",
   "partes": [
     {
       "texto": "Los pulpos tienen *tres corazones*. Y eso no es lo más raro.",
@@ -31,7 +32,7 @@
     {
       "texto": "Y su sangre no es roja: es *azul*, porque usa cobre en lugar de hierro para llevar el oxígeno.",
       "busqueda": "deep blue ocean",
-      "dibujo": "A cute octopus with glowing blue blood vessels, deep blue ocean",
+      "dibujo": "A cute octopus whose body is see-through, showing bright blue blood flowing through its veins, a small copper atom symbol nearby",
       "visual": {
         "tipo": "ilustracion",
         "texto": "sangre azul"

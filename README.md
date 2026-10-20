@@ -42,6 +42,7 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 {
   "id": "001-pulpos-tres-corazones",
   "tema": "Animales",
+  "protagonista": "a cute round purple octopus with big friendly eyes",
   "partes": [
     {"texto": "Los pulpos tienen *tres corazones*. Y eso no es lo más raro.", "busqueda": "octopus",
      "visual": {"tipo": "numero", "valor": 3, "etiqueta": "corazones"}},
@@ -57,6 +58,7 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 
 - `partes`: entre 3 y 8. Gancho, dato, giro y cierre.
 - Las palabras entre `*asteriscos*` salen con el color del tema y el búho levanta el ala.
+- `protagonista` (opcional): en inglés, cómo se ve el personaje principal de las ilustraciones, para que sea el mismo en todas las escenas.
 - `dibujo`: en inglés, qué tiene que mostrar la ilustración (un sujeto claro, sin texto). El estilo y la paleta del tema se agregan solos.
 - `busqueda`: en inglés, la foto de respaldo en Pixabay; si falta `dibujo`, también se usa para la ilustración.
 - `visual` (opcional, por defecto `ilustracion`): qué muestra la tarjeta de la escena.

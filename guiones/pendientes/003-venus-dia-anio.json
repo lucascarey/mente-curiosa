@@ -16,7 +16,7 @@
         },
         {
           "desde": "un",
-          "dibujo": "A big hourglass with a tiny sun inside the top bulb and a stack of calendar pages piling up at the bottom"
+          "dibujo": "A giant clock towering high over a tiny wall calendar beside it"
         }
       ]
     },
@@ -66,8 +66,7 @@
       },
       "tomas": [
         {
-          "foto": "Venus transit Sun",
-          "dibujo": "Simple diagram: a bright Sun in the center and one small round planet without rings on a circular orbit line around it"
+          "dibujo": "A bright Sun in the center and one small round cloudy planet traveling along a circular orbit line around it, a curved arrow following the orbit"
         },
         {
           "desde": "solo",
@@ -99,7 +98,7 @@
       },
       "tomas": [
         {
-          "dibujo": "The planet Venus as a plain round sphere without rings, with one curved arrow beside it pointing clockwise, spinning backwards"
+          "dibujo": "A plain round cloudy planet floating in space with one big curved arrow beside it pointing clockwise"
         },
         {
           "desde": "casi",
@@ -107,8 +106,7 @@
         },
         {
           "desde": "allá",
-          "foto": "Venus Venera surface",
-          "dibujo": "A sunrise on the rocky surface of Venus, the Sun rising on the horizon",
+          "dibujo": "The Sun rising over the rocky horizon of a cloudy planet, a compass on the ground with its needle pointing straight at the rising Sun",
           "texto": "sale por el oeste"
         }
       ]

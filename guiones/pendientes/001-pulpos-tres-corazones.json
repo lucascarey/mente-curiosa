@@ -35,11 +35,7 @@
       },
       "tomas": [
         {
-          "dibujo": "A cute purple octopus with three glowing hearts visible inside its body, simple anatomy diagram"
-        },
-        {
-          "desde": "branquias",
-          "dibujo": "A cute octopus with two small glowing hearts beside its gills, red arrows flowing into the gills"
+          "dibujo": "A cute octopus with two small glowing hearts beside its gills, arrows of blood flowing from the hearts into the gills"
         },
         {
           "desde": "tercero",
@@ -83,7 +79,7 @@
       },
       "tomas": [
         {
-          "dibujo": "A single big glowing drop of liquid floating in the deep ocean"
+          "dibujo": "A big drop of blood floating in the deep ocean in front of a cute surprised octopus"
         },
         {
           "desde": "azul",
@@ -92,8 +88,7 @@
         },
         {
           "desde": "cobre",
-          "foto": "copper wire coil",
-          "dibujo": "Shiny copper coins and a coil of copper wire next to a rusty iron nail",
+          "dibujo": "A cute octopus hugging a shiny copper coin covered in tiny oxygen bubbles, a rusty iron nail lying on the sand beside it",
           "texto": "cobre, no hierro"
         }
       ]

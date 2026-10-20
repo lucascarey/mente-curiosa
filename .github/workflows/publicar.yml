@@ -71,6 +71,21 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      - name: Guardar cuadros de vista previa
+        if: ${{ inputs.solo_video == true }}
+        run: |
+          f=$(ls salida/*.mp4 | head -1)
+          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+          mkdir -p /tmp/vista
+          ffmpeg -v error -i "$f" -vf "fps=8/$dur,scale=360:-1,tile=8x1" -frames:v 1 /tmp/vista/cuadros.jpg
+          cd /tmp/vista
+          git init -q -b vista-previa
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cuadros.jpg
+          git commit -qm "Vista previa de $(basename "$f")"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" vista-previa
+
       - name: Actualizar tokens renovados
         if: always()
         env:

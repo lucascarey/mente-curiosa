@@ -1,0 +1,35 @@
+{
+  "id": "008-saturno-flota",
+  "tema": "Espacio",
+  "partes": [
+    {
+      "texto": "Saturno es gigante, pero *flotaría en el agua*.",
+      "busqueda": "saturn planet"
+    },
+    {
+      "texto": "Es casi todo hidrógeno y helio, así que su densidad es menor que la del agua.",
+      "busqueda": "gas planet space"
+    },
+    {
+      "texto": "Si existiera una pileta lo bastante grande para meterlo, *quedaría flotando*.",
+      "busqueda": "swimming pool water"
+    },
+    {
+      "texto": "Y eso que entrarían unas setecientas Tierras dentro de él.",
+      "busqueda": "earth from space"
+    },
+    {
+      "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
+      "busqueda": "galaxy"
+    }
+  ],
+  "descripcion": "Saturno flotaría en el agua 🪐",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#espacio",
+    "#planetas"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Saturno_(planeta)"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "003-venus-dia-anio",
+  "tema": "Espacio",
+  "partes": [
+    {
+      "texto": "En Venus, *un día dura más que un año*.",
+      "busqueda": "planet space"
+    },
+    {
+      "texto": "Venus gira sobre sí mismo tan lento que una vuelta completa le lleva unos 243 días terrestres.",
+      "busqueda": "venus planet"
+    },
+    {
+      "texto": "Pero da la vuelta al Sol en solo unos 225 días.",
+      "busqueda": "sun space"
+    },
+    {
+      "texto": "Y encima gira *al revés* que casi todos los planetas: allá el Sol sale por el oeste.",
+      "busqueda": "sunrise clouds"
+    },
+    {
+      "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
+      "busqueda": "stars night sky"
+    }
+  ],
+  "descripcion": "En Venus un día dura más que un año 🪐",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#espacio",
+    "#astronomia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Venus_(planeta)"
+}

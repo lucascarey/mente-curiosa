@@ -1,0 +1,35 @@
+{
+  "id": "009-banana-baya",
+  "tema": "Comida",
+  "partes": [
+    {
+      "texto": "Para la botánica, la *banana es una baya*. Y la frutilla no.",
+      "busqueda": "banana"
+    },
+    {
+      "texto": "Una baya es un fruto carnoso que nace de una sola flor y tiene las semillas adentro.",
+      "busqueda": "fruit market"
+    },
+    {
+      "texto": "La banana cumple con eso. La frutilla tiene las semillas *por fuera*.",
+      "busqueda": "strawberries"
+    },
+    {
+      "texto": "Y en realidad esos puntitos de la frutilla son sus verdaderos frutos.",
+      "busqueda": "strawberry close up"
+    },
+    {
+      "texto": "El tomate y la sandía también son bayas. ¿Lo sabías? Seguime para más.",
+      "busqueda": "watermelon"
+    }
+  ],
+  "descripcion": "La banana es una baya y la frutilla no 🍌",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#comida",
+    "#frutas"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Baya"
+}

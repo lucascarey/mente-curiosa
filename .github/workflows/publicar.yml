@@ -1,0 +1,94 @@
+name: Publicar video
+
+on:
+  schedule:
+    # 9, 13, 17 y 21 h de Argentina (UTC-3). GitHub puede atrasarse unos minutos.
+    - cron: "0 12 * * *"
+    - cron: "0 16 * * *"
+    - cron: "0 20 * * *"
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      solo_video:
+        description: "Solo armar el video, sin publicar"
+        type: boolean
+        default: true
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    # El horario automático solo corre con la variable PUBLICACION_ACTIVA=true
+    if: github.event_name == 'workflow_dispatch' || vars.PUBLICACION_ACTIVA == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          pip install -r requirements.txt
+
+      - name: Revisar guiones
+        run: python -m mc.main --validar
+
+      - name: Armar y publicar
+        env:
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
+          TIKTOK_PRIVACIDAD: ${{ vars.TIKTOK_PRIVACIDAD || 'SELF_ONLY' }}
+          MC_TOKENS_DIR: ${{ runner.temp }}/tokens
+        run: |
+          if [ "${{ inputs.solo_video }}" = "true" ]; then
+            python -m mc.main --solo-video
+          else
+            python -m mc.main
+          fi
+
+      - name: Guardar el video como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video
+          path: salida/*.mp4
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Actualizar tokens renovados
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          dir="${{ runner.temp }}/tokens"
+          [ -d "$dir" ] || exit 0
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::Hay tokens renovados pero falta el secreto GH_PAT para guardarlos"
+            exit 0
+          fi
+          for f in "$dir"/*; do gh secret set "$(basename "$f")" --repo "$GITHUB_REPOSITORY" < "$f"; done
+
+      - name: Marcar guion como publicado
+        if: ${{ inputs.solo_video != true }}
+        run: |
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A guiones
+          git diff --cached --quiet && exit 0
+          git commit -m "Publicado $(ls -t guiones/publicados | head -1)"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

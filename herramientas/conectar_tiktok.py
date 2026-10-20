@@ -11,7 +11,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 import requests
 
-REDIRECCION = "https://github.com/lucascarey/mente-curiosa"
+REDIRECCION = "https://lucascarey.github.io/mente-curiosa/conectar.html"
 
 
 def main() -> int:

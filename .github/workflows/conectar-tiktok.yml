@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       direccion:
-        description: "Dirección completa a la que volviste después de autorizar (empieza con https://github.com/lucascarey/mente-curiosa?code=)"
+        description: "Dirección completa a la que volviste después de autorizar (empieza con https://lucascarey.github.io/mente-curiosa/conectar.html?code=)"
         type: string
         required: true
 

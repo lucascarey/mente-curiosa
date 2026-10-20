@@ -62,6 +62,8 @@ jobs:
           TIKTOK_PRIVACIDAD: ${{ vars.TIKTOK_PRIVACIDAD || 'SELF_ONLY' }}
           MC_TOKENS_DIR: ${{ runner.temp }}/tokens
           MC_GUION: ${{ inputs.solo_video == true && inputs.guion || '' }}
+          # Primer día de publicación automática (hora de Argentina)
+          MC_DESDE: "2026-10-21"
         run: |
           if [ "${{ inputs.solo_video }}" = "true" ]; then
             python -m mc.main --solo-video

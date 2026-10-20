@@ -12,7 +12,7 @@ import json
 import os
 import shutil
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from . import config, guion, instagram, tiktok, video
@@ -40,6 +40,11 @@ def validar() -> int:
 
 
 def publicar(solo_video: bool) -> int:
+    desde = os.environ.get("MC_DESDE", "")
+    hoy = datetime.now(timezone(timedelta(hours=-3))).date().isoformat()  # hora de Argentina
+    if not solo_video and desde and hoy < desde:
+        print(f"La publicación automática empieza el {desde}; hoy es {hoy}")
+        return 0
     if elegido := os.environ.get("MC_GUION"):
         # Para probar un guion puntual sin esperar su turno
         actual = guion.cargar(next(config.PENDIENTES.glob(f"{elegido}*.json")))

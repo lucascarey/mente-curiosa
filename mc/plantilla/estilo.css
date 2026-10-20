@@ -103,7 +103,7 @@ html, body {
 
 /* Conductora, abajo a la derecha */
 #personaje {
-  position: absolute; left: 445px; top: 1120px; width: 490px; height: 505px; transform-origin: 50% 100%;
+  position: absolute; left: 380px; top: 1085px; width: 590px; height: 608px; transform-origin: 50% 100%;
   -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
 }
 #personaje img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }

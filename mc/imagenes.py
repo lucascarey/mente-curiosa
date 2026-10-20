@@ -32,7 +32,8 @@ def _buscar_pixabay(consulta: str, usados: set[str], clave: str, orientaciones=(
         r.raise_for_status()
         for foto in r.json().get("hits", []):
             url = foto.get("largeImageURL")
-            if relevante and not claves(consulta) & claves(foto.get("tags", "")):
+            buscadas = claves(consulta)
+            if relevante and len(buscadas & claves(foto.get("tags", ""))) < _necesarias(buscadas):
                 continue
             if url and url not in usados and min(foto.get("imageWidth", 0), foto.get("imageHeight", 0)) >= 900:
                 return url
@@ -69,6 +70,11 @@ def _sin_html(texto: str) -> str:
 COMUNES = set("""a an and the of on in at to with from for by into over under near its his her their this that
 these those some many few one two three small large big tiny old new view photo image picture close closeup
 up side front back top showing shows shown made very file jpg png""".split())
+
+
+# Imágenes que casi nunca muestran lo que se dice, salvo que la búsqueda las pida
+RARAS = {"map", "mapa", "locator", "distribution", "range", "flag", "coat", "arms", "logo", "stamp", "coin",
+         "mosaic", "diagram", "chart", "graph", "icon", "signature", "plan", "svg", "seal", "emblem", "banknote"}
 
 
 def claves(texto: str) -> set[str]:
@@ -144,12 +150,33 @@ def del_articulo(fuente: str) -> list[dict]:
         return []
 
 
-def _mejor(fotos: list[dict], consulta: str, usados: set[str], minimo: int) -> dict | None:
-    """La foto que más palabras comparte con la consulta (al menos `minimo`)."""
+def _necesarias(buscadas: set[str]) -> int:
+    """Cuántas palabras de la búsqueda tiene que compartir una foto: todas si son pocas, casi todas si no."""
+    return len(buscadas) if len(buscadas) <= 3 else len(buscadas) - 1
+
+
+def _sirve(foto: dict, buscadas: set[str]) -> bool:
+    return not (foto["claves"] & RARAS - buscadas)
+
+
+def _mejor(fotos: list[dict], consulta: str, usados: set[str], minimo: int | None = None) -> dict | None:
+    """La foto que más palabras comparte con la consulta (por defecto, casi todas), sin mapas ni escudos."""
     buscadas = claves(consulta)
+    minimo = _necesarias(buscadas) if minimo is None else minimo
     puntaje = lambda f: len(buscadas & f["claves"])
-    libres = [f for f in fotos if f["url"] not in usados and puntaje(f) >= minimo]
+    libres = [f for f in fotos if f["url"] not in usados and puntaje(f) >= minimo and _sirve(f, buscadas)]
     return max(libres, key=puntaje) if libres else None
+
+
+def archivo_exacto(nombre: str) -> tuple[str, str] | None:
+    """(url, crédito) de un archivo puntual de Wikimedia Commons, por ejemplo "File:Beit al Ajaib, Zanzibar.jpg"."""
+    try:
+        for pagina in _info("https://commons.wikimedia.org/w/api.php", [nombre]):
+            if c := _candidata(pagina, set()):
+                return c["url"], c["credito"]
+    except requests.RequestException as e:
+        print(f"::warning::No pude bajar {nombre}: {e}")
+    return None
 
 
 def _buscar_wikimedia(consulta: str, usados: set[str]) -> tuple[str, str] | None:
@@ -165,17 +192,22 @@ def _buscar_wikimedia(consulta: str, usados: set[str]) -> tuple[str, str] | None
     r.raise_for_status()
     paginas = sorted(r.json().get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
     candidatas = [c for p in paginas if (c := _candidata(p, usados))]
-    # Respeta el orden de relevancia del buscador, pero pide que comparta al menos una palabra
+    # Respeta el orden de relevancia del buscador, pero pide que comparta casi todas las palabras
     buscadas = claves(consulta)
     for c in candidatas:
-        if buscadas & c["claves"]:
+        if len(buscadas & c["claves"]) >= _necesarias(buscadas) and _sirve(c, buscadas):
             return c["url"], c["credito"]
     return None
 
 
 def foto(consulta: str, usados: set[str], articulo: list[dict] = ()) -> tuple[str, str] | None:
-    """(url, crédito) de una foto real para la consulta, o None si no aparece ninguna."""
-    if elegida := _mejor(list(articulo), consulta, usados, minimo=2 if len(claves(consulta)) > 2 else 1):
+    """(url, crédito) de una foto real para la consulta, o None si no aparece ninguna.
+
+    Si la consulta es un archivo puntual de Commons ("File:..."), usa ese.
+    """
+    if consulta.startswith(("File:", "Archivo:")):
+        return archivo_exacto(consulta)
+    if elegida := _mejor(list(articulo), consulta, usados):
         return elegida["url"], elegida["credito"]
     try:
         if encontrada := _buscar_wikimedia(consulta, usados):

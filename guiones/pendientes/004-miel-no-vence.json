@@ -56,7 +56,6 @@
       },
       "tomas": [
         {
-          "foto": "bees honeycomb",
           "dibujo": "Cute bees working on a honeycomb full of golden honey"
         },
         {
@@ -65,8 +64,7 @@
         },
         {
           "desde": "agua",
-          "foto": "hydrogen peroxide bottle",
-          "dibujo": "A small brown bottle of hydrogen peroxide with fizzy bubbles",
+          "dibujo": "A small brown bottle of hydrogen peroxide with fizzy bubbles rising from its open top, next to a honeycomb",
           "texto": "agua oxigenada"
         }
       ]

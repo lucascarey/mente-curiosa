@@ -1,121 +1,114 @@
-@font-face { font-family: "Montserrat"; src: url("Montserrat-Medium.ttf"); font-weight: 500; }
-@font-face { font-family: "Montserrat"; src: url("Montserrat-Bold.ttf"); font-weight: 700; }
-@font-face { font-family: "Montserrat"; src: url("Montserrat-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Inter"; src: url("Inter.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Mono"; src: url("JetBrainsMono.ttf"); font-weight: 100 800; }
+
+/* Zona segura de Reels y TikTok: todo lo importante entre x 60-930 e y 220-1470 */
+:root { --borde: rgba(255, 255, 255, .14); --tenue: rgba(255, 255, 255, .55); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   width: 1080px; height: 1920px; overflow: hidden; background: #000;
-  font-family: "Montserrat", sans-serif; font-weight: 700; color: #fff;
+  font-family: "Inter", sans-serif; font-weight: 400; color: #fff;
 }
 
-#video { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--oscuro); }
+#video { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
 
-/* Fondo plano del tema con una luz suave y grano */
-#fondo {
+/* Grilla de puntos muy suave, como papel técnico */
+#grilla {
   position: absolute; inset: 0;
-  background: radial-gradient(120% 70% at 50% 32%, color-mix(in srgb, var(--color) 16%, var(--oscuro)) 0%, var(--oscuro) 75%);
-}
-#luz {
-  position: absolute; width: 900px; height: 900px; border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color) 22%, transparent) 0%, transparent 65%);
-}
-#grano {
-  position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .07) 1.2px, transparent 1.6px);
+  background-size: 45px 45px; background-position: 15px 0;
 }
 
-/* Escenas: una tarjeta grande arriba */
+/* Tarjeta de la escena */
 #escenas { position: absolute; inset: 0; }
-.escena { position: absolute; left: 60px; top: 230px; width: 960px; height: 860px; display: none; }
+.escena { position: absolute; left: 60px; top: 300px; width: 870px; height: 700px; display: none; }
 .visual { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 
+.marco { position: absolute; inset: 0; border: 1.5px solid var(--borde); border-radius: 18px; pointer-events: none; }
+.marco i { position: absolute; width: 30px; height: 30px; border: 0 solid var(--color); }
+.marco i:nth-child(1) { left: -1.5px; top: -1.5px; border-left-width: 3px; border-top-width: 3px; border-top-left-radius: 18px; }
+.marco i:nth-child(2) { right: -1.5px; top: -1.5px; border-right-width: 3px; border-top-width: 3px; border-top-right-radius: 18px; }
+.marco i:nth-child(3) { left: -1.5px; bottom: -1.5px; border-left-width: 3px; border-bottom-width: 3px; border-bottom-left-radius: 18px; }
+.marco i:nth-child(4) { right: -1.5px; bottom: -1.5px; border-right-width: 3px; border-bottom-width: 3px; border-bottom-right-radius: 18px; }
+
 /* Ilustración */
-.ilus {
-  position: absolute; inset: 0; border-radius: 44px; overflow: hidden;
-  background: color-mix(in srgb, var(--color) 10%, var(--oscuro));
-  box-shadow: 0 30px 80px rgba(0, 0, 0, .35), inset 0 0 0 2px rgba(255, 255, 255, .06);
-}
+.ilus { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: #000; }
 .ilus .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
 .etiqueta {
-  position: absolute; left: 36px; bottom: 36px; max-width: 880px;
-  font-size: 46px; font-weight: 700; padding: 18px 32px; border-radius: 999px;
-  background: color-mix(in srgb, var(--oscuro) 82%, transparent); color: #fff;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color) 55%, transparent);
+  position: absolute; left: 28px; bottom: 28px; max-width: 800px;
+  font-family: "Mono"; font-size: 30px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+  padding: 12px 20px; background: rgba(0, 0, 0, .8); border-left: 3px solid var(--color);
 }
 
 /* Número */
-.numero-caja { position: relative; width: 680px; height: 680px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.numero-caja svg { position: absolute; inset: 0; transform: rotate(-90deg); }
-.numero { font-size: 250px; font-weight: 800; line-height: 1; color: var(--color); white-space: nowrap; letter-spacing: -4px; }
-.numero.l3 { font-size: 210px; }
-.numero.l4 { font-size: 170px; }
-.numero.l5 { font-size: 138px; }
-.numero-etiqueta { font-size: 56px; font-weight: 500; text-align: center; max-width: 520px; margin-top: 14px; color: rgba(255, 255, 255, .85); }
+.numero-caja { position: relative; width: 600px; height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.numero-caja svg { position: absolute; inset: 0; transform: rotate(-90deg); overflow: visible; }
+.numero { font-size: 220px; font-weight: 200; line-height: 1; white-space: nowrap; letter-spacing: -6px; font-variant-numeric: tabular-nums; }
+.numero.l3 { font-size: 190px; }
+.numero.l4 { font-size: 150px; }
+.numero.l5 { font-size: 122px; }
+.numero-etiqueta { font-family: "Mono"; font-size: 32px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; text-align: center; max-width: 440px; margin-top: 18px; color: var(--color); }
 
 /* Comparación */
-.comparacion { width: 860px; display: flex; flex-direction: column; gap: 80px; }
-.comp-titulo { font-size: 46px; font-weight: 500; text-align: center; color: rgba(255, 255, 255, .7); }
-.fila { display: flex; flex-direction: column; gap: 24px; }
-.fila-cabeza { display: flex; align-items: center; gap: 24px; font-size: 56px; font-weight: 700; }
-.icono { width: 84px; height: 84px; flex: none; color: var(--color); }
-.icono svg { width: 100%; height: 100%; stroke-width: 1.6; }
-.valor { margin-left: auto; font-weight: 800; color: var(--color); white-space: nowrap; }
-.pista { height: 26px; border-radius: 13px; background: rgba(255, 255, 255, .1); overflow: hidden; }
-.relleno { height: 100%; border-radius: 13px; background: var(--color); }
-.fila.b .relleno { background: rgba(255, 255, 255, .85); }
-.fila.b .icono { color: rgba(255, 255, 255, .85); }
+.comparacion { width: 760px; display: flex; flex-direction: column; gap: 70px; }
+.comp-titulo { font-family: "Mono"; font-size: 30px; letter-spacing: 3px; text-transform: uppercase; color: var(--tenue); }
+.fila { display: flex; flex-direction: column; gap: 22px; }
+.fila-cabeza { display: flex; align-items: center; gap: 22px; font-size: 50px; font-weight: 500; }
+.icono { width: 64px; height: 64px; flex: none; color: var(--color); }
+.icono svg { width: 100%; height: 100%; stroke-width: 1.4; }
+.valor { margin-left: auto; font-weight: 300; color: var(--color); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pista { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.relleno { height: 100%; border-radius: 3px; background: var(--color); }
+.fila.b .relleno { background: #fff; }
+.fila.b .icono, .fila.b .valor { color: #fff; }
 
 /* Línea de tiempo */
-.linea { position: relative; width: 860px; height: 760px; }
-.eje { position: absolute; left: 118px; top: 0; bottom: 0; width: 4px; border-radius: 2px; background: rgba(255, 255, 255, .14); }
-.eje-relleno { width: 100%; border-radius: 2px; background: var(--color); }
-.hito { position: absolute; left: 0; width: 860px; display: flex; align-items: center; transform: translateY(-50%); }
-.punto { width: 40px; height: 40px; border-radius: 50%; background: var(--oscuro); border: 5px solid var(--color); margin-left: 100px; flex: none; }
-.hito-texto { margin-left: 40px; }
-.hito-anio { font-size: 46px; font-weight: 800; color: var(--color); }
-.hito-nombre { font-size: 54px; font-weight: 500; }
+.linea { position: relative; width: 760px; height: 600px; }
+.eje { position: absolute; left: 100px; top: 0; bottom: 0; width: 2px; background: rgba(255, 255, 255, .16); }
+.eje-relleno { width: 100%; background: var(--color); }
+.hito { position: absolute; left: 0; width: 760px; display: flex; align-items: center; transform: translateY(-50%); }
+.punto { width: 24px; height: 24px; border-radius: 50%; background: #000; border: 2.5px solid var(--color); margin-left: 89px; flex: none; }
+.hito-texto { margin-left: 36px; }
+.hito-anio { font-family: "Mono"; font-size: 30px; color: var(--color); letter-spacing: 1px; }
+.hito-nombre { font-size: 48px; font-weight: 400; }
 
 /* Seguir */
-.seguir { display: flex; flex-direction: column; align-items: center; gap: 44px; position: relative; }
-.avatar {
-  width: 330px; height: 330px; border-radius: 50%; overflow: hidden; position: relative;
-  background: color-mix(in srgb, var(--color) 30%, var(--oscuro));
-  box-shadow: 0 0 0 6px var(--color);
-}
-.avatar > div { position: absolute; left: 25px; top: 40px; width: 280px; height: 322px; }
-.seguir-nombre { font-size: 58px; font-weight: 700; }
+.seguir { display: flex; flex-direction: column; align-items: center; gap: 40px; position: relative; }
+.avatar { width: 260px; height: 260px; border-radius: 50%; overflow: hidden; border: 2px solid var(--color); position: relative; background: #000; }
+.avatar img { position: absolute; width: 330px; left: -38px; top: -6px; }
+.seguir-nombre { font-size: 46px; font-weight: 500; }
 .boton {
-  font-size: 60px; font-weight: 800; padding: 28px 96px; border-radius: 999px;
-  background: var(--color); color: var(--oscuro); display: flex; align-items: center; gap: 18px;
+  font-size: 44px; font-weight: 600; padding: 22px 76px; border-radius: 999px;
+  border: 2px solid var(--color); color: var(--color); display: flex; align-items: center; gap: 14px;
 }
-.boton.hecho { background: rgba(255, 255, 255, .12); color: #fff; box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .3); }
-.boton svg { width: 60px; height: 60px; }
-.onda { position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 5px solid #fff; left: 50%; bottom: 40px; margin-left: -60px; opacity: 0; }
+.boton.hecho { background: var(--color); color: #000; }
+.boton svg { width: 44px; height: 44px; }
+.onda { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--color); left: 50%; bottom: 28px; margin-left: -55px; opacity: 0; }
 
-/* Capas fijas */
-#progreso { position: absolute; top: 96px; left: 80px; right: 80px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .14); overflow: hidden; }
-#barra { height: 100%; width: 0; background: var(--color); border-radius: 3px; }
-
-#chip { position: absolute; top: 134px; left: 80px; display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255, 255, 255, .85); }
-#chip-punto { width: 16px; height: 16px; border-radius: 50%; background: var(--color); }
-#usuario { position: absolute; top: 134px; right: 80px; font-size: 34px; font-weight: 500; color: rgba(255, 255, 255, .55); }
-
-#personaje { position: absolute; left: 34px; top: 1190px; width: 320px; height: 368px; }
-
-#globo {
-  position: absolute; left: 380px; right: 56px; top: 1150px; height: 410px; border-radius: 40px;
-  background: color-mix(in srgb, var(--color) 12%, #17151f);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .3), inset 0 0 0 2px rgba(255, 255, 255, .06);
+/* Cabecera */
+#progreso { position: absolute; top: 226px; left: 60px; width: 870px; height: 2px; background: rgba(255, 255, 255, .15); }
+#barra { height: 100%; width: 0; background: var(--color); }
+#cabecera {
+  position: absolute; top: 246px; left: 60px; width: 870px; display: flex; justify-content: space-between;
+  font-family: "Mono"; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; color: var(--tenue);
 }
-#globo::before {
-  content: ""; position: absolute; left: -26px; top: 170px; width: 0; height: 0;
-  border-top: 22px solid transparent; border-bottom: 22px solid transparent;
-  border-right: 28px solid color-mix(in srgb, var(--color) 12%, #17151f);
+#tema::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--color); margin-right: 14px; vertical-align: 3px; }
+#usuario { text-transform: none; letter-spacing: 0; }
+
+/* Conductora */
+#personaje {
+  position: absolute; left: 0; top: 1022px; width: 450px; height: 463px;
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
 }
+#personaje img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+
+/* Subtítulos finos: la palabra que se dice se subraya en celeste */
 #subtitulo {
-  position: absolute; inset: 0; padding: 40px 46px;
-  display: flex; flex-wrap: wrap; align-content: center; gap: 4px 22px;
+  position: absolute; left: 470px; width: 460px; top: 1070px; height: 380px;
+  display: flex; flex-wrap: wrap; align-content: center; gap: 6px 18px;
 }
-.palabra { display: inline-block; font-size: 78px; font-weight: 800; line-height: 1.12; }
-.palabra.destacada { color: var(--color); }
+.palabra { display: inline-block; font-size: 56px; font-weight: 500; line-height: 1.3; color: rgba(255, 255, 255, .35); }
+.palabra.dicha { color: #fff; }
+.palabra.destacada.dicha { color: var(--color); }
+#subrayado { position: absolute; height: 4px; border-radius: 2px; background: var(--color); opacity: 0; }

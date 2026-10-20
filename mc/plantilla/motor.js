@@ -3,7 +3,7 @@
 // cuadro se puede capturar en cualquier orden.
 // Los momentos clave de cada escena (D.escenas[i].marcas) los calcula Python,
 // que usa los mismos valores para ubicar los efectos de sonido.
-// Estilo: movimientos cortos y suaves, siempre con las mismas curvas.
+// Estilo: técnico y mínimo; movimientos cortos y suaves, siempre con las mismas curvas.
 
 const D = window.DATOS;
 const $ = (sel, raiz = document) => raiz.querySelector(sel);
@@ -36,7 +36,7 @@ const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const raiz = document.documentElement;
 raiz.style.setProperty("--color", D.tema.color);
 raiz.style.setProperty("--oscuro", D.tema.oscuro);
-$("#chip-texto").textContent = D.tema.nombre;
+$("#tema").textContent = D.tema.nombre;
 $("#usuario").textContent = D.usuario;
 
 // ---------- Construcción de escenas ----------
@@ -60,7 +60,14 @@ const constructores = {
   numero(v, caja, esc) {
     const m = esc.marcas;
     const cont = crear("div", "numero-caja", caja);
-    cont.innerHTML = `<svg viewBox="0 0 680 680"><circle cx="340" cy="340" r="320" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/><circle class="arco" cx="340" cy="340" r="320" fill="none" stroke="${D.tema.color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="2011" stroke-dashoffset="2011"/></svg>`;
+    // Anillo fino con marcas, como un instrumento de medición
+    const marcas = Array.from({ length: 60 }, (_, k) => {
+      const a = (k / 60) * 2 * Math.PI, largo = k % 5 ? 10 : 22;
+      const x1 = 300 + 286 * Math.cos(a), y1 = 300 + 286 * Math.sin(a);
+      const x2 = 300 + (286 - largo) * Math.cos(a), y2 = 300 + (286 - largo) * Math.sin(a);
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(255,255,255,${k % 5 ? 0.15 : 0.35})" stroke-width="2"/>`;
+    }).join("");
+    cont.innerHTML = `<svg viewBox="0 0 600 600">${marcas}<circle cx="300" cy="300" r="298" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/><circle class="arco" cx="300" cy="300" r="298" fill="none" stroke="${D.tema.color}" stroke-width="4" stroke-linecap="round" stroke-dasharray="1872" stroke-dashoffset="1872"/></svg>`;
     const arco = $(".arco", cont);
     const texto = `${v.prefijo || ""}${formatear(v.valor)}${v.sufijo || ""}`;
     const num = crear("div", "numero l" + Math.min(5, Math.max(2, texto.length)), cont);
@@ -68,7 +75,7 @@ const constructores = {
     return (tl) => {
       const pc = suave(prog(tl, m.cuenta_inicio, m.cuenta_fin - m.cuenta_inicio));
       num.textContent = `${v.prefijo || ""}${formatear(v.valor * pc)}${v.sufijo || ""}`;
-      arco.style.strokeDashoffset = 2011 * (1 - pc);
+      arco.style.strokeDashoffset = 1872 * (1 - pc);
       entrar(etiqueta, tl, m.cuenta_fin - 0.3);
     };
   },
@@ -103,11 +110,11 @@ const constructores = {
     const relleno = crear("div", "eje-relleno", crear("div", "eje", cont));
     const hitos = v.hitos.map((h, i) => {
       const el = crear("div", "hito", cont, `<div class="punto"></div><div class="hito-texto"><div class="hito-anio">${h.fecha}</div><div class="hito-nombre">${h.etiqueta}</div></div>`);
-      el.style.top = `${m.posiciones[i] * 760}px`;
+      el.style.top = `${m.posiciones[i] * 600}px`;
       return { punto: $(".punto", el), texto: $(".hito-texto", el), t: m.hitos[i] };
     });
     return (tl) => {
-      relleno.style.height = `${760 * suaveDoble(prog(tl, m.linea_inicio, m.linea_fin - m.linea_inicio))}px`;
+      relleno.style.height = `${600 * suaveDoble(prog(tl, m.linea_inicio, m.linea_fin - m.linea_inicio))}px`;
       hitos.forEach((h) => {
         const p = suave(prog(tl, h.t, 0.3));
         h.punto.style.background = p > 0 ? D.tema.color : "";
@@ -121,13 +128,11 @@ const constructores = {
   seguir(v, caja, esc) {
     const m = esc.marcas;
     const cont = crear("div", "seguir", caja);
-    const avatar = crear("div", "avatar", cont);
-    const mini = personaje(crear("div", "", avatar));
+    const avatar = crear("div", "avatar", cont, '<img src="personaje/12.png">');
     const nombre = crear("div", "seguir-nombre", cont, D.usuario);
     const boton = crear("div", "boton", cont, "Seguir");
     const onda = crear("div", "onda", cont);
     return (tl) => {
-      mini(tl + 1.3, {});
       entrar(avatar, tl, 0.05);
       entrar(nombre, tl, 0.2);
       entrar(boton, tl, 0.35);
@@ -150,12 +155,14 @@ const escenas = D.escenas.map((esc) => {
   const caja = crear("div", "visual", el);
   const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "ilustracion";
   const dibujar = constructores[tipo](esc.visual, caja, esc);
+  crear("div", "marco", el, "<i></i><i></i><i></i><i></i>");
   return { ...esc, el, tipo, dibujar };
 });
 
-// ---------- Subtítulos dentro del globo ----------
+// ---------- Subtítulos: la palabra que se dice se subraya ----------
 
 const sub = $("#subtitulo");
+const subrayado = $("#subrayado");
 let grupoActual = -1;
 let spans = [];
 
@@ -165,22 +172,35 @@ function mostrarGrupo(i) {
   grupoActual = i;
 }
 
-// ---------- Personaje ----------
+// Posición del subrayado debajo de una palabra, en coordenadas del video
+const caja = (el) => ({ x: sub.offsetLeft + el.offsetLeft, y: sub.offsetTop + el.offsetTop + el.offsetHeight - 2, w: el.offsetWidth });
+
+function subrayar(t, grupo) {
+  const k = grupo.palabras.findLastIndex((p) => t >= p.inicio - 0.03);
+  grupo.palabras.forEach((p, j) => spans[j].classList.toggle("dicha", j <= k));
+  if (k < 0) { subrayado.style.opacity = 0; return; }
+  // Se desliza de la palabra anterior a la actual
+  const actual = caja(spans[k]);
+  const antes = k > 0 && spans[k - 1].offsetTop === spans[k].offsetTop ? caja(spans[k - 1]) : { ...actual, w: 0 };
+  const p = suave(prog(t, grupo.palabras[k].inicio - 0.03, 0.14));
+  subrayado.style.opacity = 1;
+  subrayado.style.left = `${mezclar(antes.x, actual.x, p)}px`;
+  subrayado.style.top = `${actual.y}px`;
+  subrayado.style.width = `${mezclar(antes.w, actual.w, p)}px`;
+}
+
+// ---------- Conductora ----------
 
 const animarPersonaje = personaje($("#personaje"));
 const destacadas = D.grupos.flatMap((g) => g.palabras.filter((p) => p.destacada).map((p) => p.inicio));
 
-function estadoPersonaje(t, escena) {
+function estadoPersonaje(t, escena, i) {
   const tl = t - escena.inicio;
-  // Al empezar cada escena mira la tarjeta y después vuelve al globo
-  const mira = campana(tl, 0, 1.1, 0.3, 0.4);
-  let gesto = Math.max(0, ...destacadas.map((d) => campana(t, d - 0.15, d + 0.6, 0.3, 0.4)));
-  if (escena.tipo === "seguir") gesto = Math.max(gesto, suaveDoble(prog(tl, 0.2, 0.4)));
   return {
     boca: D.boca[Math.round(t * D.fps)] || 0,
-    mirada: mezclar(0.35, 0.6, mira),
-    arriba: mira,
-    gesto,
+    mira: i > 0 && tl < 0.6,
+    senala: destacadas.some((d) => t >= d - 0.1 && t < d + 0.9),
+    saluda: escena.tipo === "seguir" && tl > 0.3,
   };
 }
 
@@ -206,26 +226,29 @@ window.render = function (t) {
     e.dibujar(tl);
   });
 
-  // Subtítulo palabra por palabra
-  const g = D.grupos.findLastIndex((gr) => t >= gr.inicio);
+  // Subtítulo: el grupo aparece entero y se va subrayando palabra por palabra
+  const g = D.grupos.findLastIndex((gr) => t >= gr.inicio - 0.05);
   if (g >= 0 && t < D.grupos[g].fin) {
     if (g !== grupoActual) mostrarGrupo(g);
     sub.style.display = "flex";
-    D.grupos[g].palabras.forEach((p, k) => entrar(spans[k], t, p.inicio - 0.05, 0.16, 14));
+    sub.style.opacity = suave(prog(t, D.grupos[g].inicio - 0.05, 0.12));
+    subrayar(t, D.grupos[g]);
   } else {
     sub.style.display = "none";
+    subrayado.style.opacity = 0;
   }
 
-  animarPersonaje(t, estadoPersonaje(t, escenas[Math.max(0, actual)]));
+  const i = Math.max(0, actual);
+  animarPersonaje(t, estadoPersonaje(t, escenas[i], i));
 
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;
-  $("#luz").style.transform = `translate(${90 + Math.sin(t * 0.2) * 60}px, ${-60 + Math.cos(t * 0.15) * 50}px)`;
 };
 
 window.listo = Promise.all([
   document.fonts.ready,
-  ...["500", "700", "800"].map((peso) => document.fonts.load(`${peso} 40px Montserrat`)),
+  ...["200 40px Inter", "400 40px Inter", "500 40px Inter", "600 40px Inter", "400 30px Mono"].map((f) => document.fonts.load(f)),
+  personaje.cargado,
   ...D.escenas.filter((e) => e.dibujo).map((e) => new Promise((ok) => {
     const img = new Image();
     img.onload = img.onerror = ok;

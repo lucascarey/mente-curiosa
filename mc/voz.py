@@ -30,7 +30,8 @@ def duracion(ruta: Path) -> float:
 async def _sintetizar(texto: str, destino: Path) -> list[tuple[str, float, float]]:
     import edge_tts
 
-    com = edge_tts.Communicate(texto, config.VOZ, rate=config.VELOCIDAD_VOZ, boundary="WordBoundary")
+    com = edge_tts.Communicate(texto, config.VOZ, rate=config.VELOCIDAD_VOZ, pitch=config.TONO_VOZ,
+                                 boundary="WordBoundary")
     tiempos = []
     with destino.open("wb") as f:
         async for trozo in com.stream():

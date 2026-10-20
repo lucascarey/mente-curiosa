@@ -4,11 +4,17 @@ Fábrica automática de videos de curiosidades para Instagram (@mente.curiosatv)
 
 Cuatro veces por día, GitHub Actions toma el próximo guion de `guiones/pendientes`, arma el video y lo publica:
 
-1. **Voz:** voz IA gratuita (edge-tts, `es-MX-JorgeNeural`).
-2. **Ilustraciones:** una ilustración plana por escena, estilo Kurzgesagt, generada con IA en [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) (modelo Flux, plan gratis). Sin credenciales de Cloudflare usa una foto de Pixabay.
-3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía de línea), el búho de la cuenta que habla con la voz, y el texto palabra por palabra en su globo. Chromium la captura a 30 cuadros por segundo.
+Estética: fondo negro, técnica y mínima, en negro, blanco y celeste (`#4FC3F7`). Todo lo importante queda dentro de la zona segura de Reels y TikTok (x 60-930, y 220-1470).
+
+1. **Voz:** voz IA gratuita femenina (edge-tts, `es-AR-ElenaNeural`, un poco más rápida y aguda).
+2. **Ilustraciones:** una ilustración de línea por escena (blanco y celeste sobre negro), generada con IA en [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) (modelo Flux, plan gratis). Sin credenciales de Cloudflare usa una foto de Pixabay.
+3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora que habla con la voz y los subtítulos, que se van subrayando palabra por palabra. Chromium la captura a 30 cuadros por segundo.
 4. **Sonido:** efectos suaves (soplido, clic, nota) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz.
 5. **Publicación:** Reels con la API oficial de Instagram y, si está configurado, TikTok con su API oficial.
+
+## La conductora
+
+`assets/personaje` tiene 12 dibujos con fondo transparente, recortados de `planilla.jpg` con `python herramientas/recortar_personaje.py planilla.jpg assets/personaje`. El orden: 1-5 boca (cerrada, apenas abierta, a medias, bien abierta, redonda), 6-7 parpadeo, 8 mira arriba a la derecha, 9-10 señala (boca cerrada y abierta), 11-12 saluda. La boca sigue el volumen de la voz, señala en las palabras destacadas, mira la tarjeta al cambiar de escena y saluda en el cierre.
 
 Después mueve el guion a `guiones/publicados` con el resultado. Los guiones nuevos se agregan una vez por semana.
 
@@ -30,7 +36,7 @@ La publicación automática corre solo si existe la variable `PUBLICACION_ACTIVA
 
 ## Probar
 
-En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto.
+En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto. En "guion" se puede poner el número de un guion (por ejemplo `003`) para probar ese en vez del próximo.
 
 En local, sin internet: `MC_MOCK=1 python -m mc.main --solo-video` (voz muda e ilustraciones de color). Si Playwright no encuentra Chromium, indicar la ruta con `MC_CHROMIUM`.
 
@@ -57,9 +63,9 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 ```
 
 - `partes`: entre 3 y 8. Gancho, dato, giro y cierre.
-- Las palabras entre `*asteriscos*` salen con el color del tema y el búho levanta el ala.
+- Las palabras entre `*asteriscos*` salen en celeste y la conductora levanta el dedo.
 - `protagonista` (opcional): en inglés, cómo se ve el personaje principal de las ilustraciones, para que sea el mismo en todas las escenas.
-- `dibujo`: en inglés, qué tiene que mostrar la ilustración (un sujeto claro, sin texto). El estilo y la paleta del tema se agregan solos.
+- `dibujo`: en inglés, qué tiene que mostrar la ilustración (un sujeto claro, sin texto). El estilo se agrega solo.
 - `busqueda`: en inglés, la foto de respaldo en Pixabay; si falta `dibujo`, también se usa para la ilustración.
 - `visual` (opcional, por defecto `ilustracion`): qué muestra la tarjeta de la escena.
 

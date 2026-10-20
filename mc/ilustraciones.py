@@ -1,4 +1,4 @@
-"""Ilustraciones planas generadas con IA (Cloudflare Workers AI, modelo Flux) e íconos de línea.
+"""Ilustraciones de línea generadas con IA (Cloudflare Workers AI, modelo Flux) e íconos de línea.
 
 Cada escena con ilustración usa el campo `dibujo` de la parte (o su `busqueda`)
 y le suma un estilo fijo, así todos los videos se ven de la misma familia.
@@ -17,9 +17,9 @@ from . import config, imagenes
 
 MODELO = "@cf/black-forest-labs/flux-1-schnell"
 ESTILO = (
-    "Flat vector illustration in the style of Kurzgesagt: simple bold geometric shapes, smooth soft gradients, "
-    "subtle film grain, gentle rim light, cute and clear, {paleta}, dark background, one centered subject, "
-    "clean minimal background, no text, no letters, no words, no watermark"
+    "Minimal technical illustration: thin clean white line art on a pure black background, "
+    "light blue (#4FC3F7) accent highlights, blueprint and scientific diagram style, precise simple geometric shapes, "
+    "lots of negative space, one centered subject, no text, no letters, no numbers, no watermark"
 )
 CON_ILUSTRACION = {"foto", "ilustracion", "emoji"}
 ICONOS = "https://raw.githubusercontent.com/lucide-icons/lucide/0.460.0/icons/{}.svg"
@@ -30,11 +30,11 @@ def _credenciales() -> tuple[str, str] | None:
     return (cuenta, token) if cuenta and token else None
 
 
-def prompt(tema: str, paleta: str, protagonista: str = "") -> str:
-    texto = f"{tema.rstrip('. ')}. "
+def prompt(sujeto: str, protagonista: str = "") -> str:
+    texto = f"{sujeto.rstrip('. ')}. "
     if protagonista:
         texto += f"The main character looks exactly like this: {protagonista.rstrip('. ')}. "
-    return texto + ESTILO.format(paleta=paleta)
+    return texto + ESTILO
 
 
 def _generar(texto: str, destino: Path, cuenta: str, token: str) -> None:
@@ -63,7 +63,7 @@ def _mock(i: int, destino: Path) -> None:
     )
 
 
-def conseguir(guion, tema: dict, carpeta: Path) -> list[str | None]:
+def conseguir(guion, carpeta: Path) -> list[str | None]:
     """Devuelve, por escena, el nombre del archivo de la ilustración dentro de `carpeta` (o None)."""
     carpeta.mkdir(parents=True, exist_ok=True)
     credenciales = _credenciales()
@@ -79,7 +79,7 @@ def conseguir(guion, tema: dict, carpeta: Path) -> list[str | None]:
         if config.MOCK:
             _mock(i, destino)
         elif credenciales:
-            texto = prompt(parte.dibujo or parte.busqueda, tema["paleta"], guion.protagonista)
+            texto = prompt(parte.dibujo or parte.busqueda, guion.protagonista)
             print(f"Ilustración {i + 1}: {parte.dibujo or parte.busqueda}")
             _generar(texto, destino, *credenciales)
         else:

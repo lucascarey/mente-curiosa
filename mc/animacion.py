@@ -135,6 +135,7 @@ def renderizar(datos: dict, carpeta_imagenes: Path, destino: Path) -> Path:
         shutil.copy(archivo, trabajo / archivo.name)
     for fuente in config.FUENTES.glob("*.ttf"):
         shutil.copy(fuente, trabajo / fuente.name)
+    shutil.copytree(config.PERSONAJE, trabajo / "personaje", dirs_exist_ok=True, ignore=shutil.ignore_patterns("planilla.*"))
     (trabajo / "datos.js").write_text("window.DATOS = " + json.dumps(datos, ensure_ascii=False) + ";", encoding="utf-8")
 
     cuadros = int(datos["duracion"] * config.FPS)

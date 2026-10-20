@@ -40,7 +40,11 @@ def validar() -> int:
 
 
 def publicar(solo_video: bool) -> int:
-    actual = guion.siguiente(config.PENDIENTES)
+    if elegido := os.environ.get("MC_GUION"):
+        # Para probar un guion puntual sin esperar su turno
+        actual = guion.cargar(next(config.PENDIENTES.glob(f"{elegido}*.json")))
+    else:
+        actual = guion.siguiente(config.PENDIENTES)
     if not actual:
         print("::error::No quedan guiones pendientes en guiones/pendientes")
         return 1

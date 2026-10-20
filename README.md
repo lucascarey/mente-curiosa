@@ -22,6 +22,10 @@ Después mueve el guion a `guiones/publicados` con el resultado. Los guiones nue
 
 Hasta que TikTok apruebe la app, los videos se suben en privado. Cuando la aprueben, crear la variable `TIKTOK_PRIVACIDAD` con valor `PUBLIC_TO_EVERYONE`.
 
+## Encender y apagar
+
+La publicación automática corre solo si existe la variable `PUBLICACION_ACTIVA` con valor `true` (Settings → Secrets and variables → Actions → pestaña Variables). Para pausarla, cambiala a `false`.
+
 ## Probar
 
 En la pestaña **Actions → Publicar video → Run workflow**, con "Solo armar el video" marcado, se genera un video sin publicar y queda para descargar como artefacto.

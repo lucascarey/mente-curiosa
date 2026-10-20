@@ -23,6 +23,8 @@ permissions:
 
 jobs:
   publicar:
+    # El horario automático solo corre con la variable PUBLICACION_ACTIVA=true
+    if: github.event_name == 'workflow_dispatch' || vars.PUBLICACION_ACTIVA == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

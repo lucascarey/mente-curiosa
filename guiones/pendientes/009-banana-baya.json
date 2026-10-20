@@ -17,6 +17,7 @@
         },
         {
           "desde": "banana",
+          "foto": "banana bunch",
           "dibujo": "A cute smiling banana next to a small bunch of blueberries",
           "texto": "es una baya"
         },
@@ -40,10 +41,12 @@
         },
         {
           "desde": "flor",
+          "foto": "banana flower",
           "dibujo": "A single flower on a branch with a small round green fruit growing in its center"
         },
         {
           "desde": "semillas",
+          "foto": "kiwifruit cross section",
           "dibujo": "A kiwi cut in half showing small black seeds inside"
         }
       ]
@@ -58,6 +61,7 @@
       },
       "tomas": [
         {
+          "foto": "banana cross section",
           "dibujo": "A peeled banana sliced open showing tiny dark seeds in its center"
         },
         {
@@ -76,6 +80,7 @@
       },
       "tomas": [
         {
+          "foto": "strawberry achenes macro",
           "dibujo": "Close up of a strawberry showing tiny seed fruits on its surface, magnifying glass"
         },
         {
@@ -93,10 +98,12 @@
       },
       "tomas": [
         {
+          "foto": "tomato",
           "dibujo": "A ripe red tomato on a wooden table"
         },
         {
           "desde": "sandía",
+          "foto": "watermelon slice",
           "dibujo": "A slice of watermelon next to a red tomato",
           "texto": "también son bayas"
         },

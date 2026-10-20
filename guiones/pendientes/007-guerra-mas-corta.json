@@ -16,6 +16,7 @@
         },
         {
           "desde": "duró",
+          "foto": "brass pocket watch",
           "dibujo": "A vintage brass pocket watch with its lid open",
           "texto": "menos de 1 hora"
         }
@@ -34,10 +35,12 @@
         },
         {
           "desde": "Reino",
+          "foto": "HMS St George 1892",
           "dibujo": "A British Royal Navy steam warship from the 1890s with tall funnels sailing on the ocean"
         },
         {
           "desde": "isla",
+          "foto": "Zanzibar Stone Town seafront",
           "dibujo": "A tropical island off the coast of Africa with an old white palace and palm trees, seen from the sea",
           "texto": "Zanzíbar"
         }
@@ -52,10 +55,12 @@
       },
       "tomas": [
         {
+          "foto": "Anglo-Zanzibar War palace",
           "dibujo": "Old British steam warships firing at a palace on a tropical coast, smoke clouds"
         },
         {
           "desde": "palacio",
+          "foto": "Zanzibar Beit al-Ajaib",
           "dibujo": "An old white palace with wooden balconies on a tropical shore hit by cannon fire, smoke rising",
           "texto": "palacio del sultán"
         }

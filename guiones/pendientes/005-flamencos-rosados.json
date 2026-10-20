@@ -12,6 +12,7 @@
       },
       "tomas": [
         {
+          "foto": "Phoenicopterus roseus",
           "dibujo": "A cute pink flamingo standing on one leg in a shallow lake"
         },
         {
@@ -20,6 +21,7 @@
         },
         {
           "desde": "grises",
+          "foto": "flamingo chick",
           "dibujo": "A fluffy grey flamingo chick standing next to an adult pink flamingo in shallow water",
           "texto": "grises o blancos"
         }
@@ -35,6 +37,7 @@
       },
       "tomas": [
         {
+          "foto": "flamingo feeding",
           "dibujo": "A cute pink flamingo with its head upside down in the water, filter feeding"
         },
         {
@@ -44,6 +47,7 @@
         },
         {
           "desde": "carotenoides",
+          "foto": "Artemia salina",
           "dibujo": "Tiny bright orange-red brine shrimp swimming in salty water",
           "texto": "carotenoides"
         }
@@ -63,6 +67,7 @@
         },
         {
           "desde": "naranja",
+          "foto": "carrots",
           "dibujo": "Orange carrots next to a pink flamingo feather",
           "texto": "mismo pigmento"
         }
@@ -85,6 +90,7 @@
         },
         {
           "desde": "cada",
+          "foto": "pale flamingo",
           "dibujo": "A pale white flamingo looking at its reflection in the water",
           "texto": "cada vez más pálidas"
         }

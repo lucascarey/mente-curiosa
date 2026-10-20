@@ -13,6 +13,7 @@
       },
       "tomas": [
         {
+          "foto": "honey jar",
           "dibujo": "A glass jar of golden honey with a wooden honey dipper"
         },
         {
@@ -36,6 +37,7 @@
         },
         {
           "desde": "ácida",
+          "foto": "lemon halves",
           "dibujo": "A lemon cut in half next to a jar of golden honey",
           "texto": "muy ácida"
         },
@@ -54,6 +56,7 @@
       },
       "tomas": [
         {
+          "foto": "bees honeycomb",
           "dibujo": "Cute bees working on a honeycomb full of golden honey"
         },
         {
@@ -62,6 +65,7 @@
         },
         {
           "desde": "agua",
+          "foto": "hydrogen peroxide bottle",
           "dibujo": "A small brown bottle of hydrogen peroxide with fizzy bubbles",
           "texto": "agua oxigenada"
         }
@@ -78,6 +82,7 @@
       },
       "tomas": [
         {
+          "foto": "Egyptian tomb jars",
           "dibujo": "Ancient clay honey jars inside a dark Egyptian tomb next to a stone sarcophagus, lit by a lantern",
           "texto": "tumbas egipcias"
         },
@@ -104,6 +109,7 @@
         },
         {
           "desde": "cristalizó",
+          "foto": "crystallized honey",
           "dibujo": "Close up of crystallized honey with sparkling sugar crystals on a spoon",
           "texto": "solo cristalizó"
         },

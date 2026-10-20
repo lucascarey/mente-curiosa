@@ -13,6 +13,7 @@
       },
       "tomas": [
         {
+          "foto": "woman stretching bed",
           "dibujo": "A young person waking up and stretching in bed in a sunny bedroom"
         },
         {
@@ -31,6 +32,7 @@
       },
       "tomas": [
         {
+          "foto": "pedestrians city street",
           "dibujo": "A young person walking down a busy city street on a sunny afternoon"
         },
         {
@@ -39,6 +41,7 @@
         },
         {
           "desde": "discos",
+          "foto": "intervertebral disc",
           "dibujo": "Side view of a human spine showing soft round cushion discs between the bones, medical diagram"
         }
       ]
@@ -73,6 +76,7 @@
       },
       "tomas": [
         {
+          "foto": "person sleeping bed",
           "dibujo": "A young person sleeping peacefully in bed at night under moonlight"
         },
         {
@@ -94,6 +98,7 @@
       },
       "tomas": [
         {
+          "foto": "stadiometer height measurement",
           "dibujo": "A young person measuring their height against a wall ruler in the morning sunlight"
         },
         {

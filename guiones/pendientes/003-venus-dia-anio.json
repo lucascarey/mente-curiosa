@@ -11,6 +11,7 @@
       },
       "tomas": [
         {
+          "foto": "Venus Mariner 10",
           "dibujo": "A single glowing ball made of thick swirling clouds floating alone in black space, a small bright star far away"
         },
         {
@@ -65,6 +66,7 @@
       },
       "tomas": [
         {
+          "foto": "Venus transit Sun",
           "dibujo": "Simple diagram: a bright Sun in the center and one small round planet without rings on a circular orbit line around it"
         },
         {
@@ -105,6 +107,7 @@
         },
         {
           "desde": "allá",
+          "foto": "Venus Venera surface",
           "dibujo": "A sunrise on the rocky surface of Venus, the Sun rising on the horizon",
           "texto": "sale por el oeste"
         }

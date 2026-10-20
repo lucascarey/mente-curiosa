@@ -12,7 +12,6 @@ import requests
 
 VERSION = os.environ.get("IG_API_VERSION", "v23.0")
 GRAPH = f"https://graph.instagram.com/{VERSION}"
-RUPLOAD = f"https://rupload.facebook.com/ig-api-upload/{VERSION}"
 
 
 class ErrorInstagram(RuntimeError):
@@ -40,27 +39,16 @@ def publicar_reel(video: Path, caption: str) -> str:
     token = _token()
     ig_id = usuario()["user_id"]
 
-    # 1. Crear el contenedor del Reel con subida directa del archivo
-    contenedor = _revisar(requests.post(
+    # 1. Crear el contenedor del Reel. Con el inicio de sesión de Instagram la API solo acepta
+    # el video desde una dirección pública, así que primero va a un alojamiento temporal.
+    contenedor_id = _revisar(requests.post(
         f"{GRAPH}/{ig_id}/media",
-        # Instagram lee upload_type solo de la dirección, no del cuerpo
-        params={"media_type": "REELS", "upload_type": "resumable", "caption": caption,
-                "share_to_feed": "true", "access_token": token},
+        data={"media_type": "REELS", "video_url": _alojar(video), "caption": caption,
+              "share_to_feed": "true", "access_token": token},
         timeout=60,
-    ))
-    contenedor_id = contenedor["id"]
-    destino = contenedor.get("uri") or f"{RUPLOAD}/{contenedor_id}"
+    ))["id"]
 
-    # 2. Subir el video
-    datos = video.read_bytes()
-    _revisar(requests.post(
-        destino,
-        headers={"Authorization": f"OAuth {token}", "offset": "0", "file_size": str(len(datos))},
-        data=datos,
-        timeout=600,
-    ))
-
-    # 3. Esperar a que Instagram termine de procesarlo
+    # 2. Esperar a que Instagram termine de procesarlo
     for _ in range(60):
         estado = _revisar(requests.get(
             f"{GRAPH}/{contenedor_id}",
@@ -75,13 +63,31 @@ def publicar_reel(video: Path, caption: str) -> str:
     else:
         raise ErrorInstagram("Instagram tardó más de 10 minutos en procesar el video")
 
-    # 4. Publicar
+    # 3. Publicar
     publicado = _revisar(requests.post(
         f"{GRAPH}/{ig_id}/media_publish",
         data={"creation_id": contenedor_id, "access_token": token},
         timeout=60,
     ))
     return publicado["id"]
+
+
+def _alojar(video: Path) -> str:
+    """Sube el video a Litterbox (gratis, sin cuenta), que lo borra a las 24 h."""
+    for intento in range(3):
+        with video.open("rb") as f:
+            r = requests.post(
+                "https://litterbox.catbox.moe/resources/internals/api.php",
+                data={"reqtype": "fileupload", "time": "24h"},
+                files={"fileToUpload": (video.name, f, "video/mp4")},
+                timeout=600,
+            )
+        url = r.text.strip()
+        if r.ok and url.startswith("https://"):
+            print(f"Video alojado en {url}")
+            return url
+        time.sleep(10 * (intento + 1))
+    raise ErrorInstagram(f"No pude alojar el video: {r.status_code} {url[:200]}")
 
 
 def renovar_token() -> str:

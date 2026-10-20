@@ -80,6 +80,7 @@ def _alojar(video: Path) -> str:
                 "https://litterbox.catbox.moe/resources/internals/api.php",
                 data={"reqtype": "fileupload", "time": "24h"},
                 files={"fileToUpload": (video.name, f, "video/mp4")},
+                headers={"User-Agent": "curl/8.5.0"},  # rechaza el agente por defecto de requests (412)
                 timeout=600,
             )
         url = r.text.strip()

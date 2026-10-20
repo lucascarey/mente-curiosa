@@ -15,8 +15,8 @@ ANCHO, ALTO, FPS = 1080, 1920, 30
 
 USUARIO = os.environ.get("MC_USUARIO", "@mente.curiosatv")
 VOZ = os.environ.get("MC_VOZ", "en-US-AvaMultilingualNeural")  # multilingüe: lee el español con naturalidad
-VELOCIDAD_VOZ = os.environ.get("MC_VELOCIDAD_VOZ", "+0%")
-TONO_VOZ = os.environ.get("MC_TONO_VOZ", "+0Hz")
+VELOCIDAD_VOZ = os.environ.get("MC_VELOCIDAD_VOZ", "+12%")  # "Ava muy joven", elegida por Lucas
+TONO_VOZ = os.environ.get("MC_TONO_VOZ", "+15Hz")
 PAUSA_ENTRE_PARTES = 0.25  # segundos de silencio entre partes del guion
 
 # Modo de prueba sin internet: voz silenciosa e imágenes de color

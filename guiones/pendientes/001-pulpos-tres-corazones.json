@@ -1,0 +1,35 @@
+{
+  "id": "001-pulpos-tres-corazones",
+  "tema": "Animales",
+  "partes": [
+    {
+      "texto": "Los pulpos tienen *tres corazones*. Y eso no es lo más raro.",
+      "busqueda": "octopus"
+    },
+    {
+      "texto": "Dos corazones mandan sangre a las branquias y el tercero al resto del cuerpo.",
+      "busqueda": "octopus underwater"
+    },
+    {
+      "texto": "Cuando nadan, ese tercer corazón se detiene. Por eso prefieren arrastrarse por el fondo.",
+      "busqueda": "octopus crawling"
+    },
+    {
+      "texto": "Y su sangre no es roja: es *azul*, porque usa cobre en lugar de hierro para llevar el oxígeno.",
+      "busqueda": "deep blue ocean"
+    },
+    {
+      "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
+      "busqueda": "coral reef"
+    }
+  ],
+  "descripcion": "Los pulpos tienen tres corazones 🐙",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#oceano"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Octopoda"
+}

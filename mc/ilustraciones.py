@@ -63,6 +63,24 @@ def _mock(i: int, destino: Path) -> None:
     )
 
 
+def a_paleta(ruta: Path) -> None:
+    """Lleva la imagen a la paleta de la cuenta: grises sobre negro y solo los azules quedan en celeste."""
+    import numpy as np
+    from PIL import Image
+
+    img = Image.open(ruta).convert("RGB")
+    hsv = np.asarray(img.convert("HSV")).astype(np.float32) / 255
+    rgb = np.asarray(img).astype(np.float32) / 255
+    luz = rgb @ np.array([0.299, 0.587, 0.114], np.float32)
+    luz = np.clip((luz - 0.06) / 0.94, 0, 1)  # el fondo queda negro puro
+    tono, sat = hsv[..., 0] * 360, hsv[..., 1]
+    azul = np.clip((sat - 0.2) / 0.3, 0, 1) * np.clip(1 - np.abs(tono - 200) / 40, 0, 1)
+    celeste = np.array([0x4F, 0xC3, 0xF7], np.float32) / 255
+    gris = np.repeat(luz[..., None], 3, axis=2)
+    salida = gris * (1 - azul[..., None]) + np.clip(celeste * luz[..., None] * 1.6, 0, 1) * azul[..., None]
+    Image.fromarray((salida * 255).astype(np.uint8)).save(ruta, quality=92)
+
+
 def conseguir(guion, carpeta: Path) -> list[str | None]:
     """Devuelve, por escena, el nombre del archivo de la ilustración dentro de `carpeta` (o None)."""
     carpeta.mkdir(parents=True, exist_ok=True)
@@ -88,6 +106,7 @@ def conseguir(guion, carpeta: Path) -> list[str | None]:
                 raise RuntimeError(f"No encontré fotos para '{parte.busqueda}'")
             usados.add(url)
             imagenes.descargar(url, destino)
+        a_paleta(destino)
         resultado.append(destino.name)
     return resultado
 

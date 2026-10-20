@@ -12,7 +12,7 @@ import subprocess
 from pathlib import Path
 
 from . import config, ilustraciones
-from .guion import Guion, normalizar
+from .guion import PALABRA, Guion, normalizar
 from .voz import Palabra
 
 PLANTILLA = Path(__file__).parent / "plantilla"
@@ -85,15 +85,24 @@ def _visual(visual: dict) -> dict:
     return v
 
 
-def _inicios(planos: list[dict], palabras: list[Palabra], inicio: float) -> list[float]:
-    """Segundo en que arranca cada toma: la primera con la parte, las demás un poco antes de su palabra `desde`."""
-    inicios, k = [inicio], 0
+def _inicios(planos: list[dict], texto: str, palabras: list[Palabra], inicio: float) -> list[float]:
+    """Segundo en que arranca cada toma: la primera con la parte, las demás un poco antes de su palabra `desde`.
+
+    La voz a veces junta o separa palabras distinto que el texto (por ejemplo los números),
+    así que si no la encuentra tal cual usa la posición de la palabra en el texto, en proporción.
+    """
+    escritas = [normalizar(w) for w in PALABRA.findall(texto)]
+    inicios, k, j = [inicio], 0, 0
     for plano in planos[1:]:
         desde = normalizar(plano["desde"])
-        while k < len(palabras) and normalizar(palabras[k].texto) != desde:
-            k += 1
-        if k == len(palabras):
-            raise ValueError(f"No encontré la palabra '{plano['desde']}' en la voz")
+        j = escritas.index(desde, j + 1) if desde in escritas[j + 1:] else j
+        busca = k
+        while busca < len(palabras) and normalizar(palabras[busca].texto) != desde:
+            busca += 1
+        if busca == len(palabras):
+            busca = min(len(palabras) - 1, max(k, round(j * len(palabras) / max(1, len(escritas)))))
+            print(f"::warning::La voz no dice '{plano['desde']}' tal cual; ubico la toma por proporción")
+        k = busca
         inicios.append(max(inicios[-1] + 0.5, palabras[k].inicio - ADELANTO))
         k += 1
     return inicios
@@ -107,7 +116,7 @@ def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duracione
     for parte, dur in zip(guion.partes, duraciones):
         planos = parte.planos
         propias = [p for p in palabras if reloj <= p.inicio < reloj + dur]
-        inicios = _inicios(planos, propias, reloj) + [reloj + dur]
+        inicios = _inicios(planos, parte.texto_limpio, propias, reloj) + [reloj + dur]
         for k, plano in enumerate(planos):
             ini, fin = inicios[k], inicios[k + 1]
             visual = _visual(plano["visual"])

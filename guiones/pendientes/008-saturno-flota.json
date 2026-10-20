@@ -5,26 +5,26 @@
     {
       "texto": "Saturno es gigante, pero *flotaría en el agua*.",
       "busqueda": "saturn planet",
+      "dibujo": "The planet Saturn with its rings floating in a giant bathtub of water in space",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🪐"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Es casi todo hidrógeno y helio, así que su densidad es menor que la del agua.",
       "busqueda": "gas planet space",
+      "dibujo": "Saturn as a giant gas ball made of hydrogen and helium clouds, light as a balloon",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🎈",
+        "tipo": "ilustracion",
         "texto": "más liviano que el agua"
       }
     },
     {
       "texto": "Si existiera una pileta lo bastante grande para meterlo, *quedaría flotando*.",
       "busqueda": "swimming pool water",
+      "dibujo": "Saturn floating in an enormous swimming pool, with a rubber duck nearby",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🏊",
+        "tipo": "ilustracion",
         "texto": "flotaría"
       }
     },

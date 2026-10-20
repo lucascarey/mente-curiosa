@@ -29,9 +29,9 @@
     {
       "texto": "La Gran Pirámide de Guiza se terminó hace unos cuatro mil quinientos años.",
       "busqueda": "giza pyramid",
+      "dibujo": "The Great Pyramid of Giza under a starry desert night sky",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🔺"
+        "tipo": "ilustracion"
       }
     },
     {

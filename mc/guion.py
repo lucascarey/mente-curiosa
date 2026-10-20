@@ -13,6 +13,7 @@ class Parte:
     texto: str  # puede marcar palabras a destacar con *asteriscos*
     busqueda: str  # búsqueda de la foto en Pixabay, en inglés
     visual: dict = field(default_factory=dict)  # gráfico animado de la escena (ver README)
+    dibujo: str = ""  # qué ilustrar en la escena, en inglés (si falta se usa `busqueda`)
 
     @property
     def texto_limpio(self) -> str:
@@ -51,7 +52,7 @@ def cargar(ruta: Path) -> Guion:
     return Guion(
         id=datos["id"],
         tema=datos["tema"],
-        partes=[Parte(p["texto"], p["busqueda"], p.get("visual") or {}) for p in datos["partes"]],
+        partes=[Parte(p["texto"], p["busqueda"], p.get("visual") or {}, p.get("dibujo", "")) for p in datos["partes"]],
         descripcion=datos["descripcion"],
         hashtags=datos["hashtags"],
         fuente=datos["fuente"],
@@ -84,8 +85,9 @@ def validar_visual(v: dict) -> list[str]:
     if not v:
         return []
     requeridos = {
+        "ilustracion": [],
         "foto": [],
-        "emoji": ["emoji"],
+        "emoji": [],
         "numero": ["valor"],
         "comparacion": ["a", "b"],
         "linea": ["hitos"],

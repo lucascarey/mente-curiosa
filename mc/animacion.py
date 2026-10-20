@@ -1,22 +1,23 @@
 """Arma la línea de tiempo del video y la renderiza cuadro por cuadro con Chromium.
 
-La animación vive en mc/plantilla (HTML + motor.js). Este módulo calcula los
-momentos clave de cada escena (las "marcas") y los efectos de sonido, así
-imagen y sonido usan exactamente los mismos tiempos.
+La animación vive en mc/plantilla (HTML + motor.js + personaje.js). Este módulo
+calcula los momentos clave de cada escena (las "marcas") y los efectos de sonido,
+así imagen y sonido usan exactamente los mismos tiempos.
 """
 
 import json
+import math
 import os
 import shutil
 import subprocess
 from pathlib import Path
 
-from . import config
+from . import config, ilustraciones
 from .guion import Guion
 from .voz import Palabra
 
 PLANTILLA = Path(__file__).parent / "plantilla"
-TRANSICION = 0.32
+TRANSICION = 0.45
 PALABRAS_POR_PANTALLA = 3
 
 
@@ -36,26 +37,22 @@ def marcas(visual: dict, duracion: float) -> tuple[dict, list[tuple[float, str]]
     sonidos: list[tuple[float, str]] = []
     m: dict = {}
     if tipo == "numero":
-        m = {"cuenta_inicio": 0.25, "cuenta_fin": 1.15}
-        sonidos += [(0.25 + k * 0.1, "tic") for k in range(9)] + [(1.15, "ding")]
+        m = {"cuenta_inicio": 0.3, "cuenta_fin": 1.4}
+        sonidos += [(1.4, "nota")]
     elif tipo == "comparacion":
         m = {"fila_a": 0.35, "fila_b": 1.1}
-        sonidos += [(0.2, "pop"), (0.35, "subida"), (0.95, "pop"), (1.1, "subida"), (1.85, "ding")]
+        sonidos += [(0.35, "clic"), (1.1, "clic"), (1.9, "nota")]
     elif tipo == "linea":
         fechas = [h["anio"] for h in visual["hitos"]]
         menor, mayor = min(fechas), max(fechas)
         posiciones = [0.06 + 0.88 * (f - menor) / ((mayor - menor) or 1) for f in fechas]
-        inicio, fin = 0.2, 1.6
+        inicio, fin = 0.2, 1.8
         hitos = [inicio + (fin - inicio) * _invertir_curva(p) for p in posiciones]
         m = {"linea_inicio": inicio, "linea_fin": fin, "posiciones": posiciones, "hitos": hitos}
-        sonidos += [(0.2, "subida")] + [(h, "pop") for h in hitos]
+        sonidos += [(h, "clic") for h in hitos]
     elif tipo == "seguir":
-        m = {"toque": min(1.1, max(0.7, duracion - 0.6))}
-        sonidos += [(0.05, "pop"), (m["toque"], "clic"), (m["toque"] + 0.05, "ding")]
-    elif tipo == "emoji":
-        sonidos += [(0.1, "pop")] + ([(0.45, "pop")] if visual.get("texto") else [])
-    else:
-        sonidos += [(0.05, "pop")] + ([(0.35, "pop")] if visual.get("emoji") else [])
+        m = {"toque": min(1.4, max(0.8, duracion - 0.8))}
+        sonidos += [(m["toque"], "clic"), (m["toque"] + 0.08, "nota")]
     return m, sonidos
 
 
@@ -79,26 +76,47 @@ def agrupar(palabras: list[Palabra]) -> list[dict]:
     return salida
 
 
+def boca_por_palabras(palabras: list[Palabra], duracion: float) -> list[float]:
+    """Movimiento del pico cuando no hay audio real (modo de prueba): abre y cierra en cada palabra."""
+    valores = []
+    for n in range(int(duracion * config.FPS)):
+        t = n / config.FPS
+        hablando = any(p.inicio <= t < p.fin for p in palabras)
+        valores.append(round(abs(math.sin(t * 14)) * 0.8, 2) if hablando else 0.0)
+    return valores
+
+
+def _visual(visual: dict) -> dict:
+    """Copia del visual con los íconos de línea ya resueltos a SVG."""
+    v = dict(visual)
+    if v.get("tipo") == "comparacion":
+        for lado in ("a", "b"):
+            v[lado] = {**v[lado], "svg": ilustraciones.icono(v[lado]["icono"]) if v[lado].get("icono") else ""}
+    return v
+
+
 def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duraciones: list[float],
-                    imagenes: list[tuple[str, str]]) -> tuple[dict, list[tuple[float, str]]]:
-    escenas, sonidos = [], [(0.0, "impacto")]
+                    dibujos: list[str | None]) -> tuple[dict, list[tuple[float, str]]]:
+    escenas, sonidos = [], []
     reloj = 0.0
-    for i, (parte, dur, (foto, fondo)) in enumerate(zip(guion.partes, duraciones, imagenes)):
-        visual = parte.visual or {"tipo": "foto"}
+    for i, (parte, dur, dibujo) in enumerate(zip(guion.partes, duraciones, dibujos)):
+        visual = _visual(parte.visual or {"tipo": "ilustracion"})
         m, sonidos_escena = marcas(visual, dur)
-        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "foto": foto, "fondo": fondo,
+        escenas.append({"inicio": round(reloj, 3), "fin": round(reloj + dur, 3), "dibujo": dibujo,
                         "visual": visual, "marcas": m})
         if i > 0:
-            sonidos.append((reloj - 0.08, "whoosh"))
+            sonidos.append((reloj - 0.15, "swoosh"))
         sonidos += [(reloj + t, nombre) for t, nombre in sonidos_escena]
         reloj += dur
     datos = {
         "duracion": round(reloj, 3),
+        "fps": config.FPS,
         "transicion": TRANSICION,
         "tema": tema,
         "usuario": config.USUARIO,
         "escenas": escenas,
         "grupos": agrupar(palabras),
+        "boca": [],
     }
     return datos, sorted(sonidos)
 
@@ -115,7 +133,8 @@ def renderizar(datos: dict, carpeta_imagenes: Path, destino: Path) -> Path:
     trabajo = carpeta_imagenes
     for archivo in PLANTILLA.iterdir():
         shutil.copy(archivo, trabajo / archivo.name)
-    shutil.copy(config.FUENTE, trabajo / config.FUENTE.name)
+    for fuente in config.FUENTES.glob("*.ttf"):
+        shutil.copy(fuente, trabajo / fuente.name)
     (trabajo / "datos.js").write_text("window.DATOS = " + json.dumps(datos, ensure_ascii=False) + ";", encoding="utf-8")
 
     cuadros = int(datos["duracion"] * config.FPS)

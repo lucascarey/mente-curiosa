@@ -3,6 +3,7 @@
 // cuadro se puede capturar en cualquier orden.
 // Los momentos clave de cada escena (D.escenas[i].marcas) los calcula Python,
 // que usa los mismos valores para ubicar los efectos de sonido.
+// Estilo: movimientos cortos y suaves, siempre con las mismas curvas.
 
 const D = window.DATOS;
 const $ = (sel, raiz = document) => raiz.querySelector(sel);
@@ -16,75 +17,59 @@ const crear = (tag, clase, padre, html) => {
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const prog = (t, inicio, dur) => clamp((t - inicio) / dur);
-const E = {
-  outCubic: x => 1 - Math.pow(1 - x, 3),
-  inOutCubic: x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2),
-  outBack: x => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
-  outElastic: x => (x === 0 || x === 1 ? x : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * (2 * Math.PI / 3)) + 1),
-};
+const suave = x => 1 - Math.pow(1 - x, 3);
+const suaveDoble = x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 const mezclar = (a, b, p) => a + (b - a) * p;
 const formatear = n => Math.round(n).toLocaleString("es-AR");
+// Sube en `sube` segundos desde `inicio`, se mantiene hasta `fin` y baja en `baja` segundos
+const campana = (t, inicio, fin, sube = 0.3, baja = 0.4) =>
+  suaveDoble(prog(t, inicio, sube)) * (1 - suaveDoble(prog(t, fin, baja)));
+// Entrada estándar: aparece y sube unos pocos píxeles
+const entrar = (el, t, inicio, dur = 0.45, distancia = 24) => {
+  const p = suave(prog(t, inicio, dur));
+  el.style.opacity = p;
+  el.style.transform = `translateY(${mezclar(distancia, 0, p)}px)`;
+};
+
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 
 const raiz = document.documentElement;
 raiz.style.setProperty("--color", D.tema.color);
 raiz.style.setProperty("--oscuro", D.tema.oscuro);
-$("#chip-emoji").textContent = D.tema.emoji;
 $("#chip-texto").textContent = D.tema.nombre;
 $("#usuario").textContent = D.usuario;
 
 // ---------- Construcción de escenas ----------
 
-const constructores = {
-  foto(v, caja, esc) {
-    const foto = crear("div", "foto", caja);
-    const img = crear("div", "img", foto);
-    img.style.backgroundImage = `url(${esc.foto})`;
-    const sticker = v.emoji ? crear("div", "sticker", caja, v.emoji) : null;
-    return (tl) => {
-      const p = E.outBack(prog(tl, 0.05, 0.45));
-      foto.style.transform = `scale(${mezclar(0.4, 1, p)}) rotate(${mezclar(-14, -3, p) + Math.sin(tl * 1.4) * 1.2}deg)`;
-      foto.style.opacity = prog(tl, 0.05, 0.12);
-      img.style.transform = `scale(${1.05 + tl * 0.035}) translateX(${-tl * 6}px)`;
-      if (sticker) {
-        const ps = E.outElastic(prog(tl, 0.35, 0.8));
-        sticker.style.transform = `scale(${ps}) rotate(${12 + Math.sin(tl * 3) * 6}deg)`;
-      }
-    };
-  },
+function ilustracion(esc, caja, texto) {
+  const marco = crear("div", "ilus", caja);
+  const img = crear("div", "img", marco);
+  img.style.backgroundImage = `url(${esc.dibujo})`;
+  const etiqueta = texto ? crear("div", "etiqueta", marco, texto) : null;
+  return (tl) => {
+    img.style.transform = `scale(${1.02 + tl * 0.012})`;
+    if (etiqueta) entrar(etiqueta, tl, 0.5);
+  };
+}
 
-  emoji(v, caja) {
-    const halo = crear("div", "halo", caja);
-    const emoji = crear("div", "emoji-grande", caja, v.emoji);
-    const texto = v.texto ? crear("div", "emoji-texto", caja, v.texto) : null;
-    return (tl) => {
-      const p = E.outElastic(prog(tl, 0.1, 0.9));
-      emoji.style.transform = `translateY(${Math.sin(tl * 2.4) * 18 - 90}px) scale(${p}) rotate(${Math.sin(tl * 1.7) * 6}deg)`;
-      halo.style.transform = `translateY(-90px) scale(${E.outCubic(prog(tl, 0, 0.5)) * (1 + Math.sin(tl * 4) * 0.06)})`;
-      if (texto) {
-        const pt = E.outBack(prog(tl, 0.45, 0.4));
-        texto.style.transform = `translateY(${mezclar(120, 0, pt)}px) rotate(-3deg)`;
-        texto.style.opacity = prog(tl, 0.45, 0.15);
-      }
-    };
-  },
+const constructores = {
+  ilustracion: (v, caja, esc) => ilustracion(esc, caja, v.texto),
+  foto: (v, caja, esc) => ilustracion(esc, caja, v.texto),
+  emoji: (v, caja, esc) => ilustracion(esc, caja, v.texto),
 
   numero(v, caja, esc) {
     const m = esc.marcas;
     const cont = crear("div", "numero-caja", caja);
-    cont.innerHTML = `<svg viewBox="0 0 760 760"><circle cx="380" cy="380" r="350" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="22"/><circle class="arco" cx="380" cy="380" r="350" fill="none" stroke="${D.tema.color}" stroke-width="22" stroke-linecap="round" stroke-dasharray="2199" stroke-dashoffset="2199"/></svg>`;
+    cont.innerHTML = `<svg viewBox="0 0 680 680"><circle cx="340" cy="340" r="320" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/><circle class="arco" cx="340" cy="340" r="320" fill="none" stroke="${D.tema.color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="2011" stroke-dashoffset="2011"/></svg>`;
     const arco = $(".arco", cont);
     const texto = `${v.prefijo || ""}${formatear(v.valor)}${v.sufijo || ""}`;
     const num = crear("div", "numero l" + Math.min(5, Math.max(2, texto.length)), cont);
     const etiqueta = crear("div", "numero-etiqueta", cont, v.etiqueta || "");
     return (tl) => {
-      const pc = E.outCubic(prog(tl, m.cuenta_inicio, m.cuenta_fin - m.cuenta_inicio));
+      const pc = suave(prog(tl, m.cuenta_inicio, m.cuenta_fin - m.cuenta_inicio));
       num.textContent = `${v.prefijo || ""}${formatear(v.valor * pc)}${v.sufijo || ""}`;
-      const golpe = tl > m.cuenta_fin ? 1 + 0.18 * Math.exp(-(tl - m.cuenta_fin) * 9) : 1;
-      num.style.transform = `scale(${E.outBack(prog(tl, 0, 0.35)) * golpe})`;
-      arco.style.strokeDashoffset = 2199 * (1 - pc);
-      cont.style.transform = `rotate(${Math.sin(tl * 1.3) * 2}deg)`;
-      etiqueta.style.opacity = prog(tl, m.cuenta_fin - 0.2, 0.25);
-      etiqueta.style.transform = `translateY(${mezclar(40, 0, E.outCubic(prog(tl, m.cuenta_fin - 0.2, 0.3)))}px)`;
+      arco.style.strokeDashoffset = 2011 * (1 - pc);
+      entrar(etiqueta, tl, m.cuenta_fin - 0.3);
     };
   },
 
@@ -93,23 +78,21 @@ const constructores = {
     const cont = crear("div", "comparacion", caja);
     if (v.titulo) crear("div", "comp-titulo", cont, v.titulo);
     const maximo = Math.max(v.a.valor, v.b.valor);
-    const filas = [v.a, v.b].map((item) => {
-      const fila = crear("div", "fila", cont);
-      const cabeza = crear("div", "fila-cabeza", fila, `<span class="e">${item.emoji || ""}</span><span>${item.etiqueta}</span>`);
+    const filas = [v.a, v.b].map((item, i) => {
+      const fila = crear("div", "fila " + (i ? "b" : "a"), cont);
+      const cabeza = crear("div", "fila-cabeza", fila);
+      if (item.svg) crear("div", "icono", cabeza, item.svg);
+      crear("span", "", cabeza, item.etiqueta);
       const valor = crear("div", "valor", cabeza);
-      const pista = crear("div", "pista", fila);
-      const relleno = crear("div", "relleno", pista);
-      return { fila, relleno, valor, item };
+      const relleno = crear("div", "relleno", crear("div", "pista", fila));
+      return { fila, relleno, valor, item, inicio: i ? m.fila_b : m.fila_a };
     });
     return (tl) => {
-      filas.forEach((f, i) => {
-        const inicio = i === 0 ? m.fila_a : m.fila_b;
-        const pe = E.outBack(prog(tl, inicio - 0.15, 0.35));
-        f.fila.style.opacity = prog(tl, inicio - 0.15, 0.15);
-        f.fila.style.transform = `translateX(${mezclar(-200, 0, pe)}px)`;
-        const pb = E.outCubic(prog(tl, inicio, 0.75));
-        f.relleno.style.width = `${Math.max(9, 100 * (f.item.valor / maximo) * pb)}%`;
-        f.valor.textContent = `${formatear(f.item.valor * pb)} ${v.unidad || ""}`;
+      filas.forEach((f) => {
+        entrar(f.fila, tl, f.inicio - 0.2, 0.4, 20);
+        const pb = suave(prog(tl, f.inicio, 0.8));
+        f.relleno.style.width = `${Math.max(3, 100 * (f.item.valor / maximo) * pb)}%`;
+        f.valor.textContent = `${formatear(f.item.valor * pb)} ${v.unidad || ""}`.trim();
       });
     };
   },
@@ -117,18 +100,20 @@ const constructores = {
   linea(v, caja, esc) {
     const m = esc.marcas;
     const cont = crear("div", "linea", caja);
-    const eje = crear("div", "eje", cont);
+    const relleno = crear("div", "eje-relleno", crear("div", "eje", cont));
     const hitos = v.hitos.map((h, i) => {
       const el = crear("div", "hito", cont, `<div class="punto"></div><div class="hito-texto"><div class="hito-anio">${h.fecha}</div><div class="hito-nombre">${h.etiqueta}</div></div>`);
-      el.style.top = `${m.posiciones[i] * 860}px`;
-      return { el, punto: $(".punto", el), texto: $(".hito-texto", el), t: m.hitos[i] };
+      el.style.top = `${m.posiciones[i] * 760}px`;
+      return { punto: $(".punto", el), texto: $(".hito-texto", el), t: m.hitos[i] };
     });
     return (tl) => {
-      eje.style.height = `${860 * E.inOutCubic(prog(tl, m.linea_inicio, m.linea_fin - m.linea_inicio))}px`;
+      relleno.style.height = `${760 * suaveDoble(prog(tl, m.linea_inicio, m.linea_fin - m.linea_inicio))}px`;
       hitos.forEach((h) => {
-        h.punto.style.transform = `scale(${E.outElastic(prog(tl, h.t, 0.7))})`;
-        h.texto.style.opacity = prog(tl, h.t, 0.15);
-        h.texto.style.transform = `translateX(${mezclar(80, 0, E.outCubic(prog(tl, h.t, 0.35)))}px)`;
+        const p = suave(prog(tl, h.t, 0.3));
+        h.punto.style.background = p > 0 ? D.tema.color : "";
+        h.punto.style.opacity = mezclar(0.35, 1, p);
+        h.texto.style.opacity = p;
+        h.texto.style.transform = `translateX(${mezclar(24, 0, p)}px)`;
       });
     };
   },
@@ -136,106 +121,114 @@ const constructores = {
   seguir(v, caja, esc) {
     const m = esc.marcas;
     const cont = crear("div", "seguir", caja);
-    const avatar = crear("div", "avatar", cont, D.tema.emoji);
-    crear("div", "seguir-nombre", cont, D.usuario);
-    const boton = crear("div", "boton", cont, "SEGUIR");
-    const mano = crear("div", "mano", cont, "👆");
+    const avatar = crear("div", "avatar", cont);
+    const mini = personaje(crear("div", "", avatar));
+    const nombre = crear("div", "seguir-nombre", cont, D.usuario);
+    const boton = crear("div", "boton", cont, "Seguir");
+    const onda = crear("div", "onda", cont);
     return (tl) => {
-      avatar.style.transform = `scale(${E.outBack(prog(tl, 0.05, 0.4))})`;
-      cont.style.opacity = prog(tl, 0, 0.12);
+      mini(tl + 1.3, {});
+      entrar(avatar, tl, 0.05);
+      entrar(nombre, tl, 0.2);
+      entrar(boton, tl, 0.35);
       const hecho = tl >= m.toque;
-      boton.textContent = hecho ? "SIGUIENDO ✓" : "SEGUIR";
-      boton.classList.toggle("hecho", hecho);
-      const latido = hecho ? 1 + 0.12 * Math.exp(-(tl - m.toque) * 7) : 1 + Math.sin(tl * 8) * 0.03;
-      const apretado = Math.abs(tl - m.toque) < 0.08 ? 0.9 : 1;
-      boton.style.transform = `scale(${E.outBack(prog(tl, 0.25, 0.4)) * latido * apretado})`;
-      const pm = E.outCubic(prog(tl, m.toque - 0.6, 0.55));
-      mano.style.transform = `translate(${mezclar(260, 0, pm)}px, ${mezclar(380, 0, pm)}px) scale(${apretado})`;
-      mano.style.opacity = prog(tl, m.toque - 0.6, 0.1) * (1 - prog(tl, m.toque + 0.6, 0.3));
+      if (boton.classList.contains("hecho") !== hecho) {
+        boton.classList.toggle("hecho", hecho);
+        boton.innerHTML = hecho ? `${CHECK}Siguiendo` : "Seguir";
+      }
+      const apretado = 1 - 0.05 * campana(tl, m.toque - 0.12, m.toque, 0.1, 0.15);
+      boton.style.transform = `scale(${apretado})`;
+      const po = prog(tl, m.toque - 0.05, 0.6);
+      onda.style.opacity = po > 0 && po < 1 ? 0.6 * (1 - po) : 0;
+      onda.style.transform = `scale(${mezclar(0.3, 1.8, suave(po))})`;
     };
   },
 };
 
-const escenas = D.escenas.map((esc, i) => {
+const escenas = D.escenas.map((esc) => {
   const el = crear("div", "escena", $("#escenas"));
-  el.style.zIndex = i + 1;
-  const fondo = crear("div", "fondo", el);
-  fondo.style.backgroundImage = `url(${esc.fondo})`;
-  crear("div", "tinte", el);
   const caja = crear("div", "visual", el);
-  const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "foto";
+  const tipo = esc.visual.tipo in constructores ? esc.visual.tipo : "ilustracion";
   const dibujar = constructores[tipo](esc.visual, caja, esc);
-  return { ...esc, el, fondo, caja, dibujar };
+  return { ...esc, el, tipo, dibujar };
 });
 
-// ---------- Subtítulos palabra por palabra ----------
+// ---------- Subtítulos dentro del globo ----------
 
 const sub = $("#subtitulo");
-const grupos = D.grupos.map((g) => ({
-  ...g,
-  spans: null,
-}));
 let grupoActual = -1;
+let spans = [];
 
 function mostrarGrupo(i) {
   sub.innerHTML = "";
-  grupos[i].spans = grupos[i].palabras.map((p) => {
-    const s = crear("span", "palabra" + (p.destacada ? " destacada" : ""), sub);
-    s.textContent = p.texto;
-    return s;
-  });
+  spans = D.grupos[i].palabras.map((p) => crear("span", "palabra" + (p.destacada ? " destacada" : ""), sub, p.texto));
   grupoActual = i;
+}
+
+// ---------- Personaje ----------
+
+const animarPersonaje = personaje($("#personaje"));
+const destacadas = D.grupos.flatMap((g) => g.palabras.filter((p) => p.destacada).map((p) => p.inicio));
+
+function estadoPersonaje(t, escena) {
+  const tl = t - escena.inicio;
+  // Al empezar cada escena mira la tarjeta y después vuelve al globo
+  const mira = campana(tl, 0, 1.1, 0.3, 0.4);
+  let gesto = Math.max(0, ...destacadas.map((d) => campana(t, d - 0.15, d + 0.6, 0.3, 0.4)));
+  if (escena.tipo === "seguir") gesto = Math.max(gesto, suaveDoble(prog(tl, 0.2, 0.4)));
+  return {
+    boca: D.boca[Math.round(t * D.fps)] || 0,
+    mirada: mezclar(0.35, 0.6, mira),
+    arriba: mira,
+    gesto,
+  };
 }
 
 // ---------- Render ----------
 
 window.render = function (t) {
-  // Escenas: la actual entra con una cortina circular sobre la anterior
   const actual = escenas.findLastIndex((e) => t >= e.inicio);
   escenas.forEach((e, i) => {
-    const visible = i === actual || (i === actual - 1 && t - escenas[actual].inicio < D.transicion);
+    const sale = i === actual - 1 && t - escenas[actual].inicio < D.transicion;
+    const visible = i === actual || sale;
     e.el.style.display = visible ? "block" : "none";
     if (!visible) return;
     const tl = t - e.inicio;
-    if (i === actual && i > 0) {
-      const pc = E.inOutCubic(prog(tl, 0, D.transicion));
-      e.el.style.clipPath = pc < 1 ? `circle(${pc * 120}% at 50% 40%)` : "none";
+    if (sale) {
+      const p = suaveDoble(prog(t, escenas[actual].inicio, D.transicion * 0.6));
+      e.el.style.opacity = 1 - p;
+      e.el.style.transform = `translateY(${-16 * p}px)`;
+    } else if (i > 0) {
+      const p = suave(prog(tl, D.transicion * 0.3, D.transicion * 0.7));
+      e.el.style.opacity = p;
+      e.el.style.transform = `translateY(${mezclar(28, 0, p)}px)`;
     }
-    // Golpe de cámara cada vez que cambia el subtítulo
-    const g = grupos.findLastIndex((gr) => t >= gr.inicio);
-    const golpe = g >= 0 ? 0.035 * Math.exp(-(t - grupos[g].inicio) * 7) : 0;
-    e.fondo.style.transform = `scale(${1.06 + tl * 0.012 + golpe}) rotate(${Math.sin(t * 0.6) * 0.6}deg)`;
-    e.caja.style.transform = `translateY(${Math.sin(t * 1.1) * 8}px) scale(${1 + golpe * 0.6})`;
     e.dibujar(tl);
   });
 
-  // Subtítulo
-  const g = grupos.findLastIndex((gr) => t >= gr.inicio);
-  if (g >= 0 && t < grupos[g].fin) {
+  // Subtítulo palabra por palabra
+  const g = D.grupos.findLastIndex((gr) => t >= gr.inicio);
+  if (g >= 0 && t < D.grupos[g].fin) {
     if (g !== grupoActual) mostrarGrupo(g);
     sub.style.display = "flex";
-    grupos[g].palabras.forEach((p, k) => {
-      const s = grupos[g].spans[k];
-      const pp = prog(t, p.inicio - 0.04, 0.16);
-      s.style.opacity = pp > 0 ? 1 : 0;
-      s.style.transform = `translateY(${mezclar(40, 0, E.outBack(pp))}px) scale(${mezclar(0.55, 1, E.outBack(pp))})`;
-      if (p.destacada) s.style.setProperty("--pill", E.outBack(prog(t, p.inicio, 0.25)));
-    });
+    D.grupos[g].palabras.forEach((p, k) => entrar(spans[k], t, p.inicio - 0.05, 0.16, 14));
   } else {
     sub.style.display = "none";
   }
 
+  animarPersonaje(t, estadoPersonaje(t, escenas[Math.max(0, actual)]));
+
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;
-  const pchip = E.outBack(prog(t, 0.2, 0.5));
-  $("#chip").style.transform = `translateX(${mezclar(-500, 0, pchip)}px)`;
+  $("#luz").style.transform = `translate(${90 + Math.sin(t * 0.2) * 60}px, ${-60 + Math.cos(t * 0.15) * 50}px)`;
 };
 
 window.listo = Promise.all([
   document.fonts.ready,
-  ...D.escenas.flatMap((e) => [e.fondo, e.foto]).map((src) => new Promise((ok) => {
+  ...["500", "700", "800"].map((peso) => document.fonts.load(`${peso} 40px Montserrat`)),
+  ...D.escenas.filter((e) => e.dibujo).map((e) => new Promise((ok) => {
     const img = new Image();
     img.onload = img.onerror = ok;
-    img.src = src;
+    img.src = e.dibujo;
   })),
 ]);

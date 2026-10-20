@@ -5,34 +5,35 @@
     {
       "texto": "Los flamencos *no nacen rosados*. Nacen grises o blancos.",
       "busqueda": "flamingo",
+      "dibujo": "A fluffy grey flamingo chick standing next to an adult pink flamingo in shallow water",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🦩"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Su color viene de lo que comen: algas y pequeños crustáceos llenos de *carotenoides*.",
       "busqueda": "flamingo water",
+      "dibujo": "A pink flamingo eating small red shrimp and algae in a lake",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🦐",
+        "tipo": "ilustracion",
         "texto": "algas y crustáceos"
       }
     },
     {
       "texto": "Son los mismos pigmentos que le dan el color naranja a la zanahoria.",
       "busqueda": "carrots",
+      "dibujo": "Orange carrots next to a pink flamingo feather",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🥕",
+        "tipo": "ilustracion",
         "texto": "mismo pigmento"
       }
     },
     {
       "texto": "Si un flamenco deja de comer eso, con el tiempo sus plumas nuevas salen cada vez más pálidas.",
       "busqueda": "flamingo flock",
+      "dibujo": "A flamingo whose feathers fade from pink to pale white",
       "visual": {
-        "tipo": "foto"
+        "tipo": "ilustracion"
       }
     },
     {

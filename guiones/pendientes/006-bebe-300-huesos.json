@@ -5,9 +5,9 @@
     {
       "texto": "Cuando naciste tenías casi *cien huesos más* que ahora.",
       "busqueda": "newborn baby",
+      "dibujo": "A cute sleeping newborn baby wrapped in a blanket",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "👶"
+        "tipo": "ilustracion"
       }
     },
     {
@@ -23,9 +23,9 @@
     {
       "texto": "Con el tiempo, muchos de ellos se van *fusionando*, como los del cráneo.",
       "busqueda": "x ray skeleton",
+      "dibujo": "A friendly simple skeleton x-ray of a baby skull with soft spots, medical diagram",
       "visual": {
-        "tipo": "foto",
-        "emoji": "💀"
+        "tipo": "ilustracion"
       }
     },
     {
@@ -38,12 +38,12 @@
         "a": {
           "etiqueta": "Bebé",
           "valor": 300,
-          "emoji": "👶"
+          "icono": "baby"
         },
         "b": {
           "etiqueta": "Adulto",
           "valor": 206,
-          "emoji": "🧑"
+          "icono": "user"
         }
       }
     },

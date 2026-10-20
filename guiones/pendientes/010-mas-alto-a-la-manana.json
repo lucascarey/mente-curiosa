@@ -5,26 +5,26 @@
     {
       "texto": "A la mañana sos *más alto* que a la noche.",
       "busqueda": "waking up morning",
+      "dibujo": "A person stretching tall in the morning next to a height measuring ruler, sunrise window",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "📏",
+        "tipo": "ilustracion",
         "texto": "más alto de mañana"
       }
     },
     {
       "texto": "Durante el día, la gravedad aprieta los discos que tenés entre las vértebras.",
       "busqueda": "walking city",
+      "dibujo": "A person walking in the city with arrows of gravity pressing down on their spine",
       "visual": {
-        "tipo": "foto",
-        "emoji": "⬇️"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Esos discos pierden un poco de líquido y la columna se acorta.",
       "busqueda": "spine",
+      "dibujo": "A side view of a human spine with the discs between vertebrae slightly squashed, medical diagram",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "💧",
+        "tipo": "ilustracion",
         "texto": "los discos se aplastan"
       }
     },

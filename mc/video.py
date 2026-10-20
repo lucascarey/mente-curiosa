@@ -1,8 +1,8 @@
-"""Arma el video final: voz, fotos, animación y sonido."""
+"""Arma el video final: voz, ilustraciones, animación y sonido."""
 
 import subprocess
 
-from . import animacion, config, imagenes, sonido, temas, voz
+from . import animacion, config, ilustraciones, sonido, temas, voz
 from .guion import Guion
 
 
@@ -13,8 +13,10 @@ def armar(guion: Guion):
     tema = temas.tema(guion.tema)
 
     audio_voz, palabras, duraciones = voz.generar(guion.partes, trabajo / "voz")
-    fotos = imagenes.conseguir([p.busqueda for p in guion.partes], trabajo / "escena")
-    datos, eventos = animacion.linea_de_tiempo(guion, tema, palabras, duraciones, fotos)
+    dibujos = ilustraciones.conseguir(guion.partes, tema, trabajo / "escena")
+    datos, eventos = animacion.linea_de_tiempo(guion, tema, palabras, duraciones, dibujos)
+    boca = sonido.boca(audio_voz, datos["duracion"], config.FPS)
+    datos["boca"] = boca if any(boca) else animacion.boca_por_palabras(palabras, datos["duracion"])
 
     mudo = animacion.renderizar(datos, trabajo / "escena", trabajo / "mudo.mp4")
     audio = sonido.mezclar(audio_voz, datos["duracion"], eventos, tema["tonalidad"], trabajo / "audio.m4a")

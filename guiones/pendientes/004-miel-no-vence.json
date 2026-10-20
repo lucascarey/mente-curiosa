@@ -5,26 +5,26 @@
     {
       "texto": "La miel es uno de los pocos alimentos que *nunca se echa a perder*.",
       "busqueda": "honey",
+      "dibujo": "A glass jar of golden honey with a wooden honey dipper",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🍯",
+        "tipo": "ilustracion",
         "texto": "nunca vence"
       }
     },
     {
       "texto": "Tiene muy poca agua y es muy ácida, así que las bacterias no pueden vivir en ella.",
       "busqueda": "honey dripping",
+      "dibujo": "Golden honey dripping, tiny sad cartoon bacteria floating away from it",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🦠"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Además, las abejas le agregan una enzima que produce agua oxigenada en pequeñas cantidades.",
       "busqueda": "bees honeycomb",
+      "dibujo": "Cute bees working on a honeycomb full of golden honey",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🐝"
+        "tipo": "ilustracion"
       }
     },
     {

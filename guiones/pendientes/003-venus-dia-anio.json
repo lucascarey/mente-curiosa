@@ -5,9 +5,9 @@
     {
       "texto": "En Venus, *un día dura más que un año*.",
       "busqueda": "planet space",
+      "dibujo": "The planet Venus covered in thick yellow clouds, glowing in space next to a distant Sun",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🪐"
+        "tipo": "ilustracion"
       }
     },
     {
@@ -29,21 +29,21 @@
         "a": {
           "etiqueta": "Un día",
           "valor": 243,
-          "emoji": "🌗"
+          "icono": "rotate-cw"
         },
         "b": {
           "etiqueta": "Un año",
           "valor": 225,
-          "emoji": "☀️"
+          "icono": "orbit"
         }
       }
     },
     {
       "texto": "Y encima gira *al revés* que casi todos los planetas: allá el Sol sale por el oeste.",
       "busqueda": "sunrise clouds",
+      "dibujo": "A sunrise on the rocky surface of Venus, the Sun rising on the west horizon, orange clouds",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🔄",
+        "tipo": "ilustracion",
         "texto": "gira al revés"
       }
     },

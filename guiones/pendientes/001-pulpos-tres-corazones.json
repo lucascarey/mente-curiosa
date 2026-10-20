@@ -14,26 +14,26 @@
     {
       "texto": "Dos corazones mandan sangre a las branquias y el tercero al resto del cuerpo.",
       "busqueda": "octopus underwater",
+      "dibujo": "A cute purple octopus with three glowing hearts visible inside its body, simple anatomy diagram",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🫀"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Cuando nadan, ese tercer corazón se detiene. Por eso prefieren arrastrarse por el fondo.",
       "busqueda": "octopus crawling",
+      "dibujo": "A cute octopus crawling on the sandy sea floor among rocks and seaweed",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "🐙",
+        "tipo": "ilustracion",
         "texto": "prefiere arrastrarse"
       }
     },
     {
       "texto": "Y su sangre no es roja: es *azul*, porque usa cobre en lugar de hierro para llevar el oxígeno.",
       "busqueda": "deep blue ocean",
+      "dibujo": "A cute octopus with glowing blue blood vessels, deep blue ocean",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "💙",
+        "tipo": "ilustracion",
         "texto": "sangre azul"
       }
     },

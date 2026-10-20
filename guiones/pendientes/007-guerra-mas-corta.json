@@ -5,26 +5,26 @@
     {
       "texto": "La guerra más corta de la historia duró *menos de una hora*.",
       "busqueda": "old clock",
+      "dibujo": "A vintage pocket watch showing less than one hour, timer",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "⏱️",
+        "tipo": "ilustracion",
         "texto": "menos de 1 hora"
       }
     },
     {
       "texto": "Fue en 1896, entre el Reino Unido y Zanzíbar, una isla frente a la costa de África.",
       "busqueda": "zanzibar beach",
+      "dibujo": "A tropical island off the coast of Africa with an old palace and palm trees, year 1896",
       "visual": {
-        "tipo": "foto",
-        "emoji": "🏝️"
+        "tipo": "ilustracion"
       }
     },
     {
       "texto": "Los barcos británicos bombardearon el palacio del sultán.",
       "busqueda": "old warship",
+      "dibujo": "Old British steam warships firing at a palace on a tropical coast, smoke clouds",
       "visual": {
-        "tipo": "emoji",
-        "emoji": "💥"
+        "tipo": "ilustracion"
       }
     },
     {

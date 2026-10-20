@@ -27,63 +27,34 @@ def _paso_bajo(x: np.ndarray, corte: np.ndarray | float) -> np.ndarray:
     return y
 
 
-def whoosh(dur: float = 0.42) -> np.ndarray:
+def swoosh(dur: float = 0.38) -> np.ndarray:
+    """Soplido corto y apagado para el cambio de escena."""
     t = _t(dur)
     ruido = rng.standard_normal(len(t))
-    barrido = 300 + 5200 * np.sin(np.pi * t / dur) ** 2
-    sonido = _paso_bajo(ruido, barrido) - _paso_bajo(ruido, 180)
-    env = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 1.5
-    return 0.9 * sonido * env / (np.abs(sonido).max() + 1e-9)
-
-
-def subida(dur: float = 0.7) -> np.ndarray:
-    t = _t(dur)
-    frec = 220 * (4 ** (t / dur))
-    fase = 2 * np.pi * np.cumsum(frec) / SR
-    tono = np.sin(fase) + 0.3 * np.sin(2 * fase)
-    ruido = _paso_bajo(rng.standard_normal(len(t)), 800 + 4000 * t / dur)
-    env = (t / dur) ** 1.5 * np.exp(-((t - dur) ** 2) * 60)
-    return 0.35 * (tono * 0.5 + ruido * 2) * env
-
-
-def pop() -> np.ndarray:
-    t = _t(0.12)
-    frec = 1100 * np.exp(-t * 30) + 260
-    fase = 2 * np.pi * np.cumsum(frec) / SR
-    return 0.8 * np.sin(fase) * np.exp(-t * 38)
-
-
-def tic() -> np.ndarray:
-    t = _t(0.03)
-    return 0.35 * np.sin(2 * np.pi * 2400 * t) * np.exp(-t * 180)
-
-
-def ding() -> np.ndarray:
-    t = _t(0.9)
-    tono = sum(a * np.sin(2 * np.pi * f * t) for f, a in ((1318.5, 1), (1975.5, 0.5), (2637, 0.25)))
-    return 0.35 * tono * np.exp(-t * 5.5)
+    barrido = 250 + 1800 * np.sin(np.pi * t / dur) ** 2
+    sonido = _paso_bajo(ruido, barrido) - _paso_bajo(ruido, 150)
+    env = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 2
+    return sonido * env / (np.abs(sonido).max() + 1e-9)
 
 
 def clic() -> np.ndarray:
-    t = _t(0.06)
-    golpe = np.sin(2 * np.pi * 140 * t) * np.exp(-t * 70)
-    return 0.7 * (golpe + 0.4 * rng.standard_normal(len(t)) * np.exp(-t * 400))
+    """Clic suave, como una tecla de madera."""
+    t = _t(0.08)
+    return (np.sin(2 * np.pi * 820 * t) + 0.4 * np.sin(2 * np.pi * 1640 * t)) * np.exp(-t * 85)
 
 
-def impacto() -> np.ndarray:
-    t = _t(1.1)
-    frec = 110 * np.exp(-t * 3) + 38
-    grave = np.sin(2 * np.pi * np.cumsum(frec) / SR) * np.exp(-t * 3.2)
-    brillo = _paso_bajo(rng.standard_normal(len(t)), 2500) * np.exp(-t * 9)
-    return 0.9 * grave + 0.5 * brillo
+def nota() -> np.ndarray:
+    """Nota de marimba para cerrar un dato."""
+    t = _t(0.7)
+    tono = np.sin(2 * np.pi * 784 * t) + 0.25 * np.sin(2 * np.pi * 784 * 4 * t) * np.exp(-t * 30)
+    return tono * np.exp(-t * 7) * np.minimum(1, t / 0.004)
 
 
-EFECTOS = {"whoosh": (whoosh, 0.55), "subida": (subida, 0.5), "pop": (pop, 0.4), "tic": (tic, 0.35),
-           "ding": (ding, 0.45), "clic": (clic, 0.6), "impacto": (impacto, 0.7)}
+EFECTOS = {"swoosh": (swoosh, 0.22), "clic": (clic, 0.22), "nota": (nota, 0.2)}
 
 
-def musica(dur: float, tonalidad: int = 0, bpm: int = 112) -> np.ndarray:
-    """Base electrónica suave: acordes, arpegio, bombo y hi-hat."""
+def musica(dur: float, tonalidad: int = 0, bpm: int = 96) -> np.ndarray:
+    """Base tranquila: acordes, arpegio suave y un bombo apenas marcado."""
     total = int(dur * SR)
     salida = np.zeros(total)
     negra = 60 / bpm
@@ -114,22 +85,15 @@ def musica(dur: float, tonalidad: int = 0, bpm: int = 112) -> np.ndarray:
             a = ini + int(k * negra / 2 * SR)
             b = min(total, a + len(pluck))
             if a < total:
-                salida[a:b] += 0.06 * pluck[: b - a]
-        # Bombo en cada negra y hi-hat a contratiempo
-        for k in range(4):
+                salida[a:b] += 0.04 * pluck[: b - a]
+        # Bombo suave en el primer y tercer tiempo
+        for k in (0, 2):
             tb = _t(0.25)
-            bombo = np.sin(2 * np.pi * np.cumsum(55 + 90 * np.exp(-tb * 30)) / SR) * np.exp(-tb * 14)
+            bombo = np.sin(2 * np.pi * np.cumsum(50 + 60 * np.exp(-tb * 30)) / SR) * np.exp(-tb * 12)
             a = ini + int(k * negra * SR)
             b = min(total, a + len(bombo))
             if a < total:
-                salida[a:b] += 0.32 * bombo[: b - a]
-            th = _t(0.05)
-            hat = rng.standard_normal(len(th)) * np.exp(-th * 90)
-            hat -= _paso_bajo(hat, 6000)
-            a = ini + int((k + 0.5) * negra * SR)
-            b = min(total, a + len(hat))
-            if a < total:
-                salida[a:b] += 0.08 * hat[: b - a]
+                salida[a:b] += 0.16 * bombo[: b - a]
     # Entrada y salida suaves
     env = np.minimum(1, _t(dur) / 0.4)[:total]
     env *= np.minimum(1, (dur - _t(dur)) / 1.2)[:total]
@@ -162,9 +126,25 @@ def mezclar(voz: Path, duracion: float, eventos: list[tuple[float, str]], tonali
         if a < total:
             fx[a:b] += sonido[: b - a]
 
-    mezcla = 1.0 * v + 0.55 * mus + 0.6 * fx
+    mezcla = 1.0 * v + 0.4 * mus + fx
     mezcla *= 0.89 / (np.abs(mezcla).max() + 1e-9)
     estereo = np.repeat(mezcla.astype(np.float32)[:, None], 2, axis=1)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-",
                     "-c:a", "aac", "-b:a", "192k", str(destino)], input=estereo.tobytes(), check=True)
     return destino
+
+
+def boca(voz: Path, duracion: float, fps: int) -> list[float]:
+    """Apertura del pico del personaje (0 a 1) en cada cuadro, según el volumen de la voz."""
+    v = _leer(voz)
+    paso = SR // fps
+    cuadros = int(duracion * fps)
+    v = np.pad(v, (0, max(0, cuadros * paso - len(v))))[: cuadros * paso]
+    rms = np.sqrt((v.reshape(cuadros, paso) ** 2).mean(axis=1))
+    tope = np.percentile(rms, 95)
+    if tope < 1e-4:
+        return [0.0] * cuadros
+    nivel = np.clip((rms / tope - 0.12) / 0.88, 0, 1)
+    # Suaviza un poco para que el pico no tiemble
+    nivel = np.convolve(nivel, [0.25, 0.5, 0.25], mode="same")
+    return [round(float(x), 2) for x in nivel]

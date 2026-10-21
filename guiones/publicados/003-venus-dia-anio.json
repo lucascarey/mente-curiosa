@@ -141,5 +141,10 @@
     "#espacio",
     "#astronomia"
   ],
-  "fuente": "https://es.wikipedia.org/wiki/Venus_(planeta)"
+  "fuente": "https://es.wikipedia.org/wiki/Venus_(planeta)",
+  "resultado": {
+    "publicado_en": "2026-10-21T23:04:45+00:00",
+    "instagram": "18012624848988198",
+    "tiktok_error": "403: {\"error\":{\"code\":\"unaudited_client_can_only_post_to_private_accounts\",\"message\":\"Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/\",\"log_id\":\"202610220705296C6D8835E63B9FB50FDA\"}}"
+  }
 }

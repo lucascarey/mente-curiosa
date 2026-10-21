@@ -46,7 +46,7 @@
           "dibujo": "A giant thermometer next to a lightning bolt with its red line at the very top"
         },
         {
-          "desde": "30",
+          "desde": "unos",
           "visual": {
             "tipo": "numero",
             "valor": 30000,

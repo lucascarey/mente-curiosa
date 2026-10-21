@@ -12,7 +12,7 @@
       },
       "tomas": [
         {
-          "dibujo": "A giant dinosaur skeleton in a museum hall"
+          "dibujo": "A gigantic blue whale swimming above a line of much smaller prehistoric animals and dinosaurs"
         },
         {
           "desde": "está",
@@ -35,7 +35,7 @@
           "dibujo": "A huge blue-grey whale swimming near the ocean surface"
         },
         {
-          "desde": "30",
+          "desde": "medir",
           "visual": {
             "tipo": "numero",
             "valor": 30,
@@ -59,7 +59,6 @@
       },
       "tomas": [
         {
-          "desde": "150",
           "visual": {
             "tipo": "numero",
             "valor": 150,

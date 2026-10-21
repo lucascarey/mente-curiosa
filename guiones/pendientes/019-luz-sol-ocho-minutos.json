@@ -48,7 +48,7 @@
       ]
     },
     {
-      "texto": "Recorre unos 150 millones de kilómetros a casi 300.000 kilómetros por segundo.",
+      "texto": "Recorre unos 150 millones de kilómetros viajando a casi 300.000 kilómetros por segundo.",
       "busqueda": "earth sun distance",
       "visual": {
         "tipo": "numero",
@@ -68,7 +68,7 @@
           }
         },
         {
-          "desde": "300",
+          "desde": "casi",
           "visual": {
             "tipo": "numero",
             "valor": 300000,

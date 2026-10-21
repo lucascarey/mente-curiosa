@@ -41,7 +41,7 @@
           "dibujo": "A brown wombat and a grey koala sitting side by side under a eucalyptus tree"
         },
         {
-          "desde": "80",
+          "desde": "entre",
           "visual": {
             "tipo": "numero",
             "valor": 100,

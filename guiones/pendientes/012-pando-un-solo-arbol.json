@@ -39,7 +39,7 @@
           "dibujo": "A mountain valley in Utah covered by a wide aspen forest"
         },
         {
-          "desde": "47",
+          "desde": "tiene",
           "visual": {
             "tipo": "numero",
             "valor": 47000,
@@ -78,11 +78,6 @@
       },
       "tomas": [
         {
-          "foto": "Pando aerial view",
-          "dibujo": "An aerial view of a large aspen forest patch on a mountain slope"
-        },
-        {
-          "desde": "6",
           "visual": {
             "tipo": "numero",
             "valor": 6000,

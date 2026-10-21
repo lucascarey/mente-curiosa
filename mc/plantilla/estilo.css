@@ -21,7 +21,7 @@ html, body {
 }
 
 /* Tarjeta de la escena */
-#escenas { position: absolute; inset: 0; }
+#escenas { position: absolute; inset: 0; transform-origin: 50% 35%; }
 .escena { position: absolute; left: 85px; top: 305px; width: 820px; height: 640px; display: none; transform-origin: 50% 100%; }
 .visual { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 
@@ -100,6 +100,16 @@ html, body {
 }
 #tema::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--color); margin-right: 14px; vertical-align: 3px; }
 #usuario { text-transform: none; letter-spacing: 0; }
+/* Serie numerada: "Dato #N" en celeste, la cuenta que el público reconoce */
+#serie { color: var(--color); font-weight: 700; margin-right: 22px; }
+#serie:empty { display: none; }
+#serie + #tema::before { display: none; }
+
+/* Momento revelación: destello celeste que se apaga enseguida */
+#destello {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at 50% 38%, var(--color) 0%, rgba(79, 195, 247, .35) 35%, transparent 70%);
+}
 
 /* Conductora, abajo a la izquierda: a la derecha están los botones de Reels y TikTok */
 #personaje {
@@ -115,6 +125,7 @@ html, body {
 }
 .palabra { display: inline-block; font-size: 68px; font-weight: 600; line-height: 1.2; letter-spacing: -0.5px; color: rgba(255, 255, 255, .35); }
 .palabra.dicha { color: #fff; }
+.palabra.destacada { font-size: 86px; font-weight: 700; }
 .palabra.destacada.dicha { color: var(--color); }
 #subrayado { position: absolute; height: 5px; border-radius: 3px; background: var(--color); opacity: 0; }
 

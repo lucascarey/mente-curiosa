@@ -19,6 +19,8 @@ PLANTILLA = Path(__file__).parent / "plantilla"
 TRANSICION = 0.4  # entrada y salida de cada tarjeta
 ADELANTO = 0.12  # la imagen nueva entra apenas antes de la palabra
 PALABRAS_POR_PANTALLA = 3
+SEPARACION_REVELACIONES = 2.5  # segundos mínimos entre dos momentos revelación
+INICIO_REVELACIONES = 2.8  # antes de esto manda el gancho
 
 
 def _invertir_curva(objetivo: float) -> float:
@@ -56,6 +58,31 @@ def marcas(visual: dict, duracion: float) -> tuple[dict, list[tuple[float, str]]
     return m, sonidos
 
 
+def _destacada(p: Palabra) -> bool:
+    """Van en celeste y más grandes solo las palabras marcadas con *asteriscos* y los números."""
+    return p.destacada or any(c.isdigit() for c in p.texto)
+
+
+def revelaciones(escenas: list[dict], palabras: list[Palabra]) -> list[float]:
+    """Momentos en que se dice el dato fuerte: el número llega a su valor, la segunda barra
+    aparece o arranca una frase marcada. Ahí hay zoom, destello y golpe, y la música calla antes."""
+    candidatos = []
+    for e in escenas:
+        m, tipo = e["marcas"], e["visual"].get("tipo")
+        if tipo == "numero":
+            candidatos.append(e["inicio"] + m["cuenta_fin"])
+        elif tipo == "comparacion":
+            candidatos.append(e["inicio"] + m["fila_b"])
+    for i, p in enumerate(palabras):
+        if p.destacada and (i == 0 or not palabras[i - 1].destacada):
+            candidatos.append(p.inicio)
+    elegidos: list[float] = []
+    for t in sorted(candidatos):
+        if t >= INICIO_REVELACIONES and (not elegidos or t - elegidos[-1] >= SEPARACION_REVELACIONES):
+            elegidos.append(round(t, 3))
+    return elegidos
+
+
 def agrupar(palabras: list[Palabra]) -> list[dict]:
     grupos, actual = [], []
     for p in palabras:
@@ -71,7 +98,7 @@ def agrupar(palabras: list[Palabra]) -> list[dict]:
         salida.append({
             "inicio": round(g[0].inicio, 3),
             "fin": round(fin, 3),
-            "palabras": [{"texto": p.texto, "inicio": round(p.inicio, 3), "destacada": p.destacada} for p in g],
+            "palabras": [{"texto": p.texto, "inicio": round(p.inicio, 3), "destacada": _destacada(p)} for p in g],
         })
     return salida
 
@@ -128,6 +155,8 @@ def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duracione
             sonidos += [(ini + t, nombre) for t, nombre in sonidos_escena]
             n += 1
         reloj += dur
+    momentos = revelaciones(escenas, palabras)
+    sonidos += [(t, "golpe") for t in momentos]
     datos = {
         "duracion": round(reloj, 3),
         "fps": config.FPS,
@@ -135,10 +164,18 @@ def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duracione
         "tema": tema,
         "usuario": config.USUARIO,
         "gancho": guion.gancho,
+        "serie": serie(guion.id),
+        "revelaciones": momentos,
         "escenas": escenas,
         "grupos": agrupar(palabras),
     }
     return datos, sorted(sonidos)
+
+
+def serie(id_guion: str) -> str:
+    """Número de la serie a partir del id del guion: '002-cleopatra-luna' -> 'Dato #2'."""
+    numero = id_guion.split("-", 1)[0]
+    return f"Dato #{int(numero)}" if numero.isdigit() else ""
 
 
 def _chromium() -> dict:

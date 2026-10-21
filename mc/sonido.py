@@ -50,7 +50,18 @@ def nota() -> np.ndarray:
     return tono * np.exp(-t * 7) * np.minimum(1, t / 0.004)
 
 
-EFECTOS = {"swoosh": (swoosh, 0.22), "clic": (clic, 0.22), "nota": (nota, 0.2)}
+def golpe() -> np.ndarray:
+    """Golpe grave para el momento revelación: un bombo hondo que baja de tono."""
+    t = _t(0.7)
+    tono = 38 + 70 * np.exp(-t * 18)
+    fase = 2 * np.pi * np.cumsum(tono) / SR
+    cuerpo = np.sin(fase) * np.exp(-t * 5)
+    ataque = np.random.default_rng(7).standard_normal(len(t)) * np.exp(-t * 90) * 0.25
+    return (cuerpo + ataque) * np.minimum(1, t / 0.002)
+
+
+EFECTOS = {"swoosh": (swoosh, 0.22), "clic": (clic, 0.22), "nota": (nota, 0.2), "golpe": (golpe, 0.5)}
+SILENCIO_ANTES = 0.5  # la música se corta medio segundo antes de cada revelación
 
 
 def musica(dur: float, tonalidad: int = 0, bpm: int = 96) -> np.ndarray:
@@ -115,7 +126,15 @@ def mezclar(voz: Path, duracion: float, eventos: list[tuple[float, str]], tonali
     energia = np.convolve(np.abs(v), np.ones(4800) / 4800, mode="same")
     energia /= energia.max() + 1e-9
     agache = 1 - 0.55 * np.clip(energia * 3, 0, 1)
-    mus = musica(duracion, tonalidad)[:total] * agache
+    # y se calla justo antes de cada revelación, para que el dato pegue en silencio
+    tiempo = np.arange(total) / SR
+    corte = np.ones(total)
+    for t, nombre in eventos:
+        if nombre == "golpe":
+            baja = np.clip((tiempo - (t - SILENCIO_ANTES)) / 0.08, 0, 1)
+            vuelve = np.clip((tiempo - (t + 0.35)) / 0.5, 0, 1)
+            corte = np.minimum(corte, 1 - baja * (1 - vuelve))
+    mus = musica(duracion, tonalidad)[:total] * agache * corte
 
     fx = np.zeros(total)
     for t, nombre in eventos:
@@ -126,7 +145,7 @@ def mezclar(voz: Path, duracion: float, eventos: list[tuple[float, str]], tonali
         if a < total:
             fx[a:b] += sonido[: b - a]
 
-    mezcla = 1.0 * v + 0.4 * mus + fx
+    mezcla = 1.0 * v + 0.5 * mus + fx
     mezcla *= 0.89 / (np.abs(mezcla).max() + 1e-9)
     estereo = np.repeat(mezcla.astype(np.float32)[:, None], 2, axis=1)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-",

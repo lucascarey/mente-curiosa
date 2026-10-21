@@ -39,6 +39,7 @@ const raiz = document.documentElement;
 raiz.style.setProperty("--color", D.tema.color);
 raiz.style.setProperty("--oscuro", D.tema.oscuro);
 $("#tema").textContent = D.tema.nombre;
+$("#serie").textContent = D.serie || "";
 // *palabras* del gancho en celeste
 $("#gancho").innerHTML = (D.gancho || "").replace(/\*(.+?)\*/g, "<b>$1</b>");
 $("#usuario").textContent = D.usuario;
@@ -83,6 +84,9 @@ const constructores = {
       const pc = suave(prog(tl, m.cuenta_inicio, m.cuenta_fin - m.cuenta_inicio));
       num.textContent = `${v.prefijo || ""}${formatear(v.valor * pc)}${v.sufijo || ""}`;
       arco.style.strokeDashoffset = 1872 * (1 - pc);
+      // Al llegar al valor el número da un golpe: crece y vuelve
+      const golpe = prog(tl, m.cuenta_fin, 0.45);
+      num.style.transform = `scale(${golpe > 0 && golpe < 1 ? mezclar(1.22, 1, suave(golpe)) : 1})`;
       entrar(etiqueta, tl, m.cuenta_fin - 0.3);
     };
   },
@@ -292,6 +296,13 @@ window.render = function (t) {
     ga.style.opacity = suave(pg) * (1 - sale);
     ga.style.transform = `translateY(${mezclar(30, 0, entrada(pg)) + sale * 20}px) scale(${mezclar(0.94, 1, entrada(pg))})`;
   }
+
+  // Momento revelación: zoom rápido de la tarjeta y destello celeste
+  const r = (D.revelaciones || []).findLast((x) => t >= x - 0.04);
+  const pr = r === undefined ? 1 : prog(t, r - 0.04, 0.5);
+  const zoom = pr < 1 ? (pr < 0.25 ? suave(pr / 0.25) : 1 - suaveDoble((pr - 0.25) / 0.75)) : 0;
+  $("#escenas").style.transform = `scale(${1 + 0.07 * zoom})`;
+  $("#destello").style.opacity = pr < 1 ? 0.32 * (1 - suave(pr)) : 0;
 
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;

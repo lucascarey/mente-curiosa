@@ -8,8 +8,8 @@ Estética: fondo negro, técnica y mínima, en negro, blanco y celeste (`#4FC3F7
 
 1. **Voz:** voz IA gratuita femenina (edge-tts, `en-US-AvaMultilingualNeural`, que habla español). Para comparar voces: el workflow "Muestras de voces" deja un mp3 por voz en la rama `voces`.
 2. **Ilustraciones:** una ilustración de línea por escena (blanco y celeste sobre negro), generada con IA en [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) (modelo Flux, plan gratis). Sin credenciales de Cloudflare usa una foto de Pixabay.
-3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora, que cambia de pose cada uno o dos segundos como en un cómic, y los subtítulos, que se van subrayando palabra por palabra. Chromium la captura a 30 cuadros por segundo.
-4. **Sonido:** efectos suaves (soplido, clic, nota) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz.
+3. **Animación:** `mc/plantilla` es una página HTML que dibuja cada cuadro: la tarjeta de la escena (ilustración o infografía), la conductora, que cambia de pose cada uno o dos segundos como en un cómic, y los subtítulos, que se van subrayando palabra por palabra (solo los números y las palabras con *asteriscos* van en celeste y más grandes). Arriba va la serie numerada, "Dato #N", que sale del número del id del guion. En cada dato fuerte (el número llega a su valor, aparece la segunda barra de una comparación o empieza una frase marcada) hay un momento revelación: zoom rápido, destello celeste y un golpe grave. Chromium la captura a 30 cuadros por segundo.
+4. **Sonido:** efectos suaves (soplido, clic, nota) y música de fondo sintetizados en `mc/sonido.py`, sin archivos con licencia. La música baja sola cuando habla la voz y se corta medio segundo antes de cada momento revelación, así el dato pega en silencio.
 5. **Publicación:** Reels con la API oficial de Instagram y, si está configurado, TikTok con su API oficial.
 
 ## La conductora

@@ -1,0 +1,32 @@
+name: Muestras de voces de personajes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - herramientas/muestras_personajes.py
+      - .github/workflows/voces-personajes.yml
+
+permissions:
+  contents: write
+
+jobs:
+  voces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Generar muestras
+        run: python herramientas/muestras_personajes.py /tmp/voces
+      - name: Subir a la rama voces-personajes
+        run: |
+          cd /tmp/voces
+          git init -q -b voces-personajes
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Muestras de voces de personajes"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" voces-personajes

@@ -134,6 +134,7 @@ def linea_de_tiempo(guion: Guion, tema: dict, palabras: list[Palabra], duracione
         "transicion": TRANSICION,
         "tema": tema,
         "usuario": config.USUARIO,
+        "gancho": guion.gancho,
         "escenas": escenas,
         "grupos": agrupar(palabras),
     }

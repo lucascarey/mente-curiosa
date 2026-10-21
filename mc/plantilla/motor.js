@@ -39,6 +39,8 @@ const raiz = document.documentElement;
 raiz.style.setProperty("--color", D.tema.color);
 raiz.style.setProperty("--oscuro", D.tema.oscuro);
 $("#tema").textContent = D.tema.nombre;
+// *palabras* del gancho en celeste
+$("#gancho").innerHTML = (D.gancho || "").replace(/\*(.+?)\*/g, "<b>$1</b>");
 $("#usuario").textContent = D.usuario;
 
 // ---------- Construcción de escenas ----------
@@ -134,8 +136,11 @@ const constructores = {
     const m = esc.marcas;
     const cont = crear("div", "seguir", caja);
     const avatar = crear("div", "avatar", cont, '<img src="personaje/12.png">');
-    const nombre = crear("div", "seguir-nombre", cont, D.usuario);
-    const boton = crear("div", "boton", cont, "Seguir");
+    // accion "compartir": en vez de seguir, pide mandárselo a alguien (los envíos pesan más que los likes)
+    const comparte = v.accion === "compartir";
+    const texto = comparte ? ["Enviar", "Enviado"] : ["Seguir", "Siguiendo"];
+    const nombre = crear("div", "seguir-nombre", cont, comparte ? "Mandáselo a alguien" : D.usuario);
+    const boton = crear("div", "boton", cont, texto[0]);
     const onda = crear("div", "onda", cont);
     return (tl) => {
       entrar(avatar, tl, 0.05);
@@ -144,7 +149,7 @@ const constructores = {
       const hecho = tl >= m.toque;
       if (boton.classList.contains("hecho") !== hecho) {
         boton.classList.toggle("hecho", hecho);
-        boton.innerHTML = hecho ? `${CHECK}Siguiendo` : "Seguir";
+        boton.innerHTML = hecho ? `${CHECK}${texto[1]}` : texto[0];
       }
       const apretado = 1 - 0.05 * campana(tl, m.toque - 0.12, m.toque, 0.1, 0.15);
       boton.style.transform = `scale(${apretado})`;
@@ -278,6 +283,15 @@ window.render = function (t) {
 
   const [pose, desde] = poseActual(t);
   mostrarPersonaje(t, pose, desde);
+
+  // Gancho: entra apenas arranca y se va a los 2,4 s
+  if (D.gancho) {
+    const pg = prog(t, 0.1, 0.35);
+    const sale = suaveDoble(prog(t, 2.4, 0.35));
+    const ga = $("#gancho");
+    ga.style.opacity = suave(pg) * (1 - sale);
+    ga.style.transform = `translateY(${mezclar(30, 0, entrada(pg)) + sale * 20}px) scale(${mezclar(0.94, 1, entrada(pg))})`;
+  }
 
   // Capas fijas
   $("#barra").style.width = `${100 * clamp(t / D.duracion)}%`;

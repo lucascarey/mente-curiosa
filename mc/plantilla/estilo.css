@@ -117,3 +117,12 @@ html, body {
 .palabra.dicha { color: #fff; }
 .palabra.destacada.dicha { color: var(--color); }
 #subrayado { position: absolute; height: 5px; border-radius: 3px; background: var(--color); opacity: 0; }
+
+/* Gancho: texto grande sobre la tarjeta los primeros segundos (para quien mira sin sonido) */
+#gancho {
+  position: absolute; left: 85px; width: 820px; top: 700px; box-sizing: border-box; padding: 26px 40px;
+  background: rgba(0, 0, 0, 0.78); border-top: 2px solid var(--color);
+  font-size: 66px; font-weight: 700; line-height: 1.08; text-align: center; letter-spacing: -1px;
+  opacity: 0; border-radius: 0 0 36px 36px;
+}
+#gancho b { color: var(--color); font-weight: 700; }

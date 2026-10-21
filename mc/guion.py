@@ -50,6 +50,7 @@ class Guion:
     ruta: Path
     creditos: list[str] = field(default_factory=list)  # autores de las fotos usadas (se completa al armar el video)
     protagonista: str = ""  # cómo se ve el protagonista de las ilustraciones, en inglés (igual en todas)
+    gancho: str = ""  # texto grande en pantalla los primeros segundos, para quien mira sin sonido
 
     @property
     def caption(self) -> str:
@@ -77,6 +78,7 @@ def cargar(ruta: Path) -> Guion:
         fuente=datos["fuente"],
         ruta=ruta,
         protagonista=datos.get("protagonista", ""),
+        gancho=datos.get("gancho", ""),
     )
 
 
@@ -97,6 +99,11 @@ def validar(datos: dict) -> list[str]:
     palabras = sum(len(PALABRA.findall(p.get("texto", ""))) for p in datos["partes"])
     if not 50 <= palabras <= 160:
         errores.append(f"tiene {palabras} palabras (entre 50 y 160 da 20 a 60 segundos)")
+    gancho = PALABRA.findall(datos.get("gancho", ""))
+    if datos.get("gancho") and not 2 <= len(gancho) <= 7:
+        errores.append(f"el gancho tiene {len(gancho)} palabras (entre 2 y 7, se lee en 2 segundos)")
+    if len(datos["hashtags"]) > 5:
+        errores.append("Instagram acepta hasta 5 hashtags")
     if len(datos["descripcion"]) + sum(len(h) + 1 for h in datos["hashtags"]) > 2000:
         errores.append("descripción y hashtags superan 2000 caracteres")
     return errores

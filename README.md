@@ -63,6 +63,10 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 ```
 
 - `partes`: entre 3 y 8. Gancho, dato, giro y cierre.
+- Gancho (primera frase): 12 palabras o menos, con una contradicción, un número concreto o un mito roto. Nunca "¿Sabías que…?".
+- `gancho` (recomendado): de 2 a 7 palabras que salen grandes sobre la tarjeta los primeros 2,4 segundos, para quien mira sin sonido. Complementa la voz, no la repite. Ej.: `"Cleopatra *vs* las pirámides"`.
+- Cierre: pedir que lo compartan ("Mandáselo a alguien que no te lo va a creer"), una pregunta corta para comentarios, y una última frase que empalme con la primera para que el video se repita en loop. El visual final es `{"tipo": "seguir", "accion": "compartir"}`.
+- `descripcion`: la primera línea es lo que alguien buscaría ("Datos curiosos de los pulpos"); hasta 5 hashtags (Instagram no acepta más).
 - Las palabras entre `*asteriscos*` salen en celeste y la conductora levanta el dedo.
 - `protagonista` (opcional): en inglés, cómo se ve el personaje principal de las ilustraciones, para que sea el mismo en todas las escenas.
 - `dibujo`: en inglés, qué tiene que mostrar la ilustración (un sujeto claro, sin texto). El estilo se agrega solo.
@@ -76,7 +80,7 @@ Un archivo JSON por video en `guiones/pendientes`, que se publican en orden alfa
 | `numero` | `valor`, `etiqueta`, `prefijo`/`sufijo` opcionales | `{"tipo": "numero", "valor": 243, "etiqueta": "días"}` |
 | `comparacion` | `a` y `b` con `etiqueta`, `valor` e `icono` ([nombre de Lucide](https://lucide.dev/icons)); `titulo`, `unidad` | ver `003-venus-dia-anio.json` |
 | `linea` | `hitos`: 2 a 4 con `anio` (número, negativo antes de Cristo), `fecha`, `etiqueta` | ver `002-cleopatra-luna.json` |
-| `seguir` | nada (botón de seguir animado, va al final) | `{"tipo": "seguir"}` |
+| `seguir` | `accion` opcional: `"compartir"` cambia el botón de seguir por uno de enviar (va al final) | `{"tipo": "seguir", "accion": "compartir"}` |
 
 - Entre 50 y 160 palabras en total (20 a 60 segundos).
 - `python -m mc.main --validar` revisa todos los pendientes.

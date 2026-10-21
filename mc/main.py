@@ -55,9 +55,16 @@ def publicar(solo_video: bool) -> int:
         return 1
     if os.environ.get("IG_ACCESS_TOKEN"):
         # Comprueba el token y usa el usuario real de Instagram en la marca de agua
-        cuenta = instagram.usuario()
-        config.USUARIO = f"@{cuenta['username']}"
-        print(f"Cuenta de Instagram conectada: {config.USUARIO}")
+        try:
+            cuenta = instagram.usuario()
+        except instagram.ErrorInstagram as e:
+            if not solo_video:
+                raise
+            # Para una vista previa alcanza con el usuario por defecto
+            print(f"::warning::Instagram no respondió ({e}); armo el video igual")
+        else:
+            config.USUARIO = f"@{cuenta['username']}"
+            print(f"Cuenta de Instagram conectada: {config.USUARIO}")
     print(f"Armando {actual.id}")
     archivo = video.armar(actual)
     print(f"Video listo: {archivo} ({archivo.stat().st_size / 1e6:.1f} MB)")

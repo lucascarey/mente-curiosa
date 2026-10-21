@@ -166,5 +166,10 @@
     "#historia",
     "#egipto"
   ],
-  "fuente": "https://es.wikipedia.org/wiki/Cleopatra"
+  "fuente": "https://es.wikipedia.org/wiki/Cleopatra",
+  "resultado": {
+    "publicado_en": "2026-10-21T16:28:08+00:00",
+    "instagram": "18111176450239918",
+    "tiktok_error": "403: {\"error\":{\"code\":\"unaudited_client_can_only_post_to_private_accounts\",\"message\":\"Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/\",\"log_id\":\"202610220028529505C2B331270697CA71\"}}"
+  }
 }

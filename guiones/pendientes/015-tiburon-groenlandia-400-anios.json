@@ -1,0 +1,162 @@
+{
+  "id": "015-tiburon-groenlandia-400-anios",
+  "tema": "Animales",
+  "gancho": "*400* velitas",
+  "protagonista": "a big slow grey Greenland shark with small eyes and a gentle face",
+  "partes": [
+    {
+      "texto": "Este tiburón puede vivir *casi 400 años*.",
+      "busqueda": "shark",
+      "visual": {
+        "tipo": "numero",
+        "valor": 400,
+        "prefijo": "casi ",
+        "etiqueta": "años"
+      },
+      "tomas": [
+        {
+          "foto": "Somniosus microcephalus",
+          "dibujo": "A large grey shark swimming slowly in dark icy water"
+        },
+        {
+          "desde": "casi",
+          "visual": {
+            "tipo": "numero",
+            "valor": 400,
+            "prefijo": "casi ",
+            "etiqueta": "años"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Es el *tiburón de Groenlandia* y vive en las aguas heladas del Ártico.",
+      "busqueda": "arctic ocean",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Greenland shark",
+          "dibujo": "A big grey shark gliding under floating sea ice"
+        },
+        {
+          "desde": "vive",
+          "foto": "Arctic sea ice",
+          "dibujo": "Floating white sea ice on a dark cold Arctic sea"
+        }
+      ]
+    },
+    {
+      "texto": "Crece apenas *un centímetro por año* y recién se vuelve adulto a los 150.",
+      "busqueda": "shark deep sea",
+      "visual": {
+        "tipo": "numero",
+        "valor": 150,
+        "etiqueta": "años para ser adulto"
+      },
+      "tomas": [
+        {
+          "dibujo": "A big grey shark next to a measuring tape showing one centimeter"
+        },
+        {
+          "desde": "recién",
+          "dibujo": "A small young grey shark swimming beside a huge adult grey shark"
+        },
+        {
+          "desde": "adulto",
+          "visual": {
+            "tipo": "numero",
+            "valor": 150,
+            "etiqueta": "años para ser adulto"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "En 2016 calcularon su edad estudiando sus ojos: uno tendría unos 392 años.",
+      "busqueda": "shark eye",
+      "visual": {
+        "tipo": "linea",
+        "hitos": [
+          {
+            "anio": 1624,
+            "fecha": "~1624",
+            "etiqueta": "Nace"
+          },
+          {
+            "anio": 1774,
+            "fecha": "~1774",
+            "etiqueta": "Adulto"
+          },
+          {
+            "anio": 2016,
+            "fecha": "2016",
+            "etiqueta": "Lo estudian"
+          }
+        ]
+      },
+      "tomas": [
+        {
+          "dibujo": "A team of scientists on a research boat in icy Arctic waters"
+        },
+        {
+          "desde": "estudiando",
+          "dibujo": "A scientist on a boat looking closely at the eye of a large grey shark"
+        },
+        {
+          "desde": "tendría",
+          "visual": {
+            "tipo": "linea",
+            "hitos": [
+              {
+                "anio": 1624,
+                "fecha": "~1624",
+                "etiqueta": "Nace"
+              },
+              {
+                "anio": 1774,
+                "fecha": "~1774",
+                "etiqueta": "Adulto"
+              },
+              {
+                "anio": 2016,
+                "fecha": "2016",
+                "etiqueta": "Lo estudian"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Es el vertebrado más longevo conocido. Mandáselo a alguien que cumple años pronto. ¿Vos lo sabías? Porque sí,",
+      "busqueda": "shark ocean",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "An old wise grey shark swimming in front of a line of other animals that look young next to it"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del tiburón de Groenlandia\nEl tiburón de Groenlandia puede vivir casi 400 años: es el vertebrado más longevo conocido.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#oceano"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Somniosus_microcephalus"
+}

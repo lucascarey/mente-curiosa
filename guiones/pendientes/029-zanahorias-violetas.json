@@ -1,0 +1,157 @@
+{
+  "id": "029-zanahorias-violetas",
+  "tema": "Comida",
+  "gancho": "Antes eran *violetas*",
+  "partes": [
+    {
+      "texto": "Las zanahorias no siempre fueron naranjas. Eran *violetas* y amarillas.",
+      "busqueda": "carrots",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Carrots",
+          "dibujo": "A bunch of fresh orange carrots with green leaves on a wooden table"
+        },
+        {
+          "desde": "Eran",
+          "foto": "Purple and yellow carrots",
+          "dibujo": "A bunch of purple carrots and yellow carrots with green leaves on a wooden table"
+        }
+      ]
+    },
+    {
+      "texto": "Las primeras se cultivaron hace más de *mil años*, en la zona de lo que hoy es Afganistán.",
+      "busqueda": "afghanistan mountains",
+      "visual": {
+        "tipo": "numero",
+        "valor": 1000,
+        "etiqueta": "años",
+        "prefijo": "+"
+      },
+      "tomas": [
+        {
+          "dibujo": "Ancient farmers pulling purple carrots out of the soil in a dry mountain valley"
+        },
+        {
+          "desde": "mil",
+          "visual": {
+            "tipo": "numero",
+            "valor": 1000,
+            "etiqueta": "años",
+            "prefijo": "+"
+          }
+        },
+        {
+          "desde": "zona",
+          "foto": "Hindu Kush mountains Afghanistan",
+          "dibujo": "Dry rocky mountains and a green valley in Afghanistan"
+        }
+      ]
+    },
+    {
+      "texto": "La zanahoria *naranja* se impuso recién en el siglo diecisiete, en los campos de los *Países Bajos*.",
+      "busqueda": "netherlands windmill field",
+      "visual": {
+        "tipo": "linea",
+        "hitos": [
+          {
+            "anio": 950,
+            "fecha": "siglo X",
+            "etiqueta": "Violetas y amarillas"
+          },
+          {
+            "anio": 1650,
+            "fecha": "siglo XVII",
+            "etiqueta": "Naranja"
+          }
+        ]
+      },
+      "tomas": [
+        {
+          "foto": "Orange carrots",
+          "dibujo": "A pile of bright orange carrots"
+        },
+        {
+          "desde": "recién",
+          "visual": {
+            "tipo": "linea",
+            "hitos": [
+              {
+                "anio": 950,
+                "fecha": "siglo X",
+                "etiqueta": "Violetas y amarillas"
+              },
+              {
+                "anio": 1650,
+                "fecha": "siglo XVII",
+                "etiqueta": "Naranja"
+              }
+            ]
+          }
+        },
+        {
+          "desde": "campos",
+          "foto": "Kinderdijk windmills",
+          "dibujo": "A carrot field in the Netherlands with old wooden windmills in the background"
+        }
+      ]
+    },
+    {
+      "texto": "Los agricultores fueron eligiendo y cruzando las raíces más anaranjadas.",
+      "busqueda": "carrot harvest",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A 1600s Dutch farmer in a field holding up two carrots and choosing the more orange one"
+        },
+        {
+          "desde": "cruzando",
+          "dibujo": "A wooden crate full of bright orange carrots"
+        }
+      ]
+    },
+    {
+      "texto": "Muchos dicen que fue para homenajear a la Casa de Orange, pero no hay pruebas. Mandáselo a alguien que odia la zanahoria. ¿Vos lo sabías? Porque...",
+      "busqueda": "carrots basket",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A group of 1600s Dutch people chatting together and pointing at a big orange carrot"
+        },
+        {
+          "desde": "a",
+          "foto": "William the Silent portrait",
+          "dibujo": "A 16th century Dutch prince in dark armor wearing an orange sash"
+        },
+        {
+          "desde": "pero",
+          "dibujo": "A magnifying glass over the blank empty pages of an old open book",
+          "texto": "no hay pruebas"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de las zanahorias\nLas zanahorias eran violetas y amarillas: la naranja se impuso recién en el siglo XVII en los Países Bajos.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#comida",
+    "#zanahoria"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Daucus_carota"
+}

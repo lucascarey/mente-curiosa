@@ -1,0 +1,155 @@
+{
+  "id": "023-cornea-sin-sangre",
+  "tema": "Cuerpo humano",
+  "gancho": "*Cero* vasos sanguíneos",
+  "partes": [
+    {
+      "texto": "Una parte de tu cuerpo no tiene *ni un vaso sanguíneo*.",
+      "busqueda": "human body",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A human body silhouette with a network of red blood vessels running through it"
+        },
+        {
+          "desde": "no",
+          "dibujo": "A magnifying glass held over a perfectly clear, transparent patch of tissue"
+        }
+      ]
+    },
+    {
+      "texto": "Es la *córnea*, la capa transparente que cubre la parte de adelante del ojo.",
+      "busqueda": "human eye",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Human eye close up",
+          "dibujo": "A close-up of a human eye with a clear shiny dome over the colored iris"
+        },
+        {
+          "desde": "cubre",
+          "dibujo": "A side view of a human eyeball with a clear curved dome on its front"
+        }
+      ]
+    },
+    {
+      "texto": "Si tuviera vasos, no podrías ver bien: la sangre taparía la luz.",
+      "busqueda": "blurry",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A human eye with red blood vessels growing across its clear front dome"
+        },
+        {
+          "desde": "ver",
+          "dibujo": "A blurry view of a garden seen through a clear dome covered in red branching veins that block the light"
+        }
+      ]
+    },
+    {
+      "texto": "Se alimenta del líquido que hay dentro del ojo y toma oxígeno *directamente del aire*.",
+      "busqueda": "eye anatomy",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A single drop of clear liquid glistening"
+        },
+        {
+          "desde": "dentro",
+          "dibujo": "A side view of a human eyeball filled with clear liquid behind its clear front dome"
+        },
+        {
+          "desde": "oxígeno",
+          "dibujo": "Tiny air bubbles floating onto the clear front surface of an open human eye"
+        }
+      ]
+    },
+    {
+      "texto": "Con el ojo abierto recibe un *21%* de oxígeno del aire; cerrado, apenas un 8%.",
+      "busqueda": "sleeping",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Oxígeno del aire",
+        "unidad": "%",
+        "a": {
+          "etiqueta": "Ojo abierto",
+          "valor": 21,
+          "icono": "eye"
+        },
+        "b": {
+          "etiqueta": "Ojo cerrado",
+          "valor": 8,
+          "icono": "eye-off"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "A wide open human eye in bright daylight"
+        },
+        {
+          "desde": "21",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Oxígeno del aire",
+            "unidad": "%",
+            "a": {
+              "etiqueta": "Ojo abierto",
+              "valor": 21,
+              "icono": "eye"
+            },
+            "b": {
+              "etiqueta": "Ojo cerrado",
+              "valor": 8,
+              "icono": "eye-off"
+            }
+          }
+        },
+        {
+          "desde": "cerrado",
+          "dibujo": "A closed human eye with relaxed eyelashes, a person peacefully sleeping"
+        }
+      ]
+    },
+    {
+      "texto": "Es de las pocas partes del cuerpo sin vasos sanguíneos. Mandáselo a alguien que te mira a los ojos. ¿Vos lo sabías? Porque una parte de tu cuerpo...",
+      "busqueda": "eye close up",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A human body silhouette with a few small spots glowing, one of them on the eye"
+        },
+        {
+          "desde": "cuerpo",
+          "dibujo": "A close-up of a human eye with a shining, crystal clear dome over the iris"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del ojo: la córnea no tiene vasos sanguíneos\nLa córnea es transparente porque no tiene vasos: se alimenta del líquido del ojo y toma oxígeno del aire.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#cuerpohumano",
+    "#ciencia",
+    "#salud"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/C%C3%B3rnea"
+}

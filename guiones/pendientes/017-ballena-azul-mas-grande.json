@@ -1,0 +1,137 @@
+{
+  "id": "017-ballena-azul-mas-grande",
+  "tema": "Animales",
+  "gancho": "Más grande que *un dinosaurio*",
+  "protagonista": "a huge friendly blue whale with a long blue-grey body and small kind eyes",
+  "partes": [
+    {
+      "texto": "El animal más grande de la historia *está vivo hoy*.",
+      "busqueda": "blue whale",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A giant dinosaur skeleton in a museum hall"
+        },
+        {
+          "desde": "está",
+          "foto": "Blue whale Balaenoptera musculus",
+          "dibujo": "A huge blue-grey whale swimming in the deep blue ocean"
+        }
+      ]
+    },
+    {
+      "texto": "Es la *ballena azul*: puede medir unos 30 metros, como tres colectivos en fila.",
+      "busqueda": "whale ocean",
+      "visual": {
+        "tipo": "numero",
+        "valor": 30,
+        "etiqueta": "metros de largo"
+      },
+      "tomas": [
+        {
+          "foto": "Blue whale",
+          "dibujo": "A huge blue-grey whale swimming near the ocean surface"
+        },
+        {
+          "desde": "30",
+          "visual": {
+            "tipo": "numero",
+            "valor": 30,
+            "etiqueta": "metros de largo"
+          }
+        },
+        {
+          "desde": "tres",
+          "dibujo": "Three city buses parked in a line next to a huge blue whale of the same total length"
+        }
+      ]
+    },
+    {
+      "texto": "Y pesa más de 150 toneladas, lo mismo que unos *25 elefantes*.",
+      "busqueda": "elephant",
+      "visual": {
+        "tipo": "numero",
+        "valor": 150,
+        "prefijo": "más de ",
+        "etiqueta": "toneladas"
+      },
+      "tomas": [
+        {
+          "desde": "150",
+          "visual": {
+            "tipo": "numero",
+            "valor": 150,
+            "prefijo": "más de ",
+            "etiqueta": "toneladas"
+          }
+        },
+        {
+          "desde": "mismo",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Peso",
+            "unidad": "toneladas",
+            "a": {
+              "etiqueta": "Ballena azul",
+              "valor": 150,
+              "icono": "fish"
+            },
+            "b": {
+              "etiqueta": "Elefante",
+              "valor": 6,
+              "icono": "paw-print"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Ningún dinosaurio conocido llegó a pesar tanto.",
+      "busqueda": "dinosaur",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A long-necked dinosaur standing on one side of a giant balance scale, a blue whale on the other side pushing it down"
+        }
+      ]
+    },
+    {
+      "texto": "Y se alimenta casi solo de krill, unos bichitos de pocos centímetros. Mandáselo a alguien que ama los animales. ¿Vos lo sabías? Ojo:",
+      "busqueda": "krill",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A huge blue whale with its mouth wide open gulping a cloud of tiny pink krill"
+        },
+        {
+          "desde": "krill",
+          "foto": "Antarctic krill",
+          "dibujo": "Tiny pink shrimp-like krill floating in a dense cloud in the sea"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de la ballena azul\nLa ballena azul es el animal más grande que existió: mide unos 30 metros y pesa más de 150 toneladas.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#oceano"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Balaenoptera_musculus"
+}

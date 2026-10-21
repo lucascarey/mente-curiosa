@@ -1,0 +1,111 @@
+{
+  "id": "014-medusa-inmortal",
+  "tema": "Animales",
+  "gancho": "Envejece *al revés*",
+  "protagonista": "a tiny cute transparent jellyfish with a bright red center and big friendly eyes",
+  "partes": [
+    {
+      "texto": "Hay una medusa que *no muere de vieja*.",
+      "busqueda": "jellyfish",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Turritopsis dohrnii",
+          "dibujo": "A tiny transparent jellyfish with a bright red center floating in blue water"
+        },
+        {
+          "desde": "no",
+          "dibujo": "A tiny jellyfish with a calm smile floating next to a stopped hourglass"
+        }
+      ]
+    },
+    {
+      "texto": "Se llama *Turritopsis dohrnii* y mide menos de medio centímetro.",
+      "busqueda": "small jellyfish",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Turritopsis dohrnii",
+          "dibujo": "A tiny transparent jellyfish with a red center and thin white tentacles"
+        },
+        {
+          "desde": "mide",
+          "dibujo": "A tiny jellyfish next to a human fingertip, smaller than the fingernail"
+        }
+      ]
+    },
+    {
+      "texto": "Cuando está herida, enferma o vieja, *vuelve a ser pólipo*: su etapa de bebé.",
+      "busqueda": "jellyfish polyp",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A tiny weak jellyfish sinking slowly to the sea floor"
+        },
+        {
+          "desde": "vuelve",
+          "dibujo": "A tiny jellyfish shrinking into a small blob that attaches to a rock and sprouts into a polyp"
+        },
+        {
+          "desde": "etapa",
+          "dibujo": "A small branching polyp stuck to a rock on the sea floor, like a tiny underwater plant"
+        }
+      ]
+    },
+    {
+      "texto": "Y desde ahí crece de nuevo. Puede repetir ese ciclo *una y otra vez*.",
+      "busqueda": "jellyfish ocean",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A polyp on a rock releasing several tiny new baby jellyfish into the water"
+        },
+        {
+          "desde": "repetir",
+          "dibujo": "A circle of arrows linking a jellyfish, a small blob and a polyp in a loop"
+        }
+      ]
+    },
+    {
+      "texto": "Igual puede morir si se la come un pez. Mandáselo a alguien que no quiere envejecer. ¿Vos lo sabías? Así que sí:",
+      "busqueda": "fish jellyfish",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A tiny transparent jellyfish drifting alone in open blue water"
+        },
+        {
+          "desde": "come",
+          "dibujo": "A small fish with its mouth open swimming toward a tiny transparent jellyfish"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de la medusa inmortal\nLa Turritopsis dohrnii puede volver a su etapa de pólipo y empezar su vida otra vez.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#oceano"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Turritopsis_dohrnii"
+}

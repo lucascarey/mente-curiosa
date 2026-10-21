@@ -1,0 +1,127 @@
+{
+  "id": "025-intestino-siete-metros",
+  "tema": "Cuerpo humano",
+  "gancho": "*7 metros* adentro tuyo",
+  "partes": [
+    {
+      "texto": "Adentro tuyo hay un tubo de hasta *7 metros*.",
+      "busqueda": "human body",
+      "visual": {
+        "tipo": "numero",
+        "valor": 7,
+        "etiqueta": "metros"
+      },
+      "tomas": [
+        {
+          "dibujo": "A human belly silhouette with a long coiled pink tube inside"
+        },
+        {
+          "desde": "de",
+          "visual": {
+            "tipo": "numero",
+            "valor": 7,
+            "etiqueta": "metros"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Es tu *intestino delgado*, y está todo plegado en la panza.",
+      "busqueda": "intestine",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Small intestine Blausen",
+          "dibujo": "The human small intestine, a long pink tube coiled in many loops"
+        },
+        {
+          "desde": "plegado",
+          "dibujo": "A long pink tube folded into many tight loops inside a human belly"
+        }
+      ]
+    },
+    {
+      "texto": "Estirado, mide más que *tres personas acostadas* una detrás de otra.",
+      "busqueda": "people lying",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Largo",
+        "unidad": "m",
+        "a": {
+          "etiqueta": "Intestino delgado",
+          "valor": 7,
+          "icono": "move-horizontal"
+        },
+        "b": {
+          "etiqueta": "Una persona",
+          "valor": 1.7,
+          "icono": "person-standing"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "A very long pink tube stretched out straight on the floor"
+        },
+        {
+          "desde": "tres",
+          "dibujo": "Three adults lying on the floor head to feet in a straight line next to a long pink tube that is even longer"
+        }
+      ]
+    },
+    {
+      "texto": "Tiene tres partes: *duodeno*, yeyuno e íleon, y ahí se absorben casi todos los nutrientes.",
+      "busqueda": "anatomy",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A long pink tube divided into three sections, each a different shade of pink"
+        },
+        {
+          "desde": "yeyuno",
+          "dibujo": "Two long sections of pink tube coiled in loops, one lighter and one darker"
+        },
+        {
+          "desde": "ahí",
+          "dibujo": "Tiny finger-like folds on the inner wall of a pink tube soaking up small glowing particles"
+        }
+      ]
+    },
+    {
+      "texto": "Todo eso entra en tu panza, bien doblado. Mandáselo a alguien que dice que no le entra nada más. ¿Vos lo sabías? Porque adentro tuyo...",
+      "busqueda": "belly",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A very long pink tube stretched out straight on the floor"
+        },
+        {
+          "desde": "tu",
+          "dibujo": "A smiling person patting their belly, a long neatly coiled pink tube visible inside"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del cuerpo humano: el intestino delgado\nEl intestino delgado mide entre 6 y 7 metros y entra plegado en la panza.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#cuerpohumano",
+    "#ciencia",
+    "#anatomia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Intestino_delgado"
+}

@@ -1,0 +1,146 @@
+{
+  "id": "012-pando-un-solo-arbol",
+  "tema": "Naturaleza",
+  "gancho": "Un bosque · *un árbol*",
+  "partes": [
+    {
+      "texto": "Este bosque entero es *un solo ser vivo*.",
+      "busqueda": "aspen forest",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Pando aspen grove Utah",
+          "dibujo": "A golden forest of white-trunked aspen trees on a hillside in autumn"
+        },
+        {
+          "desde": "un",
+          "dibujo": "A whole aspen forest with all the trees joined underground by one single glowing root network"
+        }
+      ]
+    },
+    {
+      "texto": "Se llama *Pando*, está en Utah y tiene unos 47.000 troncos.",
+      "busqueda": "aspen trees",
+      "visual": {
+        "tipo": "numero",
+        "valor": 47000,
+        "etiqueta": "troncos"
+      },
+      "tomas": [
+        {
+          "foto": "Pando clonal colony",
+          "dibujo": "A dense grove of white aspen trunks with yellow leaves"
+        },
+        {
+          "desde": "Utah",
+          "foto": "Fishlake National Forest",
+          "dibujo": "A mountain valley in Utah covered by a wide aspen forest"
+        },
+        {
+          "desde": "47",
+          "visual": {
+            "tipo": "numero",
+            "valor": 47000,
+            "etiqueta": "troncos"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Pero todos son *clones* del mismo álamo y comparten una sola raíz gigante.",
+      "busqueda": "aspen roots",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Rows of identical white aspen trees, each one an exact copy of the next"
+        },
+        {
+          "desde": "mismo",
+          "dibujo": "One single white aspen tree with a golden crown standing on a hill"
+        },
+        {
+          "desde": "comparten",
+          "dibujo": "A cross-section of the ground showing many aspen trunks rising from one huge shared root system"
+        }
+      ]
+    },
+    {
+      "texto": "Pesa unas *6.000 toneladas*: cuarenta veces más que una ballena azul.",
+      "busqueda": "forest aerial",
+      "visual": {
+        "tipo": "numero",
+        "valor": 6000,
+        "etiqueta": "toneladas"
+      },
+      "tomas": [
+        {
+          "foto": "Pando aerial view",
+          "dibujo": "An aerial view of a large aspen forest patch on a mountain slope"
+        },
+        {
+          "desde": "6",
+          "visual": {
+            "tipo": "numero",
+            "valor": 6000,
+            "etiqueta": "toneladas"
+          }
+        },
+        {
+          "desde": "cuarenta",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Peso",
+            "unidad": "toneladas",
+            "a": {
+              "etiqueta": "Pando",
+              "valor": 6000,
+              "icono": "trees"
+            },
+            "b": {
+              "etiqueta": "Ballena azul",
+              "valor": 150,
+              "icono": "fish"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Cada tronco nuevo es otro brote de la misma planta. Mandáselo a alguien que ama los árboles. ¿Vos lo sabías? Ojo, porque",
+      "busqueda": "aspen sprout",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A row of tall white aspen trunks in a sunny forest"
+        },
+        {
+          "desde": "brote",
+          "dibujo": "A young aspen sprout growing out of the soil from a long underground root connected to tall aspen trees"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de Pando, el árbol más pesado del mundo\nPando es un bosque de unos 47.000 álamos que son un solo ser vivo con una misma raíz.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#naturaleza",
+    "#arboles"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Pando_(árbol)"
+}

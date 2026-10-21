@@ -1,0 +1,154 @@
+{
+  "id": "030-papua-800-idiomas",
+  "tema": "Idiomas",
+  "gancho": "Un país, más de *800* idiomas",
+  "partes": [
+    {
+      "texto": "Hay un país donde se hablan *más de 800 idiomas*.",
+      "busqueda": "tropical island jungle",
+      "visual": {
+        "tipo": "numero",
+        "valor": 800,
+        "etiqueta": "idiomas",
+        "prefijo": "+"
+      },
+      "tomas": [
+        {
+          "foto": "Papua New Guinea highlands",
+          "dibujo": "A green mountainous tropical island seen from above, small villages among the jungle"
+        },
+        {
+          "desde": "más",
+          "visual": {
+            "tipo": "numero",
+            "valor": 800,
+            "etiqueta": "idiomas",
+            "prefijo": "+"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Es *Papúa Nueva Guinea*, al norte de Australia.",
+      "busqueda": "papua new guinea",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Flag of Papua New Guinea",
+          "dibujo": "A red and black flag with a golden bird of paradise and white stars waving in the wind"
+        },
+        {
+          "desde": "al",
+          "dibujo": "A globe showing a large tropical island just north of Australia"
+        }
+      ]
+    },
+    {
+      "texto": "Eso es más de un *diez por ciento* de todos los idiomas del planeta.",
+      "busqueda": "world globe",
+      "visual": {
+        "tipo": "numero",
+        "valor": 10,
+        "etiqueta": "de los idiomas del mundo",
+        "prefijo": "+",
+        "sufijo": "%"
+      },
+      "tomas": [
+        {
+          "dibujo": "A world globe surrounded by many colorful empty speech bubbles"
+        },
+        {
+          "desde": "diez",
+          "visual": {
+            "tipo": "numero",
+            "valor": 10,
+            "etiqueta": "de los idiomas del mundo",
+            "prefijo": "+",
+            "sufijo": "%"
+          }
+        },
+        {
+          "desde": "los",
+          "dibujo": "Planet Earth covered with thousands of tiny colorful empty speech bubbles"
+        }
+      ]
+    },
+    {
+      "texto": "Muchos de esos idiomas tienen *menos de mil hablantes*.",
+      "busqueda": "village jungle",
+      "visual": {
+        "tipo": "numero",
+        "valor": 1000,
+        "etiqueta": "hablantes",
+        "prefijo": "<"
+      },
+      "tomas": [
+        {
+          "dibujo": "A small village of wooden stilt houses in a jungle clearing"
+        },
+        {
+          "desde": "menos",
+          "visual": {
+            "tipo": "numero",
+            "valor": 1000,
+            "etiqueta": "hablantes",
+            "prefijo": "<"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Montañas y selvas aislaron a los pueblos durante miles de años.",
+      "busqueda": "mountains jungle",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Papua New Guinea mountains",
+          "dibujo": "Steep green mountains covered in thick jungle and clouds"
+        },
+        {
+          "desde": "los",
+          "dibujo": "Two small villages on opposite sides of a steep jungle-covered mountain ridge"
+        }
+      ]
+    },
+    {
+      "texto": "Por eso, a veces el pueblo de al lado habla otra lengua. Mandáselo a alguien que habla tres idiomas. ¿Vos lo sabías? Porque...",
+      "busqueda": "village people",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "Two neighboring jungle villages a short walk apart, connected by a dirt path"
+        },
+        {
+          "desde": "de",
+          "dibujo": "Two villagers from neighboring villages talking with confused faces, each with an empty speech bubble of a different shape",
+          "texto": "otra lengua"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de los idiomas del mundo\nEn Papúa Nueva Guinea se hablan más de 800 idiomas, más que en cualquier otro país.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#idiomas",
+    "#geografia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Papúa_Nueva_Guinea"
+}

@@ -1,0 +1,124 @@
+{
+  "id": "011-wombat-caca-cubos",
+  "tema": "Animales",
+  "gancho": "Caca *cuadrada*, en serio",
+  "protagonista": "a cute chubby brown wombat with small round ears and big friendly eyes",
+  "partes": [
+    {
+      "texto": "El wombat hace *caca en forma de cubo*.",
+      "busqueda": "wombat",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Vombatus ursinus Maria Island",
+          "dibujo": "A cute chubby brown wombat sitting on green grass"
+        },
+        {
+          "desde": "caca",
+          "dibujo": "A neat little stack of small brown cubes on a flat grey rock"
+        }
+      ]
+    },
+    {
+      "texto": "Es un marsupial de Australia, pariente del koala, y deja entre *80 y 100 cubitos* por día.",
+      "busqueda": "wombat australia",
+      "visual": {
+        "tipo": "numero",
+        "valor": 100,
+        "prefijo": "hasta ",
+        "etiqueta": "cubitos por día"
+      },
+      "tomas": [
+        {
+          "foto": "Common wombat walking",
+          "dibujo": "A chubby brown wombat walking through the dry Australian bush"
+        },
+        {
+          "desde": "pariente",
+          "foto": "Koala climbing tree",
+          "dibujo": "A brown wombat and a grey koala sitting side by side under a eucalyptus tree"
+        },
+        {
+          "desde": "80",
+          "visual": {
+            "tipo": "numero",
+            "valor": 100,
+            "prefijo": "hasta ",
+            "etiqueta": "cubitos por día"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Los apila sobre piedras y troncos para *marcar su territorio*. Como son cubos, no se caen rodando.",
+      "busqueda": "wombat rock",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A cute brown wombat placing small brown cubes on top of a flat rock"
+        },
+        {
+          "desde": "marcar",
+          "dibujo": "A brown wombat standing proudly next to a fallen log topped with small brown cubes, a grassy field around it"
+        },
+        {
+          "desde": "Como",
+          "dibujo": "A small brown cube resting still on a sloped rock while a round pebble rolls down the slope"
+        }
+      ]
+    },
+    {
+      "texto": "La forma se arma *dentro del intestino*, que tiene zonas más rígidas y otras más elásticas.",
+      "busqueda": "intestine diagram",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A soft lump of brown clay slowly taking the shape of a neat cube"
+        },
+        {
+          "desde": "dentro",
+          "dibujo": "A long winding soft pink tube coiled inside the round belly of a cartoon wombat"
+        },
+        {
+          "desde": "zonas",
+          "dibujo": "A soft pink tube with alternating stiff and stretchy rings, squeezing a soft brown mass into a cube shape"
+        }
+      ]
+    },
+    {
+      "texto": "Ningún otro animal conocido lo hace. Mandáselo a alguien que no te lo va a creer. ¿Vos lo sabías? Sí, en serio:",
+      "busqueda": "wombat grass",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A proud brown wombat standing alone on a hill in front of a crowd of other animals looking at it in surprise"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del wombat\nEl wombat hace caca en forma de cubo: hasta 100 cubitos por día para marcar su territorio.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#australia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Vombatidae"
+}

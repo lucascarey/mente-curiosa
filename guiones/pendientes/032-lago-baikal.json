@@ -1,0 +1,149 @@
+{
+  "id": "032-lago-baikal",
+  "tema": "Geografía",
+  "gancho": "Un lago, *20 %* del agua",
+  "partes": [
+    {
+      "texto": "Un solo lago guarda *un quinto* del agua dulce del planeta. Sin contar los hielos.",
+      "busqueda": "lake baikal",
+      "visual": {
+        "tipo": "numero",
+        "valor": 20,
+        "etiqueta": "del agua dulce",
+        "sufijo": "%"
+      },
+      "tomas": [
+        {
+          "foto": "Lake Baikal",
+          "dibujo": "A huge long blue lake surrounded by mountains, seen from above"
+        },
+        {
+          "desde": "un",
+          "visual": {
+            "tipo": "numero",
+            "valor": 20,
+            "etiqueta": "del agua dulce",
+            "sufijo": "%"
+          }
+        },
+        {
+          "desde": "Sin",
+          "dibujo": "Huge white glaciers and ice sheets at the North and South Poles"
+        }
+      ]
+    },
+    {
+      "texto": "Es el *lago Baikal*, en el sur de Siberia, Rusia.",
+      "busqueda": "siberia lake",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Lake Baikal winter ice",
+          "dibujo": "A frozen lake with clear turquoise ice and snowy mountains"
+        },
+        {
+          "desde": "en",
+          "dibujo": "A map of Russia with a long thin crescent-shaped lake in the south of Siberia"
+        }
+      ]
+    },
+    {
+      "texto": "Y es el más profundo del mundo: llega a *1642 metros* de fondo.",
+      "busqueda": "deep water",
+      "visual": {
+        "tipo": "numero",
+        "valor": 1642,
+        "etiqueta": "metros de profundidad"
+      },
+      "tomas": [
+        {
+          "dibujo": "A cross-section view of a very deep lake reaching far down into the earth, a tiny boat on the surface"
+        },
+        {
+          "desde": "llega",
+          "visual": {
+            "tipo": "numero",
+            "valor": 1642,
+            "etiqueta": "metros de profundidad"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Ahí entrarían casi *cinco Torres Eiffel*, una arriba de la otra.",
+      "busqueda": "eiffel tower",
+      "visual": {
+        "tipo": "numero",
+        "valor": 5,
+        "etiqueta": "Torres Eiffel"
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 5,
+            "etiqueta": "Torres Eiffel"
+          }
+        },
+        {
+          "desde": "una",
+          "dibujo": "Five Eiffel Towers stacked one on top of another inside a cross-section of a very deep lake"
+        }
+      ]
+    },
+    {
+      "texto": "Y es viejísimo: tiene unos *25 millones de años*.",
+      "busqueda": "ancient lake landscape",
+      "visual": {
+        "tipo": "numero",
+        "valor": 25,
+        "etiqueta": "millones de años"
+      },
+      "tomas": [
+        {
+          "dibujo": "A prehistoric landscape with a huge lake surrounded by ancient forests and mountains"
+        },
+        {
+          "desde": "unos",
+          "visual": {
+            "tipo": "numero",
+            "valor": 25,
+            "etiqueta": "millones de años"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Es el lago más antiguo del planeta. Mandáselo a alguien que ama viajar. ¿Vos lo sabías? Porque...",
+      "busqueda": "frozen lake",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "foto": "Lake Baikal ice",
+          "dibujo": "The shore of a huge frozen lake with clear turquoise ice blocks and mountains"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del lago Baikal\nEl lago Baikal guarda cerca del 20 % del agua dulce líquida del mundo y es el más profundo y antiguo del planeta.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#geografia",
+    "#rusia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Lago_Baikal"
+}

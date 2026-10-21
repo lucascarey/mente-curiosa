@@ -1,0 +1,143 @@
+{
+  "id": "021-monte-olimpo-marte",
+  "tema": "Espacio",
+  "gancho": "Everest *×3*, en Marte",
+  "partes": [
+    {
+      "texto": "El Everest es enano al lado de este volcán.",
+      "busqueda": "mount everest",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Mount Everest",
+          "dibujo": "Mount Everest, a tall snowy mountain peak under a blue sky"
+        },
+        {
+          "desde": "al",
+          "dibujo": "A small snowy mountain standing next to a gigantic wide volcano that towers far above it"
+        }
+      ]
+    },
+    {
+      "texto": "Se llama *Monte Olimpo* y está en el planeta Marte.",
+      "busqueda": "mars planet",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Olympus Mons",
+          "dibujo": "A huge wide volcano with a crater on top, on the red dusty surface of Mars, seen from above"
+        },
+        {
+          "desde": "en",
+          "foto": "Mars Hubble",
+          "dibujo": "The red planet Mars floating in black space"
+        }
+      ]
+    },
+    {
+      "texto": "Mide unos *22 kilómetros* de alto, casi tres veces el Everest.",
+      "busqueda": "mountain peak",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Altura",
+        "unidad": "km",
+        "a": {
+          "etiqueta": "Monte Olimpo",
+          "valor": 22,
+          "icono": "mountain"
+        },
+        "b": {
+          "etiqueta": "Everest",
+          "valor": 8.8,
+          "icono": "mountain-snow"
+        }
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 22,
+            "etiqueta": "km de alto"
+          }
+        },
+        {
+          "desde": "casi",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Altura",
+            "unidad": "km",
+            "a": {
+              "etiqueta": "Monte Olimpo",
+              "valor": 22,
+              "icono": "mountain"
+            },
+            "b": {
+              "etiqueta": "Everest",
+              "valor": 8.8,
+              "icono": "mountain-snow"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Y su base mide unos *600 kilómetros* de ancho.",
+      "busqueda": "mars surface",
+      "visual": {
+        "tipo": "numero",
+        "valor": 600,
+        "etiqueta": "km de ancho"
+      },
+      "tomas": [
+        {
+          "dibujo": "A gigantic wide volcano spreading across the red surface of Mars, its base reaching the horizon"
+        },
+        {
+          "desde": "600",
+          "visual": {
+            "tipo": "numero",
+            "valor": 600,
+            "etiqueta": "km de ancho"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Subirlo sería como escalar el Everest casi tres veces seguidas. Mandáselo a alguien que se cansa subiendo escaleras. ¿Vos lo sabías? Porque al lado de Marte, el Everest...",
+      "busqueda": "climber mountain",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A mountain climber with a backpack hiking up the slope of a giant red volcano on Mars"
+        },
+        {
+          "desde": "Everest",
+          "dibujo": "Three snowy mountains stacked one on top of another, reaching high into the sky"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de Marte: el Monte Olimpo\nEl volcán Monte Olimpo mide unos 22 km de alto, casi tres veces el Everest, y su base unos 600 km.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#espacio",
+    "#astronomia",
+    "#marte"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Monte_Olimpo_(Marte)"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "019-luz-sol-ocho-minutos",
+  "tema": "Espacio",
+  "gancho": "Lo ves *con retraso*",
+  "partes": [
+    {
+      "texto": "El Sol que ves en el cielo es *del pasado*.",
+      "busqueda": "sun sky",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Sun in the sky",
+          "dibujo": "A bright yellow Sun shining high in a clear blue sky over a green field"
+        },
+        {
+          "desde": "cielo",
+          "dibujo": "A bright glowing Sun in space with an old hourglass in front of it, sand running down"
+        }
+      ]
+    },
+    {
+      "texto": "Su luz tarda unos *8 minutos y 19 segundos* en llegar a la Tierra.",
+      "busqueda": "sunlight space",
+      "visual": {
+        "tipo": "numero",
+        "valor": 8,
+        "etiqueta": "minutos de viaje"
+      },
+      "tomas": [
+        {
+          "dibujo": "A beam of yellow light traveling through black space away from the glowing Sun"
+        },
+        {
+          "desde": "8",
+          "visual": {
+            "tipo": "numero",
+            "valor": 8,
+            "etiqueta": "minutos de viaje"
+          }
+        },
+        {
+          "desde": "llegar",
+          "foto": "The Blue Marble",
+          "dibujo": "The blue planet Earth in space, lit by a beam of sunlight on one side"
+        }
+      ]
+    },
+    {
+      "texto": "Recorre unos 150 millones de kilómetros a casi 300.000 kilómetros por segundo.",
+      "busqueda": "earth sun distance",
+      "visual": {
+        "tipo": "numero",
+        "valor": 150,
+        "etiqueta": "millones de km"
+      },
+      "tomas": [
+        {
+          "dibujo": "The glowing Sun on the far left and a tiny blue Earth on the far right, a long dotted line between them"
+        },
+        {
+          "desde": "de",
+          "visual": {
+            "tipo": "numero",
+            "valor": 150,
+            "etiqueta": "millones de km"
+          }
+        },
+        {
+          "desde": "300",
+          "visual": {
+            "tipo": "numero",
+            "valor": 300000,
+            "etiqueta": "km por segundo"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Si el Sol se apagara ahora, vos lo seguirías viendo *ocho minutos más*.",
+      "busqueda": "sunset",
+      "visual": {
+        "tipo": "numero",
+        "valor": 8,
+        "etiqueta": "minutos más"
+      },
+      "tomas": [
+        {
+          "dibujo": "The Sun in space turning dark, becoming a black disk with a faint glowing rim"
+        },
+        {
+          "desde": "vos",
+          "dibujo": "A person standing on a hill looking up at a bright shining Sun in the sky"
+        }
+      ]
+    },
+    {
+      "texto": "Con las estrellas pasa lo mismo, pero su luz tarda años. Mandáselo a alguien que vive mirando el cielo. ¿Vos lo sabías? Porque el Sol que ves...",
+      "busqueda": "stars night sky",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A starry night sky full of bright twinkling stars over a dark quiet landscape"
+        },
+        {
+          "desde": "pero",
+          "dibujo": "Beams of light traveling a very long way from a distant twinkling star toward a tiny blue Earth"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del Sol: su luz tarda 8 minutos en llegar\nLa luz del Sol tarda unos 8 minutos y 19 segundos en recorrer los 150 millones de km hasta la Tierra.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#ciencia",
+    "#espacio",
+    "#astronomia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Sol"
+}

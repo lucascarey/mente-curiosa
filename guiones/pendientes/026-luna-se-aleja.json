@@ -1,0 +1,138 @@
+{
+  "id": "026-luna-se-aleja",
+  "tema": "Espacio",
+  "gancho": "*3,8 cm* por año",
+  "partes": [
+    {
+      "texto": "La Luna se está escapando de la Tierra.",
+      "busqueda": "full moon",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Full Moon",
+          "dibujo": "The full Moon glowing in a dark night sky"
+        },
+        {
+          "desde": "escapando",
+          "dibujo": "The grey Moon slowly drifting away from the blue Earth in space, a curved arrow pointing outward"
+        }
+      ]
+    },
+    {
+      "texto": "Cada año se aleja unos *3,8 centímetros* más.",
+      "busqueda": "moon earth",
+      "visual": {
+        "tipo": "numero",
+        "valor": 3.8,
+        "etiqueta": "cm por año"
+      },
+      "tomas": [
+        {
+          "dibujo": "The grey Moon drifting a little farther from the blue Earth in space"
+        },
+        {
+          "desde": "unos",
+          "visual": {
+            "tipo": "numero",
+            "valor": 3.8,
+            "etiqueta": "cm por año"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Lo sabemos porque los astronautas del *Apolo* dejaron espejos en la Luna.",
+      "busqueda": "astronaut moon",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A scientist at an observatory looking up at the Moon at night"
+        },
+        {
+          "desde": "astronautas",
+          "foto": "Apollo 11 Aldrin Moon",
+          "dibujo": "An astronaut in a white spacesuit standing on the grey Moon surface"
+        },
+        {
+          "desde": "espejos",
+          "foto": "Apollo 11 Lunar Laser Ranging Experiment",
+          "dibujo": "A flat panel of many small round mirrors lying on the grey Moon dust"
+        }
+      ]
+    },
+    {
+      "texto": "Desde la Tierra les disparan un *láser* y miden cuánto tarda en volver.",
+      "busqueda": "laser",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A green laser beam shooting from an observatory telescope up toward the Moon at night"
+        },
+        {
+          "desde": "y",
+          "dibujo": "A laser beam bouncing off a mirror panel on the Moon and traveling back toward the Earth"
+        }
+      ]
+    },
+    {
+      "texto": "Pasa por las *mareas*, que también frenan de a poco el giro de la Tierra.",
+      "busqueda": "ocean tide",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Low tide",
+          "dibujo": "Ocean water rising high on a beach under a bright full Moon"
+        },
+        {
+          "desde": "también",
+          "dibujo": "The blue Earth spinning slowly in space with one small curved arrow beside it"
+        },
+        {
+          "desde": "giro",
+          "dibujo": "The grey Moon pulling on the oceans of the spinning blue Earth, making a bulge of water"
+        }
+      ]
+    },
+    {
+      "texto": "Hace millones de años, la Luna estaba mucho más cerca. Mandáselo a alguien que siempre se va sin saludar. ¿Vos lo sabías? Porque la Luna se está...",
+      "busqueda": "moon horizon",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "An ancient Earth landscape with smoking volcanoes under a dark sky"
+        },
+        {
+          "desde": "la",
+          "dibujo": "A huge Moon looming very close above the horizon of an ancient rocky Earth"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de la Luna: se aleja de la Tierra\nLa Luna se aleja unos 3,8 cm por año; se mide con láser y los espejos que dejaron las misiones Apolo.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#espacio",
+    "#astronomia",
+    "#luna"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Luna"
+}

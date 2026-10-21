@@ -1,0 +1,137 @@
+{
+  "id": "016-oxigeno-del-oceano",
+  "tema": "Naturaleza",
+  "gancho": "Respirás *gracias al mar*",
+  "partes": [
+    {
+      "texto": "La mitad del oxígeno que respirás *no viene de los árboles*.",
+      "busqueda": "ocean",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A person taking a deep breath on a beach facing the open sea"
+        },
+        {
+          "desde": "no",
+          "dibujo": "A tall green tree with a big question mark shape made of leaves above it"
+        }
+      ]
+    },
+    {
+      "texto": "Viene del océano, de unos seres diminutos llamados *fitoplancton*.",
+      "busqueda": "plankton",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Ocean waves",
+          "dibujo": "Wide blue ocean waves under a sunny sky"
+        },
+        {
+          "desde": "diminutos",
+          "foto": "Diatoms microscope",
+          "dibujo": "Tiny green glass-like microscopic algae of many shapes under a microscope"
+        }
+      ]
+    },
+    {
+      "texto": "Hacen fotosíntesis como las plantas: usan la luz del Sol y largan oxígeno.",
+      "busqueda": "sunlight underwater",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Tiny green floating algae next to a leafy green plant, both glowing in sunlight"
+        },
+        {
+          "desde": "usan",
+          "dibujo": "Sunbeams shining down into the sea onto tiny green floating algae"
+        },
+        {
+          "desde": "largan",
+          "dibujo": "Tiny green algae in the sea releasing small bubbles that rise to the surface"
+        }
+      ]
+    },
+    {
+      "texto": "Entre todos producen cerca del *50 por ciento* del oxígeno del planeta.",
+      "busqueda": "earth ocean",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Oxígeno del planeta",
+        "unidad": "%",
+        "a": {
+          "etiqueta": "Océano",
+          "valor": 50,
+          "icono": "waves"
+        },
+        "b": {
+          "etiqueta": "Resto",
+          "valor": 50,
+          "icono": "trees"
+        }
+      },
+      "tomas": [
+        {
+          "foto": "Phytoplankton bloom satellite",
+          "dibujo": "A view of the ocean from space with swirls of green and turquoise algae"
+        },
+        {
+          "desde": "50",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Oxígeno del planeta",
+            "unidad": "%",
+            "a": {
+              "etiqueta": "Océano",
+              "valor": 50,
+              "icono": "waves"
+            },
+            "b": {
+              "etiqueta": "Resto",
+              "valor": 50,
+              "icono": "trees"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "O sea, una de cada dos respiraciones te la regala el mar. Mandáselo a alguien que ama el océano. ¿Vos lo sabías? Porque",
+      "busqueda": "sea breeze",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A person on a beach taking two deep breaths, two soft puffs of air in front of their face"
+        },
+        {
+          "desde": "regala",
+          "dibujo": "A person breathing in fresh sea air on a cliff above the ocean, waves below"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del océano y el oxígeno\nEl fitoplancton del océano produce cerca de la mitad del oxígeno del planeta.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#naturaleza",
+    "#oceano"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Fitoplancton"
+}

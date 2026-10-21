@@ -1,0 +1,120 @@
+{
+  "id": "018-mosquitos-solo-pican-hembras",
+  "tema": "Animales",
+  "gancho": "Los machos *no pican*",
+  "protagonista": "a small cute cartoon mosquito with long thin legs and big friendly eyes",
+  "partes": [
+    {
+      "texto": "El mosquito que te pica *siempre es hembra*.",
+      "busqueda": "mosquito",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Aedes aegypti feeding",
+          "dibujo": "A mosquito with long thin legs resting on human skin"
+        },
+        {
+          "desde": "siempre",
+          "dibujo": "A small female mosquito with long thin legs standing apart from a male mosquito with feathery antennae"
+        }
+      ]
+    },
+    {
+      "texto": "Los machos no chupan sangre: comen *néctar* de las flores.",
+      "busqueda": "flower nectar",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Mosquito male antennae",
+          "dibujo": "A male mosquito with big feathery antennae"
+        },
+        {
+          "desde": "néctar",
+          "foto": "Mosquito on flower",
+          "dibujo": "A mosquito sipping nectar from a small yellow flower"
+        }
+      ]
+    },
+    {
+      "texto": "Las hembras también toman néctar, pero necesitan la sangre para *poner sus huevos*.",
+      "busqueda": "mosquito eggs",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A female mosquito sipping from a flower in a garden"
+        },
+        {
+          "desde": "necesitan",
+          "dibujo": "A female mosquito with its belly swollen red with a drop of blood"
+        },
+        {
+          "desde": "poner",
+          "dibujo": "A female mosquito laying a small raft of tiny dark eggs on the surface of still water"
+        }
+      ]
+    },
+    {
+      "texto": "La sangre les da las proteínas que esos huevos necesitan para formarse.",
+      "busqueda": "water eggs",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A single shiny red drop of blood"
+        },
+        {
+          "desde": "proteínas",
+          "dibujo": "Tiny glowing building blocks flowing out of a red drop of blood"
+        },
+        {
+          "desde": "huevos",
+          "dibujo": "A small raft of tiny dark mosquito eggs floating on a calm pond"
+        }
+      ]
+    },
+    {
+      "texto": "Por eso el zumbido que te despierta a la noche es de ella. Mandáselo a alguien a quien los mosquitos adoran. ¿Vos lo sabías? Ya sabés:",
+      "busqueda": "mosquito night",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A small mosquito flying with curved buzzing sound waves around its wings"
+        },
+        {
+          "desde": "despierta",
+          "dibujo": "A person awake in bed at night looking annoyed at a small mosquito flying near their ear"
+        },
+        {
+          "desde": "es",
+          "dibujo": "A close-up of a female mosquito hovering in a dark bedroom"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de los mosquitos\nSolo las hembras de mosquito pican: necesitan la sangre para formar sus huevos.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#animales",
+    "#insectos"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Culicidae"
+}

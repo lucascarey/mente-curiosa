@@ -1,0 +1,112 @@
+{
+  "id": "020-estrella-neutrones",
+  "tema": "Espacio",
+  "gancho": "Chiquita y *pesadísima*",
+  "partes": [
+    {
+      "texto": "Hay estrellas de unos *24 kilómetros* que pesan más que el Sol.",
+      "busqueda": "star space",
+      "visual": {
+        "tipo": "numero",
+        "valor": 24,
+        "etiqueta": "km de ancho"
+      },
+      "tomas": [
+        {
+          "dibujo": "A tiny glowing blue-white star floating alone in black space"
+        },
+        {
+          "desde": "que",
+          "dibujo": "An old balance scale in space, a tiny glowing star on the low side and the huge bright Sun on the high side"
+        }
+      ]
+    },
+    {
+      "texto": "Se llaman *estrellas de neutrones* y nacen cuando una estrella gigante explota.",
+      "busqueda": "supernova",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A small glowing blue-white sphere in space with two beams of light shooting from its poles"
+        },
+        {
+          "desde": "nacen",
+          "foto": "Crab Nebula",
+          "dibujo": "A giant star exploding in a huge bright burst of colorful gas in space"
+        }
+      ]
+    },
+    {
+      "texto": "Su materia es tan densa que es como meter un *Boeing 747* en un grano de arena.",
+      "busqueda": "airplane",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Countless tiny spheres squeezed tightly together into one small glowing ball"
+        },
+        {
+          "desde": "como",
+          "foto": "Boeing 747-400",
+          "dibujo": "A large white jumbo jet airplane flying in a blue sky"
+        },
+        {
+          "desde": "en",
+          "dibujo": "A jumbo jet airplane shrinking down into a single tiny grain of sand resting on a fingertip"
+        }
+      ]
+    },
+    {
+      "texto": "Una sola cucharadita de ese material pesaría *miles de millones de toneladas*.",
+      "busqueda": "teaspoon",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A small silver teaspoon holding a glowing blue-white substance"
+        },
+        {
+          "desde": "pesaría",
+          "dibujo": "A giant balance scale, a tiny teaspoon on one side outweighing huge rocky mountains piled on the other side"
+        }
+      ]
+    },
+    {
+      "texto": "Es de lo más denso que existe en el universo. Mandáselo a alguien que dice que su mochila pesa una tonelada. ¿Vos lo sabías? Porque hay estrellas...",
+      "busqueda": "galaxy",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "Countless tiny glowing particles squeezed tightly together into one small dense ball"
+        },
+        {
+          "desde": "existe",
+          "dibujo": "A tiny glowing blue-white star in the center of a dark universe full of spiral galaxies"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de las estrellas de neutrones\nMiden unos 24 km y pesan más que el Sol: es como meter un Boeing 747 en un grano de arena.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#espacio",
+    "#astronomia",
+    "#ciencia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Estrella_de_neutrones"
+}

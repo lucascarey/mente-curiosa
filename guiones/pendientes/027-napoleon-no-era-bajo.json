@@ -1,0 +1,143 @@
+{
+  "id": "027-napoleon-no-era-bajo",
+  "tema": "Historia",
+  "gancho": "El emperador *no* era bajito",
+  "partes": [
+    {
+      "texto": "Napoleón *no era bajo*. Medía alrededor de *un metro sesenta y nueve*.",
+      "busqueda": "napoleon portrait",
+      "visual": {
+        "tipo": "numero",
+        "valor": 169,
+        "etiqueta": "centímetros"
+      },
+      "tomas": [
+        {
+          "foto": "Napoleon in His Study Jacques-Louis David",
+          "dibujo": "Napoleon Bonaparte standing tall in his dark blue uniform and bicorne hat, full body portrait"
+        },
+        {
+          "desde": "un",
+          "visual": {
+            "tipo": "numero",
+            "valor": 169,
+            "etiqueta": "centímetros"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Eso era incluso un poco más que el francés promedio de su época.",
+      "busqueda": "french soldiers history",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Napoleon in his grey coat and bicorne hat standing beside two 1800s French soldiers, Napoleon slightly taller than them"
+        },
+        {
+          "desde": "que",
+          "dibujo": "A row of 1800s French soldiers in blue uniforms, all of similar height, standing in line"
+        }
+      ]
+    },
+    {
+      "texto": "El mito nació de *dos pulgadas distintas*: la francesa era más larga que la inglesa.",
+      "busqueda": "old ruler",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Una pulgada",
+        "unidad": "cm",
+        "a": {
+          "etiqueta": "Francesa",
+          "valor": 2.71,
+          "icono": "ruler"
+        },
+        "b": {
+          "etiqueta": "Inglesa",
+          "valor": 2.54,
+          "icono": "ruler"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "A caricature of a tiny Napoleon wearing a huge bicorne hat that covers half his body"
+        },
+        {
+          "desde": "dos",
+          "dibujo": "Two old wooden rulers of different lengths lying side by side on a desk"
+        },
+        {
+          "desde": "era",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Una pulgada",
+            "unidad": "cm",
+            "a": {
+              "etiqueta": "Francesa",
+              "valor": 2.71,
+              "icono": "ruler"
+            },
+            "b": {
+              "etiqueta": "Inglesa",
+              "valor": 2.54,
+              "icono": "ruler"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Y los caricaturistas ingleses lo dibujaban diminuto para burlarse.",
+      "busqueda": "caricature drawing",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "An 1800s British cartoonist sitting at a wooden desk drawing with a quill pen"
+        },
+        {
+          "desde": "lo",
+          "foto": "Maniac-ravings or Little Boney in a strong fit",
+          "dibujo": "A cartoon of a tiny angry Napoleon stamping his feet next to a giant chair"
+        }
+      ]
+    },
+    {
+      "texto": "Su apodo, *el pequeño cabo*, era de cariño, no de altura. Mandáselo a alguien que se cree alto. ¿Vos lo sabías? Porque...",
+      "busqueda": "napoleon soldiers",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "French soldiers of the 1800s cheering and raising their hats to Napoleon"
+        },
+        {
+          "desde": "de",
+          "dibujo": "A smiling French soldier warmly patting Napoleon on the shoulder, both laughing",
+          "texto": "de cariño"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de Napoleón y su altura\nNapoleón medía alrededor de 1,69 m: el mito de que era bajo nació de la diferencia entre la pulgada francesa y la inglesa.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#historia",
+    "#napoleon"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Complejo_de_Napoleón"
+}

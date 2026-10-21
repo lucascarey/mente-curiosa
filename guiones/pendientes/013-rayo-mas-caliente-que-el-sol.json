@@ -1,0 +1,160 @@
+{
+  "id": "013-rayo-mas-caliente-que-el-sol",
+  "tema": "Naturaleza",
+  "gancho": "Más caliente que *el Sol*",
+  "partes": [
+    {
+      "texto": "Un rayo está *cinco veces más caliente* que el Sol.",
+      "busqueda": "lightning",
+      "visual": {
+        "tipo": "numero",
+        "valor": 5,
+        "etiqueta": "veces más caliente",
+        "sufijo": "x"
+      },
+      "tomas": [
+        {
+          "foto": "Lightning over city",
+          "dibujo": "A bright lightning bolt striking down from dark storm clouds at night"
+        },
+        {
+          "desde": "cinco",
+          "visual": {
+            "tipo": "numero",
+            "valor": 5,
+            "etiqueta": "veces más caliente",
+            "sufijo": "x"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "El aire por donde pasa llega a unos *30.000 grados*.",
+      "busqueda": "lightning storm",
+      "visual": {
+        "tipo": "numero",
+        "valor": 30000,
+        "etiqueta": "grados",
+        "sufijo": " °C"
+      },
+      "tomas": [
+        {
+          "dibujo": "A glowing white-hot lightning channel cutting through the air between clouds and the ground"
+        },
+        {
+          "desde": "llega",
+          "dibujo": "A giant thermometer next to a lightning bolt with its red line at the very top"
+        },
+        {
+          "desde": "30",
+          "visual": {
+            "tipo": "numero",
+            "valor": 30000,
+            "etiqueta": "grados",
+            "sufijo": " °C"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "La superficie del Sol, en cambio, ronda los 5.500.",
+      "busqueda": "sun surface",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Temperatura",
+        "unidad": "°C",
+        "a": {
+          "etiqueta": "Rayo",
+          "valor": 30000,
+          "icono": "zap"
+        },
+        "b": {
+          "etiqueta": "Superficie del Sol",
+          "valor": 5500,
+          "icono": "sun"
+        }
+      },
+      "tomas": [
+        {
+          "foto": "Sun white light",
+          "dibujo": "The glowing orange surface of the Sun up close with bubbling hot spots"
+        },
+        {
+          "desde": "ronda",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Temperatura",
+            "unidad": "°C",
+            "a": {
+              "etiqueta": "Rayo",
+              "valor": 30000,
+              "icono": "zap"
+            },
+            "b": {
+              "etiqueta": "Superficie del Sol",
+              "valor": 5500,
+              "icono": "sun"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Ese calor dura una fracción de segundo y hace que el aire se expanda de golpe: eso es el *trueno*.",
+      "busqueda": "thunderstorm",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A single lightning bolt glowing white for an instant in a dark sky"
+        },
+        {
+          "desde": "fracción",
+          "dibujo": "A small stopwatch frozen at a tiny fraction of a second next to a lightning bolt"
+        },
+        {
+          "desde": "aire",
+          "dibujo": "Round shock waves of air bursting outward from a lightning bolt"
+        },
+        {
+          "desde": "eso",
+          "dibujo": "A family covering their ears at a window while a storm rumbles outside"
+        }
+      ]
+    },
+    {
+      "texto": "Por eso primero ves el rayo y después escuchás el trueno. Mandáselo a alguien que le tiene miedo a las tormentas. ¿Vos lo sabías? Porque",
+      "busqueda": "storm clouds",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A person at a window at night seeing a lightning flash far away over the hills"
+        },
+        {
+          "desde": "después",
+          "dibujo": "A person at a window covering their ears as curved sound waves arrive from a distant storm"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de los rayos y las tormentas\nUn rayo calienta el aire a unos 30.000 grados, cinco veces más que la superficie del Sol.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#naturaleza",
+    "#clima"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Rayo"
+}

@@ -1,0 +1,163 @@
+{
+  "id": "022-neptuno-una-vuelta",
+  "tema": "Espacio",
+  "gancho": "Una vuelta: *1846* a *2011*",
+  "partes": [
+    {
+      "texto": "Desde que lo descubrimos, Neptuno dio *una sola vuelta* al Sol.",
+      "busqueda": "planet space",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Neptune Voyager 2",
+          "dibujo": "The deep blue planet Neptune floating in black space"
+        },
+        {
+          "desde": "una",
+          "dibujo": "A deep blue planet moving along one big circular orbit line around a distant Sun, a curved arrow on the orbit"
+        }
+      ]
+    },
+    {
+      "texto": "Lo encontraron en 1846, calculando dónde tenía que estar con matemática.",
+      "busqueda": "telescope night",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A nineteenth century astronomer looking through a large brass telescope at the night sky"
+        },
+        {
+          "desde": "calculando",
+          "dibujo": "An old wooden desk covered in handwritten math equations and a drawing of planet orbits, with a quill pen"
+        }
+      ]
+    },
+    {
+      "texto": "Y recién el 12 de julio de 2011 completó su primera órbita.",
+      "busqueda": "solar system",
+      "visual": {
+        "tipo": "linea",
+        "hitos": [
+          {
+            "anio": 1846,
+            "fecha": "1846",
+            "etiqueta": "Descubrimiento"
+          },
+          {
+            "anio": 2011,
+            "fecha": "2011",
+            "etiqueta": "Primera vuelta"
+          },
+          {
+            "anio": 2176,
+            "fecha": "2176",
+            "etiqueta": "Segunda vuelta"
+          }
+        ]
+      },
+      "tomas": [
+        {
+          "dibujo": "A deep blue planet moving slowly along a huge orbit line, far from a small distant Sun"
+        },
+        {
+          "desde": "2011",
+          "visual": {
+            "tipo": "linea",
+            "hitos": [
+              {
+                "anio": 1846,
+                "fecha": "1846",
+                "etiqueta": "Descubrimiento"
+              },
+              {
+                "anio": 2011,
+                "fecha": "2011",
+                "etiqueta": "Primera vuelta"
+              },
+              {
+                "anio": 2176,
+                "fecha": "2176",
+                "etiqueta": "Segunda vuelta"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Un año en Neptuno dura casi *165 años* terrestres.",
+      "busqueda": "neptune planet",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Una vuelta al Sol",
+        "unidad": "años",
+        "a": {
+          "etiqueta": "Tierra",
+          "valor": 1,
+          "icono": "globe"
+        },
+        "b": {
+          "etiqueta": "Neptuno",
+          "valor": 165,
+          "icono": "orbit"
+        }
+      },
+      "tomas": [
+        {
+          "dibujo": "A deep blue planet floating in space next to a tall stack of wall calendars"
+        },
+        {
+          "desde": "casi",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Una vuelta al Sol",
+            "unidad": "años",
+            "a": {
+              "etiqueta": "Tierra",
+              "valor": 1,
+              "icono": "globe"
+            },
+            "b": {
+              "etiqueta": "Neptuno",
+              "valor": 165,
+              "icono": "orbit"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "La próxima vuelta la completa en 2176. Mandáselo a alguien que dice que el año se le pasó volando. ¿Vos lo sabías? Porque desde que lo descubrimos...",
+      "busqueda": "outer space",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A deep blue planet far out in space, its long orbit line circling a tiny distant Sun"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de Neptuno: un año de 165 años\nNeptuno fue descubierto en 1846 y recién completó su primera vuelta al Sol en 2011.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#espacio",
+    "#astronomia",
+    "#planetas"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Neptuno_(planeta)"
+}

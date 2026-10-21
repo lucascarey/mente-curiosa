@@ -1,0 +1,138 @@
+{
+  "id": "024-estribo-hueso-mas-chico",
+  "tema": "Cuerpo humano",
+  "gancho": "*3 mm* de hueso",
+  "partes": [
+    {
+      "texto": "Tu hueso más chico mide *3 milímetros* y está en tu oído.",
+      "busqueda": "ear",
+      "visual": {
+        "tipo": "numero",
+        "valor": 3,
+        "etiqueta": "milímetros"
+      },
+      "tomas": [
+        {
+          "dibujo": "A tiny bone resting on a human fingertip"
+        },
+        {
+          "desde": "mide",
+          "visual": {
+            "tipo": "numero",
+            "valor": 3,
+            "etiqueta": "milímetros"
+          }
+        },
+        {
+          "desde": "está",
+          "dibujo": "A side view of a human head with the inside of the ear shown, a tiny bone deep inside"
+        }
+      ]
+    },
+    {
+      "texto": "Se llama *estribo*, porque tiene la forma del estribo de una montura.",
+      "busqueda": "horse saddle",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Stapes",
+          "dibujo": "A tiny human ear bone shaped like a horse riding stirrup"
+        },
+        {
+          "desde": "forma",
+          "foto": "Stirrup",
+          "dibujo": "A metal horse riding stirrup hanging from a leather saddle strap"
+        }
+      ]
+    },
+    {
+      "texto": "Pesa apenas unos *2 miligramos*.",
+      "busqueda": "feather",
+      "visual": {
+        "tipo": "numero",
+        "valor": 2,
+        "etiqueta": "miligramos"
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 2,
+            "etiqueta": "miligramos"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Junto al martillo y el yunque, lleva el sonido desde el tímpano hasta el oído interno.",
+      "busqueda": "ear anatomy",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Three tiny connected bones of the middle ear: a hammer-shaped bone, an anvil-shaped bone and a stirrup-shaped bone"
+        },
+        {
+          "desde": "lleva",
+          "dibujo": "Sound waves hitting a thin round eardrum and traveling along three tiny connected bones"
+        },
+        {
+          "desde": "hasta",
+          "dibujo": "A spiral snail-shaped organ of the inner ear glowing as it receives vibrations from a tiny stirrup-shaped bone"
+        }
+      ]
+    },
+    {
+      "texto": "Y el músculo que lo mueve es el *más chico del cuerpo*.",
+      "busqueda": "muscle",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A tiny thin muscle attached to a tiny stirrup-shaped bone"
+        },
+        {
+          "desde": "es",
+          "dibujo": "A magnifying glass revealing a tiny thin muscle next to a tiny stirrup-shaped bone"
+        }
+      ]
+    },
+    {
+      "texto": "Y todo eso entra en la punta de un dedo. Mandáselo a alguien que nunca te escucha. ¿Vos lo sabías? Porque tu hueso más chico...",
+      "busqueda": "finger",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "Three tiny connected ear bones: a hammer-shaped bone, an anvil-shaped bone and a stirrup-shaped bone"
+        },
+        {
+          "desde": "la",
+          "dibujo": "Three tiny ear bones resting together on the tip of a human finger"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del cuerpo humano: el hueso más chico\nEl estribo, en el oído, mide unos 3 mm y pesa unos 2 mg: es el hueso más pequeño del cuerpo.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#cuerpohumano",
+    "#ciencia",
+    "#anatomia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Estribo_(anatom%C3%ADa)"
+}

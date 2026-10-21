@@ -1,0 +1,140 @@
+{
+  "id": "033-microondas-chocolate",
+  "tema": "Inventos",
+  "gancho": "Todo por un *chocolate*",
+  "partes": [
+    {
+      "texto": "El microondas se inventó por culpa de un *chocolate derretido*.",
+      "busqueda": "microwave oven",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Microwave oven",
+          "dibujo": "A white microwave oven on a kitchen counter"
+        },
+        {
+          "desde": "culpa",
+          "dibujo": "A melted chocolate bar oozing out of its open wrapper"
+        }
+      ]
+    },
+    {
+      "texto": "En los años cuarenta, el ingeniero *Percy Spencer* trabajaba con radares.",
+      "busqueda": "radar",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A 1940s laboratory with large radar equipment and glowing vacuum tubes"
+        },
+        {
+          "desde": "ingeniero",
+          "foto": "Percy Spencer",
+          "dibujo": "A 1940s engineer in a white shirt and tie working on radar machinery"
+        }
+      ]
+    },
+    {
+      "texto": "Un día se paró frente a un *magnetrón* y notó que el chocolate de su bolsillo se había derretido.",
+      "busqueda": "chocolate melted",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A 1940s engineer standing in front of a large metal radar tube machine"
+        },
+        {
+          "desde": "un",
+          "foto": "Cavity magnetron",
+          "dibujo": "A round copper magnetron device with metal fins"
+        },
+        {
+          "desde": "chocolate",
+          "dibujo": "A chocolate bar melting inside a white shirt pocket"
+        }
+      ]
+    },
+    {
+      "texto": "Después probó con *granos de maíz*: se convirtieron en pochoclo.",
+      "busqueda": "popcorn",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A small pile of dry corn kernels on a plate next to a metal radar device"
+        },
+        {
+          "desde": "se",
+          "foto": "Popcorn",
+          "dibujo": "Popcorn bursting and flying out of a bowl"
+        }
+      ]
+    },
+    {
+      "texto": "El primero, de 1947, era del tamaño de una heladera y pesaba unos *340 kilos*.",
+      "busqueda": "old appliance",
+      "visual": {
+        "tipo": "numero",
+        "valor": 340,
+        "etiqueta": "kilos"
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 1947,
+            "etiqueta": "primer microondas",
+            "sufijo": ""
+          }
+        },
+        {
+          "desde": "del",
+          "foto": "Raytheon Radarange",
+          "dibujo": "A giant 1940s metal microwave oven as tall as the refrigerator standing next to it"
+        },
+        {
+          "desde": "pesaba",
+          "visual": {
+            "tipo": "numero",
+            "valor": 340,
+            "etiqueta": "kilos"
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Hoy hay uno en casi cada cocina. Mandáselo a alguien que vive calentando sobras. ¿Vos lo sabías? Porque...",
+      "busqueda": "kitchen microwave",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A modern small microwave oven on a kitchen counter with a plate of food inside"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del microondas\nEl microondas se inventó cuando a Percy Spencer se le derritió un chocolate en el bolsillo frente a un magnetrón.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#inventos",
+    "#historia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Horno_de_microondas"
+}

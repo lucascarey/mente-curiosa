@@ -1,0 +1,157 @@
+{
+  "id": "028-ketchup-remedio",
+  "tema": "Comida",
+  "gancho": "Se compraba en la *farmacia*",
+  "partes": [
+    {
+      "texto": "El kétchup empezó como *remedio*. Y se vendía en pastillas.",
+      "busqueda": "ketchup bottle",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Ketchup bottle",
+          "dibujo": "A bottle of red tomato ketchup on an old pharmacy counter beside glass medicine jars"
+        },
+        {
+          "desde": "Y",
+          "dibujo": "A small round tin full of red pills next to fresh tomatoes"
+        }
+      ]
+    },
+    {
+      "texto": "En *1834*, un médico de Ohio, John Cook Bennett, decía que curaba la indigestión.",
+      "busqueda": "old doctor",
+      "visual": {
+        "tipo": "numero",
+        "valor": 1834,
+        "etiqueta": "el año",
+        "sufijo": ""
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 1834,
+            "etiqueta": "el año",
+            "sufijo": ""
+          }
+        },
+        {
+          "desde": "Ohio",
+          "dibujo": "A 19th century American doctor with sideburns and a black coat holding a ripe tomato"
+        },
+        {
+          "desde": "que",
+          "dibujo": "A 19th century doctor handing a red pill to a man holding his upset stomach"
+        }
+      ]
+    },
+    {
+      "texto": "Pronto aparecieron *píldoras de tomate* por todo Estados Unidos.",
+      "busqueda": "pills pharmacy",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "Shelves of an old American pharmacy filled with small boxes of red tomato pills"
+        },
+        {
+          "desde": "por",
+          "dibujo": "A map of the United States dotted with many little red tomato pills"
+        }
+      ]
+    },
+    {
+      "texto": "Algunas ni siquiera tenían tomate: en realidad eran *laxantes*.",
+      "busqueda": "pills",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "An open pill box full of plain white pills with a sad tomato sitting beside it"
+        },
+        {
+          "desde": "en",
+          "dibujo": "A man in 1800s clothes running in a hurry toward an outhouse door",
+          "texto": "laxantes"
+        }
+      ]
+    },
+    {
+      "texto": "La moda duró poco: hacia *1850* ya casi nadie las compraba.",
+      "busqueda": "old shelf dust",
+      "visual": {
+        "tipo": "linea",
+        "hitos": [
+          {
+            "anio": 1834,
+            "fecha": "1834",
+            "etiqueta": "Píldoras de tomate"
+          },
+          {
+            "anio": 1850,
+            "fecha": "1850",
+            "etiqueta": "Fin de la moda"
+          }
+        ]
+      },
+      "tomas": [
+        {
+          "dibujo": "Dusty forgotten boxes of tomato pills on an old pharmacy shelf with cobwebs"
+        },
+        {
+          "desde": "hacia",
+          "visual": {
+            "tipo": "linea",
+            "hitos": [
+              {
+                "anio": 1834,
+                "fecha": "1834",
+                "etiqueta": "Píldoras de tomate"
+              },
+              {
+                "anio": 1850,
+                "fecha": "1850",
+                "etiqueta": "Fin de la moda"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "texto": "Y el kétchup quedó solo como salsa. Mandáselo a alguien que le pone kétchup a todo. ¿Vos lo sabías? Porque...",
+      "busqueda": "french fries ketchup",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "foto": "Ketchup and french fries",
+          "dibujo": "A bottle of ketchup next to a plate of golden french fries"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos del kétchup\nEn 1834 un médico de Ohio vendía el kétchup como remedio para la indigestión, y hasta se hicieron píldoras de tomate.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#comida",
+    "#historia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Kétchup"
+}

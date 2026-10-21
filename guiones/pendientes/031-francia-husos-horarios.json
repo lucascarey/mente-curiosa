@@ -1,0 +1,146 @@
+{
+  "id": "031-francia-husos-horarios",
+  "tema": "Geografía",
+  "gancho": "Ni Rusia ni *Estados Unidos*",
+  "partes": [
+    {
+      "texto": "El país con más husos horarios no es Rusia: gana *Francia*, con doce.",
+      "busqueda": "world clocks",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A world map with vertical time zone stripes and many round wall clocks showing different times"
+        },
+        {
+          "desde": "husos",
+          "foto": "Saint Basil's Cathedral Moscow",
+          "dibujo": "The colorful onion domes of a cathedral in Moscow under a winter sky"
+        },
+        {
+          "desde": "gana",
+          "foto": "Eiffel Tower Paris",
+          "dibujo": "The Eiffel Tower in Paris under a blue sky"
+        }
+      ]
+    },
+    {
+      "texto": "Tiene *doce* husos horarios. Rusia y Estados Unidos tienen once.",
+      "busqueda": "clocks",
+      "visual": {
+        "tipo": "comparacion",
+        "titulo": "Husos horarios",
+        "unidad": "husos",
+        "a": {
+          "etiqueta": "Francia",
+          "valor": 12,
+          "icono": "clock"
+        },
+        "b": {
+          "etiqueta": "Rusia y EE. UU.",
+          "valor": 11,
+          "icono": "clock"
+        }
+      },
+      "tomas": [
+        {
+          "visual": {
+            "tipo": "numero",
+            "valor": 12,
+            "etiqueta": "husos horarios"
+          }
+        },
+        {
+          "desde": "Rusia",
+          "visual": {
+            "tipo": "comparacion",
+            "titulo": "Husos horarios",
+            "unidad": "husos",
+            "a": {
+              "etiqueta": "Francia",
+              "valor": 12,
+              "icono": "clock"
+            },
+            "b": {
+              "etiqueta": "Rusia y EE. UU.",
+              "valor": 11,
+              "icono": "clock"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "texto": "¿Cómo puede ser? Por sus *territorios de ultramar*, repartidos por todos los océanos.",
+      "busqueda": "tropical island ocean",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "dibujo": "A puzzled person scratching their head while looking at a small map of France"
+        },
+        {
+          "desde": "territorios",
+          "dibujo": "A world map with small tropical islands highlighted in the Caribbean, the Indian Ocean and the Pacific"
+        },
+        {
+          "desde": "por",
+          "dibujo": "A blue globe with tiny islands scattered across every ocean"
+        }
+      ]
+    },
+    {
+      "texto": "Desde la Polinesia Francesa en el Pacífico hasta la isla Reunión en el Índico.",
+      "busqueda": "tropical lagoon",
+      "visual": {
+        "tipo": "ilustracion"
+      },
+      "tomas": [
+        {
+          "foto": "Bora Bora",
+          "dibujo": "A turquoise lagoon with a green volcanic island and overwater huts in the Pacific"
+        },
+        {
+          "desde": "hasta",
+          "foto": "Piton de la Fournaise Reunion",
+          "dibujo": "A green volcanic island in the Indian Ocean with a smoking volcano"
+        }
+      ]
+    },
+    {
+      "texto": "Cuando allá es de noche, en otra parte de Francia ya amaneció. Mandáselo a alguien que siempre llega tarde. ¿Vos lo sabías? Porque...",
+      "busqueda": "sunrise beach",
+      "visual": {
+        "tipo": "seguir",
+        "accion": "compartir"
+      },
+      "tomas": [
+        {
+          "dibujo": "A starry night sky over a tropical island beach with palm trees"
+        },
+        {
+          "desde": "en",
+          "dibujo": "A bright sunrise over a tropical island beach with palm trees"
+        },
+        {
+          "desde": "Mandáselo",
+          "visual": {
+            "tipo": "seguir",
+            "accion": "compartir"
+          }
+        }
+      ]
+    }
+  ],
+  "descripcion": "Datos curiosos de los husos horarios\nFrancia es el país con más husos horarios: tiene 12 gracias a sus territorios de ultramar.",
+  "hashtags": [
+    "#curiosidades",
+    "#datoscuriosos",
+    "#sabiasque",
+    "#geografia",
+    "#francia"
+  ],
+  "fuente": "https://es.wikipedia.org/wiki/Huso_horario"
+}

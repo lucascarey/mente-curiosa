@@ -1,9 +1,10 @@
 {
   "id": "002-cleopatra-luna",
   "tema": "Historia",
+  "gancho": "Cleopatra *vs* las pirámides",
   "partes": [
     {
-      "texto": "Cleopatra vivió más cerca de la *llegada a la Luna* que de la construcción de la Gran Pirámide.",
+      "texto": "Cleopatra está más cerca de vos que de las pirámides. Vivió más cerca de la *llegada a la Luna* que de la construcción de la Gran Pirámide.",
       "busqueda": "egypt pyramids",
       "visual": {
         "tipo": "linea",
@@ -29,6 +30,11 @@
         {
           "foto": "Cleopatra bust Altes Museum",
           "dibujo": "Cleopatra, the ancient Egyptian queen, with black braided hair and a golden headdress, royal portrait"
+        },
+        {
+          "desde": "pirámides",
+          "foto": "Great Pyramid of Giza",
+          "dibujo": "The Great Pyramid of Giza in the desert under a clear sky"
         },
         {
           "desde": "llegada",
@@ -131,10 +137,11 @@
       ]
     },
     {
-      "texto": "O sea, para ella las pirámides ya eran ruinas antiguas. ¿Lo sabías? Seguime para más.",
+      "texto": "O sea, para ella las pirámides ya eran ruinas antiguas. Mandáselo a alguien que no te lo va a creer. ¿Vos lo sabías? Porque...",
       "busqueda": "desert sunset",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
@@ -142,15 +149,16 @@
           "texto": "ya eran ruinas"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "Cleopatra está más cerca de nosotros que de las pirámides 🏛️",
+  "descripcion": "Datos curiosos de Cleopatra y las pirámides\nCleopatra vivió más cerca de la llegada a la Luna que de la construcción de la Gran Pirámide.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

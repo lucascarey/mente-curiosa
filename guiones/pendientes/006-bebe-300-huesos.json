@@ -1,6 +1,7 @@
 {
   "id": "006-bebe-300-huesos",
   "tema": "Cuerpo humano",
+  "gancho": "De *300* a *206* huesos",
   "partes": [
     {
       "texto": "Cuando naciste tenías casi *cien huesos más* que ahora.",
@@ -112,25 +113,28 @@
       ]
     },
     {
-      "texto": "¿Lo sabías? Contame en los comentarios y seguime para más datos raros.",
+      "texto": "O sea, no los perdiste: se fueron juntando. Mandáselo a alguien que no te lo va a creer. ¿Vos lo sabías? Y es que...",
       "busqueda": "child running",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
-          "dibujo": "A smiling toddler typing a comment on a smartphone, a big glowing question mark floating above"
+          "dibujo": "Two small bones joining together into one bigger bone, simple friendly medical illustration",
+          "texto": "se juntaron"
         },
         {
-          "desde": "seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "Naciste con casi 100 huesos más que ahora 🦴",
+  "descripcion": "Cuántos huesos tiene un bebé al nacer\nUn bebé nace con unos 300 huesos y un adulto tiene 206: muchos se fusionan con el tiempo.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

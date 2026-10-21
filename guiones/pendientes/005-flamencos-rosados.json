@@ -1,6 +1,7 @@
 {
   "id": "005-flamencos-rosados",
   "tema": "Animales",
+  "gancho": "El rosa *se come*",
   "protagonista": "a cute pink flamingo with big friendly eyes",
   "partes": [
     {
@@ -96,10 +97,11 @@
       ]
     },
     {
-      "texto": "Literalmente, son lo que comen. ¿Lo sabías? Seguime para un dato raro cada día.",
+      "texto": "Literalmente, son lo que comen. Mandáselo a alguien que ama los flamencos. ¿Vos lo sabías? Porque, aunque no lo parezca,",
       "busqueda": "pink lake",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
@@ -107,15 +109,16 @@
           "texto": "son lo que comen"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "Los flamencos no nacen rosados 🦩",
+  "descripcion": "Por qué los flamencos son rosados\nNacen grises o blancos y se vuelven rosados por los carotenoides de lo que comen.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

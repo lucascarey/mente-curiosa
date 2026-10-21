@@ -1,10 +1,11 @@
 {
   "id": "004-miel-no-vence",
   "tema": "Comida",
+  "gancho": "Miel de *3.000* años",
   "protagonista": "a cute round honeybee with big friendly eyes",
   "partes": [
     {
-      "texto": "La miel es uno de los pocos alimentos que *nunca se echa a perder*.",
+      "texto": "La miel *nunca se echa a perder*, ni después de miles de años.",
       "busqueda": "honey",
       "dibujo": "A glass jar of golden honey with a wooden honey dipper",
       "visual": {
@@ -96,10 +97,11 @@
       ]
     },
     {
-      "texto": "Si tu miel se pone dura, no está vencida: solo se cristalizó. Seguime para más datos raros.",
+      "texto": "Si tu miel se pone dura, no está vencida: solo se cristalizó. Mandáselo a alguien que tira la miel dura. ¿Vos lo sabías? Porque, en serio,",
       "busqueda": "honey jar",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
@@ -112,15 +114,16 @@
           "texto": "solo cristalizó"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "La miel nunca se echa a perder 🍯",
+  "descripcion": "Por qué la miel nunca se vence\nPoca agua, mucha acidez y agua oxigenada natural: por eso aguanta miles de años.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

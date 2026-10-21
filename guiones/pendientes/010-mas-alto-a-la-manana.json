@@ -1,6 +1,7 @@
 {
   "id": "010-mas-alto-a-la-manana",
   "tema": "Cuerpo humano",
+  "gancho": "Te achicás *cada día*",
   "protagonista": "a friendly young person with short brown hair in a teal t-shirt",
   "partes": [
     {
@@ -87,10 +88,11 @@
       ]
     },
     {
-      "texto": "Si querés medirte, hacelo a la mañana. Seguime para un dato raro cada día.",
+      "texto": "Si querés medirte, hacelo a la mañana. Mandáselo a alguien que se queja de ser bajo. ¿Vos lo sabías? Porque, de verdad,",
       "busqueda": "measuring height",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
@@ -98,15 +100,16 @@
           "dibujo": "A young person measuring their height against a wall ruler in the morning sunlight"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "A la mañana sos más alto que a la noche 📏",
+  "descripcion": "Por qué somos más altos a la mañana\nLos discos de la columna se aplastan durante el día y se recuperan mientras dormís.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

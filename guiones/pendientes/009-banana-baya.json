@@ -1,6 +1,7 @@
 {
   "id": "009-banana-baya",
   "tema": "Comida",
+  "gancho": "Banana *sí*, frutilla *no*",
   "protagonista": "a cute smiling yellow banana",
   "partes": [
     {
@@ -91,10 +92,11 @@
       ]
     },
     {
-      "texto": "El tomate y la sandía también son bayas. ¿Lo sabías? Seguime para más.",
+      "texto": "El tomate y la sandía también son bayas. Mandáselo a alguien que ama las frutillas. ¿Vos lo sabías? Porque, aunque no parezca,",
       "busqueda": "watermelon",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
@@ -108,15 +110,16 @@
           "texto": "también son bayas"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "La banana es una baya y la frutilla no 🍌",
+  "descripcion": "La banana es una baya y la frutilla no\nQué es una baya para la botánica y por qué la frutilla no entra.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

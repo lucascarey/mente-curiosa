@@ -1,6 +1,7 @@
 {
   "id": "008-saturno-flota",
   "tema": "Espacio",
+  "gancho": "*700* Tierras y *flota*",
   "partes": [
     {
       "texto": "Saturno es gigante, pero *flotaría en el agua*.",
@@ -86,25 +87,27 @@
       ]
     },
     {
-      "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
+      "texto": "Un gigante más liviano que el agua. Mandáselo a alguien que no te lo va a creer. ¿Vos lo sabías? Así que ya sabés:",
       "busqueda": "galaxy",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
-          "dibujo": "The planet Saturn with its rings next to a big question mark made of stars"
+          "dibujo": "The giant planet Saturn with its rings resting gently on top of calm blue water like a beach ball"
         },
         {
-          "desde": "seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "Saturno flotaría en el agua 🪐",
+  "descripcion": "Por qué Saturno flotaría en el agua\nEs casi todo hidrógeno y helio: su densidad es menor que la del agua.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

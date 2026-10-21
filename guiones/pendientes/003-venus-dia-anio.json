@@ -1,6 +1,7 @@
 {
   "id": "003-venus-dia-anio",
   "tema": "Espacio",
+  "gancho": "Día *243* · año *225*",
   "partes": [
     {
       "texto": "En Venus, *un día dura más que un año*.",
@@ -112,25 +113,27 @@
       ]
     },
     {
-      "texto": "¿Lo sabías? Contame en los comentarios y seguime para un dato raro cada día.",
+      "texto": "Es el único planeta donde pasa algo así. Mandáselo a alguien que se queja de que los días son largos. ¿Vos lo sabías? Así que acordate:",
       "busqueda": "stars night sky",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
-          "dibujo": "A big glowing question mark floating in space surrounded by small stars"
+          "dibujo": "The cloudy planet Venus glowing alone in front of the other planets of the solar system lined up behind it"
         },
         {
-          "desde": "seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "En Venus un día dura más que un año 🪐",
+  "descripcion": "Datos curiosos de Venus: un día más largo que un año\nVenus tarda unos 243 días en girar sobre sí mismo y solo 225 en dar la vuelta al Sol.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

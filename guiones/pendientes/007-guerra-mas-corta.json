@@ -1,6 +1,7 @@
 {
   "id": "007-guerra-mas-corta",
   "tema": "Historia",
+  "gancho": "*38 minutos* de guerra",
   "partes": [
     {
       "texto": "La guerra más corta de la historia duró *menos de una hora*.",
@@ -90,25 +91,27 @@
       ]
     },
     {
-      "texto": "Menos de lo que dura un capítulo de serie. ¿Lo sabías? Seguime para más.",
+      "texto": "Menos de lo que dura un capítulo de serie. Mandáselo a alguien que mira series de una hora. ¿Vos lo sabías? Así es:",
       "busqueda": "watching tv",
       "visual": {
-        "tipo": "seguir"
+        "tipo": "seguir",
+        "accion": "compartir"
       },
       "tomas": [
         {
           "dibujo": "A family on a couch watching a TV show with a bowl of popcorn"
         },
         {
-          "desde": "Seguime",
+          "desde": "Mandáselo",
           "visual": {
-            "tipo": "seguir"
+            "tipo": "seguir",
+            "accion": "compartir"
           }
         }
       ]
     }
   ],
-  "descripcion": "La guerra más corta de la historia duró menos de una hora ⏱️",
+  "descripcion": "La guerra más corta de la historia\nReino Unido contra Zanzíbar, en 1896: terminó en unos 38 minutos.",
   "hashtags": [
     "#curiosidades",
     "#datoscuriosos",

@@ -70,11 +70,14 @@ def sintetizar(personaje: str, texto: str, voz: str, destino: Path) -> None:
     }
     ultimo = None
     for modelo in MODELOS:
-        for intento in range(3):
+        for intento in range(2):
             r = requests.post(URL.format(modelo), json=cuerpo, timeout=120,
                               headers={"x-goog-api-key": os.environ["GEMINI_API_KEY"]})
             if r.status_code == 429:
-                time.sleep(60)
+                print(modelo, "429:", r.text[:500], flush=True)
+                if "PerDay" in r.text:
+                    break  # se acabó la cuota del día de este modelo
+                time.sleep(40)
                 continue
             if r.ok:
                 datos = r.json()["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]

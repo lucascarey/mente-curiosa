@@ -22,10 +22,11 @@ jobs:
       - name: Generar muestras
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python herramientas/muestras_gemini.py /tmp/voces
+        run: python -u herramientas/muestras_gemini.py /tmp/voces
       - name: Subir a la rama voces-gemini
+        if: always()
         run: |
-          cd /tmp/voces
+          mkdir -p /tmp/voces && cd /tmp/voces && touch .keep
           git init -q -b voces-gemini
           git config user.name "mente-curiosa-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"

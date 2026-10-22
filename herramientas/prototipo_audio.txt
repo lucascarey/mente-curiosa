@@ -1,2 +1,2 @@
 gemini
-2026-10-22 18:02 UTC v5 subtítulos por palabra, línea de Bruno
+2026-10-22 19:53 UTC v6 voces más humanas

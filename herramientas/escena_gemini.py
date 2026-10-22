@@ -18,20 +18,25 @@ MODELOS = ("gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts")
 URL = "https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent"
 PAUSA = 22  # segundos entre pedidos, para no pasar el límite gratis por minuto
 
+# Lucas (2026-10-22): los tonos están bien, pero tienen que sonar más humanos y menos IA. Neurón queda como está.
+HUMANO = (" Que suene a una persona real grabada hablando, no a un locutor ni a una voz sintética: ritmo irregular, "
+          "respiraciones, pausas cortas donde se piensa, alguna palabra estirada o atropellada, y la entonación "
+          "de una charla casual entre amigos. ")
+
 ESTILOS = {
     "neuron": ("Actuá como el protagonista carismático de una película: un profesor genio, seguro de sí mismo y canchero, "
                "con energía y entusiasmo exagerado, voz masculina firme y clara de tono medio (no demasiado grave), "
                "proyectada y fuerte, con un toque de ironía simpática. Ritmo ágil, un poco rápido, sin pausas largas. "
                "Español latinoamericano neutro, sin ningún acento regional. Decí:"),
     "nyx": ("Actuá como una chica punk de 20 años, aburrida, sobradora y burlona, nada impresionada. "
-            "Voz joven y natural, español latinoamericano neutro, sin ningún acento regional, arrastrando un poco las palabras. Decí:"),
+            "Voz joven y natural, español latinoamericano neutro, sin ningún acento regional, arrastrando un poco las palabras." + HUMANO + "Decí:"),
     "glip": ("Actuá como un extraterrestre pequeño y curioso, con voz muy aguda, rápida y entusiasta, "
-             "que habla español latinoamericano neutro pero con un tono raro de otro planeta. Exagerado y caricaturesco. Decí:"),
+             "que habla español latinoamericano neutro pero con un tono raro de otro planeta. Exagerado y caricaturesco." + HUMANO + "Decí:"),
     "bruno": ("Actuá como un adolescente de 16 años en pánico: alarmado, acelerado y nervioso, que se hace el valiente. "
               "Habla rápido y agudo, con energía alta, como si fuera una emergencia; NUNCA triste, quejoso ni llorón. "
               "Voz joven que se quiebra cuando grita, español latinoamericano neutro, sin ningún acento regional, "
               "MUY exagerado y teatral, como dibujito animado: grita, chilla y se le escapan gallitos en los momentos de "
-              "susto, y cuando se calma se ríe nervioso. Decí:"),
+              "susto, y cuando se calma se ríe nervioso." + HUMANO + "Decí:"),
 }
 
 # Glip se pasa por un filtro que le sube el tono, para que suene marciano.
@@ -50,7 +55,7 @@ def configurar(bloque: list) -> dict:
     else:
         reglas = "\n".join(f"{NOMBRES[p]}: {ESTILOS[p].removesuffix(' Decí:')}" for p in hablan)
         guion = "\n".join(f"{NOMBRES[p]}: {linea}" for p, linea in bloque)
-        texto = f"Leé esta conversación. Cómo habla cada uno:\n{reglas}\n\nConversación:\n{guion}"
+        texto = f"Leé esta conversación como una charla real entre personas, no como una lectura. Cómo habla cada uno:\n{reglas}\n\nConversación:\n{guion}"
         voz = {"multiSpeakerVoiceConfig": {"speakerVoiceConfigs": [
             {"speaker": NOMBRES[p], "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOCES[p]}}} for p in hablan]}}
     return {

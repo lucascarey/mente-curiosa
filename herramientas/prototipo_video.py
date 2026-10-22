@@ -10,7 +10,6 @@ Es un prototipo aparte: no toca el pipeline de publicación (mc/).
 import json
 import subprocess
 import sys
-import textwrap
 from pathlib import Path
 
 import numpy as np
@@ -30,7 +29,7 @@ TITULO = "¿QUÉ PASARÍA SI LA LUNA DESAPARECIERA?"
 ESCENA = [
     ("glip", "¿Qué pasaría si mañana la Luna desapareciera?", ["luna-1"],
      {"glip": 5, "bruno": 6, "neuron": 4}),
-    ("bruno", "Fin del mundo. Tsunamis gigantes, el mar se sale, todo.", ["ola-gigante-5"],
+    ("bruno", "¡Fin del mundo! ¡Tsunamis gigantes que inundan todo!", ["ola-gigante-5"],
      {"glip": 7, "bruno": [7, 1], "neuron": 7}),
     ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco.", ["luna-6"],
      {"glip": 4, "bruno": 6, "neuron": [6, 2]}),
@@ -120,14 +119,64 @@ def volumen(audio: Path, total: int) -> np.ndarray:
     return np.clip(rms / (np.percentile(rms[rms > 0], 95) + 1e-6), 0, 1)
 
 
-def trozos(texto: str) -> list[str]:
-    """Parte el texto en pantallas de hasta dos renglones."""
-    renglones = textwrap.wrap(texto, 26)
-    return ["\n".join(renglones[i:i + 2]) for i in range(0, len(renglones), 2)]
+DEBILES = {"a", "al", "con", "de", "del", "el", "en", "la", "las", "lo", "los", "me", "no", "o", "para", "por", "que",
+           "se", "si", "sin", "su", "un", "una", "y"}  # palabras con las que no conviene cortar una frase
+
+
+def frases(texto: str) -> list[list[int]]:
+    """Parte la línea en frases cortas (índices de palabras) que se leen de un vistazo. Cada oración se corta
+    en pedazos parejos de hasta ~32 caracteres, de preferencia en las comas y nunca dejando una palabra sola
+    ni cortando después de un artículo o preposición."""
+    palabras, grupos, oracion = texto.split(), [], []
+    for j, w in enumerate(palabras):
+        oracion.append(j)
+        if w[-1] in ".?!:" or j == len(palabras) - 1:
+            grupos += partir(palabras, oracion)
+            oracion = []
+    return grupos
+
+
+def partir(palabras: list[str], oracion: list[int]) -> list[list[int]]:
+    largo = lambda a, b: len(" ".join(palabras[j] for j in oracion[a:b]))  # noqa: E731
+    total = largo(0, len(oracion))
+    if total <= 32:
+        return [oracion]
+    partes = -(-total // 30)
+    meta = total / partes
+    # programación dinámica: costo[b] = mejor forma de partir las primeras b palabras
+    costo, corte = [0.0] + [float("inf")] * len(oracion), [0] * (len(oracion) + 1)
+    for b in range(1, len(oracion) + 1):
+        for a in range(b):
+            n = largo(a, b)
+            if n > 34 and b - a > 1:
+                continue
+            c = costo[a] + (n - meta) ** 2
+            if b - a == 1 and len(oracion) > 1:
+                c += 400
+            fin = palabras[oracion[b - 1]]
+            if b < len(oracion):
+                if fin[-1] in ",;":
+                    c -= 60
+                elif fin.lower().strip("¿¡") in DEBILES:
+                    c += 300
+            if c < costo[b]:
+                costo[b], corte[b] = c, a
+    grupos, b = [], len(oracion)
+    while b:
+        grupos.insert(0, oracion[corte[b]:b])
+        b = corte[b]
+    return grupos
 
 
 def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
     tiempos = json.loads(tiempos_json.read_text())
+    # inicio de cada palabra; sin el archivo se reparten parejas en la línea
+    archivo_palabras = tiempos_json.parent / "palabras.json"
+    if archivo_palabras.exists():
+        inicios = json.loads(archivo_palabras.read_text())
+    else:
+        inicios = [[a + (b - a) * j / len(texto.split()) for j in range(len(texto.split()))]
+                   for (a, b), (_, texto, _, _) in zip(tiempos, ESCENA)]
     duracion = tiempos[-1][1] + 1.2
     total = int(duracion * FPS)
     vol = volumen(audio, total)
@@ -238,14 +287,34 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
 
         # subtítulo con el nombre de quien habla
         if hablando:
-            pantallas = trozos(texto)
-            sub = pantallas[min(len(pantallas) - 1, int(avance * len(pantallas)))]
+            # la frase que se está diciendo, con la palabra actual del color de quien habla
+            palabras = texto.split()
+            ws = inicios[i]
+            actual = max([j for j in range(len(palabras)) if ws[j] <= t + 0.05] or [0])
+            grupo = next(g for g in frases(texto) if actual in g)
             color = COLORES[quien]
             dc = ImageDraw.Draw(cuadro)
             dc.rounded_rectangle((ANCHO // 2 - 110, SUB_Y - 30, ANCHO // 2 + 110, SUB_Y + 26), 28, fill=color)
             dc.text((ANCHO // 2, SUB_Y), NOMBRES[quien], font=f_nombre, fill=FONDO, anchor="mm")
-            dc.multiline_text((ANCHO // 2, SUB_Y + 105), sub, font=f_sub, fill="white", anchor="mm", align="center",
-                              spacing=10, stroke_width=7, stroke_fill="black")
+            renglones, renglon = [], []
+            for j in grupo:
+                if renglon and len(" ".join(palabras[x] for x in renglon + [j])) > 20:
+                    renglones.append(renglon)
+                    renglon = []
+                renglon.append(j)
+            renglones.append(renglon)
+            espacio = f_sub.getlength(" ")
+            alto_renglon = 78
+            y = SUB_Y + 105 - alto_renglon * (len(renglones) - 1) / 2
+            for renglon in renglones:
+                ancho = sum(f_sub.getlength(palabras[j]) for j in renglon) + espacio * (len(renglon) - 1)
+                x = ANCHO / 2 - ancho / 2
+                for j in renglon:
+                    relleno = color if j == actual else "white"
+                    dc.text((x, y), palabras[j], font=f_sub, fill=relleno, anchor="lm", stroke_width=7,
+                            stroke_fill="black")
+                    x += f_sub.getlength(palabras[j]) + espacio
+                y += alto_renglon
         ff.stdin.write(cuadro.tobytes())
     ff.stdin.close()
     ff.wait()

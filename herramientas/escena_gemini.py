@@ -1,9 +1,11 @@
 """Genera el audio del primer \"¿Qué pasaría si...?\" (la Luna) con las voces elegidas de Gemini.
 
-Usa diálogo multi-speaker (2 voces por pedido) para gastar poca cuota gratis. Necesita la variable GEMINI_API_KEY. Uso: python herramientas/escena_gemini.py carpeta_destino
+Usa diálogo multi-speaker (2 voces por pedido) para gastar poca cuota gratis. Necesita la variable GEMINI_API_KEY. Uso: python herramientas/escena_gemini.py carpeta_destino [carpeta_anterior]
+Si se pasa la carpeta de una corrida anterior, los bloques con el mismo texto se reutilizan sin gastar cuota.
 """
 
 import base64
+import json
 import os
 import subprocess
 import sys
@@ -104,7 +106,7 @@ VOCES = {"neuron": "Algenib", "nyx": "Despina", "glip": "Puck", "bruno": "Achird
 
 ESCENA = [
     ("glip", "¿Qué pasaría si mañana la Luna desapareciera?"),
-    ("bruno", "[gritando con pánico, rápido] ¡Fin del mundo! ¡Tsunamis gigantes, el mar se sale, todo!"),
+    ("bruno", "[gritando con pánico, rápido] ¡Fin del mundo! ¡Tsunamis gigantes que inundan todo!"),
     ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco."),
     ("neuron", "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, y serían un tercio de lo que son."),
     ("bruno", "[alarmado, nervioso y rápido] ¿Y las olas? ¿Se termina el surf?"),
@@ -116,15 +118,25 @@ ESCENA = [
 ]
 
 
-def main(destino: Path) -> None:
+def main(destino: Path, anterior: Path | None) -> None:
     destino.mkdir(parents=True, exist_ok=True)
     partes = []
     bloques = agrupar(ESCENA)
     print(len(bloques), "pedidos a Gemini", flush=True)
     for i, bloque in enumerate(bloques, 1):
         parte = destino / f"{i:02d}-{'-'.join(dict.fromkeys(p for p, _ in bloque))}.mp3"
+        texto = json.dumps(bloque, ensure_ascii=False)
+        previo = anterior / parte.name if anterior else None
+        if previo and previo.exists() and previo.with_suffix(".txt").exists() \
+                and previo.with_suffix(".txt").read_text() == texto:
+            parte.write_bytes(previo.read_bytes())
+            parte.with_suffix(".txt").write_text(texto)
+            partes.append(parte)
+            print(i, parte.name, "reutilizado", flush=True)
+            continue
         try:
             sintetizar(bloque, parte)
+            parte.with_suffix(".txt").write_text(texto)
             partes.append(parte)
             print(i, parte.name, "ok", flush=True)
         except Exception as e:  # un bloque que falla no frena al resto
@@ -139,4 +151,4 @@ def main(destino: Path) -> None:
         lista.unlink()
 
 
-main(Path(sys.argv[1]))
+main(Path(sys.argv[1]), Path(sys.argv[2]) if len(sys.argv) > 2 else None)

@@ -32,7 +32,10 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python -u herramientas/escena_gemini.py /tmp/video
+          # los bloques que no cambiaron se reutilizan de la corrida anterior (no gastan cuota)
+          mkdir -p /tmp/previo
+          git fetch -q origin prototipo-video && git archive origin/prototipo-video | tar -x -C /tmp/previo || true
+          python -u herramientas/escena_gemini.py /tmp/video /tmp/previo
           test -f /tmp/video/escena-luna.mp3
       - name: Audio de prueba de Chatterbox
         if: env.AUDIO == 'chatterbox'

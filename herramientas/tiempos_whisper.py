@@ -6,9 +6,11 @@ Uso: python herramientas/tiempos_whisper.py audio.mp3 tiempos.json
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
+import numpy as np
 from faster_whisper import WhisperModel
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -21,7 +23,11 @@ def contar(texto: str) -> int:
 
 def main(audio: Path, salida: Path) -> None:
     modelo = WhisperModel("small", device="cpu", compute_type="int8")
-    segmentos, _ = modelo.transcribe(str(audio), language="es", word_timestamps=True)
+    # se decodifica con ffmpeg: la versión de PyAV que trae faster-whisper a veces no abre el mp3
+    crudo = subprocess.run(["ffmpeg", "-v", "error", "-i", str(audio), "-f", "s16le", "-ac", "1", "-ar", "16000", "-"],
+                           capture_output=True, check=True).stdout
+    muestras = np.frombuffer(crudo, np.int16).astype(np.float32) / 32768
+    segmentos, _ = modelo.transcribe(muestras, language="es", word_timestamps=True)
     palabras = [p for s in segmentos for p in s.words]
     print(len(palabras), "palabras reconocidas", flush=True)
     por_linea = [contar(texto) for _, texto, _, _ in ESCENA]

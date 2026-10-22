@@ -16,9 +16,12 @@ MODELOS = ("gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts")
 URL = "https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent"
 PAUSA = 22
 
-ESTILO = ("Actuá como un profesor genio con aire de villano de película: voz MUY grave, profunda y potente, "
-          "proyectada y segura, con autoridad, un poco teatral y sarcástica, disfrutando de saber más que todos. "
-          "Hablá fuerte y claro, sin susurrar. Español latinoamericano neutro, sin ningún acento regional. Decí:")
+# Segunda ronda (Lucas, 2026-10-22): exagerada como la primera, pero menos villano y menos grave,
+# más de protagonista, y un poco más rápida.
+ESTILO = ("Actuá como el protagonista carismático de una película: un profesor genio, seguro de sí mismo y canchero, "
+          "con energía y entusiasmo exagerado, voz masculina firme y clara de tono medio (no demasiado grave), "
+          "proyectada y fuerte, con un toque de ironía simpática. Ritmo ágil, un poco rápido, sin pausas largas. "
+          "Español latinoamericano neutro, sin ningún acento regional. Decí:")
 FRASE = ("Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco. "
          "La Luna no es decoración. Es lo que mantiene estable al planeta.")
 CANDIDATAS = ["Iapetus", "Charon", "Algenib", "Orus"]

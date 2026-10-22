@@ -13,16 +13,18 @@ from PIL import Image
 from scipy import ndimage
 
 CARPETAS = {"neuron": "profesor", "nyx": "punk", "glip": "alien", "bruno": "gallo"}
-ALTO = 720  # alto máximo de cada pose, alcanza para el video vertical
-UMBRAL = 38
-CERCA = 90  # distancia máxima (px) para que un trazo suelto cuente como parte de un personaje  # diferencia con el color del fondo para considerar que hay dibujo
+ALTO = 900  # alto máximo de cada pose, alcanza para el video vertical
+UMBRAL = 38  # diferencia con el color del fondo para considerar que hay dibujo
+# Las medidas en pixeles están pensadas para planillas de ~1300 px de ancho y se escalan con la planilla.
+CERCA = 90  # distancia máxima para que un trazo suelto cuente como parte de un personaje
 
 
 def recortar(planilla: Path, destino: Path) -> int:
     im = np.asarray(Image.open(planilla).convert("RGB")).astype(np.int16)
     fondo = np.median(np.concatenate([im[:8].reshape(-1, 3), im[-8:].reshape(-1, 3)]), axis=0)
     dibujo = np.abs(im - fondo).max(axis=2) > UMBRAL
-    grueso = ndimage.binary_closing(dibujo, iterations=6)
+    f = max(1, round(im.shape[1] / 1300))
+    grueso = ndimage.binary_closing(dibujo, iterations=6 * f)
     etiquetas, n = ndimage.label(grueso)
     cajas = ndimage.find_objects(etiquetas)
     areas = ndimage.sum(grueso, etiquetas, range(1, n + 1))
@@ -36,14 +38,14 @@ def recortar(planilla: Path, destino: Path) -> int:
     for k, i in enumerate(grandes, 1):
         solo_grandes[etiquetas == i + 1] = k
     distancia, (iy, ix) = ndimage.distance_transform_edt(solo_grandes == 0, return_indices=True)
-    duenio = np.where(distancia < CERCA, solo_grandes[iy, ix], 0)
+    duenio = np.where(distancia < CERCA * f, solo_grandes[iy, ix], 0)
     destino.mkdir(parents=True, exist_ok=True)
     for k in range(1, len(grandes) + 1):
         ys, xs = np.nonzero((duenio == k) & dibujo)
-        y0, y1 = max(0, ys.min() - 6), min(im.shape[0], ys.max() + 7)
-        x0, x1 = max(0, xs.min() - 6), min(im.shape[1], xs.max() + 7)
+        y0, y1 = max(0, ys.min() - 6 * f), min(im.shape[0], ys.max() + 7 * f)
+        x0, x1 = max(0, xs.min() - 6 * f), min(im.shape[1], xs.max() + 7 * f)
         recorte = im[y0:y1, x0:x1]
-        propio = ndimage.binary_closing((duenio[y0:y1, x0:x1] == k) & dibujo[y0:y1, x0:x1], iterations=2)
+        propio = ndimage.binary_closing((duenio[y0:y1, x0:x1] == k) & dibujo[y0:y1, x0:x1], iterations=2 * f)
         propio = ndimage.binary_fill_holes(propio)
         # huecos encerrados (entre brazo y cuerpo, entre manos): si son del color liso del fondo, se vacían.
         # La ropa blanca tiene sombras, así que no se confunde.
@@ -53,11 +55,11 @@ def recortar(planilla: Path, destino: Path) -> int:
         if n_huecos:
             tam = ndimage.sum(np.ones_like(huecos), huecos, range(1, n_huecos + 1))
             media = ndimage.mean(diferencia, huecos, range(1, n_huecos + 1))
-            vaciar = [j + 1 for j in range(n_huecos) if tam[j] > 150 and media[j] < 4]
+            vaciar = [j + 1 for j in range(n_huecos) if tam[j] > 150 * f * f and media[j] < 4]
             propio &= ~np.isin(huecos, vaciar)
         # borde suave sin halo claro: se achica un pixel y se difumina
-        alfa = ndimage.binary_erosion(propio, iterations=1).astype(np.float32)
-        alfa = ndimage.gaussian_filter(alfa, 0.7)
+        alfa = ndimage.binary_erosion(propio, iterations=f).astype(np.float32)
+        alfa = ndimage.gaussian_filter(alfa, 0.7 * f)
         rgba = np.dstack([recorte.astype(np.uint8), (alfa * 255).astype(np.uint8)])
         pose = Image.fromarray(rgba, "RGBA")
         pose.thumbnail((ALTO, ALTO))
@@ -67,7 +69,10 @@ def recortar(planilla: Path, destino: Path) -> int:
 
 def main(origen: Path, destino: Path) -> None:
     for personaje, carpeta in CARPETAS.items():
-        print(personaje, recortar(origen / carpeta / "planilla.png", destino / personaje), "poses")
+        planilla = origen / f"{carpeta}.png"
+        if not planilla.exists():
+            planilla = origen / carpeta / "planilla.png"
+        print(personaje, recortar(planilla, destino / personaje), "poses")
 
 
 main(Path(sys.argv[1]), Path(sys.argv[2]))

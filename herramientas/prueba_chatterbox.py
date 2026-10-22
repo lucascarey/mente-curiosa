@@ -13,18 +13,22 @@ import torchaudio as ta
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
 # personaje: (muestra de Gemini elegida, filtro para "deshacer" efectos antes de clonar, frase)
-FRASE_NYX = ("Ajá. ¿Y eso quién lo dijo? Mostrame la fuente y después hablamos. "
-             "Igual, no me sorprende nada.")
-# Segunda ronda: Lucas eligió Neurón 0.5, Glip 0.8 y Bruno 0.5. Nyx sonó poco joven: se prueban
-# otras muestras de Gemini como base, una de ellas con el tono un poco más agudo.
-JOVEN = "asetrate=24000*1.08,aresample=24000,atempo=0.926"
+# Tercera ronda (escena de la Luna): Lucas quiere a Neurón más exagerado y Bruno no le gustó nada.
+# Bruno se prueba con las tres muestras de Gemini, una con el tono más agudo para que suene más pibe.
+FRASE_NEURON = ("Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco. "
+                "La Luna no es decoración. Es lo que mantiene estable al planeta.")
+FRASE_BRUNO = ("¡Fin del mundo! Tsunamis gigantes, el mar se sale, ¡todo! "
+               "¿Y las olas? ¿Se termina el surf? "
+               "O sea que me asusté con millones de años de anticipación.")
+JOVEN = "asetrate=24000*1.12,aresample=24000,atempo=0.893"
 PERSONAJES = {
-    "nyx-leda": ("nyx-1-leda.mp3", None, FRASE_NYX),
-    "nyx-laomedeia": ("nyx-3-laomedeia.mp3", None, FRASE_NYX),
-    "nyx-despina-aguda": ("nyx-2-despina.mp3", JOVEN, FRASE_NYX),
+    "neuron": ("neuron-3-iapetus.mp3", None, FRASE_NEURON),
+    "bruno-achird-aguda": ("bruno-3-achird.mp3", JOVEN, FRASE_BRUNO),
+    "bruno-fenrir": ("bruno-1-fenrir.mp3", None, FRASE_BRUNO),
+    "bruno-puck": ("bruno-2-puck.mp3", None, FRASE_BRUNO),
 }
 SUBIR_GLIP = "asetrate=24000*1.35,aresample=24000,atempo=0.9"
-EXAGERACION = (0.5, 0.7)
+EXAGERACION = (0.8, 1.0)
 
 
 def ffmpeg(*args: str) -> None:

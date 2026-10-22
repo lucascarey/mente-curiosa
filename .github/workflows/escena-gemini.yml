@@ -1,11 +1,8 @@
 name: Audio de escena Gemini
 
 on:
+  # Solo a mano: el video prototipo ya usa escena_gemini.py y no queremos gastar cuota dos veces.
   workflow_dispatch:
-  push:
-    paths:
-      - herramientas/escena_gemini.py
-      - .github/workflows/escena-gemini.yml
 
 permissions:
   contents: write

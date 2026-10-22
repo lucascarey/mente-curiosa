@@ -17,8 +17,10 @@ URL = "https://generativelanguage.googleapis.com/v1beta/models/{}:generateConten
 PAUSA = 22  # segundos entre pedidos, para no pasar el límite gratis por minuto
 
 ESTILOS = {
-    "neuron": ("Actuá como un profesor de unos 40 años, muy humano y natural, cansado y sarcástico, "
-               "que ya explicó esto mil veces. Español latinoamericano neutro, sin ningún acento regional, ritmo conversado, con suspiros. Decí:"),
+    "neuron": ("Actuá como el protagonista carismático de una película: un profesor genio, seguro de sí mismo y canchero, "
+               "con energía y entusiasmo exagerado, voz masculina firme y clara de tono medio (no demasiado grave), "
+               "proyectada y fuerte, con un toque de ironía simpática. Ritmo ágil, un poco rápido, sin pausas largas. "
+               "Español latinoamericano neutro, sin ningún acento regional. Decí:"),
     "nyx": ("Actuá como una chica punk de 20 años, aburrida, sobradora y burlona, nada impresionada. "
             "Voz joven y natural, español latinoamericano neutro, sin ningún acento regional, arrastrando un poco las palabras. Decí:"),
     "glip": ("Actuá como un extraterrestre pequeño y curioso, con voz muy aguda, rápida y entusiasta, "
@@ -96,7 +98,7 @@ def agrupar(escena: list) -> list:
     return bloques
 
 
-VOCES = {"neuron": "Iapetus", "nyx": "Despina", "glip": "Puck", "bruno": "Achird"}
+VOCES = {"neuron": "Algenib", "nyx": "Despina", "glip": "Puck", "bruno": "Achird"}
 
 ESCENA = [
     ("glip", "¿Qué pasaría si mañana la Luna desapareciera?"),

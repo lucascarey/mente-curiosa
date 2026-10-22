@@ -131,7 +131,7 @@ def main(destino: Path, anterior: Path | None) -> None:
     print(len(bloques), "pedidos a Gemini", flush=True)
     for i, bloque in enumerate(bloques, 1):
         parte = destino / f"{i:02d}-{'-'.join(dict.fromkeys(p for p, _ in bloque))}.mp3"
-        texto = json.dumps(bloque, ensure_ascii=False)
+        texto = json.dumps([bloque, configurar(bloque)], ensure_ascii=False)  # cambia si cambia el texto o el estilo
         previo = anterior / parte.name if anterior else None
         if previo and previo.exists() and previo.with_suffix(".txt").exists() \
                 and previo.with_suffix(".txt").read_text() == texto:

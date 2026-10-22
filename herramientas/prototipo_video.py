@@ -55,9 +55,28 @@ ESCENA = [
 DIAGRAMAS = {"eje-3", "estaciones-6"}
 ORDEN = ["bruno", "neuron", "glip"]  # de izquierda a derecha
 
-FOTO_CAJA = (60, 250, ANCHO - 60, 1050)  # x0, y0, x1, y1
-SUB_Y = 1110
-PISO = ALTO + 40  # los pies quedan apenas fuera de cuadro
+# Todo lo importante queda entre y=200 e y=1510: más abajo lo tapan el texto y los comentarios de Reels/TikTok.
+FOTO_CAJA = (60, 215, ANCHO - 60, 760)  # x0, y0, x1, y1
+SUB_Y = 800
+PISO = 1650  # base de los personajes; lo de abajo (panza y piernas) puede quedar tapado sin problema
+TRANSICION = 0.3  # segundos que tarda un personaje en entrar o salir
+
+
+def en_pantalla(i: int) -> dict[str, int]:
+    """Quién se ve en la línea i y dónde: el que habla y, si le está contestando a la línea anterior, ese otro.
+    Nunca más de dos."""
+    quien = ESCENA[i][0]
+    presentes = [quien]
+    if i > 0 and ESCENA[i - 1][0] != quien:
+        presentes.append(ESCENA[i - 1][0])
+    presentes.sort(key=ORDEN.index)
+    xs = (540,) if len(presentes) == 1 else (320, 760)
+    return dict(zip(presentes, xs))
+
+
+def suave(x: float) -> float:
+    x = min(1.0, max(0.0, x))
+    return x * x * (3 - 2 * x)
 
 
 def fuente(tam: int, peso: int = 800) -> ImageFont.FreeTypeFont:
@@ -125,8 +144,16 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
     d.text((ANCHO // 2, 120), TITULO, font=f_titulo, fill="white", anchor="mm")
     d.text((ANCHO // 2, 185), "NADA QUE VER", font=f_marca, fill=(190, 120, 255), anchor="mm")
 
+    piso = Image.new("RGBA", (ANCHO, 140))
+    piso.putalpha(Image.fromarray((np.linspace(0, 255, 140)[:, None] * np.ones((1, ANCHO))).astype(np.uint8)))
+    piso_color = Image.new("RGBA", (ANCHO, 140), tuple(base.getpixel((0, PISO))) + (255,))
+    piso_color.putalpha(piso.getchannel("A"))
+    piso = piso_color
+    base.paste(Image.new("RGB", (ANCHO, ALTO - PISO), base.getpixel((0, PISO))), (0, PISO))
+
     ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{ANCHO}x{ALTO}",
-                           "-r", str(FPS), "-i", "-", "-i", str(audio), "-map", "0:v", "-map", "1:a", "-af", "apad",
+                           "-r", str(FPS), "-i", "-", "-i", str(audio), "-map", "0:v", "-map", "1:a",
+                           "-af", "dynaudnorm=f=250:g=15:p=0.9,loudnorm=I=-14:TP=-1.5,apad",
                            "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
                            "-c:a", "aac", "-b:a", "160k", "-t", f"{total / FPS:.3f}", "-movflags", "+faststart", str(salida)],
                           stdin=subprocess.PIPE)
@@ -162,23 +189,33 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
                                  fill=(0, 0, 0))
             dc.text((FOTO_CAJA[0] + 162, FOTO_CAJA[1] + 57), rotulo, font=f_nombre, fill="white", anchor="mm")
 
-        # personajes: oyentes atrás y apagados, el que habla adelante y rebotando con la voz
+        # personajes: entra el que habla; si contesta a la línea anterior queda también el otro, apagado
         # whisper a veces corta el final de la línea: el subtítulo sigue hasta que arranca la siguiente
         hablando = i + 1 < len(tiempos) or t < fin + 0.5
-        lugares = {p: x for p, x in zip(ORDEN, (230, 540, 850))}
-        for p in sorted(ps, key=lambda p: p == quien):
+        ahora, antes = en_pantalla(i), en_pantalla(i - 1) if i else {}
+        k = suave((t - ini) / TRANSICION) if i else 1.0
+        for p in sorted(set(ahora) | set(antes), key=lambda p: p == quien):
+            x = antes.get(p, ahora.get(p)) * (1 - k) + ahora.get(p, antes.get(p)) * k
+            opacidad = (1.0 if p in antes else 0.0) * (1 - k) + (1.0 if p in ahora else 0.0) * k
+            if opacidad <= 0.02:
+                continue
             pose = poses[(p, ps[p])]
             habla = p == quien and hablando
-            alto = 640 if p == quien else 540
+            alto = 650 if p == quien else 580
             rebote = 1 + (0.035 * vol[n] if habla else 0.008 * np.sin(t * 2 + ORDEN.index(p)))
             h = int(alto * rebote)
             w = int(pose.width * h / pose.height)
             im = pose.resize((w, h), Image.LANCZOS)
+            alfa = im.getchannel("A")
             if p != quien:
-                rgb = ImageEnhance.Brightness(im.convert("RGB")).enhance(0.55)
-                rgb.putalpha(im.getchannel("A"))
-                im = rgb
-            cuadro.paste(im, (lugares[p] - w // 2, PISO - h), im)
+                im = ImageEnhance.Brightness(im.convert("RGB")).enhance(0.7)
+            if opacidad < 1:
+                alfa = alfa.point(lambda v: int(v * opacidad))
+            im.putalpha(alfa)
+            subida = int(60 * (1 - opacidad))  # entra subiendo un poco
+            cuadro.paste(im, (int(x) - w // 2, PISO - h + subida), im)
+        # tapa la base de los personajes con un degradé hacia el fondo
+        cuadro.paste(piso, (0, PISO - piso.height), piso)
 
         # subtítulo con el nombre de quien habla
         if hablando:
@@ -188,7 +225,7 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
             dc = ImageDraw.Draw(cuadro)
             dc.rounded_rectangle((ANCHO // 2 - 110, SUB_Y - 30, ANCHO // 2 + 110, SUB_Y + 26), 28, fill=color)
             dc.text((ANCHO // 2, SUB_Y), NOMBRES[quien], font=f_nombre, fill=FONDO, anchor="mm")
-            dc.multiline_text((ANCHO // 2, SUB_Y + 120), sub, font=f_sub, fill="white", anchor="mm", align="center",
+            dc.multiline_text((ANCHO // 2, SUB_Y + 105), sub, font=f_sub, fill="white", anchor="mm", align="center",
                               spacing=10, stroke_width=7, stroke_fill="black")
         ff.stdin.write(cuadro.tobytes())
     ff.stdin.close()

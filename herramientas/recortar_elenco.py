@@ -14,7 +14,8 @@ from scipy import ndimage
 
 CARPETAS = {"neuron": "profesor", "nyx": "punk", "glip": "alien", "bruno": "gallo"}
 ALTO = 720  # alto máximo de cada pose, alcanza para el video vertical
-UMBRAL = 38  # diferencia con el color del fondo para considerar que hay dibujo
+UMBRAL = 38
+CERCA = 90  # distancia máxima (px) para que un trazo suelto cuente como parte de un personaje  # diferencia con el color del fondo para considerar que hay dibujo
 
 
 def recortar(planilla: Path, destino: Path) -> int:
@@ -30,20 +31,34 @@ def recortar(planilla: Path, destino: Path) -> int:
     centros = {i: ((cajas[i][0].start + cajas[i][0].stop) / 2, cajas[i][1].start) for i in grandes}
     alto_fila = np.median([cajas[i][0].stop - cajas[i][0].start for i in grandes])
     grandes.sort(key=lambda i: (round(centros[i][0] / alto_fila), centros[i][1]))
-    destino.mkdir(parents=True, exist_ok=True)
+    # cada pixel de dibujo va con el personaje más cercano: así no se pierden gotitas, signos ni manos sueltas
+    solo_grandes = np.zeros_like(etiquetas)
     for k, i in enumerate(grandes, 1):
-        ys, xs = cajas[i]
-        y0, y1 = max(0, ys.start - 12), min(im.shape[0], ys.stop + 12)
-        x0, x1 = max(0, xs.start - 12), min(im.shape[1], xs.stop + 12)
-        propio = ndimage.binary_fill_holes(etiquetas[y0:y1, x0:x1] == i + 1)
-        # el fondo es lo claro conectado al borde de la caja; lo demás de la mancha es dibujo
-        claro = ~dibujo[y0:y1, x0:x1]
-        semillas = np.zeros_like(claro)
-        semillas[0, :] = semillas[-1, :] = semillas[:, 0] = semillas[:, -1] = True
-        afuera = ndimage.binary_propagation(semillas & claro, mask=claro)
-        alfa = (~afuera & ndimage.binary_dilation(propio, iterations=3)).astype(np.float32)
-        alfa = ndimage.gaussian_filter(alfa, 0.8)
-        rgba = np.dstack([im[y0:y1, x0:x1].astype(np.uint8), (alfa * 255).astype(np.uint8)])
+        solo_grandes[etiquetas == i + 1] = k
+    distancia, (iy, ix) = ndimage.distance_transform_edt(solo_grandes == 0, return_indices=True)
+    duenio = np.where(distancia < CERCA, solo_grandes[iy, ix], 0)
+    destino.mkdir(parents=True, exist_ok=True)
+    for k in range(1, len(grandes) + 1):
+        ys, xs = np.nonzero((duenio == k) & dibujo)
+        y0, y1 = max(0, ys.min() - 6), min(im.shape[0], ys.max() + 7)
+        x0, x1 = max(0, xs.min() - 6), min(im.shape[1], xs.max() + 7)
+        recorte = im[y0:y1, x0:x1]
+        propio = ndimage.binary_closing((duenio[y0:y1, x0:x1] == k) & dibujo[y0:y1, x0:x1], iterations=2)
+        propio = ndimage.binary_fill_holes(propio)
+        # huecos encerrados (entre brazo y cuerpo, entre manos): si son del color liso del fondo, se vacían.
+        # La ropa blanca tiene sombras, así que no se confunde.
+        diferencia = np.abs(recorte - fondo).max(axis=2)
+        liso = diferencia < 10
+        huecos, n_huecos = ndimage.label(propio & liso)
+        if n_huecos:
+            tam = ndimage.sum(np.ones_like(huecos), huecos, range(1, n_huecos + 1))
+            media = ndimage.mean(diferencia, huecos, range(1, n_huecos + 1))
+            vaciar = [j + 1 for j in range(n_huecos) if tam[j] > 150 and media[j] < 4]
+            propio &= ~np.isin(huecos, vaciar)
+        # borde suave sin halo claro: se achica un pixel y se difumina
+        alfa = ndimage.binary_erosion(propio, iterations=1).astype(np.float32)
+        alfa = ndimage.gaussian_filter(alfa, 0.7)
+        rgba = np.dstack([recorte.astype(np.uint8), (alfa * 255).astype(np.uint8)])
         pose = Image.fromarray(rgba, "RGBA")
         pose.thumbnail((ALTO, ALTO))
         pose.save(destino / f"{k:02d}.png", optimize=True)

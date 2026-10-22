@@ -1,11 +1,11 @@
 name: Video prototipo de la Luna
 
 on:
-  workflow_dispatch:
-    inputs:
-      audio:
-        description: "gemini (gasta 2 pedidos de la cuota) o chatterbox (audio de prueba ya generado)"
-        default: gemini
+  # Se dispara al cambiar herramientas/prototipo_audio.txt: "gemini" gasta 2 pedidos de la cuota,
+  # "chatterbox" usa el audio de prueba ya generado. Hace falta otro cambio para volver a correrlo.
+  push:
+    paths:
+      - herramientas/prototipo_audio.txt
 
 permissions:
   contents: write
@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Elegir audio
+        run: echo "AUDIO=$(head -1 herramientas/prototipo_audio.txt | tr -d '[:space:]')" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -26,14 +28,14 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests numpy pillow faster-whisper
       - name: Voces con Gemini
-        if: inputs.audio == 'gemini'
+        if: env.AUDIO == 'gemini'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python -u herramientas/escena_gemini.py /tmp/video
           test -f /tmp/video/escena-luna.mp3
       - name: Audio de prueba de Chatterbox
-        if: inputs.audio == 'chatterbox'
+        if: env.AUDIO == 'chatterbox'
         run: |
           mkdir -p /tmp/video
           git fetch -q origin escena-chatterbox
@@ -50,5 +52,5 @@ jobs:
           git config user.name "mente-curiosa-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -qm "Video prototipo de la Luna (${{ inputs.audio }})"
+          git commit -qm "Video prototipo de la Luna ($AUDIO)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" prototipo-video

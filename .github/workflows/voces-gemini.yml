@@ -1,0 +1,35 @@
+name: Muestras de voces Gemini
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - herramientas/muestras_gemini.py
+      - .github/workflows/voces-gemini.yml
+
+permissions:
+  contents: write
+
+jobs:
+  voces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt && sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Generar muestras
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python -u herramientas/muestras_gemini.py /tmp/voces
+      - name: Subir a la rama voces-gemini
+        if: always()
+        run: |
+          mkdir -p /tmp/voces && cd /tmp/voces && touch .keep
+          git init -q -b voces-gemini
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Muestras de voces Gemini"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" voces-gemini

@@ -1,0 +1,2 @@
+gemini
+2026-10-22 20:01 UTC v6 voces más humanas (sin reutilizar audio)

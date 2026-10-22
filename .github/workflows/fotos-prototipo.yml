@@ -1,0 +1,32 @@
+name: Fotos candidatas del prototipo
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - herramientas/buscar_fotos_prototipo.py
+      - .github/workflows/fotos-prototipo.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fotos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python -u herramientas/buscar_fotos_prototipo.py /tmp/fotos
+      - name: Subir a la rama fotos-prototipo
+        if: always()
+        run: |
+          mkdir -p /tmp/fotos && cd /tmp/fotos && touch .keep
+          git init -q -b fotos-prototipo
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Fotos candidatas del prototipo"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" fotos-prototipo

@@ -1,6 +1,6 @@
 """Genera el audio del primer \"¿Qué pasaría si...?\" (la Luna) con las voces elegidas de Gemini.
 
-Necesita la variable GEMINI_API_KEY. Uso: python herramientas/escena_gemini.py carpeta_destino
+Usa diálogo multi-speaker (2 voces por pedido) para gastar poca cuota gratis. Necesita la variable GEMINI_API_KEY. Uso: python herramientas/escena_gemini.py carpeta_destino
 """
 
 import base64
@@ -31,18 +31,33 @@ ESTILOS = {
 FILTROS = {"glip": "asetrate=24000*1.35,aresample=24000,atempo=0.9"}
 
 
-def sintetizar(personaje: str, texto: str, voz: str, destino: Path) -> None:
-    cuerpo = {
-        "contents": [{"parts": [{"text": f"{ESTILOS[personaje]} {texto}"}]}],
-        "generationConfig": {
-            "responseModalities": ["AUDIO"],
-            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voz}}},
-        },
+NOMBRES = {"neuron": "Neuron", "nyx": "Nyx", "glip": "Glip", "bruno": "Bruno"}
+
+
+def configurar(bloque: list) -> dict:
+    """Arma el pedido: una voz sola, o diálogo multi-speaker si hay dos personajes (un solo pedido de cuota)."""
+    hablan = list(dict.fromkeys(p for p, _ in bloque))
+    if len(hablan) == 1:
+        texto = f"{ESTILOS[hablan[0]]} " + " ".join(linea for _, linea in bloque)
+        voz = {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOCES[hablan[0]]}}}
+    else:
+        reglas = "\n".join(f"{NOMBRES[p]}: {ESTILOS[p].removesuffix(' Decí:')}" for p in hablan)
+        guion = "\n".join(f"{NOMBRES[p]}: {linea}" for p, linea in bloque)
+        texto = f"Leé esta conversación. Cómo habla cada uno:\n{reglas}\n\nConversación:\n{guion}"
+        voz = {"multiSpeakerVoiceConfig": {"speakerVoiceConfigs": [
+            {"speaker": NOMBRES[p], "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOCES[p]}}} for p in hablan]}}
+    return {
+        "contents": [{"parts": [{"text": texto}]}],
+        "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": voz},
     }
+
+
+def sintetizar(bloque: list, destino: Path) -> None:
+    cuerpo = configurar(bloque)
     ultimo = None
     for modelo in MODELOS:
         for intento in range(2):
-            r = requests.post(URL.format(modelo), json=cuerpo, timeout=120,
+            r = requests.post(URL.format(modelo), json=cuerpo, timeout=300,
                               headers={"x-goog-api-key": os.environ["GEMINI_API_KEY"]})
             if r.status_code == 429:
                 print(modelo, "429:", r.text[:500], flush=True)
@@ -54,14 +69,31 @@ def sintetizar(personaje: str, texto: str, voz: str, destino: Path) -> None:
                 datos = r.json()["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]
                 pcm = destino.with_suffix(".pcm")
                 pcm.write_bytes(base64.b64decode(datos))
+                personaje = bloque[0][0]
                 filtro = ["-af", FILTROS[personaje]] if personaje in FILTROS else []
                 subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar", "24000", "-ac", "1",
                                 "-i", str(pcm), *filtro, "-b:a", "96k", str(destino)], check=True)
                 pcm.unlink()
                 return
             ultimo = f"{modelo}: {r.status_code} {r.text[:300]}"
+            print(ultimo, flush=True)
             break
     raise RuntimeError(ultimo)
+
+
+def agrupar(escena: list) -> list:
+    """Junta líneas seguidas en bloques de hasta 2 personajes. Glip va siempre solo, porque su filtro de tono
+    se aplica a todo el audio del pedido."""
+    bloques = []
+    for personaje, linea in escena:
+        actual = bloques[-1] if bloques else None
+        hablan = {p for p, _ in actual} if actual else set()
+        if (actual and personaje not in FILTROS and not hablan & FILTROS.keys()
+                and len(hablan | {personaje}) <= 2):
+            actual.append((personaje, linea))
+        else:
+            bloques.append([(personaje, linea)])
+    return bloques
 
 
 VOCES = {"neuron": "Iapetus", "nyx": "Despina", "glip": "Puck", "bruno": "Achird"}
@@ -83,15 +115,18 @@ ESCENA = [
 def main(destino: Path) -> None:
     destino.mkdir(parents=True, exist_ok=True)
     partes = []
-    for i, (personaje, linea) in enumerate(ESCENA, 1):
-        parte = destino / f"{i:02d}-{personaje}.mp3"
+    bloques = agrupar(ESCENA)
+    print(len(bloques), "pedidos a Gemini", flush=True)
+    for i, bloque in enumerate(bloques, 1):
+        parte = destino / f"{i:02d}-{'-'.join(dict.fromkeys(p for p, _ in bloque))}.mp3"
         try:
-            sintetizar(personaje, linea, VOCES[personaje], parte)
+            sintetizar(bloque, parte)
             partes.append(parte)
-            print(i, personaje, "ok")
-        except Exception as e:  # una línea que falla no frena al resto
-            print(i, personaje, "FALLÓ:", e)
-        time.sleep(PAUSA)
+            print(i, parte.name, "ok", flush=True)
+        except Exception as e:  # un bloque que falla no frena al resto
+            print(i, parte.name, "FALLÓ:", e, flush=True)
+        if i < len(bloques):
+            time.sleep(PAUSA)
     if partes:
         lista = destino / "_lista.txt"
         lista.write_text("".join(f"file '{p.name}'\n" for p in partes))

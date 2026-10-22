@@ -135,6 +135,7 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
         i = max([k for k, (ini, _) in enumerate(tiempos) if ini <= t + 0.05] or [0])
         ini, fin = tiempos[i]
         quien, texto, nombres_foto, ps = ESCENA[i]
+        fin = tiempos[i + 1][0] if i + 1 < len(tiempos) else fin
         avance = min(1, max(0, (t - ini) / max(0.1, fin - ini)))
         cuadro = base.copy()
 
@@ -162,7 +163,8 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
             dc.text((FOTO_CAJA[0] + 162, FOTO_CAJA[1] + 57), rotulo, font=f_nombre, fill="white", anchor="mm")
 
         # personajes: oyentes atrás y apagados, el que habla adelante y rebotando con la voz
-        hablando = t < fin + 0.1
+        # whisper a veces corta el final de la línea: el subtítulo sigue hasta que arranca la siguiente
+        hablando = i + 1 < len(tiempos) or t < fin + 0.5
         lugares = {p: x for p, x in zip(ORDEN, (230, 540, 850))}
         for p in sorted(ps, key=lambda p: p == quien):
             pose = poses[(p, ps[p])]

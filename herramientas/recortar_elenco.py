@@ -68,6 +68,13 @@ def recortar(planilla: Path, destino: Path, umbral: int = UMBRAL, sesion=None) -
                     zona = alfa[caja]
                     zona[pieza] = np.maximum(zona[pieza], ndimage.gaussian_filter(pieza.astype(np.float32), 0.6 * f)[pieza])
             alfa *= ndimage.binary_dilation(mio, iterations=2 * f)
+            # sin sombras tenues ni motitas sueltas de pocos pixeles
+            alfa[alfa < 0.12] = 0
+            motas, n_motas = ndimage.label(alfa > 0.15)
+            if n_motas:
+                tam = ndimage.sum(np.ones_like(motas), motas, range(1, n_motas + 1))
+                chicas = np.isin(motas, [j + 1 for j in range(n_motas) if tam[j] < 80 * f * f])
+                alfa[ndimage.binary_dilation(chicas, iterations=2 * f)] = 0
         else:
             propio = ndimage.binary_closing(trazos, iterations=2 * f)
             propio = ndimage.binary_fill_holes(propio)

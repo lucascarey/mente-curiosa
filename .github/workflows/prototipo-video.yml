@@ -1,0 +1,54 @@
+name: Video prototipo de la Luna
+
+on:
+  workflow_dispatch:
+    inputs:
+      audio:
+        description: "gemini (gasta 2 pedidos de la cuota) o chatterbox (audio de prueba ya generado)"
+        default: gemini
+
+permissions:
+  contents: write
+
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests numpy pillow faster-whisper
+      - name: Voces con Gemini
+        if: inputs.audio == 'gemini'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python -u herramientas/escena_gemini.py /tmp/video
+          test -f /tmp/video/escena-luna.mp3
+      - name: Audio de prueba de Chatterbox
+        if: inputs.audio == 'chatterbox'
+        run: |
+          mkdir -p /tmp/video
+          git fetch -q origin escena-chatterbox
+          git show origin/escena-chatterbox:escena-luna-chatterbox.mp3 > /tmp/video/escena-luna.mp3
+      - name: Sincronizar líneas con el audio
+        run: python -u herramientas/tiempos_whisper.py /tmp/video/escena-luna.mp3 /tmp/video/tiempos.json
+      - name: Armar el video
+        run: python -u herramientas/prototipo_video.py /tmp/video/escena-luna.mp3 /tmp/video/tiempos.json /tmp/video/prototipo-luna.mp4
+      - name: Subir a la rama prototipo-video
+        if: always()
+        run: |
+          mkdir -p /tmp/video && cd /tmp/video && touch .keep
+          git init -q -b prototipo-video
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Video prototipo de la Luna (${{ inputs.audio }})"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" prototipo-video

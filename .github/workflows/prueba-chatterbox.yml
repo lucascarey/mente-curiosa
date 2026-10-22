@@ -30,18 +30,18 @@ jobs:
         run: |
           git fetch -q origin voces-gemini
           mkdir -p /tmp/refs
-          for f in neuron-3-iapetus.mp3 nyx-2-despina.mp3 glip-1-puck.mp3 bruno-3-achird.mp3; do
+          for f in nyx-1-leda.mp3 nyx-2-despina.mp3 nyx-3-laomedeia.mp3; do
             git show "origin/voces-gemini:$f" > "/tmp/refs/$f"
           done
       - name: Generar pruebas
         run: python -u herramientas/prueba_chatterbox.py /tmp/refs /tmp/chatterbox
-      - name: Subir a la rama prueba-chatterbox
+      - name: Subir a la rama prueba-chatterbox-nyx
         if: always()
         run: |
           mkdir -p /tmp/chatterbox && cd /tmp/chatterbox && touch .keep
-          git init -q -b prueba-chatterbox
+          git init -q -b prueba-chatterbox-nyx
           git config user.name "mente-curiosa-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -qm "Prueba de voces Chatterbox"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" prueba-chatterbox
+          git commit -qm "Prueba de voces Chatterbox para Nyx"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" prueba-chatterbox-nyx

@@ -13,20 +13,18 @@ import torchaudio as ta
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
 # personaje: (muestra de Gemini elegida, filtro para "deshacer" efectos antes de clonar, frase)
+FRASE_NYX = ("Ajá. ¿Y eso quién lo dijo? Mostrame la fuente y después hablamos. "
+             "Igual, no me sorprende nada.")
+# Segunda ronda: Lucas eligió Neurón 0.5, Glip 0.8 y Bruno 0.5. Nyx sonó poco joven: se prueban
+# otras muestras de Gemini como base, una de ellas con el tono un poco más agudo.
+JOVEN = "asetrate=24000*1.08,aresample=24000,atempo=0.926"
 PERSONAJES = {
-    "neuron": ("neuron-3-iapetus.mp3", None,
-               "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco. "
-               "Primero, las mareas: sin la Luna serían un tercio de lo que son."),
-    "nyx": ("nyx-2-despina.mp3", None,
-            "Ajá. ¿Y eso quién lo dijo? Mostrame la fuente y después hablamos."),
-    # la muestra de Glip ya tiene el tono subido: se baja para clonar y se vuelve a subir al final
-    "glip": ("glip-1-puck.mp3", "asetrate=24000/1.35,aresample=24000,atempo=1.1111",
-             "¿Qué pasaría si mañana la Luna desapareciera? Pregunto para mi informe sobre los humanos."),
-    "bruno": ("bruno-3-achird.mp3", None,
-              "Fin del mundo. Tsunamis gigantes, el mar se sale, todo. ¿Y las olas? ¿Se termina el surf?"),
+    "nyx-leda": ("nyx-1-leda.mp3", None, FRASE_NYX),
+    "nyx-laomedeia": ("nyx-3-laomedeia.mp3", None, FRASE_NYX),
+    "nyx-despina-aguda": ("nyx-2-despina.mp3", JOVEN, FRASE_NYX),
 }
 SUBIR_GLIP = "asetrate=24000*1.35,aresample=24000,atempo=0.9"
-EXAGERACION = (0.5, 0.8)
+EXAGERACION = (0.5, 0.7)
 
 
 def ffmpeg(*args: str) -> None:

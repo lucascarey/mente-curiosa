@@ -17,7 +17,7 @@ try:
 except ImportError:  # sin rembg se recorta por color, con los límites de siempre
     remove = new_session = None
 
-CARPETAS = {"neuron": "profesor", "nyx": "punk", "glip": "alien", "bruno": "gallo"}
+CARPETAS = {"neuron": "profesor", "nyx": "punk", "glip": "alien", "bruno": "dino"}  # Bruno era un gallo; desde 2026-10-22 es un dinosaurio
 ALTO = 900  # alto máximo de cada pose, alcanza para el video vertical
 UMBRAL = 38  # diferencia con el color del fondo para considerar que hay dibujo
 UMBRALES = {"neuron": 18}  # el borde de vidrio de la pecera es casi del color del fondo

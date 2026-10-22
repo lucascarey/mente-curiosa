@@ -56,11 +56,11 @@ DIAGRAMAS = {"eje-3", "estaciones-6"}
 # Cuando hay dos en pantalla, cada uno se espeja si hace falta para mirar al otro.
 MIRA = {
     "neuron": {1: "der", 3: "der", 6: "der", 9: "der", 11: "der"},
-    "bruno": {1: "der", 2: "der", 3: "der", 4: "der", 5: "der", 8: "der", 10: "der", 11: "der", 12: "der"},
+    "bruno": {1: "der", 2: "der", 3: "izq", 4: "der", 5: "der", 10: "der", 11: "der", 12: "der"},
     "glip": {1: "der", 2: "der", 5: "der", 11: "der", 12: "der"},
     "nyx": {1: "der", 3: "der", 12: "der"},
 }
-NO_ESPEJAR = {"bruno"}  # la B de la campera quedaría al revés
+NO_ESPEJAR: set[str] = set()  # personajes con letras o logos que quedarían al revés
 ORDEN = ["bruno", "neuron", "glip"]  # de izquierda a derecha
 
 # Todo lo importante queda entre y=200 e y=1510: más abajo lo tapan el texto y los comentarios de Reels/TikTok.

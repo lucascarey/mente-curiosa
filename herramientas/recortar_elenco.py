@@ -15,14 +15,15 @@ from scipy import ndimage
 CARPETAS = {"neuron": "profesor", "nyx": "punk", "glip": "alien", "bruno": "gallo"}
 ALTO = 900  # alto máximo de cada pose, alcanza para el video vertical
 UMBRAL = 38  # diferencia con el color del fondo para considerar que hay dibujo
+UMBRALES = {"neuron": 18}  # el borde de vidrio de la pecera es casi del color del fondo
 # Las medidas en pixeles están pensadas para planillas de ~1300 px de ancho y se escalan con la planilla.
 CERCA = 90  # distancia máxima para que un trazo suelto cuente como parte de un personaje
 
 
-def recortar(planilla: Path, destino: Path) -> int:
+def recortar(planilla: Path, destino: Path, umbral: int = UMBRAL) -> int:
     im = np.asarray(Image.open(planilla).convert("RGB")).astype(np.int16)
     fondo = np.median(np.concatenate([im[:8].reshape(-1, 3), im[-8:].reshape(-1, 3)]), axis=0)
-    dibujo = np.abs(im - fondo).max(axis=2) > UMBRAL
+    dibujo = np.abs(im - fondo).max(axis=2) > umbral
     f = max(1, round(im.shape[1] / 1300))
     grueso = ndimage.binary_closing(dibujo, iterations=6 * f)
     etiquetas, n = ndimage.label(grueso)
@@ -50,12 +51,12 @@ def recortar(planilla: Path, destino: Path) -> int:
         # huecos encerrados (entre brazo y cuerpo, entre manos): si son del color liso del fondo, se vacían.
         # La ropa blanca tiene sombras, así que no se confunde.
         diferencia = np.abs(recorte - fondo).max(axis=2)
-        liso = diferencia < 10
+        liso = diferencia < 14
         huecos, n_huecos = ndimage.label(propio & liso)
         if n_huecos:
             tam = ndimage.sum(np.ones_like(huecos), huecos, range(1, n_huecos + 1))
             media = ndimage.mean(diferencia, huecos, range(1, n_huecos + 1))
-            vaciar = [j + 1 for j in range(n_huecos) if tam[j] > 150 * f * f and media[j] < 4]
+            vaciar = [j + 1 for j in range(n_huecos) if tam[j] > 30 * f * f and media[j] < 7]
             propio &= ~np.isin(huecos, vaciar)
         # borde suave sin halo claro: se achica un pixel y se difumina
         alfa = ndimage.binary_erosion(propio, iterations=f).astype(np.float32)
@@ -72,7 +73,7 @@ def main(origen: Path, destino: Path) -> None:
         planilla = origen / f"{carpeta}.png"
         if not planilla.exists():
             planilla = origen / carpeta / "planilla.png"
-        print(personaje, recortar(planilla, destino / personaje), "poses")
+        print(personaje, recortar(planilla, destino / personaje, UMBRALES.get(personaje, UMBRAL)), "poses")
 
 
 main(Path(sys.argv[1]), Path(sys.argv[2]))

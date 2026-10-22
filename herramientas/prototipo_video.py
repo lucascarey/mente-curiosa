@@ -31,28 +31,37 @@ ESCENA = [
     ("glip", "¿Qué pasaría si mañana la Luna desapareciera?", ["luna-1"],
      {"glip": 5, "bruno": 6, "neuron": 4}),
     ("bruno", "Fin del mundo. Tsunamis gigantes, el mar se sale, todo.", ["ola-gigante-5"],
-     {"glip": 7, "bruno": 7, "neuron": 7}),
+     {"glip": 7, "bruno": [7, 1], "neuron": 7}),
     ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco.", ["luna-6"],
-     {"glip": 4, "bruno": 6, "neuron": 6}),
+     {"glip": 4, "bruno": 6, "neuron": [6, 2]}),
     ("neuron", "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, "
                "y serían un tercio de lo que son.", ["mareas-1", "mareas-2"],
-     {"glip": 11, "bruno": 6, "neuron": 1}),
+     {"glip": 11, "bruno": 6, "neuron": [1, 11]}),
     ("bruno", "¿Y las olas? ¿Se termina el surf?", ["surf-1"],
      {"glip": 5, "bruno": 11, "neuron": 4}),
     ("neuron", "No, las olas las hace el viento. Eso sigue igual.", ["surf-6"],
      {"glip": 2, "bruno": 6, "neuron": 2}),
     ("neuron", "Segundo, las noches serían mucho más oscuras, y los animales que se guían por la Luna se "
                "desorientarían. Hay corales que se reproducen todos a la vez después de la luna llena.",
-     ["noche-oscura-2", "corales-3"], {"glip": 7, "bruno": 5, "neuron": 3}),
+     ["noche-oscura-2", "corales-3"], {"glip": 7, "bruno": 5, "neuron": [3, 10]}),
     ("neuron", "Y lo más importante: la Luna mantiene estable la inclinación de la Tierra. Sin ella, el eje se "
                "tambalearía y las estaciones y el clima cambiarían por completo. Eso sí, en millones de años.",
-     ["eje-3", "estaciones-6"], {"glip": 11, "bruno": 12, "neuron": 11}),
+     ["eje-3", "estaciones-6"], {"glip": 11, "bruno": 12, "neuron": [11, 9]}),
     ("bruno", "O sea que me asusté con millones de años de anticipación.", ["luna-2"],
      {"glip": 10, "bruno": 10, "neuron": 7}),
     ("neuron", "La Luna no es decoración. Es lo que mantiene estable al planeta.", ["tierra-luna-1"],
      {"glip": 9, "bruno": 3, "neuron": 9}),
 ]
 DIAGRAMAS = {"eje-3", "estaciones-6"}
+# Hacia dónde mira o gesticula cada pose ("der"/"izq" de quien ve el video; las que no figuran miran al frente).
+# Cuando hay dos en pantalla, cada uno se espeja si hace falta para mirar al otro.
+MIRA = {
+    "neuron": {1: "der", 3: "der", 6: "der", 9: "der", 11: "der"},
+    "bruno": {1: "der", 2: "der", 3: "der", 4: "der", 5: "der", 8: "der", 10: "der", 11: "der", 12: "der"},
+    "glip": {1: "der", 2: "der", 5: "der", 11: "der", 12: "der"},
+    "nyx": {1: "der", 3: "der", 12: "der"},
+}
+NO_ESPEJAR = {"bruno"}  # la B de la campera quedaría al revés
 ORDEN = ["bruno", "neuron", "glip"]  # de izquierda a derecha
 
 # Todo lo importante queda entre y=200 e y=1510: más abajo lo tapan el texto y los comentarios de Reels/TikTok.
@@ -127,8 +136,11 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
     fotos = {n: Image.open(FOTOS / f"{n}.jpg").convert("RGB") for _, _, fs, _ in ESCENA for n in fs}
     poses = {}
     for _, _, _, ps in ESCENA:
-        for p, k in ps.items():
-            poses.setdefault((p, k), Image.open(ELENCO / p / f"{k:02d}.png").convert("RGBA"))
+        for p, ks in ps.items():
+            for k in ks if isinstance(ks, list) else [ks]:
+                im = Image.open(ELENCO / p / f"{k:02d}.png").convert("RGBA")
+                poses[(p, k, False)] = im
+                poses[(p, k, True)] = im.transpose(Image.FLIP_LEFT_RIGHT)
 
     fw, fh = FOTO_CAJA[2] - FOTO_CAJA[0], FOTO_CAJA[3] - FOTO_CAJA[1]
     mascara_foto = esquinas(fw, fh, 36)
@@ -199,7 +211,14 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
             opacidad = (1.0 if p in antes else 0.0) * (1 - k) + (1.0 if p in ahora else 0.0) * k
             if opacidad <= 0.02:
                 continue
-            pose = poses[(p, ps[p])]
+            ks = ps[p] if isinstance(ps[p], list) else [ps[p]]
+            # en las líneas largas el que habla cambia de pose a mitad de camino
+            k_pose = ks[min(len(ks) - 1, int(avance * len(ks)))] if p == quien else ks[0]
+            lugar = ahora.get(p, antes.get(p))
+            hacia = None if len(ahora) == 1 and p in ahora else ("der" if lugar < 540 else "izq")
+            mira = MIRA.get(p, {}).get(k_pose, "frente")
+            espejo = hacia is not None and mira != "frente" and mira != hacia and p not in NO_ESPEJAR
+            pose = poses[(p, k_pose, espejo)]
             habla = p == quien and hablando
             alto = 650 if p == quien else 580
             rebote = 1 + (0.035 * vol[n] if habla else 0.008 * np.sin(t * 2 + ORDEN.index(p)))

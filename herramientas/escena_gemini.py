@@ -25,8 +25,10 @@ ESTILOS = {
             "Voz joven y natural, español latinoamericano neutro, sin ningún acento regional, arrastrando un poco las palabras. Decí:"),
     "glip": ("Actuá como un extraterrestre pequeño y curioso, con voz muy aguda, rápida y entusiasta, "
              "que habla español latinoamericano neutro pero con un tono raro de otro planeta. Exagerado y caricaturesco. Decí:"),
-    "bruno": ("Actuá como un adolescente de 16 años muy nervioso y asustadizo que se hace el valiente. "
-              "Voz joven que se quiebra cuando grita, español latinoamericano neutro, sin ningún acento regional, muy exagerado, como dibujito animado. Decí:"),
+    "bruno": ("Actuá como un adolescente de 16 años en pánico: alarmado, acelerado y nervioso, que se hace el valiente. "
+              "Habla rápido y agudo, con energía alta, como si fuera una emergencia; NUNCA triste, quejoso ni llorón. "
+              "Voz joven que se quiebra cuando grita, español latinoamericano neutro, sin ningún acento regional, "
+              "muy exagerado, como dibujito animado. Decí:"),
 }
 
 # Glip se pasa por un filtro que le sube el tono, para que suene marciano.
@@ -102,14 +104,14 @@ VOCES = {"neuron": "Algenib", "nyx": "Despina", "glip": "Puck", "bruno": "Achird
 
 ESCENA = [
     ("glip", "¿Qué pasaría si mañana la Luna desapareciera?"),
-    ("bruno", "[aterrado] Fin del mundo. Tsunamis gigantes, el mar se sale, todo."),
+    ("bruno", "[gritando con pánico, rápido] ¡Fin del mundo! ¡Tsunamis gigantes, el mar se sale, todo!"),
     ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco."),
     ("neuron", "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, y serían un tercio de lo que son."),
-    ("bruno", "[preocupado] ¿Y las olas? ¿Se termina el surf?"),
+    ("bruno", "[alarmado, nervioso y rápido] ¿Y las olas? ¿Se termina el surf?"),
     ("neuron", "No, las olas las hace el viento. Eso sigue igual."),
     ("neuron", "Segundo, las noches serían mucho más oscuras, y los animales que se guían por la Luna se desorientarían. Hay corales que se reproducen todos a la vez después de la luna llena."),
     ("neuron", "Y lo más importante: la Luna mantiene estable la inclinación de la Tierra. Sin ella, el eje se tambalearía y las estaciones y el clima cambiarían por completo. [pausa] Eso sí, en millones de años."),
-    ("bruno", "[aliviado] O sea que me asusté con millones de años de anticipación."),
+    ("bruno", "[aliviado, con una risita nerviosa] O sea que me asusté con millones de años de anticipación."),
     ("neuron", "La Luna no es decoración. Es lo que mantiene estable al planeta."),
 ]
 

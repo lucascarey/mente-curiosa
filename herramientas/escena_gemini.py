@@ -30,7 +30,8 @@ ESTILOS = {
     "bruno": ("Actuá como un adolescente de 16 años en pánico: alarmado, acelerado y nervioso, que se hace el valiente. "
               "Habla rápido y agudo, con energía alta, como si fuera una emergencia; NUNCA triste, quejoso ni llorón. "
               "Voz joven que se quiebra cuando grita, español latinoamericano neutro, sin ningún acento regional, "
-              "muy exagerado, como dibujito animado. Decí:"),
+              "MUY exagerado y teatral, como dibujito animado: grita, chilla y se le escapan gallitos en los momentos de "
+              "susto, y cuando se calma se ríe nervioso. Decí:"),
 }
 
 # Glip se pasa por un filtro que le sube el tono, para que suene marciano.

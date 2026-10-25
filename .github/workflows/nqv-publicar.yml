@@ -18,11 +18,6 @@ concurrency:
 permissions:
   contents: write
 
-# Formato que publica el horario automático: variable de repo NQV_FORMATO. "animado" = Neurón solo con gráficos
-# (nqv/animados/pendientes); cualquier otro valor o vacía = elenco con fotos (nqv/guiones/pendientes).
-env:
-  FORMATO: ${{ github.event_name != 'push' && vars.NQV_FORMATO == 'animado' && 'animado' || 'elenco' }}
-
 jobs:
   publicar:
     # El horario automático corre salvo que la variable de repo NQV_ACTIVA diga false (Lucas lo prendió el 2026-10-25)
@@ -31,6 +26,13 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      # Formato que publica el horario automático, según nqv/formato.txt: "animado" = Neurón solo con gráficos
+      # (nqv/animados/pendientes); cualquier otra cosa = elenco con fotos (nqv/guiones/pendientes).
+      - name: Formato
+        run: |
+          f=elenco
+          if [ "${{ github.event_name }}" != push ] && grep -qx animado nqv/formato.txt 2>/dev/null; then f=animado; fi
+          echo "FORMATO=$f" >> "$GITHUB_ENV"; echo "Formato: $f"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

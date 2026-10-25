@@ -40,7 +40,9 @@ jobs:
       - name: Subir a la rama nqv-animado
         if: always()
         run: |
+          # se conservan los videos y voces de corridas anteriores (la publicación reusa esas voces)
           mkdir -p /tmp/sube
+          (cd /tmp/anterior 2>/dev/null && find . -mindepth 1 -maxdepth 1 ! -name .git -exec cp -r {} /tmp/sube/ \;) || true
           for d in salida/animado-*/; do
             [ -d "$d" ] || continue
             n="$(basename "$d" | sed 's/^animado-//')"

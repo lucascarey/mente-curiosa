@@ -12,6 +12,11 @@ on:
       - nqv/vista.txt
   # Para publicar a mano si el horario de GitHub se saltea una corrida
   workflow_dispatch:
+    inputs:
+      forzar:
+        description: "Publicar aunque haya salido otro video hace poco"
+        type: boolean
+        default: false
 
 concurrency:
   group: publicar
@@ -65,8 +70,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             python -u -m nqv.main --vista "$(head -1 nqv/vista.txt | tr -d '\r')"
-          elif [ -n "$(git log --since='4 hours ago' --format=%H -- nqv/guiones/publicados nqv/animados/publicados | head -1)" ]; then
-            echo "Ya se publicó un video hace menos de 4 horas: esta corrida no publica otro."
+          elif [ "${{ inputs.forzar }}" != "true" ] && [ -n "$(git log --since='6 hours ago' --format=%H -- nqv/guiones/publicados nqv/animados/publicados | head -1)" ]; then
+            echo "Ya se publicó un video hace menos de 6 horas: esta corrida no publica otro."
           elif [ "$FORMATO" = animado ]; then
             git fetch -q origin nqv-animado && git worktree add /tmp/vista-animado origin/nqv-animado || mkdir -p /tmp/vista-animado
             python -u -m nqv.animado.armar --publicar /tmp/vista-animado

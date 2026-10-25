@@ -3,52 +3,92 @@
  "caption": "No es porque refleje el mar. 🌅\n\nLa luz del Sol trae todos los colores, y el aire desvía el azul para todos lados. Al atardecer la luz cruza casi 40 veces más aire, pierde el azul y llega naranja.\n\n#datoscuriosos #ciencia #cielo #atardecer #fisica #curiosidades #nadaquever",
  "lineas": [
   {
-   "dice": "¿Por qué el cielo es azul? Spoiler: no es porque refleje el mar.",
+   "dice": "Spoiler: el cielo es azul, pero no porque refleje el mar.",
    "escena": "pregunta",
    "chip": "¿Por qué es azul?",
-   "poses": ["habla", "canchero"]
+   "poses": [
+    "habla",
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver de dónde sale ese azul, y por qué al atardecer se pone naranja.",
+   "escena": "intro",
+   "chip": "¿Por qué es azul?",
+   "poses": [
+    "habla",
+    "explica"
+   ]
   },
   {
    "dice": "La luz del Sol parece blanca, pero en realidad es una mezcla de todos los colores.",
    "escena": "luz",
    "chip": "1 La luz",
-   "poses": ["explica", "senala"]
+   "poses": [
+    "explica",
+    "senala"
+   ]
   },
   {
    "dice": "Cuando entra a la atmósfera, esa luz choca con las moléculas del aire: nitrógeno y oxígeno.",
    "escena": "atmosfera",
    "chip": "2 El choque",
-   "poses": ["idea", "explica"]
+   "poses": [
+    "idea",
+    "explica"
+   ]
   },
   {
    "dice": "Los colores de onda corta, como el azul, rebotan para todos lados. El rojo, de onda larga, pasa casi derecho.",
    "escena": "rebote",
    "chip": "3 El rebote",
-   "poses": ["senala", "explica"]
+   "poses": [
+    "senala",
+    "explica"
+   ]
   },
   {
    "dice": "El azul se desvía casi seis veces más que el rojo. Por eso, mires adonde mires, te llega azul desde todo el cielo.",
    "escena": "seis",
    "chip": "3 El rebote",
-   "poses": ["habla", "idea"]
+   "poses": [
+    "habla",
+    "idea"
+   ]
   },
   {
    "dice": "¿Y por qué no es violeta, si rebota todavía más? Porque el Sol manda menos violeta, y tus ojos captan mucho mejor el azul.",
    "escena": "violeta",
    "chip": "4 ¿Y el violeta?",
-   "poses": ["piensa", "listo"]
+   "poses": [
+    "piensa",
+    "listo"
+   ]
   },
   {
    "dice": "Al atardecer, la luz cruza casi cuarenta veces más aire para llegarte. En el camino pierde el azul, y lo que sobrevive es naranja y rojo.",
    "escena": "atardecer",
    "chip": "5 El atardecer",
-   "poses": ["explica", "idea"]
+   "poses": [
+    "explica",
+    "idea"
+   ]
   },
   {
    "dice": "Así que el cielo no tiene color: es el aire tirándote el azul del Sol a los ojos.",
    "escena": "cierre",
    "chip": "¿Por qué es azul?",
-   "poses": ["canchero"]
+   "poses": [
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
   }
  ]
 }

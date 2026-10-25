@@ -18,6 +18,11 @@ concurrency:
 permissions:
   contents: write
 
+# Formato que publica el horario automático: variable de repo NQV_FORMATO. "animado" = Neurón solo con gráficos
+# (nqv/animados/pendientes); cualquier otro valor o vacía = elenco con fotos (nqv/guiones/pendientes).
+env:
+  FORMATO: ${{ github.event_name != 'push' && vars.NQV_FORMATO == 'animado' && 'animado' || 'elenco' }}
+
 jobs:
   publicar:
     # El horario automático corre salvo que la variable de repo NQV_ACTIVA diga false (Lucas lo prendió el 2026-10-25)
@@ -33,9 +38,13 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests numpy pillow faster-whisper
+          if [ "$FORMATO" = animado ]; then
+            pip install -q playwright && python -m playwright install --with-deps chromium
+          fi
       - name: Revisar guiones
         if: github.event_name != 'push'
-        run: python -m nqv.main --validar
+        run: |
+          if [ "$FORMATO" = animado ]; then python -m nqv.animado.armar --validar; else python -m nqv.main --validar; fi
       - name: Armar y publicar
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -50,6 +59,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             python -u -m nqv.main --vista "$(head -1 nqv/vista.txt | tr -d '\r')"
+          elif [ "$FORMATO" = animado ]; then
+            python -u -m nqv.animado.armar --publicar
           else
             python -u -m nqv.main
           fi
@@ -88,7 +99,7 @@ jobs:
         run: |
           git config user.name "mente-curiosa-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A nqv/guiones
+          git add -A nqv/guiones nqv/animados
           git diff --cached --quiet && exit 0
-          git commit -qm "Publicado $(git diff --cached --name-only | grep publicados | head -1 | xargs -r basename)"
+          git commit -qm "Publicado $(git diff --cached --name-only | grep publicados | head -1 | sed -E 's#.*publicados/([^/]+).*#\1#')"
           git push -q

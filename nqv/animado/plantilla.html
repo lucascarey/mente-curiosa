@@ -146,6 +146,57 @@ function estrellas(alfa = 1, cantidad = 70) {
   ctx.restore();
 }
 
+// ---------- escenas fijas, que cualquier video puede usar ----------
+
+// la intro después del hook ("Hoy te explico..."): el título del video, grande
+ESCENAS.intro = (inf) => {
+  const t = inf.t;
+  estrellas(0.7);
+  chip("HOY", 540, 380, { tam: 44, color: NARANJA, escala: salto(t / 0.4), alfa: clamp(t / 0.2) });
+  ctx.font = "900 84px Inter";
+  const renglones = [""];
+  for (const w of DATOS.titulo.split(" ")) {
+    const prueba = (renglones.at(-1) + " " + w).trim();
+    if (ctx.measureText(prueba).width > 900 && renglones.at(-1)) renglones.push(w); else renglones[renglones.length - 1] = prueba;
+  }
+  const y0 = 620 - (renglones.length - 1) * 50;
+  renglones.forEach((r, k) => {
+    const a = entre(t, 0.15 + k * 0.15, 0.55 + k * 0.15);
+    texto(r, 540, y0 + k * 100 + 30 * (1 - a), { tam: 84, peso: 900, mono: false, alfa: a, borde: 10 });
+  });
+  const yl = y0 + renglones.length * 100 - 20, k = entre(t, 0.6, 1.3);
+  ctx.save(); ctx.strokeStyle = CELESTE; ctx.lineWidth = 10; ctx.lineCap = "round"; ctx.shadowColor = CELESTE; ctx.shadowBlur = 16;
+  ctx.beginPath(); ctx.moveTo(540 - 300 * k, yl); ctx.lineTo(540 + 300 * k, yl); ctx.stroke(); ctx.restore();
+};
+
+// el cierre que invita a seguir la cuenta: el botón "Seguir" se aprieta cuando Neurón dice "seguime"
+ESCENAS.seguir = (inf) => {
+  const t = inf.t;
+  estrellas(0.7);
+  const k = salto(t / 0.5);
+  ctx.save(); ctx.translate(540, 470); ctx.scale(k, k);
+  const g = ctx.createLinearGradient(-120, -120, 120, 120);
+  g.addColorStop(0, VIOLETA); g.addColorStop(1, CELESTE);
+  circulo(0, 0, 125, null, g, 10);
+  circulo(0, 0, 108, "#141a33");
+  if (Object.keys(POSES).length) {  // la cara de Neurón dentro del círculo
+    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 106, 0, 7); ctx.clip();
+    const im = POSES[Object.keys(POSES)[0]], h = 520, w = im.width * h / im.height;
+    ctx.drawImage(im, -w / 2, -95, w, h);
+    ctx.restore();
+  } else texto("NQV", 0, 0, { tam: 64, peso: 900 });
+  ctx.restore();
+  texto("@nqv.tv", 540, 650, { tam: 64, peso: 900, alfa: entre(t, 0.2, 0.6) });
+  texto("Nada Que Ver", 540, 715, { tam: 36, color: "rgba(255,255,255,0.7)", alfa: entre(t, 0.3, 0.7) });
+  const tS = inf.cuando("sigueme");
+  const apretado = entre(t, tS, tS + 0.25);
+  const pulso = t < tS ? 1 + 0.04 * Math.sin(t * 8) : 1 - 0.08 * Math.sin(Math.PI * apretado);
+  ctx.save(); ctx.translate(540, 840); ctx.scale(pulso, pulso); ctx.globalAlpha *= entre(t, 0.4, 0.8);
+  caja(-210, -55, 420, 110, 30, apretado > 0.5 ? "#2a3150" : "#3d7bff");
+  texto(apretado > 0.5 ? "Siguiendo ✓" : "Seguir", 0, 2, { tam: 48, peso: 800, mono: false });
+  ctx.restore();
+};
+
 // ---------- armado de cada cuadro ----------
 function info(i, T) {
   const l = DATOS.lineas[i];

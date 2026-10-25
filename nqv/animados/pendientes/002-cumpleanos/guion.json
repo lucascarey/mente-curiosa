@@ -1,0 +1,85 @@
+{
+ "titulo": "LA PARADOJA DEL CUMPLEAÑOS",
+ "caption": "Con solo 23 personas ya hay más de 50 % de chance de que dos cumplan el mismo día. 🎂\n\nEl truco: no se compara contigo, se compara cualquier pareja. Y 23 personas arman 253 parejas.\n\n#datoscuriosos #matematica #probabilidad #curiosidades #ciencia #nadaquever",
+ "lineas": [
+  {
+   "dice": "En un grupo de solo veintitrés personas, hay más de un cincuenta por ciento de chance de que dos cumplan años el mismo día.",
+   "escena": "grupo",
+   "chip": "¿Solo 23?",
+   "poses": [
+    "habla",
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Hoy te explico la paradoja del cumpleaños, y por qué tu intuición falla tanto con esto.",
+   "escena": "intro",
+   "chip": "¿Solo 23?",
+   "poses": [
+    "habla",
+    "explica"
+   ]
+  },
+  {
+   "dice": "Suena imposible, porque el año tiene trescientos sesenta y cinco días. Pero el error está en qué estás comparando.",
+   "escena": "calendario",
+   "chip": "1 El error",
+   "poses": [
+    "piensa",
+    "senala"
+   ]
+  },
+  {
+   "dice": "No importa solo si alguien cumple el mismo día que tú. Importa cualquier pareja del grupo.",
+   "escena": "vos",
+   "chip": "2 Las parejas",
+   "poses": [
+    "explica",
+    "idea"
+   ]
+  },
+  {
+   "dice": "Y con veintitrés personas se pueden armar doscientas cincuenta y tres parejas distintas.",
+   "escena": "parejas",
+   "chip": "2 Las parejas",
+   "poses": [
+    "senala",
+    "listo"
+   ]
+  },
+  {
+   "dice": "Cada pareja tiene poquísima chance de coincidir. Pero son tantas, que alguna termina coincidiendo.",
+   "escena": "chance",
+   "chip": "3 La chance",
+   "poses": [
+    "habla",
+    "festeja"
+   ]
+  },
+  {
+   "dice": "Con cincuenta personas, la probabilidad sube al noventa y siete por ciento. Con setenta, es prácticamente seguro.",
+   "escena": "curva",
+   "chip": "4 La curva",
+   "poses": [
+    "explica",
+    "idea"
+   ]
+  },
+  {
+   "dice": "Así que si en tu trabajo hay dos que cumplen el mismo día, no es destino. Es matemática.",
+   "escena": "cierre",
+   "chip": "¿Solo 23?",
+   "poses": [
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "titulo": "¿POR QUÉ FLOTA EL HIELO?",
+ "caption": "En casi todas las sustancias, el sólido se hunde. El agua es la rara: el hielo flota. 🧊\n\nAl congelarse, sus moléculas se enganchan en hexágonos que dejan huecos: el hielo ocupa cerca de 9 % más y pesa menos que la misma cantidad de agua.\n\n#datoscuriosos #ciencia #agua #quimica #curiosidades #nadaquever",
+ "lineas": [
+  {
+   "dice": "Si congelas casi cualquier líquido, el sólido se hunde. El agua hace todo al revés: el hielo flota.",
+   "escena": "vasos",
+   "chip": "¿Por qué flota?",
+   "poses": ["habla", "senala"]
+  },
+  {
+   "dice": "Hoy vamos a ver por qué pasa esto, y por qué gracias a eso los peces sobreviven al invierno.",
+   "escena": "intro",
+   "chip": "¿Por qué flota?",
+   "poses": ["explica", "idea"]
+  },
+  {
+   "dice": "Todo empieza en la forma de la molécula: un oxígeno con dos hidrógenos, doblada como una V.",
+   "escena": "molecula",
+   "chip": "1 La molécula",
+   "poses": ["explica", "senala"]
+  },
+  {
+   "dice": "En el agua líquida, las moléculas se mueven, chocan y quedan bastante amontonadas.",
+   "escena": "liquido",
+   "chip": "2 Líquida",
+   "poses": ["habla", "explica"]
+  },
+  {
+   "dice": "Pero al congelarse, se enganchan formando hexágonos. Y esa red deja huecos vacíos en el medio.",
+   "escena": "hexagonos",
+   "chip": "3 Congelada",
+   "poses": ["senala", "idea"]
+  },
+  {
+   "dice": "Por eso el hielo ocupa cerca de un nueve por ciento más de espacio, y pesa menos que la misma cantidad de agua.",
+   "escena": "espacio",
+   "chip": "4 El resultado",
+   "poses": ["explica", "listo"]
+  },
+  {
+   "dice": "Y menos mal: en un lago, el hielo queda arriba como una tapa, y el agua de abajo sigue líquida para los peces.",
+   "escena": "lago",
+   "chip": "5 El lago",
+   "poses": ["habla", "festeja"]
+  },
+  {
+   "dice": "O sea, el hielo flota porque está lleno de huecos.",
+   "escena": "cierre",
+   "chip": "¿Por qué flota?",
+   "poses": ["canchero"]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": ["festeja"]
+  }
+ ]
+}

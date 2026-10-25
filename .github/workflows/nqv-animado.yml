@@ -1,7 +1,7 @@
 name: Nada Que Ver - video animado de prueba
 
 # Arma un video animado (Neurón solo + gráficos programados) sin publicarlo.
-# Se dispara al cambiar nqv/animado.txt (primera línea: carpeta del video, ej. nqv/animados/cielo-azul).
+# Se dispara al cambiar nqv/animado.txt (una carpeta de video por línea, ej. nqv/animados/pendientes/001-cielo-azul).
 # El video queda en la rama nqv-animado. Las voces de la corrida anterior se reutilizan si el texto no cambió.
 on:
   push:
@@ -33,9 +33,10 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          carpeta="$(head -1 nqv/animado.txt | tr -d '\r')"
-          nombre="$(basename "$carpeta")"
-          python -u -m nqv.animado.armar "$carpeta" "/tmp/anterior/$nombre/voces"
+          tr -d '\r' < nqv/animado.txt | while read -r carpeta; do
+            [ -n "$carpeta" ] || continue
+            python -u -m nqv.animado.armar "$carpeta" "/tmp/anterior/$(basename "$carpeta")/voces" < /dev/null
+          done
       - name: Subir a la rama nqv-animado
         if: always()
         run: |

@@ -197,6 +197,52 @@ ESCENAS.seguir = (inf) => {
   ctx.restore();
 };
 
+// ---------- portada (miniatura del Reel) ----------
+// El título grande arriba, la imagen del hook achicada debajo y Neurón abajo a la izquierda. La grilla del perfil de Instagram
+// recorta la portada a 3:4 (y 240-1680), así que todo lo importante queda adentro de esa franja.
+function portada() {
+  fondo();
+  estrellas(0.5);
+  texto("NADA QUE VER", ANCHO / 2, 290, { tam: 30, peso: 800, color: "rgba(190,150,255,0.9)" });
+  // el título, en renglones de hasta 940 px; la última palabra en celeste
+  const tam = DATOS.titulo.length > 28 ? 96 : 112;
+  ctx.font = `900 ${tam}px Inter`;
+  const renglones = [[]];
+  for (const w of DATOS.titulo.split(" ")) {
+    const prueba = [...renglones.at(-1), w].join(" ");
+    if (ctx.measureText(prueba).width > 940 && renglones.at(-1).length) renglones.push([w]); else renglones.at(-1).push(w);
+  }
+  const alto = tam * 1.08;
+  // la escena del hook, ya con todo a la vista, achicada debajo del título
+  const h = DATOS.lineas[0], esc = 0.78, arriba = 400 + renglones.length * alto - 20;
+  ctx.save();
+  ctx.translate(ANCHO / 2 * (1 - esc), arriba - (PANEL.y - 60) * esc);
+  ctx.scale(esc, esc);
+  ctx.beginPath(); ctx.rect(0, PANEL.y - 60, ANCHO, PANEL.h + 60); ctx.clip();
+  ESCENAS[h.escena](info(0, h.ini + (h.fin - h.ini) * 0.95));
+  ctx.restore();
+  renglones.forEach((r, k) => {
+    const y = 400 + k * alto;
+    const esp = ctx.measureText(" ").width;
+    let x = ANCHO / 2 - ctx.measureText(r.join(" ")).width / 2;
+    for (const w of r) {
+      const ultima = k === renglones.length - 1 && w === r.at(-1);
+      texto(w, x, y, { tam, peso: 900, mono: false, alinear: "left", borde: 14, color: ultima ? CELESTE : "#fff" });
+      ctx.font = `900 ${tam}px Inter`;
+      x += ctx.measureText(w).width + esp;
+    }
+  });
+  // Neurón grande, abajo a la izquierda
+  const pose = POSES[h.poses[0]], hn = 640, wn = pose.width * hn / pose.height;
+  const g = ctx.createRadialGradient(250, 1160, 20, 250, 1160, 320);
+  g.addColorStop(0, "rgba(110,210,235,0.22)"); g.addColorStop(1, "rgba(110,210,235,0)");
+  ctx.fillStyle = g; ctx.fillRect(-70, 840, 640, 640);
+  ctx.drawImage(pose, 250 - wn / 2, 1660 - hn, wn, hn);
+  const piso = ctx.createLinearGradient(0, 1560, 0, 1680);
+  piso.addColorStop(0, "rgba(8,10,20,0)"); piso.addColorStop(1, "rgba(8,10,20,1)");
+  ctx.fillStyle = piso; ctx.fillRect(0, 1560, ANCHO, 360);
+}
+
 // ---------- armado de cada cuadro ----------
 function info(i, T) {
   const l = DATOS.lineas[i];

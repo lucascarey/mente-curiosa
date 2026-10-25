@@ -2,21 +2,13 @@
  "titulo": "GLIP NO ENTIENDE: ¿POR QUÉ SE ARRUGAN LOS DEDOS EN EL AGUA?",
  "caption": "Los dedos arrugados en el agua no son piel mojada: los arruga el sistema nervioso. 🖐️\n\nUn estudio encontró que así se agarran mejor las cosas mojadas.\n\n#ciencia #cuerpohumano #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "dedos": {
-   "buscar": "wrinkled fingers water"
-  },
-  "banera": {
-   "buscar": "bathtub bath"
-  },
-  "nervios": {
-   "buscar": "nervous system diagram"
-  },
+  "dedos": "File:Wrinkly fingers.jpg",
+  "banera": "File:Bathtub Bath Feet Relax.jpg",
+  "nervios": "File:TE-Nervous system diagram-es.png",
   "manos-agua": {
-   "buscar": "hands in water"
+   "buscar": "hands under running water"
   },
-  "neumatico": {
-   "buscar": "tire tread"
-  }
+  "neumatico": "File:2008-05-01 Tyre.jpg"
  },
  "lineas": [
   {

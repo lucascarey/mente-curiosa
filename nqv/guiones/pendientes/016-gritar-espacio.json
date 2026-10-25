@@ -2,21 +2,10 @@
  "titulo": "¿QUÉ PASARÍA SI GRITARAS EN EL ESPACIO?",
  "caption": "En el espacio nadie te escucharía gritar: el sonido necesita aire, o algo, para viajar. 🚀\n\nPor eso los astronautas se hablan por radio.\n\n#espacio #ciencia #sonido #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "caminata": {
-   "buscar": "astronaut spacewalk"
-  },
-  "parlante": {
-   "buscar": "loudspeaker"
-  },
-  "onda": {
-   "buscar": "sound wave diagram"
-  },
-  "casco": {
-   "buscar": "astronaut helmet visor"
-  },
-  "radio": {
-   "buscar": "astronaut radio communication"
-  }
+  "caminata": "File:Bruce McCandless II during EVA in 1984.jpg",
+  "parlante": "File:2016 Kolumna głośnikowa Altus 110.jpg",
+  "casco": "File:STS-103 Reflection on astronaut's visor.jpg",
+  "radio": "File:STS086-367-030 - STS-086 - Titov with short-wave radio on Mir - DPLA - 24209ea471f13d368e70155a68e6c15c.jpg"
  },
  "lineas": [
   {
@@ -50,7 +39,6 @@
    "quien": "neuron",
    "dice": "El sonido es una vibración que viaja por el aire, el agua o un sólido. En el espacio casi no hay nada, así que no tiene por dónde moverse.",
    "fotos": [
-    "onda",
     "parlante"
    ],
    "poses": {

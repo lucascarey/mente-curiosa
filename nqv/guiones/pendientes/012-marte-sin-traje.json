@@ -2,21 +2,10 @@
  "titulo": "¿QUÉ PASARÍA SI SALIERAS EN MARTE SIN TRAJE?",
  "caption": "En Marte el aire es casi todo dióxido de carbono y la presión es menos del 1% de la de la Tierra. 🔴\n\nSin traje, te desmayarías en unos segundos.\n\n#espacio #marte #ciencia #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "marte-suelo": {
-   "buscar": "Mars surface Curiosity rover panorama"
-  },
-  "marte-planeta": {
-   "buscar": "Mars planet globe"
-  },
-  "traje": {
-   "buscar": "astronaut spacesuit"
-  },
-  "marte-frio": {
-   "buscar": "Mars frost ice surface"
-  },
-  "marte-cielo": {
-   "buscar": "Mars sunset Curiosity"
-  }
+  "marte-suelo": "File:PIA26554A-Mars-CuriosityRover-UbajaraSite-20230430.jpg",
+  "marte-planeta": "File:Mars atmosphere by Hubble.jpg",
+  "traje": "File:Samantha Cristoforetti official portrait in an EMU spacesuit.jpg",
+  "marte-frio": "File:Ice on Mars Again - GPN-2000-001706.jpg"
  },
  "lineas": [
   {

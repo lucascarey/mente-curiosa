@@ -2,18 +2,10 @@
  "titulo": "MITO O VERDAD: ¿USAMOS SOLO EL 10% DEL CEREBRO?",
  "caption": "Mito. Las imágenes del cerebro muestran actividad en todas sus partes. 🧠\n\nY aunque pesa más o menos el 2% del cuerpo, gasta cerca del 20% de su energía.\n\n#mitooverdad #cerebro #ciencia #curiosidades #nadaquever",
  "fotos": {
-  "cerebro": {
-   "buscar": "human brain"
-  },
-  "pet": {
-   "buscar": "PET scan brain"
-  },
-  "fmri": {
-   "buscar": "fMRI brain activity"
-  },
-  "energia": {
-   "buscar": "glucose molecule"
-  }
+  "cerebro": "File:Brain Lateral (NIH BioArt 60).png",
+  "pet": "File:Pet scan of a normal brain.jpg",
+  "fmri": "File:CFS-brain-scan-basal-ganglia-fMRI.png",
+  "energia": "assets/diagramas/cerebro-energia.png"
  },
  "lineas": [
   {
@@ -93,5 +85,8 @@
     "bruno": "rie"
    }
   }
+ ],
+ "diagramas": [
+  "energia"
  ]
 }

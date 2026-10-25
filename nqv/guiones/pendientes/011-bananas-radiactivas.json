@@ -2,21 +2,13 @@
  "titulo": "DATO #5: LAS BANANAS SON UN POCO RADIACTIVAS",
  "caption": "Las bananas tienen potasio, y una pequeñísima parte de ese potasio es radiactivo. 🍌\n\nTranquilo: un vuelo en avión te expone a mucha más radiación que comer bananas.\n\n#datoscuriosos #ciencia #banana #curiosidades #nadaquever",
  "fotos": {
-  "bananas": {
-   "buscar": "bunch of bananas"
-  },
-  "contador-geiger": {
-   "buscar": "Geiger counter"
-  },
+  "bananas": "File:Bunch of bananas on sale.jpg",
+  "contador-geiger": "File:Geiger counter.jpg",
   "potasio": {
-   "buscar": "potassium metal sample"
+   "buscar": "Potassium"
   },
-  "avion": {
-   "buscar": "passenger airplane flying sky"
-  },
-  "banana-pelada": {
-   "buscar": "peeled banana"
-  }
+  "avion": "File:Flying Airplane in the Sky.jpg",
+  "banana-pelada": "File:Banane-A-05 cropped.jpg"
  },
  "lineas": [
   {

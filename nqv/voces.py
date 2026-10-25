@@ -1,6 +1,7 @@
-"""Genera el audio del primer \"¿Qué pasaría si...?\" (la Luna) con las voces elegidas de Gemini.
+"""Genera las voces de un guion de Nada Que Ver con Gemini.
 
-Usa diálogo multi-speaker (2 voces por pedido) para gastar poca cuota gratis. Necesita la variable GEMINI_API_KEY. Uso: python herramientas/escena_gemini.py carpeta_destino [carpeta_anterior]
+Usa diálogo multi-speaker (2 voces por pedido) para gastar poca cuota gratis. Necesita la variable GEMINI_API_KEY.
+Uso: python -m nqv.voces guion.json carpeta_destino [carpeta_anterior]
 Si se pasa la carpeta de una corrida anterior, los bloques con el mismo texto se reutilizan sin gastar cuota.
 """
 
@@ -110,24 +111,12 @@ def agrupar(escena: list) -> list:
 
 VOCES = {"neuron": "Algenib", "nyx": "Despina", "glip": "Puck", "bruno": "Achird"}
 
-ESCENA = [
-    ("glip", "¿Qué pasaría si mañana la Luna desapareciera?"),
-    ("bruno", "[gritando con pánico, rápido] ¡Fin del mundo! ¡Tsunamis gigantes que inundan todo!"),
-    ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco."),
-    ("neuron", "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, y serían un tercio de lo que son."),
-    ("bruno", "[alarmado, nervioso y rápido] ¿Y las olas? ¿Se termina el surf?"),
-    ("neuron", "No, las olas las hace el viento. Eso sigue igual."),
-    ("neuron", "Segundo, las noches serían mucho más oscuras, y los animales que se guían por la Luna se desorientarían. Hay corales que se reproducen todos a la vez después de la luna llena."),
-    ("neuron", "Y lo más importante: la Luna mantiene estable la inclinación de la Tierra. Sin ella, el eje se tambalearía y las estaciones y el clima cambiarían por completo. [pausa] Eso sí, en millones de años."),
-    ("bruno", "[aliviado, con una risita nerviosa] O sea que me asusté con millones de años de anticipación."),
-    ("neuron", "La Luna no es decoración. Es lo que mantiene estable al planeta."),
-]
-
-
-def main(destino: Path, anterior: Path | None) -> None:
+def generar(escena: list[tuple[str, str]], destino: Path, anterior: Path | None = None) -> Path:
+    """Genera las voces de la escena en destino/voces.mp3. Si un bloque falla, corta: un video sin una parte
+    del diálogo no sirve."""
     destino.mkdir(parents=True, exist_ok=True)
     partes = []
-    bloques = agrupar(ESCENA)
+    bloques = agrupar(escena)
     print(len(bloques), "pedidos a Gemini", flush=True)
     for i, bloque in enumerate(bloques, 1):
         parte = destino / f"{i:02d}-{'-'.join(dict.fromkeys(p for p, _ in bloque))}.mp3"
@@ -140,21 +129,21 @@ def main(destino: Path, anterior: Path | None) -> None:
             partes.append(parte)
             print(i, parte.name, "reutilizado", flush=True)
             continue
-        try:
-            sintetizar(bloque, parte)
-            parte.with_suffix(".txt").write_text(texto)
-            partes.append(parte)
-            print(i, parte.name, "ok", flush=True)
-        except Exception as e:  # un bloque que falla no frena al resto
-            print(i, parte.name, "FALLÓ:", e, flush=True)
+        sintetizar(bloque, parte)
+        parte.with_suffix(".txt").write_text(texto)
+        partes.append(parte)
+        print(i, parte.name, "ok", flush=True)
         if i < len(bloques):
             time.sleep(PAUSA)
-    if partes:
-        lista = destino / "_lista.txt"
-        lista.write_text("".join(f"file '{p.name}'\n" for p in partes))
-        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lista),
-                        "-b:a", "96k", str(destino / "escena-luna.mp3")], check=True, cwd=destino)
-        lista.unlink()
+    lista = destino / "_lista.txt"
+    lista.write_text("".join(f"file '{p.name}'\n" for p in partes))
+    salida = destino / "voces.mp3"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lista),
+                    "-b:a", "96k", str(salida)], check=True, cwd=destino)
+    lista.unlink()
+    return salida
 
 
-main(Path(sys.argv[1]), Path(sys.argv[2]) if len(sys.argv) > 2 else None)
+if __name__ == "__main__":
+    from .guion import cargar
+    generar(cargar(Path(sys.argv[1])).escena_voz, Path(sys.argv[2]), Path(sys.argv[3]) if len(sys.argv) > 3 else None)

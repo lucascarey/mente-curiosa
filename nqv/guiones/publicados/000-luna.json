@@ -1,0 +1,167 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI LA LUNA DESAPARECIERA?",
+ "caption": "¿Qué pasaría si la Luna desapareciera? 🌙\n\nEsa noche no pasaría nada dramático: los cambios vendrían de a poco. Mareas mucho más chicas, noches más oscuras, animales desorientados y, en millones de años, un planeta que se tambalea.\n\nLa Luna no es decoración. Es lo que mantiene estable al planeta.\n\n#ciencia #espacio #luna #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "luna-1": "File:Full Moon Luc Viatour.jpg",
+  "ola-gigante-5": "File:Mysovskiy Sergey surfing Nazare.jpg",
+  "luna-6": "File:Full moon over Gullmarn fjord at Holma Marina 2.jpg",
+  "mareas-1": "File:Bay of Fundy - Tide In.jpg",
+  "mareas-2": "File:Bay of Fundy - Tide Out.jpg",
+  "surf-1": "File:La horde - Surfers riding a wave in Paea, Tahiti.jpg",
+  "surf-6": "File:Photo of surfer riding a big wave at \"Jaws\" surfing spot in Hawaii by Maggie Hallahan (cropped).jpg",
+  "noche-oscura-2": "File:036 Milky Way during Perseids seen from Oeschinensee with water reflections Photo by Giles Laurent.jpg",
+  "corales-3": "File:FGBNMS - Coral Spawning (32330899546).jpg",
+  "eje-3": "File:AxialTiltObliquity.png",
+  "estaciones-6": "File:North season.jpg",
+  "luna-2": "File:Full moon partially obscured by atmosphere.jpg",
+  "tierra-luna-1": "File:Globe epc 2015198 lrg.jpg"
+ },
+ "diagramas": [
+  "eje-3",
+  "estaciones-6"
+ ],
+ "rotulos": {
+  "mareas-1": "MAREA ALTA",
+  "mareas-2": "MAREA BAJA"
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "¿Qué pasaría si mañana la Luna desapareciera?",
+   "fotos": [
+    "luna-1"
+   ],
+   "poses": {
+    "glip": 5,
+    "bruno": 6,
+    "neuron": 4
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[gritando con pánico, rápido] ¡Fin del mundo! ¡Tsunamis gigantes que inundan todo!",
+   "fotos": [
+    "ola-gigante-5"
+   ],
+   "poses": {
+    "glip": 7,
+    "bruno": [
+     7,
+     1
+    ],
+    "neuron": 7
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco.",
+   "fotos": [
+    "luna-6"
+   ],
+   "poses": {
+    "glip": 4,
+    "bruno": 6,
+    "neuron": [
+     6,
+     2
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, y serían un tercio de lo que son.",
+   "fotos": [
+    "mareas-1",
+    "mareas-2"
+   ],
+   "poses": {
+    "glip": 11,
+    "bruno": 6,
+    "neuron": [
+     1,
+     11
+    ]
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[alarmado, nervioso y rápido] ¿Y las olas? ¿Se termina el surf?",
+   "fotos": [
+    "surf-1"
+   ],
+   "poses": {
+    "glip": 5,
+    "bruno": 11,
+    "neuron": 4
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "No, las olas las hace el viento. Eso sigue igual.",
+   "fotos": [
+    "surf-6"
+   ],
+   "poses": {
+    "glip": 2,
+    "bruno": 6,
+    "neuron": 2
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Segundo, las noches serían mucho más oscuras, y los animales que se guían por la Luna se desorientarían. Hay corales que se reproducen todos a la vez después de la luna llena.",
+   "fotos": [
+    "noche-oscura-2",
+    "corales-3"
+   ],
+   "poses": {
+    "glip": 7,
+    "bruno": 5,
+    "neuron": [
+     3,
+     10
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y lo más importante: la Luna mantiene estable la inclinación de la Tierra. Sin ella, el eje se tambalearía y las estaciones y el clima cambiarían por completo. [pausa] Eso sí, en millones de años.",
+   "fotos": [
+    "eje-3",
+    "estaciones-6"
+   ],
+   "poses": {
+    "glip": 11,
+    "bruno": 12,
+    "neuron": [
+     11,
+     9
+    ]
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[aliviado, con una risita nerviosa] O sea que me asusté con millones de años de anticipación.",
+   "fotos": [
+    "luna-2"
+   ],
+   "poses": {
+    "glip": 10,
+    "bruno": 10,
+    "neuron": 7
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "La Luna no es decoración. Es lo que mantiene estable al planeta.",
+   "fotos": [
+    "tierra-luna-1"
+   ],
+   "poses": {
+    "glip": 9,
+    "bruno": 3,
+    "neuron": 9
+   }
+  }
+ ]
+}

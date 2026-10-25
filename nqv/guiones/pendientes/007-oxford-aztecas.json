@@ -1,0 +1,97 @@
+{
+ "titulo": "DATO #3: OXFORD ES MÁS VIEJA QUE LOS AZTECAS",
+ "caption": "En Oxford ya se daban clases en 1096. Tenochtitlan, la capital azteca, se fundó en 1325. 🏛️\n\nNo es que los aztecas sean nuevos: es que Oxford es viejísima.\n\n#historia #datoscuriosos #aztecas #curiosidades #nadaquever",
+ "fotos": {
+  "oxford": {
+   "buscar": "Oxford Radcliffe Camera"
+  },
+  "oxford-edificio": {
+   "buscar": "Bodleian Library Oxford"
+  },
+  "tenochtitlan": {
+   "buscar": "Tenochtitlan model"
+  },
+  "templo-mayor": {
+   "buscar": "Templo Mayor ruins Mexico City"
+  },
+  "graduacion": {
+   "buscar": "Oxford University graduation ceremony"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "nyx",
+   "dice": "[sobradora, con media sonrisa] Dato para arruinarte la línea del tiempo: la Universidad de Oxford es más vieja que el Imperio Azteca.",
+   "fotos": [
+    "oxford"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "canchero"
+    ]
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[incrédulo, muy exagerado] ¡Imposible! ¡Los aztecas son súper antiguos!",
+   "fotos": [
+    "templo-mayor"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "nyx": "camara"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "En Oxford ya se daban clases en el año mil noventa y seis.",
+   "fotos": [
+    "oxford-edificio"
+   ],
+   "poses": {
+    "nyx": "senala",
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "Tenochtitlan, la capital azteca, se fundó recién en mil trescientos veinticinco. Más de doscientos años después.",
+   "fotos": [
+    "tenochtitlan"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "idea"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[confundido, rascándose la cabeza] Entonces, ¿los aztecas son nuevos?",
+   "fotos": [
+    "tenochtitlan"
+   ],
+   "poses": {
+    "bruno": "piensa",
+    "nyx": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[aburrida] No. Es que Oxford es viejísima. Sigue abierta hace más de novecientos años.",
+   "fotos": [
+    "graduacion"
+   ],
+   "poses": {
+    "nyx": [
+     "canchero",
+     "camara"
+    ],
+    "bruno": "rie"
+   }
+  }
+ ]
+}

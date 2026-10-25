@@ -1,0 +1,125 @@
+{
+ "titulo": "GLIP NO ENTIENDE: ¿POR QUÉ BOSTEZAN LOS HUMANOS?",
+ "caption": "El bostezo se contagia, sobre todo entre gente cercana. Y no es por falta de oxígeno. 🥱\n\nUna de las ideas con más pruebas: ayuda a enfriar el cerebro. ¿Ya bostezaste?\n\n#glipnoentiende #cerebro #ciencia #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "bostezo": {
+   "buscar": "yawning woman"
+  },
+  "bostezo-hombre": {
+   "buscar": "man yawning"
+  },
+  "oxigeno": {
+   "buscar": "oxygen mask"
+  },
+  "cerebro": {
+   "buscar": "human brain"
+  },
+  "perro": {
+   "buscar": "dog yawning"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[confundido, muy curioso] Los humanos abren la boca enorme sin motivo, y después otro humano hace lo mismo. ¿Es una forma de saludarse?",
+   "fotos": [
+    "bostezo"
+   ],
+   "poses": {
+    "glip": [
+     "duda",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Es un bostezo. Y sí, se contagia: con solo verlo, o incluso leer sobre eso, dan ganas de bostezar.",
+   "fotos": [
+    "bostezo-hombre"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "explica"
+    ],
+    "glip": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[burlona, bostezando a mitad de frase] Ya bostecé. Gracias, eh.",
+   "fotos": [
+    "bostezo-hombre"
+   ],
+   "poses": {
+    "nyx": "frustrado",
+    "neuron": "rie"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Durante años se dijo que era por falta de oxígeno. Pero se probó: respirar oxígeno extra no hace que bosteces menos.",
+   "fotos": [
+    "oxigeno"
+   ],
+   "poses": {
+    "neuron": [
+     "senala",
+     "listo"
+    ],
+    "nyx": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Una de las ideas con más pruebas hoy es que ayuda a enfriar el cerebro.",
+   "fotos": [
+    "cerebro"
+   ],
+   "poses": {
+    "neuron": "idea",
+    "nyx": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[interesada a pesar suyo] ¿Y lo del contagio?",
+   "fotos": [
+    "bostezo"
+   ],
+   "poses": {
+    "nyx": "duda",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Pasa más entre gente cercana, como amigos y familia. Y hasta los perros se contagian los bostezos de sus dueños.",
+   "fotos": [
+    "perro"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "nyx": "rie"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[anotando, feliz] Anotado: bostezar es un saludo, pero solo para gente que te cae bien.",
+   "fotos": [
+    "perro"
+   ],
+   "poses": {
+    "glip": [
+     "anota",
+     "festeja"
+    ],
+    "neuron": "frustrado"
+   }
+  }
+ ]
+}

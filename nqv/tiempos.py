@@ -1,7 +1,7 @@
 """Calcula cuándo empieza y termina cada línea del guion dentro del audio de Gemini (que viene en un solo
 archivo por diálogo), transcribiendo con faster-whisper y repartiendo las palabras en orden.
 
-Uso: python herramientas/tiempos_whisper.py audio.mp3 tiempos.json
+Uso: python -m nqv.tiempos guion.json audio.mp3 tiempos.json
 También deja palabras.json al lado: cuándo empieza cada palabra (separada por espacios) de cada línea, para los subtítulos.
 """
 
@@ -15,8 +15,7 @@ from pathlib import Path
 import numpy as np
 from faster_whisper import WhisperModel
 
-sys.path.insert(0, str(Path(__file__).parent))
-from prototipo_video import ESCENA  # noqa: E402
+from .guion import cargar
 
 
 def normalizar(palabra: str) -> str:
@@ -68,7 +67,7 @@ def alinear(lineas: list[str], reconocidas: list[tuple[str, float, float]]) -> t
     return [[round(a, 3), round(b, 3)] for a, b in tiempos], [[round(t, 3) for t in ws] for ws in inicios]
 
 
-def main(audio: Path, salida: Path) -> None:
+def main(lineas: list[str], audio: Path, salida: Path) -> None:
     modelo = WhisperModel("small", device="cpu", compute_type="int8")
     # se decodifica con ffmpeg: la versión de PyAV que trae faster-whisper a veces no abre el mp3
     crudo = subprocess.run(["ffmpeg", "-v", "error", "-i", str(audio), "-f", "s16le", "-ac", "1", "-ar", "16000", "-"],
@@ -78,11 +77,12 @@ def main(audio: Path, salida: Path) -> None:
     palabras = [p for s in segmentos for p in s.words]
     print(len(palabras), "palabras reconocidas", flush=True)
     reconocidas = [(p.word, p.start, p.end) for p in palabras]
-    tiempos, inicios = alinear([texto for _, texto, _, _ in ESCENA], reconocidas)
+    tiempos, inicios = alinear(lineas, reconocidas)
     for k, (ini, fin) in enumerate(tiempos):
         print(k + 1, ini, fin, " ".join(p.word.strip() for p in palabras if ini <= p.start < fin)[:80], flush=True)
     salida.write_text(json.dumps(tiempos))
     (salida.parent / "palabras.json").write_text(json.dumps(inicios))
 
 
-main(Path(sys.argv[1]), Path(sys.argv[2]))
+if __name__ == "__main__":
+    main([l.texto for l in cargar(Path(sys.argv[1])).lineas], Path(sys.argv[2]), Path(sys.argv[3]))

@@ -1,10 +1,10 @@
-"""Arma el video prototipo de "¿Qué pasaría si la Luna desapareciera?" con el elenco de Nada Que Ver.
+"""Arma un video de Nada Que Ver a partir de un guion (nqv/guion.py), sus fotos y el audio de las voces.
 
-Uso: python herramientas/prototipo_video.py audio.mp3 tiempos.json salida.mp4
-`tiempos.json` es una lista con [inicio, fin] en segundos de cada línea de ESCENA, en orden.
-Arriba va la foto de lo que se dice (sacada de Wikimedia Commons), en el medio el subtítulo y abajo los
-personajes: el que habla adelante, a color y moviéndose con su voz; los demás más chicos y apagados.
-Es un prototipo aparte: no toca el pipeline de publicación (mc/).
+Uso: python -m nqv.video guion.json carpeta_fotos audio.mp3 tiempos.json salida.mp4
+`tiempos.json` es una lista con [inicio, fin] en segundos de cada línea, en orden (sale de nqv.tiempos, que deja
+también palabras.json al lado). Arriba va la foto de lo que se dice (de Wikimedia Commons), en el medio el
+subtítulo y abajo los personajes: el que habla adelante, a color y moviéndose con su voz; el que le contesta,
+más chico y apagado.
 """
 
 import json
@@ -13,45 +13,17 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont
+
+from .guion import Guion, Linea, cargar
 
 RAIZ = Path(__file__).resolve().parent.parent
 ELENCO = RAIZ / "assets" / "elenco"
-FOTOS = RAIZ / "assets" / "prototipo-luna"
 FUENTE = RAIZ / "assets" / "fonts" / "Inter.ttf"
 ANCHO, ALTO, FPS = 1080, 1920, 30
 FONDO = (14, 12, 32)
 COLORES = {"neuron": (110, 210, 235), "nyx": (190, 120, 255), "glip": (190, 235, 70), "bruno": (255, 90, 80)}
 NOMBRES = {"neuron": "NEURÓN", "nyx": "NYX", "glip": "GLIP", "bruno": "BRUNO"}
-TITULO = "¿QUÉ PASARÍA SI LA LUNA DESAPARECIERA?"
-
-# (quién habla, texto en pantalla, fotos, poses {personaje: número de pose})
-ESCENA = [
-    ("glip", "¿Qué pasaría si mañana la Luna desapareciera?", ["luna-1"],
-     {"glip": 5, "bruno": 6, "neuron": 4}),
-    ("bruno", "¡Fin del mundo! ¡Tsunamis gigantes que inundan todo!", ["ola-gigante-5"],
-     {"glip": 7, "bruno": [7, 1], "neuron": 7}),
-    ("neuron", "Nada de eso. Esa noche no pasaría nada dramático. Los cambios vendrían de a poco.", ["luna-6"],
-     {"glip": 4, "bruno": 6, "neuron": [6, 2]}),
-    ("neuron", "Primero, las mareas. Hoy las mueve sobre todo la Luna. Sin ella quedaría solo el Sol, "
-               "y serían un tercio de lo que son.", ["mareas-1", "mareas-2"],
-     {"glip": 11, "bruno": 6, "neuron": [1, 11]}),
-    ("bruno", "¿Y las olas? ¿Se termina el surf?", ["surf-1"],
-     {"glip": 5, "bruno": 11, "neuron": 4}),
-    ("neuron", "No, las olas las hace el viento. Eso sigue igual.", ["surf-6"],
-     {"glip": 2, "bruno": 6, "neuron": 2}),
-    ("neuron", "Segundo, las noches serían mucho más oscuras, y los animales que se guían por la Luna se "
-               "desorientarían. Hay corales que se reproducen todos a la vez después de la luna llena.",
-     ["noche-oscura-2", "corales-3"], {"glip": 7, "bruno": 5, "neuron": [3, 10]}),
-    ("neuron", "Y lo más importante: la Luna mantiene estable la inclinación de la Tierra. Sin ella, el eje se "
-               "tambalearía y las estaciones y el clima cambiarían por completo. Eso sí, en millones de años.",
-     ["eje-3", "estaciones-6"], {"glip": 11, "bruno": 12, "neuron": [11, 9]}),
-    ("bruno", "O sea que me asusté con millones de años de anticipación.", ["luna-2"],
-     {"glip": 10, "bruno": 10, "neuron": 7}),
-    ("neuron", "La Luna no es decoración. Es lo que mantiene estable al planeta.", ["tierra-luna-1"],
-     {"glip": 9, "bruno": 3, "neuron": 9}),
-]
-DIAGRAMAS = {"eje-3", "estaciones-6"}
 # Hacia dónde mira o gesticula cada pose ("der"/"izq" de quien ve el video; las que no figuran miran al frente).
 # Cuando hay dos en pantalla, cada uno se espeja si hace falta para mirar al otro.
 MIRA = {
@@ -61,7 +33,7 @@ MIRA = {
     "nyx": {1: "der", 3: "der", 12: "der"},
 }
 NO_ESPEJAR: set[str] = set()  # personajes con letras o logos que quedarían al revés
-ORDEN = ["bruno", "neuron", "glip"]  # de izquierda a derecha
+ORDEN = ["bruno", "nyx", "neuron", "glip"]  # de izquierda a derecha
 
 # Todo lo importante queda entre y=200 e y=1510: más abajo lo tapan el texto y los comentarios de Reels/TikTok.
 FOTO_CAJA = (60, 215, ANCHO - 60, 760)  # x0, y0, x1, y1
@@ -70,13 +42,13 @@ PISO = 1650  # base de los personajes; lo de abajo (panza y piernas) puede queda
 TRANSICION = 0.3  # segundos que tarda un personaje en entrar o salir
 
 
-def en_pantalla(i: int) -> dict[str, int]:
+def en_pantalla(lineas: list[Linea], i: int) -> dict[str, int]:
     """Quién se ve en la línea i y dónde: el que habla y, si le está contestando a la línea anterior, ese otro.
     Nunca más de dos."""
-    quien = ESCENA[i][0]
+    quien = lineas[i].quien
     presentes = [quien]
-    if i > 0 and ESCENA[i - 1][0] != quien:
-        presentes.append(ESCENA[i - 1][0])
+    if i > 0 and lineas[i - 1].quien != quien:
+        presentes.append(lineas[i - 1].quien)
     presentes.sort(key=ORDEN.index)
     xs = (540,) if len(presentes) == 1 else (320, 760)
     return dict(zip(presentes, xs))
@@ -168,7 +140,8 @@ def partir(palabras: list[str], oracion: list[int]) -> list[list[int]]:
     return grupos
 
 
-def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
+def main(guion: Guion, carpeta_fotos: Path, audio: Path, tiempos_json: Path, salida: Path) -> None:
+    lineas = guion.lineas
     tiempos = json.loads(tiempos_json.read_text())
     # inicio de cada palabra; sin el archivo se reparten parejas en la línea
     archivo_palabras = tiempos_json.parent / "palabras.json"
@@ -176,24 +149,22 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
         inicios = json.loads(archivo_palabras.read_text())
     else:
         inicios = [[a + (b - a) * j / len(texto.split()) for j in range(len(texto.split()))]
-                   for (a, b), (_, texto, _, _) in zip(tiempos, ESCENA)]
+                   for (a, b), texto in zip(tiempos, (l.texto for l in lineas))]
     duracion = tiempos[-1][1] + 1.2
     total = int(duracion * FPS)
     vol = volumen(audio, total)
-    creditos = json.loads((FOTOS / "creditos.json").read_text())
-
-    fotos = {n: Image.open(FOTOS / f"{n}.jpg").convert("RGB") for _, _, fs, _ in ESCENA for n in fs}
+    fotos = {n: Image.open(carpeta_fotos / f"{n}.jpg").convert("RGB") for l in lineas for n in l.fotos}
     poses = {}
-    for _, _, _, ps in ESCENA:
-        for p, ks in ps.items():
-            for k in ks if isinstance(ks, list) else [ks]:
+    for linea in lineas:
+        for p, ks in linea.poses.items():
+            for k in ks:
                 im = Image.open(ELENCO / p / f"{k:02d}.png").convert("RGBA")
                 poses[(p, k, False)] = im
                 poses[(p, k, True)] = im.transpose(Image.FLIP_LEFT_RIGHT)
 
     fw, fh = FOTO_CAJA[2] - FOTO_CAJA[0], FOTO_CAJA[3] - FOTO_CAJA[1]
     mascara_foto = esquinas(fw, fh, 36)
-    f_titulo, f_marca = fuente(46, 900), fuente(30, 700)
+    f_marca = fuente(30, 700)
     f_sub, f_nombre, f_credito = fuente(64, 850), fuente(34, 900), fuente(18, 500)
 
     # fondo fijo: degradé con el título
@@ -202,7 +173,21 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
     base = Image.fromarray((np.array(FONDO) * (1 - grad * 0.6) + np.array((40, 20, 70)) * grad * 0.6).astype(np.uint8)
                            .repeat(ANCHO, axis=1))
     d = ImageDraw.Draw(base)
-    d.text((ANCHO // 2, 120), TITULO, font=f_titulo, fill="white", anchor="mm")
+    # el título en uno o dos renglones, achicando la letra si no entra
+    for tam in (46, 42, 38, 34):
+        f_titulo = fuente(tam, 900)
+        palabras, renglones = guion.titulo.split(), [""]
+        for w in palabras:
+            prueba = f"{renglones[-1]} {w}".strip()
+            if f_titulo.getlength(prueba) > ANCHO - 40 and renglones[-1]:
+                renglones.append(w)
+            else:
+                renglones[-1] = prueba
+        if len(renglones) <= 2:
+            break
+    for r, renglon in enumerate(renglones):
+        y = 120 if len(renglones) == 1 else 86 + r * (tam + 4)
+        d.text((ANCHO // 2, y), renglon, font=f_titulo, fill="white", anchor="mm")
     d.text((ANCHO // 2, 185), "NADA QUE VER", font=f_marca, fill=(190, 120, 255), anchor="mm")
 
     piso = Image.new("RGBA", (ANCHO, 140))
@@ -222,7 +207,7 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
         t = n / FPS
         i = max([k for k, (ini, _) in enumerate(tiempos) if ini <= t + 0.05] or [0])
         ini, fin = tiempos[i]
-        quien, texto, nombres_foto, ps = ESCENA[i]
+        quien, texto, nombres_foto, ps = lineas[i].quien, lineas[i].texto, lineas[i].fotos, lineas[i].poses
         fin = tiempos[i + 1][0] if i + 1 < len(tiempos) else fin
         avance = min(1, max(0, (t - ini) / max(0.1, fin - ini)))
         cuadro = base.copy()
@@ -231,7 +216,7 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
         idx = min(len(nombres_foto) - 1, int(avance * len(nombres_foto)))
         nombre = nombres_foto[idx]
         local = (avance * len(nombres_foto)) - idx
-        if nombre in DIAGRAMAS:  # los diagramas se ven enteros, sin recortar
+        if nombre in guion.diagramas:  # los diagramas se ven enteros, sin recortar
             foto = Image.new("RGB", (fw, fh), (0, 0, 0))
             d_im = fotos[nombre].copy()
             d_im.thumbnail((fw, fh))
@@ -241,26 +226,27 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
             foto = cubrir(fotos[nombre], fw, fh, 1.0 + 0.06 * local)
         cuadro.paste(foto, FOTO_CAJA[:2], mascara_foto)
         dc = ImageDraw.Draw(cuadro)
-        credito = creditos[f"{nombre}.jpg"].removeprefix("File:").rsplit(".", 1)[0]
+        credito = guion.fotos[nombre].removeprefix("File:").rsplit(".", 1)[0]
         dc.text((FOTO_CAJA[2] - 16, FOTO_CAJA[3] - 14), f"Wikimedia Commons · {credito[:45]}",
                 font=f_credito, fill=(230, 230, 230), anchor="rd", stroke_width=2, stroke_fill="black")
-        if nombre.startswith("mareas"):
-            rotulo = "MAREA ALTA" if nombre.endswith("1") else "MAREA BAJA"
-            dc.rounded_rectangle((FOTO_CAJA[0] + 24, FOTO_CAJA[1] + 24, FOTO_CAJA[0] + 300, FOTO_CAJA[1] + 90), 18,
-                                 fill=(0, 0, 0))
-            dc.text((FOTO_CAJA[0] + 162, FOTO_CAJA[1] + 57), rotulo, font=f_nombre, fill="white", anchor="mm")
+        if rotulo := guion.rotulos.get(nombre):
+            ancho_rotulo = f_nombre.getlength(rotulo) + 48
+            dc.rounded_rectangle((FOTO_CAJA[0] + 24, FOTO_CAJA[1] + 24, FOTO_CAJA[0] + 24 + ancho_rotulo,
+                                  FOTO_CAJA[1] + 90), 18, fill=(0, 0, 0))
+            dc.text((FOTO_CAJA[0] + 24 + ancho_rotulo / 2, FOTO_CAJA[1] + 57), rotulo, font=f_nombre, fill="white",
+                    anchor="mm")
 
         # personajes: entra el que habla; si contesta a la línea anterior queda también el otro, apagado
         # whisper a veces corta el final de la línea: el subtítulo sigue hasta que arranca la siguiente
         hablando = i + 1 < len(tiempos) or t < fin + 0.5
-        ahora, antes = en_pantalla(i), en_pantalla(i - 1) if i else {}
+        ahora, antes = en_pantalla(lineas, i), en_pantalla(lineas, i - 1) if i else {}
         k = suave((t - ini) / TRANSICION) if i else 1.0
         for p in sorted(set(ahora) | set(antes), key=lambda p: p == quien):
             x = antes.get(p, ahora.get(p)) * (1 - k) + ahora.get(p, antes.get(p)) * k
             opacidad = (1.0 if p in antes else 0.0) * (1 - k) + (1.0 if p in ahora else 0.0) * k
             if opacidad <= 0.02:
                 continue
-            ks = ps[p] if isinstance(ps[p], list) else [ps[p]]
+            ks = ps.get(p) or lineas[i - 1].poses[p]  # el que se va conserva la pose que tenía
             # en las líneas largas el que habla cambia de pose a mitad de camino
             k_pose = ks[min(len(ks) - 1, int(avance * len(ks)))] if p == quien else ks[0]
             lugar = ahora.get(p, antes.get(p))
@@ -321,4 +307,4 @@ def main(audio: Path, tiempos_json: Path, salida: Path) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3]))
+    main(cargar(Path(sys.argv[1])), Path(sys.argv[2]), Path(sys.argv[3]), Path(sys.argv[4]), Path(sys.argv[5]))

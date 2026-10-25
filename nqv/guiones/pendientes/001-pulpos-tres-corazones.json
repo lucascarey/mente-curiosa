@@ -1,0 +1,86 @@
+{
+ "titulo": "DATO #1: LOS PULPOS TIENEN TRES CORAZONES",
+ "caption": "Tres corazones, sangre azul y, cuando nadan, uno de esos corazones se detiene. 🐙\n\nPor eso los pulpos prefieren arrastrarse por el fondo: nadar los agota.\n\n#datoscuriosos #pulpo #animales #ciencia #curiosidades #nadaquever",
+ "fotos": {
+  "pulpo": {
+   "buscar": "common octopus Octopus vulgaris"
+  },
+  "pulpo-nadando": {
+   "buscar": "octopus swimming"
+  },
+  "sangre-azul": {
+   "buscar": "hemocyanin blue blood"
+  },
+  "pulpo-fondo": {
+   "buscar": "octopus crawling seabed"
+  },
+  "pulpo-brazos": {
+   "buscar": "octopus arms suckers"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[fascinado, curioso] Estuve estudiando a los pulpos de la Tierra. Tienen tres corazones. ¡Tres! ¿Para qué quieren tantos?",
+   "fotos": [
+    "pulpo"
+   ],
+   "poses": {
+    "glip": [
+     "anota",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Dos mandan la sangre a las branquias, para que tome oxígeno. El tercero la reparte por todo el cuerpo.",
+   "fotos": [
+    "pulpo-nadando"
+   ],
+   "poses": {
+    "neuron": "explica",
+    "glip": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y esa sangre es azul. No usan hierro como nosotros, sino una proteína con cobre: la hemocianina.",
+   "fotos": [
+    "sangre-azul"
+   ],
+   "poses": {
+    "neuron": [
+     "senala",
+     "listo"
+    ],
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Lo más raro: cuando nadan, el corazón que reparte la sangre se detiene. Por eso prefieren arrastrarse por el fondo. Nadar los agota.",
+   "fotos": [
+    "pulpo-fondo"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "glip": "duda"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[anotando, muy serio] Tres corazones y aun así evitan hacer ejercicio. Los entiendo.",
+   "fotos": [
+    "pulpo-brazos"
+   ],
+   "poses": {
+    "glip": "anota",
+    "neuron": "canchero"
+   }
+  }
+ ]
+}

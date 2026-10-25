@@ -68,7 +68,8 @@ jobs:
           elif [ -n "$(git log --since='4 hours ago' --format=%H -- nqv/guiones/publicados nqv/animados/publicados | head -1)" ]; then
             echo "Ya se publicó un video hace menos de 4 horas: esta corrida no publica otro."
           elif [ "$FORMATO" = animado ]; then
-            python -u -m nqv.animado.armar --publicar
+            git fetch -q origin nqv-animado && git worktree add /tmp/vista-animado origin/nqv-animado || mkdir -p /tmp/vista-animado
+            python -u -m nqv.animado.armar --publicar /tmp/vista-animado
           else
             python -u -m nqv.main
           fi

@@ -1,0 +1,60 @@
+{
+ "titulo": "EL SOL QUE VES ES DE HACE 8 MINUTOS",
+ "caption": "La luz del Sol tarda 8 minutos y 20 segundos en llegar a la Tierra. ☀️\n\nSi el Sol desapareciera, lo seguirías viendo brillar 8 minutos, y la Tierra seguiría girando como si nada, porque la gravedad tampoco viaja más rápido que la luz.\n\n#datoscuriosos #espacio #sol #luz #ciencia #curiosidades #nadaquever",
+ "lineas": [
+  {
+   "dice": "El Sol que estás viendo ahora no es el Sol de ahora. Es el de hace ocho minutos.",
+   "escena": "hook",
+   "chip": "¿8 minutos?",
+   "poses": ["habla", "canchero"]
+  },
+  {
+   "dice": "Hoy te explico por qué, y qué pasaría si el Sol se apagara de golpe.",
+   "escena": "intro",
+   "chip": "¿8 minutos?",
+   "poses": ["explica", "idea"]
+  },
+  {
+   "dice": "La luz es lo más rápido que existe: recorre unos trescientos mil kilómetros por segundo. Le daría siete vueltas y media a la Tierra en un segundo.",
+   "escena": "velocidad",
+   "chip": "1 La velocidad",
+   "poses": ["explica", "senala"]
+  },
+  {
+   "dice": "Pero el Sol está a ciento cincuenta millones de kilómetros. Así que su luz tarda ocho minutos y veinte segundos en llegar.",
+   "escena": "viaje",
+   "chip": "2 El viaje",
+   "poses": ["senala", "listo"]
+  },
+  {
+   "dice": "O sea, cada vez que miras el Sol, estás viendo el pasado.",
+   "escena": "pasado",
+   "chip": "2 El viaje",
+   "poses": ["idea"]
+  },
+  {
+   "dice": "Y si el Sol desapareciera, lo seguirías viendo brillar durante ocho minutos, sin enterarte de nada.",
+   "escena": "apagon",
+   "chip": "3 El apagón",
+   "poses": ["piensa", "explica"]
+  },
+  {
+   "dice": "Con su gravedad pasa lo mismo: la Tierra seguiría girando a su alrededor esos ocho minutos, como si nada.",
+   "escena": "gravedad",
+   "chip": "3 El apagón",
+   "poses": ["explica", "senala"]
+  },
+  {
+   "dice": "Así que el cielo es una foto vieja: cuanto más lejos miras, más atrás en el tiempo ves.",
+   "escena": "cierre",
+   "chip": "¿8 minutos?",
+   "poses": ["canchero"]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": ["festeja"]
+  }
+ ]
+}

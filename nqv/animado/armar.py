@@ -8,7 +8,8 @@ Cada video es una carpeta en nqv/animados/pendientes/ (se publican en orden de n
 Cómo escribir uno nuevo: nqv/animados/COMO-ESCRIBIR.md.
 
 Uso:
-    python -m nqv.animado.armar --publicar                   arma y publica el próximo pendiente
+    python -m nqv.animado.armar --publicar [vista_previa]    arma y publica el próximo pendiente (reusando las voces
+                                                             de la carpeta de la rama nqv-animado, si se pasa)
     python -m nqv.animado.armar --validar                    prueba todos los pendientes sin voz (sin gastar cuota)
     python -m nqv.animado.armar CARPETA [voces_anteriores]   solo arma el video
     python -m nqv.animado.armar CARPETA --sin-voz [--cuadros 1,5.5,12]
@@ -167,14 +168,15 @@ def validar() -> int:
     return 1 if malos or not carpetas else 0
 
 
-def publicar() -> int:
+def publicar(anterior: Path | None = None) -> int:
     carpetas = sorted(c for c in PENDIENTES.iterdir() if c.is_dir()) if PENDIENTES.exists() else []
     if not carpetas:
         print("::error::No quedan videos animados en nqv/animados/pendientes")
         return 1
     carpeta = carpetas[0]
     print("Video:", carpeta.name, flush=True)
-    video = armar(carpeta)
+    # si el video ya se armó en la vista previa (rama nqv-animado), se reusa esa voz: es la que se revisó y no gasta cuota
+    video = armar(carpeta, anterior / carpeta.name / "voces" if anterior else None)
     from ..publicar import publicar as subir
     caption = json.loads((carpeta / "guion.json").read_text(encoding="utf-8"))["caption"]
     resultado = {"publicado_en": datetime.now(timezone.utc).isoformat(timespec="seconds"), **subir(video, caption)}
@@ -195,7 +197,7 @@ def main() -> int:
     p.add_argument("--cuadros")
     args = p.parse_args()
     if args.publicar:
-        return publicar()
+        return publicar(args.carpeta)
     if args.validar:
         return validar()
     if not args.carpeta:

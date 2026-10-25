@@ -227,8 +227,9 @@ def main(guion: Guion, carpeta_fotos: Path, audio: Path, tiempos_json: Path, sal
         cuadro.paste(foto, FOTO_CAJA[:2], mascara_foto)
         dc = ImageDraw.Draw(cuadro)
         credito = guion.fotos[nombre].removeprefix("File:").rsplit(".", 1)[0]
-        dc.text((FOTO_CAJA[2] - 16, FOTO_CAJA[3] - 14), f"Wikimedia Commons · {credito[:45]}",
-                font=f_credito, fill=(230, 230, 230), anchor="rd", stroke_width=2, stroke_fill="black")
+        if not guion.fotos[nombre].startswith("assets/"):  # los dibujos propios no llevan crédito
+            dc.text((FOTO_CAJA[2] - 16, FOTO_CAJA[3] - 14), f"Wikimedia Commons · {credito[:45]}",
+                    font=f_credito, fill=(230, 230, 230), anchor="rd", stroke_width=2, stroke_fill="black")
         if rotulo := guion.rotulos.get(nombre):
             ancho_rotulo = f_nombre.getlength(rotulo) + 48
             dc.rounded_rectangle((FOTO_CAJA[0] + 24, FOTO_CAJA[1] + 24, FOTO_CAJA[0] + 24 + ancho_rotulo,

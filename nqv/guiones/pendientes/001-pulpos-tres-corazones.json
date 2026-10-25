@@ -3,15 +3,9 @@
  "caption": "Tres corazones, sangre azul y, cuando nadan, uno de esos corazones se detiene. 🐙\n\nPor eso los pulpos prefieren arrastrarse por el fondo: nadar los agota.\n\n#datoscuriosos #pulpo #animales #ciencia #curiosidades #nadaquever",
  "fotos": {
   "pulpo": "File:Pulpo común (Octopus vulgaris), Parque natural de la Arrábida, Portugal, 2020-07-21, DD 33.jpg",
-  "pulpo-nadando": {
-   "buscar": "Octopus swimming"
-  },
-  "sangre-azul": {
-   "buscar": "horseshoe crab blood"
-  },
-  "pulpo-fondo": {
-   "buscar": "Octopus vulgaris seabed"
-  },
+  "pulpo-nadando": "File:Swimming Octopus.png",
+  "sangre-azul": "assets/diagramas/sangre-azul.png",
+  "pulpo-fondo": "File:Common octopus (Octopus vulgaris) moving on sandy seabed during Sentinelle 4 project - Musée Subaquatique de Marseille - Anse des Catalans - 2025.jpg",
   "pulpo-brazos": "File:Suckers on octopus 0448.jpg"
  },
  "lineas": [
@@ -78,5 +72,8 @@
     "neuron": "canchero"
    }
   }
+ ],
+ "diagramas": [
+  "sangre-azul"
  ]
 }

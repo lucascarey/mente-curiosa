@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw
 API = "https://commons.wikimedia.org/w/api.php"
 AGENTE = "nada-que-ver/1.0 (https://github.com/lucascarey/mente-curiosa)"
 ANCHO = 1600
+RAIZ = Path(__file__).resolve().parent.parent
 CANDIDATAS = 6
 
 
@@ -37,6 +38,13 @@ def bajar(fotos: dict[str, str], carpeta: Path) -> dict[str, str]:
     pendientes = {k: v for k, v in fotos.items() if not isinstance(v, str)}
     if pendientes:
         raise ValueError(f"fotos sin elegir: {sorted(pendientes)}")
+    # las que empiezan con assets/ son dibujos propios del repo (diagramas), no salen de Commons
+    for clave, ruta in [(k, v) for k, v in fotos.items() if v.startswith("assets/")]:
+        Image.open(RAIZ / ruta).convert("RGB").save(carpeta / f"{clave}.jpg", quality=92)
+        print("dibujo", clave, ruta, flush=True)
+    fotos = {k: v for k, v in fotos.items() if not v.startswith("assets/")}
+    if not fotos:
+        return {}
     respuesta = _consultar(titles="|".join(set(fotos.values())), prop="imageinfo", iiprop="url", iiurlwidth=ANCHO)
     por_titulo = {p["title"]: p for p in respuesta["pages"].values()}
     normalizados = {n["from"]: n["to"] for n in respuesta.get("normalized", [])}

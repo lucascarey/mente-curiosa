@@ -1,0 +1,89 @@
+{
+ "titulo": "DATO #2: LOS FLAMENCOS NACEN GRISES",
+ "caption": "Los flamencos no nacen rosados: el color viene de lo que comen. 🦩\n\nEn los zoológicos les agregan pigmentos a la comida para que no se pongan pálidos.\n\n#datoscuriosos #animales #flamencos #ciencia #curiosidades #nadaquever",
+ "fotos": {
+  "flamenco": "File:American flamingo (Phoenicopterus ruber).JPG",
+  "pichon": "File:Greater Flamingo feeding chick at zoo.jpg",
+  "artemia": "File:Live brine shrimp.jpg",
+  "zanahorias": "File:Carrots at Ljubljana Central Market.JPG",
+  "zoologico": "File:Flamingo enclosure in the Antwerp zoo.jpg",
+  "bandada": "File:Flock of greater flamingos standing in water - DPLA - 377458bdf2fce7ff0d993d090cec1425.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[confiado, canchero] Los flamencos son rosados porque nacen así. Obvio.",
+   "fotos": [
+    "flamenco"
+   ],
+   "poses": {
+    "bruno": [
+     "canchero",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "No. Nacen grises, o casi blancos.",
+   "fotos": [
+    "pichon"
+   ],
+   "poses": {
+    "neuron": "senala",
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "El rosa viene de lo que comen: algas y camaroncitos con unos pigmentos, los carotenoides. Los mismos que le dan el color a la zanahoria.",
+   "fotos": [
+    "artemia",
+    "zanahorias"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[sorprendido, muy exagerado] ¡¿O sea que si dejan de comer eso se despintan?!",
+   "fotos": [
+    "flamenco"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Exacto. Por eso en los zoológicos les agregan esos pigmentos a la comida. Si no, se van poniendo pálidos.",
+   "fotos": [
+    "zoologico"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "rie"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Así que un flamenco bien rosado es, básicamente, un flamenco bien alimentado.",
+   "fotos": [
+    "bandada"
+   ],
+   "poses": {
+    "neuron": "idea",
+    "bruno": "festeja"
+   }
+  }
+ ]
+}

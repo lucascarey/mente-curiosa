@@ -1,0 +1,104 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI NO DURMIERAS?",
+ "caption": "Después de 24 horas sin dormir, tus reflejos se parecen a los de alguien que tomó de más. 😵\n\nY en 1964, Randy Gardner aguantó 11 días despierto. No terminó bien.\n\n#ciencia #sueño #cerebro #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "noche-videojuegos": "File:Korean.culture-PC.bang-01.jpg",
+  "cansancio": "File:Yawning woman.jpg",
+  "eeg": "File:EEG Recording Cap.jpg",
+  "randy-gardner": "File:Classmate tests reaction to tuning fork on Randy Garner.jpg",
+  "dormir": "File:Man sleeping with framed picture.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[canchero, haciéndose el valiente] Hoy no pienso dormir. Me quedo toda la noche jugando y mañana voy como si nada.",
+   "fotos": [
+    "noche-videojuegos"
+   ],
+   "poses": {
+    "bruno": [
+     "canchero",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Como si nada, no. Después de veinticuatro horas despierto, tus reflejos se parecen a los de alguien que tomó de más.",
+   "fotos": [
+    "cansancio"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[nervioso, rápido] ¿Y si aguanto más? ¿Qué pasa?",
+   "fotos": [
+    "cansancio"
+   ],
+   "poses": {
+    "bruno": "duda",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Empiezan los microsueños: el cerebro se apaga unos segundos sin que te des cuenta, aunque tengas los ojos abiertos.",
+   "fotos": [
+    "eeg"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "En 1964, un estudiante llamado Randy Gardner estuvo once días sin dormir. Terminó con problemas de memoria, cambios de humor y hasta alucinaciones.",
+   "fotos": [
+    "randy-gardner"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[gritando con pánico, con la voz quebrada] ¡¿Alucinaciones?! ¡Me voy a dormir ya mismo!",
+   "fotos": [
+    "dormir"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "neuron": "canchero"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Buena decisión. Dormir no es perder el tiempo: es cuando el cerebro ordena todo lo que aprendiste en el día.",
+   "fotos": [
+    "dormir"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "idea"
+    ],
+    "bruno": "rie"
+   }
+  }
+ ]
+}

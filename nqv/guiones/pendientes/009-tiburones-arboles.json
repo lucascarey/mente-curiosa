@@ -1,0 +1,76 @@
+{
+ "titulo": "DATO #4: LOS TIBURONES SON MÁS VIEJOS QUE LOS ÁRBOLES",
+ "caption": "Los tiburones aparecieron hace unos 450 millones de años. Los primeros árboles, hace menos de 400. 🦈🌳\n\nY sobrevivieron a las cinco extinciones masivas.\n\n#datoscuriosos #tiburones #animales #ciencia #curiosidades #nadaquever",
+ "fotos": {
+  "tiburon": "File:White shark.jpg",
+  "fosil": "File:Megalodon shark tooth fossil.jpg",
+  "arbol-fosil": "File:Archaeopteris cf. Archaeopteris halliana fossil land plant (Devonian; Quebec, Canada) 2 (15498553936).jpg",
+  "asteroide": "File:Chicxulub impact - artist impression.jpg",
+  "tiburon-arrecife": "File:Full Shot of a Caribbean Reef Shark at Tiger Beach Bahamas.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[maravillado] Los tiburones parecen muy antiguos. ¿Llegaron antes que los dinosaurios?",
+   "fotos": [
+    "tiburon"
+   ],
+   "poses": {
+    "glip": [
+     "habla",
+     "duda"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Mucho antes. Y antes que los árboles, también.",
+   "fotos": [
+    "fosil"
+   ],
+   "poses": {
+    "neuron": "canchero",
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Los tiburones más antiguos aparecieron hace unos cuatrocientos cincuenta millones de años. Los primeros árboles, hace menos de cuatrocientos.",
+   "fotos": [
+    "arbol-fosil"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "glip": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Sobrevivieron a cinco extinciones masivas, incluida la que se llevó a los dinosaurios.",
+   "fotos": [
+    "asteroide"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[anotando, impresionado] Anotado: en la Tierra, los tiburones son los veteranos y los árboles, los nuevos.",
+   "fotos": [
+    "tiburon-arrecife"
+   ],
+   "poses": {
+    "glip": "anota",
+    "neuron": "rie"
+   }
+  }
+ ]
+}

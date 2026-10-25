@@ -1,0 +1,101 @@
+{
+ "titulo": "MITO O VERDAD: ¿LA GRAN MURALLA SE VE DESDE EL ESPACIO?",
+ "caption": "Mito. Desde la órbita donde viven los astronautas, la Gran Muralla China no se distingue a simple vista. 🛰️\n\nLo que sí se ve de noche: las luces de las ciudades.\n\n#mitooverdad #espacio #historia #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "muralla": "File:Great Wall of China July 2006.JPG",
+  "estacion-espacial": "File:ISS March 2009.jpg",
+  "muralla-paisaje": "File:View east from Great Wall of China at Badaling.jpg",
+  "yang-liwei": "File:Shenzhou 5 in space Yang Liwei.png",
+  "ciudades-noche": "File:Chicago, Illinois, pictured at night from the International Space Station (iss075e0099858).jpg"
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[emocionado, sabiéndose importante] Dato que sabe todo el mundo: la Gran Muralla China es lo único hecho por humanos que se ve desde el espacio.",
+   "fotos": [
+    "muralla"
+   ],
+   "poses": {
+    "bruno": [
+     "habla",
+     "idea"
+    ]
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[aburrida, sobradora] Mito. Desde donde orbitan los astronautas, a unos cuatrocientos kilómetros, a simple vista no se distingue.",
+   "fotos": [
+    "estacion-espacial"
+   ],
+   "poses": {
+    "nyx": [
+     "canchero",
+     "habla"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[indignado, exagerado] ¿Cómo que no? ¡Mide miles de kilómetros!",
+   "fotos": [
+    "muralla-paisaje"
+   ],
+   "poses": {
+    "bruno": "frustrado",
+    "nyx": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "Es larguísima, pero angosta, y del mismo color que el suelo que la rodea. Desde allá arriba se pierde en el paisaje.",
+   "fotos": [
+    "muralla-paisaje"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "Hasta el primer astronauta chino, Yang Liwei, contó que no la pudo ver.",
+   "fotos": [
+    "yang-liwei"
+   ],
+   "poses": {
+    "nyx": "camara",
+    "bruno": "frustrado"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[decepcionado pero curioso] ¿Y entonces qué se ve?",
+   "fotos": [
+    "ciudades-noche"
+   ],
+   "poses": {
+    "bruno": "duda",
+    "nyx": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[con una media sonrisa] De noche, las luces de las ciudades. Eso sí que no hay forma de esconderlo.",
+   "fotos": [
+    "ciudades-noche"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "idea"
+    ],
+    "bruno": "rie"
+   }
+  }
+ ]
+}

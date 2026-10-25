@@ -1,0 +1,94 @@
+name: Nada Que Ver - publicar
+
+on:
+  schedule:
+    # 13 y 20 h de Argentina (UTC-3). GitHub puede atrasarse unos minutos.
+    - cron: "0 16 * * *"
+    - cron: "0 23 * * *"
+  # Vista previa sin publicar: cambiar nqv/vista.txt (primera línea: guion a armar, vacía = el próximo).
+  # El video queda en la rama nqv-vista.
+  push:
+    paths:
+      - nqv/vista.txt
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    # El horario automático corre salvo que la variable de repo NQV_ACTIVA diga false (Lucas lo prendió el 2026-10-25)
+    if: github.event_name == 'push' || vars.NQV_ACTIVA != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests numpy pillow faster-whisper
+      - name: Revisar guiones
+        if: github.event_name != 'push'
+        run: python -m nqv.main --validar
+      - name: Armar y publicar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
+          TIKTOK_PRIVACIDAD: ${{ vars.TIKTOK_PRIVACIDAD || 'SELF_ONLY' }}
+          MC_TOKENS_DIR: ${{ runner.temp }}/tokens
+          # Para dejar el video en la rama video-publico, de donde lo baja Instagram
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python -u -m nqv.main --vista "$(head -1 nqv/vista.txt | tr -d '\r')"
+          else
+            python -u -m nqv.main
+          fi
+      - name: Subir la vista previa a la rama nqv-vista
+        if: always() && github.event_name == 'push'
+        run: |
+          mkdir -p salida /tmp/vista
+          find salida -name '*.mp4' -exec cp {} /tmp/vista/ \;
+          find salida -name 'tiempos.json' -exec cp {} /tmp/vista/ \;
+          cd /tmp/vista && touch .keep
+          for f in *.mp4; do
+            [ -f "$f" ] || continue
+            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+            ffmpeg -v error -i "$f" -vf "fps=8/$dur,scale=270:-1,tile=8x1" -frames:v 1 "${f%.mp4}-cuadros.jpg"
+          done
+          git init -q -b nqv-vista
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Vista previa ($GITHUB_SHA)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" nqv-vista
+      - name: Actualizar tokens renovados
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          dir="${{ runner.temp }}/tokens"
+          [ -d "$dir" ] || exit 0
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::Hay tokens renovados pero falta el secreto GH_PAT para guardarlos"
+            exit 0
+          fi
+          for f in "$dir"/*; do gh secret set "$(basename "$f")" --repo "$GITHUB_REPOSITORY" < "$f"; done
+      - name: Marcar guion como publicado
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A nqv/guiones
+          git diff --cached --quiet && exit 0
+          git commit -qm "Publicado $(git diff --cached --name-only | grep publicados | head -1 | xargs -r basename)"
+          git push -q

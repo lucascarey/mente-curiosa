@@ -1,0 +1,89 @@
+{
+ "titulo": "¿POR QUÉ DA VERGÜENZA AJENA?",
+ "caption": "Ver a alguien hacer el ridículo activa zonas del cerebro relacionadas con el dolor. 😬\n\nY pasa aunque la otra persona no se dé cuenta. Las personas más empáticas la sienten más.\n\n#psicologia #cerebro #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "karaoke": "File:Karaoke singer at Cuna de Artistas, Loja.jpg",
+  "resonancia": "File:CFS-brain-scan-basal-ganglia-fMRI.png",
+  "boda": "File:Hama Wedding Party 1 (52290277).jpg",
+  "personas": "File:DSC 7089 Three friends laugh and toast over drinks during a lively evening dinner at a cozy plant-filled restaurant.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "nyx",
+   "dice": "[incómoda, tapándose la cara] Vi un video de alguien cantando desafinado en una boda y me quise esconder. Ni lo conozco.",
+   "fotos": [
+    "karaoke"
+   ],
+   "poses": {
+    "nyx": [
+     "frustrado",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Eso es vergüenza ajena. Y no es exageración: en estudios con resonancia, ver a alguien hacer el ridículo activa zonas del cerebro relacionadas con el dolor.",
+   "fotos": [
+    "resonancia"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "explica"
+    ],
+    "nyx": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[burlona] O sea que me duele que otro cante mal. Tiene sentido.",
+   "fotos": [
+    "karaoke"
+   ],
+   "poses": {
+    "nyx": "rie",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y lo más curioso: pasa aunque la otra persona no se dé cuenta de que está haciendo el ridículo.",
+   "fotos": [
+    "boda"
+   ],
+   "poses": {
+    "neuron": [
+     "senala",
+     "listo"
+    ],
+    "nyx": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "La gente más empática la siente más fuerte. Es tu cerebro poniéndose en el lugar del otro, aunque no quieras.",
+   "fotos": [
+    "personas"
+   ],
+   "poses": {
+    "neuron": "idea",
+    "nyx": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[sobradora, satisfecha] Entonces no soy exagerada. Soy empática. Lo voy a usar.",
+   "fotos": [
+    "personas"
+   ],
+   "poses": {
+    "nyx": [
+     "canchero",
+     "camara"
+    ],
+    "neuron": "frustrado"
+   }
+  }
+ ]
+}

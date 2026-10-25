@@ -1,0 +1,104 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI LA TIERRA DEJARA DE GIRAR?",
+ "caption": "En el ecuador el suelo se mueve a unos 1.600 km/h. Si la Tierra frenara de golpe, todo lo que no esté sujeto seguiría a esa velocidad. 🌍\n\nTranquilos: sí se frena, pero unos dos milésimos de segundo por siglo.\n\n#espacio #tierra #ciencia #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "tierra": "File:The Earth seen from Apollo 17.jpg",
+  "rotacion": "File:Mitad del Mundo 05.jpg",
+  "autopista": "File:Traffic jam after massive car accident at D1 highway at March 2018.jpg",
+  "sol-medianoche": "File:Altafjord01.jpg",
+  "reloj": "File:President Piñera receives ESO's first atomic clock.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[nervioso, rápido] Che, ¿qué pasaría si la Tierra dejara de girar de golpe?",
+   "fotos": [
+    "tierra"
+   ],
+   "poses": {
+    "bruno": [
+     "duda",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Sería un desastre. En el ecuador, el suelo se mueve a unos mil seiscientos kilómetros por hora.",
+   "fotos": [
+    "rotacion"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Si el planeta frenara de golpe, todo lo que no esté sujeto al suelo seguiría a esa velocidad. Gente, autos, el agua de los océanos.",
+   "fotos": [
+    "autopista"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[gritando con pánico, chillando] ¡¿Saldríamos volando?! ¡Me agarro de algo ya mismo!",
+   "fotos": [
+    "autopista"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "neuron": "canchero"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y si frenara despacio, sin catástrofe, igual sería rarísimo: un día duraría un año entero. Seis meses de sol y seis meses de noche.",
+   "fotos": [
+    "sol-medianoche"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[aliviado, con una risita nerviosa] Bueno, por lo menos no habría que madrugar.",
+   "fotos": [
+    "sol-medianoche"
+   ],
+   "poses": {
+    "bruno": "rie",
+    "neuron": "frustrado"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Tranquilo: la Tierra sí se está frenando, pero muy de a poco. Los días se alargan unos dos milésimos de segundo por siglo.",
+   "fotos": [
+    "reloj"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "bruno": "festeja"
+   }
+  }
+ ]
+}

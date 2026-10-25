@@ -1,0 +1,93 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI CAYERAS EN UN AGUJERO NEGRO?",
+ "caption": "Depende del tamaño del agujero negro: en uno chico te estiraría como un fideo. En uno gigante cruzarías el borde sin notar nada… pero no volverías a salir. 🕳️\n\n#espacio #agujeronegro #ciencia #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "m87": "File:Black hole - Messier 87.jpg",
+  "disco": "File:Black Hole Cygnus X-1 (Illustration) (4187-Image).png",
+  "espaguetizacion": "File:Artist’s impression of star being tidally disrupted by a supermassive black hole (eso2018a).jpg",
+  "sagitario": "File:EHT Saggitarius A black hole.tif",
+  "horizonte": "File:Lonely Black Hole Relic Shines Light on Young Universe (gemini1603b).jpg"
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[curioso, como quien no quiere la cosa] ¿Qué pasaría si un humano cayera en un agujero negro? Pregunto por un amigo.",
+   "fotos": [
+    "m87"
+   ],
+   "poses": {
+    "glip": [
+     "duda",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Depende del tamaño. En uno chico, la gravedad en tus pies sería muchísimo más fuerte que en tu cabeza.",
+   "fotos": [
+    "disco"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "explica"
+    ],
+    "glip": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Te estiraría como un fideo. Los científicos lo llaman, en serio, espaguetización.",
+   "fotos": [
+    "espaguetizacion"
+   ],
+   "poses": {
+    "neuron": [
+     "canchero",
+     "listo"
+    ],
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "En uno gigante, como el del centro de nuestra galaxia, cruzarías el borde sin sentir nada raro. Pero ya no podrías volver a salir.",
+   "fotos": [
+    "sagitario"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y desde afuera, tus amigos te verían cada vez más lento y más rojo, como congelado en el borde, sin terminar de caer nunca.",
+   "fotos": [
+    "horizonte"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "glip": "duda"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[anotando, decepcionado] Anotado: sacar los agujeros negros de la lista de vacaciones.",
+   "fotos": [
+    "m87"
+   ],
+   "poses": {
+    "glip": "anota",
+    "neuron": "rie"
+   }
+  }
+ ]
+}

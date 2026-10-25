@@ -1,0 +1,43 @@
+name: Poses del elenco en alta
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - herramientas/agrandar_planillas.py
+      - herramientas/recortar_elenco.py
+      - assets/planillas/**
+      - .github/workflows/elenco-hd.yml
+
+permissions:
+  contents: write
+
+jobs:
+  poses:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar
+        run: |
+          pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install -q spandrel pillow numpy scipy "rembg[cpu]"
+          curl -sL -o /tmp/anime6b.pth https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.2.4/RealESRGAN_x4plus_anime_6B.pth
+      - name: Agrandar planillas
+        run: python -u herramientas/agrandar_planillas.py assets/planillas /tmp/anime6b.pth /tmp/planillas-hd
+      - name: Recortar poses
+        run: python -u herramientas/recortar_elenco.py /tmp/planillas-hd /tmp/salida/elenco
+      - name: Subir a la rama elenco-hd
+        if: always()
+        run: |
+          mkdir -p /tmp/salida && cp -r /tmp/planillas-hd /tmp/salida/ 2>/dev/null || true
+          cd /tmp/salida && touch .keep
+          git init -q -b elenco-hd
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Poses del elenco en alta"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" elenco-hd

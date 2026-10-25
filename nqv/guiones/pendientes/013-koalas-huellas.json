@@ -3,9 +3,6 @@
  "caption": "Las huellas digitales de los koalas se parecen tanto a las humanas que cuesta distinguirlas, incluso con microscopio. 🐨\n\n#datoscuriosos #animales #koala #curiosidades #nadaquever",
  "fotos": {
   "koala": "File:Koala eucalyptus.JPG",
-  "koala-mano": {
-   "buscar": "koala hand"
-  },
   "huella": "File:Fingerprint detail on male finger in Třebíč, Třebíč District.jpg",
   "koala-comiendo": "File:Koala eating the leaves of Eucalyptus.jpg",
   "microscopio": "File:Binocular compound microscope, Carl Zeiss Jena, 1914 (6779276516).jpg"
@@ -28,7 +25,8 @@
    "quien": "neuron",
    "dice": "Casi. Los koalas también tienen huellas digitales. Y se parecen muchísimo a las nuestras.",
    "fotos": [
-    "koala-mano"
+    "koala",
+    "huella"
    ],
    "poses": {
     "neuron": [

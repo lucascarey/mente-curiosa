@@ -1,0 +1,100 @@
+{
+ "titulo": "DATO #5: LAS BANANAS SON UN POCO RADIACTIVAS",
+ "caption": "Las bananas tienen potasio, y una pequeñísima parte de ese potasio es radiactivo. 🍌\n\nTranquilo: un vuelo en avión te expone a mucha más radiación que comer bananas.\n\n#datoscuriosos #ciencia #banana #curiosidades #nadaquever",
+ "fotos": {
+  "bananas": {
+   "buscar": "bunch of bananas"
+  },
+  "contador-geiger": {
+   "buscar": "Geiger counter"
+  },
+  "potasio": {
+   "buscar": "potassium metal sample"
+  },
+  "avion": {
+   "buscar": "passenger airplane flying sky"
+  },
+  "banana-pelada": {
+   "buscar": "peeled banana"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[comiendo tranquilo, contento] Banana a la mañana: lo más sano que hay.",
+   "fotos": [
+    "bananas"
+   ],
+   "poses": {
+    "bruno": [
+     "habla",
+     "canchero"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Sana, sí. Pero también es un poquito radiactiva.",
+   "fotos": [
+    "contador-geiger"
+   ],
+   "poses": {
+    "neuron": [
+     "canchero",
+     "senala"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[en pánico, chillando] ¡¿Qué?! ¡¿Me comí algo radiactivo?!",
+   "fotos": [
+    "banana-pelada"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Las bananas tienen mucho potasio, y una pequeñísima parte del potasio que existe en la naturaleza es radiactivo. Pasa en todos los alimentos con potasio, y hasta en tu propio cuerpo.",
+   "fotos": [
+    "potasio"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y no se acumula: tu cuerpo mantiene el potasio estable y elimina lo que sobra. Un viaje en avión te da mucha más radiación que una banana.",
+   "fotos": [
+    "avion"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "bruno": "escucha"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[aliviado, con risa nerviosa] Bueno. Entonces me como otra.",
+   "fotos": [
+    "bananas"
+   ],
+   "poses": {
+    "bruno": "rie",
+    "neuron": "festeja"
+   }
+  }
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "titulo": "DATO #6: LOS KOALAS TIENEN HUELLAS DIGITALES",
+ "caption": "Las huellas digitales de los koalas se parecen tanto a las humanas que cuesta distinguirlas, incluso con microscopio. 🐨\n\n#datoscuriosos #animales #koala #curiosidades #nadaquever",
+ "fotos": {
+  "koala": {
+   "buscar": "koala in eucalyptus tree"
+  },
+  "koala-mano": {
+   "buscar": "koala paw hand"
+  },
+  "huella": {
+   "buscar": "fingerprint"
+  },
+  "koala-comiendo": {
+   "buscar": "koala eating eucalyptus leaves"
+  },
+  "microscopio": {
+   "buscar": "microscope"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "nyx",
+   "dice": "[aburrida, sobradora] Las huellas digitales son lo único realmente único que tenemos los humanos.",
+   "fotos": [
+    "huella"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "canchero"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Casi. Los koalas también tienen huellas digitales. Y se parecen muchísimo a las nuestras.",
+   "fotos": [
+    "koala-mano"
+   ],
+   "poses": {
+    "neuron": [
+     "senala",
+     "canchero"
+    ],
+    "nyx": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[incrédula] ¿Cuánto es muchísimo?",
+   "fotos": [
+    "koala"
+   ],
+   "poses": {
+    "nyx": "duda",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Tanto que cuesta distinguirlas, incluso mirándolas con microscopio.",
+   "fotos": [
+    "microscopio"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "nyx": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y no es porque sean parientes cercanos. Los koalas las desarrollaron por su cuenta, probablemente para agarrar mejor las ramas y las hojas que comen.",
+   "fotos": [
+    "koala-comiendo"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "idea"
+    ],
+    "nyx": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[con media sonrisa] O sea que, en teoría, un koala podría dejar huellas en una escena del crimen.",
+   "fotos": [
+    "koala"
+   ],
+   "poses": {
+    "nyx": [
+     "piensa",
+     "rie"
+    ],
+    "neuron": "rie"
+   }
+  }
+ ]
+}

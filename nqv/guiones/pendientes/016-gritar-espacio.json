@@ -1,0 +1,102 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI GRITARAS EN EL ESPACIO?",
+ "caption": "En el espacio nadie te escucharía gritar: el sonido necesita aire, o algo, para viajar. 🚀\n\nPor eso los astronautas se hablan por radio.\n\n#espacio #ciencia #sonido #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "caminata": {
+   "buscar": "astronaut spacewalk"
+  },
+  "parlante": {
+   "buscar": "loudspeaker"
+  },
+  "onda": {
+   "buscar": "sound wave diagram"
+  },
+  "casco": {
+   "buscar": "astronaut helmet visor"
+  },
+  "radio": {
+   "buscar": "astronaut radio communication"
+  }
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[nervioso, rápido] Si me pierdo en el espacio, grito fuerte y alguien me va a escuchar, ¿no?",
+   "fotos": [
+    "caminata"
+   ],
+   "poses": {
+    "bruno": [
+     "susto",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "No. En el espacio, nadie te escucharía gritar.",
+   "fotos": [
+    "caminata"
+   ],
+   "poses": {
+    "neuron": [
+     "canchero",
+     "habla"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "El sonido es una vibración que viaja por el aire, el agua o un sólido. En el espacio casi no hay nada, así que no tiene por dónde moverse.",
+   "fotos": [
+    "onda",
+    "parlante"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[en pánico, con la voz quebrada] ¡¿Y entonces cómo pido ayuda?!",
+   "fotos": [
+    "casco"
+   ],
+   "poses": {
+    "bruno": "susto",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Dentro del casco sí hay aire, así que tu propia voz la escucharías. Para hablar con los demás, los astronautas usan radio: las ondas de radio sí viajan por el vacío.",
+   "fotos": [
+    "casco",
+    "radio"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "escucha"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[aliviado, con risa nerviosa] Bueno. Entonces grito, pero por radio.",
+   "fotos": [
+    "radio"
+   ],
+   "poses": {
+    "bruno": "rie",
+    "neuron": "festeja"
+   }
+  }
+ ]
+}

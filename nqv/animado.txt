@@ -1,3 +1,8 @@
 nqv/animados/pendientes/001-cielo-azul
 nqv/animados/pendientes/002-cumpleanos
 nqv/animados/pendientes/003-hielo-flota
+nqv/animados/pendientes/004-papel-luna
+nqv/animados/pendientes/005-luz-del-sol
+nqv/animados/pendientes/006-rayo-trueno
+nqv/animados/pendientes/007-barco-acero
+nqv/animados/pendientes/008-tierra-velocidad

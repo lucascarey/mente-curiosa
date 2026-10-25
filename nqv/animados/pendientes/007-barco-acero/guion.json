@@ -1,0 +1,60 @@
+{
+ "titulo": "¿CÓMO FLOTA UN BARCO DE ACERO?",
+ "caption": "El acero es casi 8 veces más pesado que el agua, pero un barco de miles de toneladas flota. 🚢\n\nEl truco es la forma: un casco hueco lleno de aire desplaza tanta agua como lo que pesa el barco, y el agua lo empuja hacia arriba. Lo descubrió Arquímedes hace más de 2.000 años.\n\n#datoscuriosos #ciencia #fisica #barcos #arquimedes #curiosidades #nadaquever",
+ "lineas": [
+  {
+   "dice": "Una moneda de acero se hunde. Pero un barco de acero de miles de toneladas flota. ¿Cómo puede ser?",
+   "escena": "hook",
+   "chip": "¿Cómo flota?",
+   "poses": ["habla", "piensa"]
+  },
+  {
+   "dice": "Hoy te explico el truco, y es más simple de lo que parece.",
+   "escena": "intro",
+   "chip": "¿Cómo flota?",
+   "poses": ["explica", "canchero"]
+  },
+  {
+   "dice": "El acero es casi ocho veces más pesado que el agua. Una bola de acero maciza se hunde sin remedio.",
+   "escena": "densidad",
+   "chip": "1 El acero",
+   "poses": ["explica", "senala"]
+  },
+  {
+   "dice": "Pero si con ese mismo acero armas un casco hueco, lleno de aire, todo cambia.",
+   "escena": "forma",
+   "chip": "2 La forma",
+   "poses": ["idea", "explica"]
+  },
+  {
+   "dice": "Al apoyarse, el barco corre agua hacia los costados. Y el agua lo empuja hacia arriba con una fuerza igual al peso del agua que corrió.",
+   "escena": "empuje",
+   "chip": "3 El empuje",
+   "poses": ["senala", "explica"]
+  },
+  {
+   "dice": "Si el casco logra correr tanta agua como lo que pesa el barco, flota. Eso lo descubrió Arquímedes hace más de dos mil años.",
+   "escena": "balanza",
+   "chip": "3 El empuje",
+   "poses": ["habla", "listo"]
+  },
+  {
+   "dice": "Por eso un barco se hunde cuando le entra agua: lo que lo mantiene arriba es el aire de adentro.",
+   "escena": "hundir",
+   "chip": "4 El hundimiento",
+   "poses": ["atento", "explica"]
+  },
+  {
+   "dice": "Así que un barco no flota a pesar del acero: flota gracias a todo el aire que lleva adentro.",
+   "escena": "cierre",
+   "chip": "¿Cómo flota?",
+   "poses": ["canchero"]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": ["festeja"]
+  }
+ ]
+}

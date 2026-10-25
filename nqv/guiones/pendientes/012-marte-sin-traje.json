@@ -1,0 +1,89 @@
+{
+ "titulo": "¿QUÉ PASARÍA SI SALIERAS EN MARTE SIN TRAJE?",
+ "caption": "En Marte el aire es casi todo dióxido de carbono y la presión es menos del 1% de la de la Tierra. 🔴\n\nSin traje, te desmayarías en unos segundos.\n\n#espacio #marte #ciencia #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "marte-suelo": "File:PIA26554A-Mars-CuriosityRover-UbajaraSite-20230430.jpg",
+  "marte-planeta": "File:Mars atmosphere by Hubble.jpg",
+  "traje": "File:Samantha Cristoforetti official portrait in an EMU spacesuit.jpg",
+  "marte-frio": "File:Ice on Mars Again - GPN-2000-001706.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[entusiasmado] Quiero visitar Marte. ¿Puedo bajar de la nave y caminar un rato así como estoy?",
+   "fotos": [
+    "marte-suelo"
+   ],
+   "poses": {
+    "glip": [
+     "habla",
+     "festeja"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Podés, pero sería un paseo cortísimo. El aire de Marte es casi todo dióxido de carbono: no hay oxígeno para respirar.",
+   "fotos": [
+    "marte-planeta"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "glip": "duda"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Y la presión es menos del uno por ciento de la de la Tierra. Es tan baja que el agua de tu lengua y de tus ojos empezaría a hervir, aunque haga frío.",
+   "fotos": [
+    "marte-suelo"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "listo"
+    ],
+    "glip": "susto"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[alarmado, rapidísimo] ¿Hervir? ¿Con frío?",
+   "fotos": [
+    "marte-frio"
+   ],
+   "poses": {
+    "glip": "susto",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Sí, y el frío también es extremo: en promedio, unos sesenta grados bajo cero. En unos quince segundos sin oxígeno te desmayarías.",
+   "fotos": [
+    "marte-frio"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "senala"
+    ],
+    "glip": "frustrado"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Por eso, en Marte, el traje no es un accesorio: es tu atmósfera portátil.",
+   "fotos": [
+    "traje"
+   ],
+   "poses": {
+    "neuron": "idea",
+    "glip": "anota"
+   }
+  }
+ ]
+}

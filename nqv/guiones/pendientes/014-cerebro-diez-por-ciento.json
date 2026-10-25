@@ -1,0 +1,92 @@
+{
+ "titulo": "MITO O VERDAD: ¿USAMOS SOLO EL 10% DEL CEREBRO?",
+ "caption": "Mito. Las imágenes del cerebro muestran actividad en todas sus partes. 🧠\n\nY aunque pesa más o menos el 2% del cuerpo, gasta cerca del 20% de su energía.\n\n#mitooverdad #cerebro #ciencia #curiosidades #nadaquever",
+ "fotos": {
+  "cerebro": "File:Brain Lateral (NIH BioArt 60).png",
+  "pet": "File:Pet scan of a normal brain.jpg",
+  "fmri": "File:CFS-brain-scan-basal-ganglia-fMRI.png",
+  "energia": "assets/diagramas/cerebro-energia.png"
+ },
+ "lineas": [
+  {
+   "quien": "bruno",
+   "dice": "[emocionado, con aire de misterio] Leí que usamos solo el diez por ciento del cerebro. Imaginate si desbloqueo el resto.",
+   "fotos": [
+    "cerebro"
+   ],
+   "poses": {
+    "bruno": [
+     "habla",
+     "idea"
+    ]
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[aburrida] Mito. No hay una parte apagada esperando que la desbloquees.",
+   "fotos": [
+    "cerebro"
+   ],
+   "poses": {
+    "nyx": [
+     "canchero",
+     "habla"
+    ],
+    "bruno": "duda"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "Cuando escanean un cerebro, se ve actividad en todas sus zonas. Cada una hace algo distinto, pero a lo largo del día se usan todas.",
+   "fotos": [
+    "fmri"
+   ],
+   "poses": {
+    "nyx": [
+     "senala",
+     "habla"
+    ],
+    "bruno": "escucha"
+   }
+  },
+  {
+   "quien": "bruno",
+   "dice": "[decepcionado] ¿Entonces no tengo superpoderes guardados?",
+   "fotos": [
+    "pet"
+   ],
+   "poses": {
+    "bruno": "frustrado",
+    "nyx": "escucha"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "No. Y te digo más: el cerebro pesa más o menos el dos por ciento del cuerpo, pero se gasta cerca del veinte por ciento de tu energía.",
+   "fotos": [
+    "energia"
+   ],
+   "poses": {
+    "nyx": [
+     "habla",
+     "senala"
+    ],
+    "bruno": "susto"
+   }
+  },
+  {
+   "quien": "nyx",
+   "dice": "[sobradora] Un órgano que no usaras no gastaría tanto. Ya está trabajando al cien.",
+   "fotos": [
+    "cerebro"
+   ],
+   "poses": {
+    "nyx": "idea",
+    "bruno": "rie"
+   }
+  }
+ ],
+ "diagramas": [
+  "energia"
+ ]
+}

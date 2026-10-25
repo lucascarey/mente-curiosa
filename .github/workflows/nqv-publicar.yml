@@ -10,6 +10,8 @@ on:
   push:
     paths:
       - nqv/vista.txt
+  # Para publicar a mano si el horario de GitHub se saltea una corrida
+  workflow_dispatch:
 
 concurrency:
   group: publicar
@@ -26,6 +28,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 30
       # Formato que publica el horario automático, según nqv/formato.txt: "animado" = Neurón solo con gráficos
       # (nqv/animados/pendientes); cualquier otra cosa = elenco con fotos (nqv/guiones/pendientes).
       - name: Formato
@@ -61,6 +65,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             python -u -m nqv.main --vista "$(head -1 nqv/vista.txt | tr -d '\r')"
+          elif [ -n "$(git log --since='4 hours ago' --format=%H -- nqv/guiones/publicados nqv/animados/publicados | head -1)" ]; then
+            echo "Ya se publicó un video hace menos de 4 horas: esta corrida no publica otro."
           elif [ "$FORMATO" = animado ]; then
             python -u -m nqv.animado.armar --publicar
           else

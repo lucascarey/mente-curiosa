@@ -1,0 +1,94 @@
+{
+ "titulo": "GLIP NO ENTIENDE: ¿POR QUÉ SE ARRUGAN LOS DEDOS EN EL AGUA?",
+ "caption": "Los dedos arrugados en el agua no son piel mojada: los arruga el sistema nervioso. 🖐️\n\nUn estudio encontró que así se agarran mejor las cosas mojadas.\n\n#ciencia #cuerpohumano #curiosidades #datoscuriosos #nadaquever",
+ "fotos": {
+  "dedos": "File:Wrinkly fingers.jpg",
+  "banera": "File:Bathtub Bath Feet Relax.jpg",
+  "nervios": "File:TE-Nervous system diagram-es.png",
+  "manos-agua": "File:Child washes hands under running water in modern kitchen sink.jpg",
+  "neumatico": "File:2008-05-01 Tyre.jpg"
+ },
+ "lineas": [
+  {
+   "quien": "glip",
+   "dice": "[preocupado, curioso] Un humano estuvo un rato en el agua y se le arrugaron los dedos. ¿Se está derritiendo?",
+   "fotos": [
+    "dedos"
+   ],
+   "poses": {
+    "glip": [
+     "susto",
+     "habla"
+    ]
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Tranquilo, no. Y no es solo que la piel absorbe agua, como se suele creer.",
+   "fotos": [
+    "banera"
+   ],
+   "poses": {
+    "neuron": [
+     "canchero",
+     "habla"
+    ],
+    "glip": "duda"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Los arruga el sistema nervioso: achica los vasos sanguíneos de la punta de los dedos y la piel se pliega. Si el nervio del dedo está dañado, no se arruga.",
+   "fotos": [
+    "nervios"
+   ],
+   "poses": {
+    "neuron": [
+     "explica",
+     "listo"
+    ],
+    "glip": "escucha"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[anotando] ¿Y para qué lo hace?",
+   "fotos": [
+    "dedos"
+   ],
+   "poses": {
+    "glip": "anota",
+    "neuron": "escucha"
+   }
+  },
+  {
+   "quien": "neuron",
+   "dice": "Una idea es que funcionan como el dibujo de un neumático. En un estudio, la gente con dedos arrugados movía objetos mojados más rápido.",
+   "fotos": [
+    "neumatico",
+    "manos-agua"
+   ],
+   "poses": {
+    "neuron": [
+     "habla",
+     "senala"
+    ],
+    "glip": "duda"
+   }
+  },
+  {
+   "quien": "glip",
+   "dice": "[satisfecho] Anotado: los humanos traen neumáticos de lluvia en los dedos.",
+   "fotos": [
+    "manos-agua"
+   ],
+   "poses": {
+    "glip": [
+     "anota",
+     "festeja"
+    ],
+    "neuron": "rie"
+   }
+  }
+ ]
+}

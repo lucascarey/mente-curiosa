@@ -75,5 +75,10 @@
  ],
  "diagramas": [
   "sangre-azul"
- ]
+ ],
+ "resultado": {
+  "publicado_en": "2026-10-25T16:55:24+00:00",
+  "instagram": "18131317741790543",
+  "tiktok_error": "403: {\"error\":{\"code\":\"unaudited_client_can_only_post_to_private_accounts\",\"message\":\"Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/\",\"log_id\":\"202610260056297CCB73F0EDBD1337C24D\"}}"
+ }
 }

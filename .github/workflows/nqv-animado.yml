@@ -1,0 +1,61 @@
+name: Nada Que Ver - video animado de prueba
+
+# Arma un video animado (Neurón solo + gráficos programados) sin publicarlo.
+# Se dispara al cambiar nqv/animado.txt (primera línea: carpeta del video, ej. nqv/animados/cielo-azul).
+# El video queda en la rama nqv-animado. Las voces de la corrida anterior se reutilizan si el texto no cambió.
+on:
+  push:
+    paths:
+      - nqv/animado.txt
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  armar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests numpy pillow faster-whisper playwright
+          python -m playwright install --with-deps chromium
+      - name: Voces de la corrida anterior
+        run: |
+          git fetch -q origin nqv-animado && git worktree add /tmp/anterior origin/nqv-animado || mkdir -p /tmp/anterior
+      - name: Armar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          carpeta="$(head -1 nqv/animado.txt | tr -d '\r')"
+          nombre="$(basename "$carpeta")"
+          python -u -m nqv.animado.armar "$carpeta" "/tmp/anterior/$nombre/voces"
+      - name: Subir a la rama nqv-animado
+        if: always()
+        run: |
+          mkdir -p /tmp/sube
+          for d in salida/animado-*/; do
+            [ -d "$d" ] || continue
+            n="$(basename "$d" | sed 's/^animado-//')"
+            mkdir -p "/tmp/sube/$n"
+            cp -r "$d/voces" "/tmp/sube/$n/" 2>/dev/null || true
+            cp "$d"/*.json "/tmp/sube/$n/" 2>/dev/null || true
+            f="salida/animado-$n.mp4"
+            [ -f "$f" ] || continue
+            cp "$f" "/tmp/sube/$n/video.mp4"
+            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+            ffmpeg -v error -i "$f" -vf "fps=10/$dur,scale=270:-1,tile=5x2" -frames:v 1 "/tmp/sube/$n/cuadros.jpg"
+          done
+          cd /tmp/sube && touch .keep
+          git init -q -b nqv-animado
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Video animado ($GITHUB_SHA)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" nqv-animado

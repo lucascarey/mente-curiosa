@@ -2,21 +2,15 @@
  "titulo": "DATO #1: LOS PULPOS TIENEN TRES CORAZONES",
  "caption": "Tres corazones, sangre azul y, cuando nadan, uno de esos corazones se detiene. 🐙\n\nPor eso los pulpos prefieren arrastrarse por el fondo: nadar los agota.\n\n#datoscuriosos #pulpo #animales #ciencia #curiosidades #nadaquever",
  "fotos": {
-  "pulpo": {
-   "buscar": "common octopus Octopus vulgaris"
-  },
-  "pulpo-nadando": {
-   "buscar": "octopus swimming"
-  },
+  "pulpo": "File:Pulpo común (Octopus vulgaris), Parque natural de la Arrábida, Portugal, 2020-07-21, DD 33.jpg",
+  "pulpo-nadando": "File:Galapagos sea lion swimming in water - DPLA - 38c4bc9b60014ccf615ab8ded439fb6f.jpg",
   "sangre-azul": {
-   "buscar": "hemocyanin blue blood"
+   "buscar": "horseshoe crab blood"
   },
   "pulpo-fondo": {
-   "buscar": "octopus crawling seabed"
+   "buscar": "octopus on sand seabed"
   },
-  "pulpo-brazos": {
-   "buscar": "octopus arms suckers"
-  }
+  "pulpo-brazos": "File:Suckers on octopus 0448.jpg"
  },
  "lineas": [
   {

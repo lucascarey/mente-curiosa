@@ -2,24 +2,14 @@
  "titulo": "DATO #2: LOS FLAMENCOS NACEN GRISES",
  "caption": "Los flamencos no nacen rosados: el color viene de lo que comen. 🦩\n\nEn los zoológicos les agregan pigmentos a la comida para que no se pongan pálidos.\n\n#datoscuriosos #animales #flamencos #ciencia #curiosidades #nadaquever",
  "fotos": {
-  "flamenco": {
-   "buscar": "American flamingo Phoenicopterus ruber"
-  },
+  "flamenco": "File:American flamingo (Phoenicopterus ruber).JPG",
   "pichon": {
-   "buscar": "flamingo chick grey"
+   "buscar": "Phoenicopterus roseus chick"
   },
-  "artemia": {
-   "buscar": "Artemia brine shrimp"
-  },
-  "zanahorias": {
-   "buscar": "carrots"
-  },
-  "zoologico": {
-   "buscar": "flamingos zoo enclosure"
-  },
-  "bandada": {
-   "buscar": "flamingo flock pink lake"
-  }
+  "artemia": "File:Live brine shrimp.jpg",
+  "zanahorias": "File:Carrots at Ljubljana Central Market.JPG",
+  "zoologico": "File:Flamingo enclosure in the Antwerp zoo.jpg",
+  "bandada": "File:Flock of greater flamingos standing in water - DPLA - 377458bdf2fce7ff0d993d090cec1425.jpg"
  },
  "lineas": [
   {

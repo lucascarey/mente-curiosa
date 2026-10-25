@@ -2,18 +2,10 @@
  "titulo": "¿POR QUÉ DA VERGÜENZA AJENA?",
  "caption": "Ver a alguien hacer el ridículo activa zonas del cerebro relacionadas con el dolor. 😬\n\nY pasa aunque la otra persona no se dé cuenta. Las personas más empáticas la sienten más.\n\n#psicologia #cerebro #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "karaoke": {
-   "buscar": "karaoke singer"
-  },
-  "resonancia": {
-   "buscar": "fMRI brain scan"
-  },
-  "boda": {
-   "buscar": "wedding reception dance floor"
-  },
-  "personas": {
-   "buscar": "friends laughing together"
-  }
+  "karaoke": "File:Karaoke singer at Cuna de Artistas, Loja.jpg",
+  "resonancia": "File:CFS-brain-scan-basal-ganglia-fMRI.png",
+  "boda": "File:Hama Wedding Party 1 (52290277).jpg",
+  "personas": "File:DSC 7089 Three friends laugh and toast over drinks during a lively evening dinner at a cozy plant-filled restaurant.jpg"
  },
  "lineas": [
   {

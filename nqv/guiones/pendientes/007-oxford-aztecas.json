@@ -2,21 +2,11 @@
  "titulo": "DATO #3: OXFORD ES MÁS VIEJA QUE LOS AZTECAS",
  "caption": "En Oxford ya se daban clases en 1096. Tenochtitlan, la capital azteca, se fundó en 1325. 🏛️\n\nNo es que los aztecas sean nuevos: es que Oxford es viejísima.\n\n#historia #datoscuriosos #aztecas #curiosidades #nadaquever",
  "fotos": {
-  "oxford": {
-   "buscar": "Oxford Radcliffe Camera"
-  },
-  "oxford-edificio": {
-   "buscar": "Bodleian Library Oxford"
-  },
-  "tenochtitlan": {
-   "buscar": "Tenochtitlan model"
-  },
-  "templo-mayor": {
-   "buscar": "Templo Mayor ruins Mexico City"
-  },
-  "graduacion": {
-   "buscar": "Oxford University graduation ceremony"
-  }
+  "oxford": "File:Radcliffe Camera Oxford 2018 02.jpg",
+  "oxford-edificio": "File:Divinity School Interior 3, Bodleian Library, Oxford, UK - Diliff.jpg",
+  "tenochtitlan": "File:Model of Tenochtitlan Ceremonial Center (9755493573).jpg",
+  "templo-mayor": "File:Ruinas del Templo Mayor - Centro Histórico de Ciudad de México.jpg",
+  "graduacion": "File:Oxford - Catte street - Graduation ceremony in the Sheldonian theatre (june 2011) 05.jpg"
  },
  "lineas": [
   {

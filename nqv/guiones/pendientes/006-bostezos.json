@@ -2,21 +2,11 @@
  "titulo": "GLIP NO ENTIENDE: ¿POR QUÉ BOSTEZAN LOS HUMANOS?",
  "caption": "El bostezo se contagia, sobre todo entre gente cercana. Y no es por falta de oxígeno. 🥱\n\nUna de las ideas con más pruebas: ayuda a enfriar el cerebro. ¿Ya bostezaste?\n\n#glipnoentiende #cerebro #ciencia #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "bostezo": {
-   "buscar": "yawning woman"
-  },
-  "bostezo-hombre": {
-   "buscar": "man yawning"
-  },
-  "oxigeno": {
-   "buscar": "oxygen mask"
-  },
-  "cerebro": {
-   "buscar": "human brain"
-  },
-  "perro": {
-   "buscar": "dog yawning"
-  }
+  "bostezo": "File:Yawning woman.jpg",
+  "bostezo-hombre": "File:Woman yawning while reading a book on an armchair by the window.jpg",
+  "oxigeno": "File:Ultraflow™ Oxygen Demand Valve in use.jpg",
+  "cerebro": "File:Brain Lateral (NIH BioArt 60).png",
+  "perro": "File:Picography-dog-yawning-1.jpg"
  },
  "lineas": [
   {

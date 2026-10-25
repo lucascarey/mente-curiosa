@@ -2,21 +2,11 @@
  "titulo": "MITO O VERDAD: ¿LA GRAN MURALLA SE VE DESDE EL ESPACIO?",
  "caption": "Mito. Desde la órbita donde viven los astronautas, la Gran Muralla China no se distingue a simple vista. 🛰️\n\nLo que sí se ve de noche: las luces de las ciudades.\n\n#mitooverdad #espacio #historia #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "muralla": {
-   "buscar": "Great Wall of China Mutianyu"
-  },
-  "estacion-espacial": {
-   "buscar": "International Space Station orbit Earth"
-  },
-  "muralla-paisaje": {
-   "buscar": "Great Wall of China mountains landscape"
-  },
-  "yang-liwei": {
-   "buscar": "Yang Liwei"
-  },
-  "ciudades-noche": {
-   "buscar": "city lights at night from International Space Station"
-  }
+  "muralla": "File:Great Wall of China July 2006.JPG",
+  "estacion-espacial": "File:ISS March 2009.jpg",
+  "muralla-paisaje": "File:View east from Great Wall of China at Badaling.jpg",
+  "yang-liwei": "File:Shenzhou 5 in space Yang Liwei.png",
+  "ciudades-noche": "File:Chicago, Illinois, pictured at night from the International Space Station (iss075e0099858).jpg"
  },
  "lineas": [
   {

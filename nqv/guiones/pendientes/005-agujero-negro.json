@@ -2,21 +2,11 @@
  "titulo": "¿QUÉ PASARÍA SI CAYERAS EN UN AGUJERO NEGRO?",
  "caption": "Depende del tamaño del agujero negro: en uno chico te estiraría como un fideo. En uno gigante cruzarías el borde sin notar nada… pero no volverías a salir. 🕳️\n\n#espacio #agujeronegro #ciencia #curiosidades #datoscuriosos #nadaquever",
  "fotos": {
-  "m87": {
-   "buscar": "M87 black hole Event Horizon Telescope"
-  },
-  "disco": {
-   "buscar": "black hole accretion disk illustration"
-  },
-  "espaguetizacion": {
-   "buscar": "spaghettification"
-  },
-  "sagitario": {
-   "buscar": "Sagittarius A* Event Horizon Telescope"
-  },
-  "horizonte": {
-   "buscar": "black hole event horizon simulation"
-  }
+  "m87": "File:Black hole - Messier 87.jpg",
+  "disco": "File:Black Hole Cygnus X-1 (Illustration) (4187-Image).png",
+  "espaguetizacion": "File:Artist’s impression of star being tidally disrupted by a supermassive black hole (eso2018a).jpg",
+  "sagitario": "File:EHT Saggitarius A black hole.tif",
+  "horizonte": "File:Lonely Black Hole Relic Shines Light on Young Universe (gemini1603b).jpg"
  },
  "lineas": [
   {

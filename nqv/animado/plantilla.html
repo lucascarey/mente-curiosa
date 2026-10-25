@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--
+Plantilla de los videos animados de Nada Que Ver: Neurón explicando con gráficos programados.
+nqv/animado.py la abre en Chromium, carga las escenas del video (escenas.js) y saca una captura por cuadro
+llamando a dibujar(t). Todo se dibuja en un canvas de 1080x1920:
+  arriba  (y 200-1040): la escena de la línea que se está diciendo
+  abajo a la izquierda: Neurón, rebotando con la voz
+  abajo a la derecha:   el subtítulo, sin el nombre de quien habla
+Lo de más abajo de y=1500 lo tapan el texto y los comentarios de Reels/TikTok, y lo de la derecha de x=930
+los botones: ahí no va nada importante.
+-->
+<style>
+@font-face { font-family: "Mono"; src: url("../../assets/fonts/JetBrainsMono.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Inter"; src: url("../../assets/fonts/Inter.ttf"); font-weight: 100 900; }
+html, body { margin: 0; background: #0b0e1c; overflow: hidden; }
+canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const ANCHO = 1080, ALTO = 1920;
+const PANEL = { x: 0, y: 200, w: 1080, h: 840 };  // donde dibujan las escenas
+const FONDO = "#0b0e1c";
+const CELESTE = "#6ed2eb";  // color de Neurón: la palabra que se está diciendo
+const NARANJA = "#ff7a45", AMARILLO = "#ffd166", AZUL = "#4ea8ff", ROJO = "#ff4d5e", VIOLETA = "#a66bff", VERDE = "#5ee08a";
+const ARCOIRIS = ["#ff4d5e", "#ff8c42", "#ffd166", "#5ee08a", "#4ea8ff", "#5b6cff", "#a66bff"];
+const ESCENAS = {};
+const ctx = document.getElementById("c").getContext("2d");
+let DATOS = null;  // lo carga animado.py: líneas con tiempos, volumen de la voz, etc.
+const POSES = {};
+
+// ---------- utilidades para las escenas ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const suave = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const salto = x => { x = clamp(x); const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+// avance suavizado entre los segundos a y b
+const entre = (t, a, b) => suave((t - a) / Math.max(0.001, b - a));
+
+function texto(s, x, y, o = {}) {
+  ctx.save();
+  ctx.globalAlpha *= o.alfa ?? 1;
+  ctx.font = `${o.peso ?? 700} ${o.tam ?? 40}px ${o.mono === false ? "Inter" : "Mono"}`;
+  ctx.textAlign = o.alinear ?? "center";
+  ctx.textBaseline = "middle";
+  if (o.borde) { ctx.lineWidth = o.borde; ctx.strokeStyle = o.colorBorde ?? FONDO; ctx.lineJoin = "round"; ctx.strokeText(s, x, y); }
+  ctx.fillStyle = o.color ?? "#fff";
+  ctx.fillText(s, x, y);
+  ctx.restore();
+}
+
+function caja(x, y, w, h, r, relleno, borde) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  if (relleno) { ctx.fillStyle = relleno; ctx.fill(); }
+  if (borde) { ctx.strokeStyle = borde; ctx.lineWidth = 3; ctx.stroke(); }
+}
+
+// cartelito oscuro con texto, centrado en x,y. partes: [[texto, color], ...] para mezclar colores
+function chip(partes, x, y, o = {}) {
+  if (typeof partes === "string") partes = [[partes, o.color ?? "#fff"]];
+  const tam = o.tam ?? 38;
+  ctx.save();
+  ctx.globalAlpha *= o.alfa ?? 1;
+  ctx.font = `${o.peso ?? 800} ${tam}px Mono`;
+  const anchos = partes.map(([s]) => ctx.measureText(s).width);
+  const total = anchos.reduce((a, b) => a + b, 0) + (partes.length - 1) * tam * 0.4;
+  const pad = tam * 0.45;
+  const esc = o.escala ?? 1;
+  ctx.translate(x, y); ctx.scale(esc, esc);
+  caja(-total / 2 - pad, -tam * 0.85, total + 2 * pad, tam * 1.7, tam * 0.3, o.fondo ?? "rgba(8,10,22,0.88)", o.borde);
+  let cx = -total / 2;
+  ctx.textBaseline = "middle"; ctx.textAlign = "left";
+  partes.forEach(([s, c], k) => { ctx.fillStyle = c; ctx.fillText(s, cx, 2); cx += anchos[k] + tam * 0.4; });
+  ctx.restore();
+}
+
+function flecha(x0, y0, x1, y1, color, grosor = 6, k = 1, alfa = 1) {
+  if (k <= 0) return;
+  const x = lerp(x0, x1, k), y = lerp(y0, y1, k);
+  const ang = Math.atan2(y - y0, x - x0), punta = grosor * 3.2;
+  ctx.save();
+  ctx.globalAlpha *= alfa;
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = grosor; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x - Math.cos(ang) * punta * 0.6, y - Math.sin(ang) * punta * 0.6); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - Math.cos(ang - 0.45) * punta, y - Math.sin(ang - 0.45) * punta);
+  ctx.lineTo(x - Math.cos(ang + 0.45) * punta, y - Math.sin(ang + 0.45) * punta);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+// onda senoidal de x0 a x1 (corta en "hasta"), con longitud de onda y amplitud en px
+function onda(x0, y, x1, longitud, amp, fase, color, grosor = 6, hasta = x1, alfa = 1) {
+  if (hasta <= x0) return;
+  ctx.save();
+  ctx.globalAlpha *= alfa;
+  ctx.strokeStyle = color; ctx.lineWidth = grosor; ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.shadowColor = color; ctx.shadowBlur = 14;
+  ctx.beginPath();
+  for (let x = x0; x <= Math.min(x1, hasta); x += 3) {
+    const yy = y + Math.sin((x - x0) / longitud * 2 * Math.PI - fase) * amp;
+    x === x0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function sol(x, y, r, color = "#fff6d5", brillo = 1) {
+  ctx.save();
+  const g = ctx.createRadialGradient(x, y, r * 0.6, x, y, r * 3.2);
+  g.addColorStop(0, `rgba(255,240,200,${0.45 * brillo})`); g.addColorStop(1, "rgba(255,240,200,0)");
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 3.2, 0, 7); ctx.fill();
+  ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+  ctx.restore();
+}
+
+function circulo(x, y, r, relleno, borde, grosor = 3) {
+  ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI);
+  if (relleno) { ctx.fillStyle = relleno; ctx.fill(); }
+  if (borde) { ctx.strokeStyle = borde; ctx.lineWidth = grosor; ctx.stroke(); }
+}
+
+function tachar(x, y, w, h, k, color = ROJO) {
+  if (k <= 0) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 10; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(x - w / 2, y - h / 2); ctx.lineTo(lerp(x - w / 2, x + w / 2, clamp(k * 2)), lerp(y - h / 2, y + h / 2, clamp(k * 2))); ctx.stroke();
+  if (k > 0.5) { ctx.beginPath(); ctx.moveTo(x + w / 2, y - h / 2); ctx.lineTo(lerp(x + w / 2, x - w / 2, clamp(k * 2 - 1)), lerp(y - h / 2, y + h / 2, clamp(k * 2 - 1))); ctx.stroke(); }
+  ctx.restore();
+}
+
+// pseudoaleatorio fijo (el mismo en cada cuadro)
+function azar(n) { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+function estrellas(alfa = 1, cantidad = 70) {
+  ctx.save();
+  for (let k = 0; k < cantidad; k++) {
+    ctx.globalAlpha = alfa * (0.25 + 0.5 * azar(k + 900));
+    circulo(azar(k) * ANCHO, PANEL.y - 120 + azar(k + 50) * (PANEL.h + 200), 1 + azar(k + 7) * 2, "#fff");
+  }
+  ctx.restore();
+}
+
+// ---------- escenas fijas, que cualquier video puede usar ----------
+
+// la intro después del hook ("Hoy te explico..."): el título del video, grande
+ESCENAS.intro = (inf) => {
+  const t = inf.t;
+  estrellas(0.7);
+  chip("HOY", 540, 380, { tam: 44, color: NARANJA, escala: salto(t / 0.4), alfa: clamp(t / 0.2) });
+  ctx.font = "900 84px Inter";
+  const renglones = [""];
+  for (const w of DATOS.titulo.split(" ")) {
+    const prueba = (renglones.at(-1) + " " + w).trim();
+    if (ctx.measureText(prueba).width > 900 && renglones.at(-1)) renglones.push(w); else renglones[renglones.length - 1] = prueba;
+  }
+  const y0 = 620 - (renglones.length - 1) * 50;
+  renglones.forEach((r, k) => {
+    const a = entre(t, 0.15 + k * 0.15, 0.55 + k * 0.15);
+    texto(r, 540, y0 + k * 100 + 30 * (1 - a), { tam: 84, peso: 900, mono: false, alfa: a, borde: 10 });
+  });
+  const yl = y0 + renglones.length * 100 - 20, k = entre(t, 0.6, 1.3);
+  ctx.save(); ctx.strokeStyle = CELESTE; ctx.lineWidth = 10; ctx.lineCap = "round"; ctx.shadowColor = CELESTE; ctx.shadowBlur = 16;
+  ctx.beginPath(); ctx.moveTo(540 - 300 * k, yl); ctx.lineTo(540 + 300 * k, yl); ctx.stroke(); ctx.restore();
+};
+
+// el cierre que invita a seguir la cuenta: el botón "Seguir" se aprieta cuando Neurón dice "seguime"
+ESCENAS.seguir = (inf) => {
+  const t = inf.t;
+  estrellas(0.7);
+  const k = salto(t / 0.5);
+  ctx.save(); ctx.translate(540, 470); ctx.scale(k, k);
+  const g = ctx.createLinearGradient(-120, -120, 120, 120);
+  g.addColorStop(0, VIOLETA); g.addColorStop(1, CELESTE);
+  circulo(0, 0, 125, null, g, 10);
+  circulo(0, 0, 108, "#141a33");
+  if (Object.keys(POSES).length) {  // la cara de Neurón dentro del círculo
+    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 106, 0, 7); ctx.clip();
+    const im = POSES[Object.keys(POSES)[0]], h = 520, w = im.width * h / im.height;
+    ctx.drawImage(im, -w / 2, -95, w, h);
+    ctx.restore();
+  } else texto("NQV", 0, 0, { tam: 64, peso: 900 });
+  ctx.restore();
+  texto("@nqv.tv", 540, 650, { tam: 64, peso: 900, alfa: entre(t, 0.2, 0.6) });
+  texto("Nada Que Ver", 540, 715, { tam: 36, color: "rgba(255,255,255,0.7)", alfa: entre(t, 0.3, 0.7) });
+  const tS = inf.cuando("sigueme");
+  const apretado = entre(t, tS, tS + 0.25);
+  const pulso = t < tS ? 1 + 0.04 * Math.sin(t * 8) : 1 - 0.08 * Math.sin(Math.PI * apretado);
+  ctx.save(); ctx.translate(540, 840); ctx.scale(pulso, pulso); ctx.globalAlpha *= entre(t, 0.4, 0.8);
+  caja(-210, -55, 420, 110, 30, apretado > 0.5 ? "#2a3150" : "#3d7bff");
+  texto(apretado > 0.5 ? "Siguiendo ✓" : "Seguir", 0, 2, { tam: 48, peso: 800, mono: false });
+  ctx.restore();
+};
+
+// ---------- armado de cada cuadro ----------
+function info(i, T) {
+  const l = DATOS.lineas[i];
+  const fin = i + 1 < DATOS.lineas.length ? DATOS.lineas[i + 1].ini : l.fin + 1.2;
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-zñ0-9]/g, "");
+  return {
+    t: T - l.ini, dur: fin - l.ini, p: clamp((T - l.ini) / (fin - l.ini)), T,
+    // segundos desde el inicio de la línea en que se dice la palabra (la primera que coincida)
+    cuando(palabra, desde = 0) {
+      const ws = l.texto.split(" ");
+      for (let j = desde; j < ws.length; j++) if (norm(ws[j]).startsWith(norm(palabra))) return l.palabras[j] - l.ini;
+      return 0;
+    },
+  };
+}
+
+function linea(T) {
+  let i = 0;
+  DATOS.lineas.forEach((l, k) => { if (l.ini <= T + 0.05) i = k; });
+  return i;
+}
+
+function fondo() {
+  const g = ctx.createLinearGradient(0, 0, 0, ALTO);
+  g.addColorStop(0, "#0e1226"); g.addColorStop(0.55, "#0b0e1c"); g.addColorStop(1, "#080a14");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, ANCHO, ALTO);
+}
+
+function escena(i, T, alfa) {
+  const l = DATOS.lineas[i];
+  ctx.save();
+  ctx.globalAlpha = alfa;
+  ctx.beginPath(); ctx.rect(0, PANEL.y - 60, ANCHO, PANEL.h + 60); ctx.clip();
+  ESCENAS[l.escena](info(i, T));
+  ctx.restore();
+}
+
+function cabecera(i, T) {
+  const l = DATOS.lineas[i], antes = i ? DATOS.lineas[i - 1] : null;
+  const k = antes && antes.chip !== l.chip ? salto((T - l.ini) / 0.4) : 1;
+  const [num, ...resto] = l.chip.split(" ");
+  const partes = /^\d+$/.test(num) ? [[num, NARANJA], [resto.join(" "), "#fff"]] : [[l.chip, "#fff"]];
+  chip(partes, ANCHO / 2, 150, { tam: 44, escala: 0.6 + 0.4 * k, alfa: clamp(k) });
+  texto("NADA QUE VER", ANCHO / 2, 82, { tam: 24, peso: 800, color: "rgba(190,150,255,0.8)" });
+}
+
+function neuron(i, T, n) {
+  const l = DATOS.lineas[i], inf = info(i, T);
+  const poses = l.poses;
+  const pose = POSES[poses[Math.min(poses.length - 1, Math.floor(inf.p * poses.length))]];
+  const habla = T < DATOS.lineas[DATOS.lineas.length - 1].fin + 0.3;
+  const vol = DATOS.vol[Math.min(n, DATOS.vol.length - 1)] || 0;
+  const entrada = suave(T / 0.5);
+  const alto = 600 * (1 + (habla ? 0.035 * vol : 0.008 * Math.sin(T * 2)));
+  const ancho = pose.width * alto / pose.height;
+  const x = 245, base = 1690 + 80 * (1 - entrada);
+  ctx.save();
+  ctx.globalAlpha = entrada;
+  // halo detrás
+  const g = ctx.createRadialGradient(x, base - alto * 0.78, 20, x, base - alto * 0.78, 300);
+  g.addColorStop(0, "rgba(110,210,235,0.18)"); g.addColorStop(1, "rgba(110,210,235,0)");
+  ctx.fillStyle = g; ctx.fillRect(x - 320, base - alto - 200, 640, 640);
+  ctx.drawImage(pose, x - ancho / 2, base - alto, ancho, alto);
+  ctx.restore();
+  // la base del cuerpo se funde con el fondo
+  const piso = ctx.createLinearGradient(0, 1560, 0, 1700);
+  piso.addColorStop(0, "rgba(8,10,20,0)"); piso.addColorStop(1, "rgba(8,10,20,1)");
+  ctx.fillStyle = piso; ctx.fillRect(0, 1560, ANCHO, 360);
+}
+
+function subtitulo(i, T) {
+  const l = DATOS.lineas[i];
+  if (T > DATOS.lineas[DATOS.lineas.length - 1].fin + 0.5) return;
+  const ws = l.texto.split(" ");
+  let actual = 0;
+  l.palabras.forEach((t, j) => { if (t <= T + 0.05) actual = j; });
+  const grupo = l.grupos.find(g => g.includes(actual)) || l.grupos[0];
+  const tam = 54, maxAncho = 470, cx = 690;
+  ctx.font = `850 ${tam}px Inter`;
+  const esp = ctx.measureText(" ").width;
+  const renglones = [[]];
+  let ancho = 0;
+  for (const j of grupo) {
+    const w = ctx.measureText(ws[j]).width;
+    if (renglones.at(-1).length && ancho + esp + w > maxAncho) { renglones.push([]); ancho = 0; }
+    ancho += (renglones.at(-1).length ? esp : 0) + w;
+    renglones.at(-1).push(j);
+  }
+  let y = 1290 - (renglones.length - 1) * 70 / 2;
+  ctx.textBaseline = "middle"; ctx.textAlign = "left"; ctx.lineJoin = "round";
+  for (const r of renglones) {
+    const total = r.reduce((a, j) => a + ctx.measureText(ws[j]).width, 0) + esp * (r.length - 1);
+    let x = cx - total / 2;
+    for (const j of r) {
+      ctx.lineWidth = 9; ctx.strokeStyle = "#05060c"; ctx.strokeText(ws[j], x, y);
+      ctx.fillStyle = j === actual ? CELESTE : "#fff"; ctx.fillText(ws[j], x, y);
+      x += ctx.measureText(ws[j]).width + esp;
+    }
+    y += 70;
+  }
+}
+
+function dibujar(T) {
+  const n = Math.round(T * DATOS.fps);
+  const i = linea(T);
+  fondo();
+  const k = i ? clamp((T - DATOS.lineas[i].ini) / 0.35) : 1;
+  if (k < 1) escena(i - 1, DATOS.lineas[i].ini - 0.001, 1 - k);
+  escena(i, T, k);
+  cabecera(i, T);
+  neuron(i, T, n);
+  subtitulo(i, T);
+}
+
+async function preparar(datos) {
+  DATOS = datos;
+  await document.fonts.load("800 40px Mono");
+  await document.fonts.load("850 40px Inter");
+  const nums = new Set(datos.lineas.flatMap(l => l.poses));
+  await Promise.all([...nums].map(k => new Promise((ok, mal) => {
+    const im = new Image();
+    im.onload = () => { POSES[k] = im; ok(); };
+    im.onerror = mal;
+    im.src = `../../assets/elenco/neuron/${String(k).padStart(2, "0")}.png`;
+  })));
+}
+</script>
+</body>
+</html>

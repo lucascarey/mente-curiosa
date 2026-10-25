@@ -9,6 +9,8 @@ dice `animado`).
 
 1. **Hook**: la primera línea engancha con el dato más sorprendente o una afirmación que choca ("Con solo 23
    personas...", "Spoiler: el cielo es azul, pero no porque refleje el mar").
+   La **portada** del Reel se arma sola con el `titulo` (corto, que dé ganas de tocar; la última palabra sale en
+   celeste) y la escena del hook tal como queda al final de esa línea: que ese último momento se entienda solo.
 2. **Intro corta** con la escena fija `intro` (muestra el título grande): "Hoy vamos a ver...", "Hoy te explico...".
 3. **Explicación** en 4 a 6 líneas, una idea por línea, cada una con su escena. Datos reales y comprobables.
 4. **Conclusión** en una frase que cierre la idea.
@@ -73,6 +75,6 @@ Reglas de diseño (copiadas de los videos de referencia que eligió Lucas):
 NQV_CHROMIUM=/opt/pw-browsers/chromium python -m nqv.animado.armar --validar
 NQV_CHROMIUM=/opt/pw-browsers/chromium python -m nqv.animado.armar nqv/animados/pendientes/NNN-tema --sin-voz --cuadros 1,3,6,9
 ```
-`--validar` dibuja varios cuadros de cada pendiente y falla si hay errores de JavaScript; las capturas quedan en
-`salida/animado-NNN-tema/cuadros/` para MIRARLAS antes de subir. Para el video completo con voz: poner la carpeta en
+`--validar` dibuja varios cuadros de cada pendiente y falla si hay errores de JavaScript; las capturas (y la
+`portada.jpg`) quedan en `salida/animado-NNN-tema/cuadros/` para MIRARLAS antes de subir. Para el video completo con voz: poner la carpeta en
 `nqv/animado.txt` y pushear (workflow "Nada Que Ver - video animado de prueba", resultado en la rama `nqv-animado`).

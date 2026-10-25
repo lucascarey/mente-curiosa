@@ -17,9 +17,9 @@ def _guardar_token(nombre: str, valor: str) -> None:
         (Path(carpeta) / nombre).write_text(valor)
 
 
-def publicar(video: Path, caption: str) -> dict:
+def publicar(video: Path, caption: str, portada: Path | None = None) -> dict:
     print("Cuenta:", instagram.usuario().get("username"), flush=True)
-    resultado = {"instagram": instagram.publicar_reel(video, caption)}
+    resultado = {"instagram": instagram.publicar_reel(video, caption, portada)}
     print("Publicado en Instagram:", resultado["instagram"], flush=True)
     if tiktok.configurado():
         try:

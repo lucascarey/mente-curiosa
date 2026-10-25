@@ -52,6 +52,7 @@ jobs:
             f="salida/animado-$n.mp4"
             [ -f "$f" ] || continue
             cp "$f" "/tmp/sube/$n/video.mp4"
+            [ -f "salida/animado-$n.jpg" ] && cp "salida/animado-$n.jpg" "/tmp/sube/$n/portada.jpg"
             dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
             ffmpeg -v error -i "$f" -vf "fps=10/$dur,scale=270:-1,tile=5x2" -frames:v 1 "/tmp/sube/$n/cuadros.jpg"
           done

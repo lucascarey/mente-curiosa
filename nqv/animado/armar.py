@@ -15,7 +15,7 @@ Uso:
     python -m nqv.animado.armar CARPETA --sin-voz [--cuadros 1,5.5,12]
 --sin-voz estima los tiempos por la cantidad de letras y no gasta cuota de Gemini (para revisar las animaciones);
 --cuadros guarda solo esas capturas (segundos) en vez del video.
-El video queda en salida/animado-<nombre>.mp4.
+El video queda en salida/animado-<nombre>.mp4 y su portada (título + hook + Neurón) en salida/animado-<nombre>.jpg.
 """
 
 import argparse
@@ -89,6 +89,8 @@ def renderizar(g: dict, duracion: float, vol: np.ndarray, salida: Path, audio: P
         nav = pw.chromium.launch(executable_path=os.environ.get("NQV_CHROMIUM"), args=["--allow-file-access-from-files"])
         pagina = nav.new_page(viewport={"width": 1080, "height": 1920})
         pagina.on("console", lambda m: print("consola:", m.text, flush=True))
+        if solo is not None:
+            salida.mkdir(parents=True, exist_ok=True)
         pagina.goto(PLANTILLA.as_uri())
         pagina.add_script_tag(path=str(g["_escenas"]))
         sin_escena = pagina.evaluate("ns => ns.filter(n => typeof ESCENAS[n] !== 'function')",
@@ -96,8 +98,11 @@ def renderizar(g: dict, duracion: float, vol: np.ndarray, salida: Path, audio: P
         if sin_escena:
             raise ValueError(f"escenas.js no define: {sorted(set(sin_escena))}")
         pagina.evaluate("d => preparar(d)", datos)
+        # la portada (miniatura del Reel) va al lado del video, o junto a los cuadros
+        pagina.evaluate("portada()")
+        pagina.screenshot(path=str(salida / "portada.jpg" if solo is not None else salida.with_suffix(".jpg")),
+                          type="jpeg", quality=92)
         if solo is not None:
-            salida.mkdir(parents=True, exist_ok=True)
             for t in solo:
                 pagina.evaluate(f"dibujar({t})")
                 pagina.screenshot(path=str(salida / f"cuadro-{t:05.1f}.jpg"), type="jpeg", quality=85)
@@ -179,7 +184,7 @@ def publicar(anterior: Path | None = None) -> int:
     video = armar(carpeta, anterior / carpeta.name / "voces" if anterior else None)
     from ..publicar import publicar as subir
     caption = json.loads((carpeta / "guion.json").read_text(encoding="utf-8"))["caption"]
-    resultado = {"publicado_en": datetime.now(timezone.utc).isoformat(timespec="seconds"), **subir(video, caption)}
+    resultado = {"publicado_en": datetime.now(timezone.utc).isoformat(timespec="seconds"), **subir(video, caption, video.with_suffix(".jpg"))}
     (carpeta / "resultado.json").write_text(json.dumps(resultado, ensure_ascii=False, indent=1) + "\n")
     PUBLICADOS.mkdir(parents=True, exist_ok=True)
     shutil.move(str(carpeta), PUBLICADOS / carpeta.name)

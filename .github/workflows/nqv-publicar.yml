@@ -20,8 +20,8 @@ permissions:
 
 jobs:
   publicar:
-    # El horario automático solo corre con la variable NQV_ACTIVA=true
-    if: github.event_name == 'push' || vars.NQV_ACTIVA == 'true'
+    # El horario automático corre salvo que la variable de repo NQV_ACTIVA diga false (Lucas lo prendió el 2026-10-25)
+    if: github.event_name == 'push' || vars.NQV_ACTIVA != 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:

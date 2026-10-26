@@ -1,66 +1,118 @@
 {
  "titulo": "UNA HOJA DOBLADA 42 VECES",
  "caption": "Si pudieras doblar una hoja de papel 42 veces, llegaría más lejos que la Luna. 📄🌕\n\nCada doblez duplica el grosor: 10 dobleces = 10 cm, 20 = 100 m, 30 = más de 100 km, 42 = unos 440.000 km. Eso es crecer de forma exponencial.\n\n#datoscuriosos #matematica #exponencial #luna #curiosidades #nadaquever",
+ "musica": "espacio",
  "lineas": [
   {
    "dice": "Si pudieras doblar una hoja de papel cuarenta y dos veces, llegaría hasta la Luna.",
    "escena": "hook",
    "chip": "¿42 dobleces?",
-   "poses": ["habla", "canchero"]
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "Luna"
+   ]
   },
   {
    "dice": "Hoy vamos a ver por qué pasa esto, y por qué a tu cabeza le cuesta tanto creerlo.",
    "escena": "intro",
    "chip": "¿42 dobleces?",
-   "poses": ["explica", "idea"]
+   "poses": [
+    "explica",
+    "idea"
+   ],
+   "destacar": [
+    "cuesta"
+   ]
   },
   {
    "dice": "Una hoja común mide un décimo de milímetro. Y cada vez que la doblas, el grosor se duplica.",
    "escena": "doblar",
    "chip": "1 El doblez",
-   "poses": ["explica", "senala"]
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "se duplica"
+   ]
   },
   {
    "dice": "Con diez dobleces, ya tienes unos diez centímetros de papel.",
    "escena": "diez",
    "chip": "2 La escalera",
-   "poses": ["habla"]
+   "poses": [
+    "habla"
+   ]
   },
   {
    "dice": "Con veinte, unos cien metros: la altura de un edificio de treinta pisos.",
    "escena": "veinte",
    "chip": "2 La escalera",
-   "poses": ["senala", "explica"]
+   "poses": [
+    "senala",
+    "explica"
+   ],
+   "destacar": [
+    "edificio"
+   ]
   },
   {
    "dice": "Con treinta, más de cien kilómetros. Tu hoja ya llegó al espacio.",
    "escena": "treinta",
    "chip": "2 La escalera",
-   "poses": ["idea", "festeja"]
+   "poses": [
+    "idea",
+    "festeja"
+   ],
+   "destacar": [
+    "espacio"
+   ]
   },
   {
    "dice": "Y con cuarenta y dos, unos cuatrocientos cuarenta mil kilómetros. Más que la distancia a la Luna.",
    "escena": "luna",
    "chip": "3 La Luna",
-   "poses": ["senala", "listo"]
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "la Luna"
+   ]
   },
   {
    "dice": "Eso es crecer de forma exponencial: al principio casi no pasa nada, y de golpe se dispara.",
    "escena": "curva",
    "chip": "4 Exponencial",
-   "poses": ["explica", "idea"]
+   "poses": [
+    "explica",
+    "idea"
+   ],
+   "destacar": [
+    "exponencial"
+   ]
   },
   {
    "dice": "Igual, ni lo intentes: el récord es de doce dobleces, y usaron una tira de papel de más de un kilómetro.",
    "escena": "record",
    "chip": "¿42 dobleces?",
-   "poses": ["canchero"]
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "récord"
+   ]
   },
   {
    "dice": "Para más datos curiosos como este, sígueme.",
    "escena": "seguir",
    "chip": "Sígueme",
-   "poses": ["festeja"]
+   "poses": [
+    "festeja"
+   ]
   }
  ]
 }

@@ -1,60 +1,111 @@
 {
  "titulo": "¿A QUÉ VELOCIDAD TE MUEVES AHORA?",
  "caption": "Aunque estés quieto en el sillón, vas a más de 100.000 km/h. 🌍💨\n\nLa Tierra gira (1.670 km/h en el ecuador), da la vuelta al Sol (107.000 km/h) y el Sol gira alrededor de la galaxia (más de 800.000 km/h). No lo sientes porque la velocidad es constante: el cuerpo solo nota los cambios.\n\n#datoscuriosos #espacio #tierra #fisica #ciencia #curiosidades #nadaquever",
+ "musica": "espacio",
  "lineas": [
   {
    "dice": "Ahora mismo, mientras ves esto, te estás moviendo a más de cien mil kilómetros por hora.",
    "escena": "hook",
    "chip": "¿Quieto?",
-   "poses": ["habla", "canchero"]
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "moviendo"
+   ]
   },
   {
    "dice": "Hoy vamos a ver hacia dónde vas tan rápido, y por qué no lo sientes para nada.",
    "escena": "intro",
    "chip": "¿Quieto?",
-   "poses": ["explica", "idea"]
+   "poses": [
+    "explica",
+    "idea"
+   ],
+   "destacar": [
+    "no lo sientes"
+   ]
   },
   {
    "dice": "Primero, la Tierra gira sobre sí misma. En el ecuador, eso son unos mil seiscientos setenta kilómetros por hora.",
    "escena": "giro",
    "chip": "1 El giro",
-   "poses": ["explica", "senala"]
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "gira"
+   ]
   },
   {
    "dice": "Segundo, la Tierra da la vuelta alrededor del Sol, a unos ciento siete mil kilómetros por hora.",
    "escena": "orbita",
    "chip": "2 La órbita",
-   "poses": ["senala", "listo"]
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "alrededor del Sol"
+   ]
   },
   {
    "dice": "Y el Sol, con todos sus planetas, gira alrededor de la galaxia a más de ochocientos mil kilómetros por hora.",
    "escena": "galaxia",
    "chip": "3 La galaxia",
-   "poses": ["idea", "festeja"]
+   "poses": [
+    "idea",
+    "festeja"
+   ],
+   "destacar": [
+    "galaxia"
+   ]
   },
   {
    "dice": "¿Y por qué no lo sentimos? Porque esa velocidad es constante. El cuerpo solo nota los cambios: acelerar, frenar o doblar.",
    "escena": "constante",
    "chip": "4 ¿Por qué no se siente?",
-   "poses": ["piensa", "explica"]
+   "poses": [
+    "piensa",
+    "explica"
+   ],
+   "destacar": [
+    "constante",
+    "cambios"
+   ]
   },
   {
    "dice": "Es como en un avión a novecientos kilómetros por hora: si no hay turbulencia, puedes servirte un café tranquilo.",
    "escena": "avion",
    "chip": "4 ¿Por qué no se siente?",
-   "poses": ["habla", "canchero"]
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "turbulencia"
+   ]
   },
   {
    "dice": "Así que nunca estás quieto: solo vas a la misma velocidad que todo lo que te rodea.",
    "escena": "cierre",
    "chip": "¿Quieto?",
-   "poses": ["canchero"]
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "nunca estás quieto"
+   ]
   },
   {
    "dice": "Para más datos curiosos como este, sígueme.",
    "escena": "seguir",
    "chip": "Sígueme",
-   "poses": ["festeja"]
+   "poses": [
+    "festeja"
+   ]
   }
  ]
 }

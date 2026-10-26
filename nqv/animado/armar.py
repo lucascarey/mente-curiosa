@@ -21,7 +21,9 @@ El video queda en salida/animado-<nombre>.mp4 y su portada (título + hook + Neu
 import argparse
 import json
 import os
+import re
 import shutil
+import unicodedata
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,6 +32,7 @@ import numpy as np
 
 from ..guion import GESTOS, pantalla
 from ..video import FPS, frases, volumen
+from . import sonido
 
 RAIZ = Path(__file__).resolve().parent.parent.parent
 PLANTILLA = Path(__file__).resolve().parent / "plantilla.html"
@@ -57,8 +60,36 @@ def cargar(carpeta: Path) -> dict:
                              f"(válidas: {sorted(GESTOS['neuron'])})") from None
         l["texto"] = pantalla(l["dice"])
         l["grupos"] = frases(l["texto"])
+        l["clave"] = claves(l["texto"], l.get("destacar", []))
     g["_escenas"] = carpeta / "escenas.js"
     return g
+
+
+def _norm(s: str) -> str:
+    s = unicodedata.normalize("NFD", s.lower())
+    return re.sub(r"[^a-zñ0-9]", "", "".join(c for c in s if not unicodedata.combining(c)))
+
+
+# números dichos con palabras (sin "un/uno/una", que casi nunca son el dato)
+NUMERO = re.compile(r"(dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|dieci\w+|"
+                    r"veinte|veinti\w+|treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa|cien|ciento|"
+                    r"\w+cientos|\w+cientas|quinientos|mil|millon|millones|billones|porciento)")
+
+
+def claves(texto: str, destacar: list[str]) -> list[int]:
+    """Índices de las palabras que el subtítulo resalta: las de "destacar" (pueden ser frases) y las que tienen números."""
+    ws = [_norm(w) for w in texto.split(" ")]
+    idx = {j for j, w in enumerate(ws) if re.search(r"\d", w) or NUMERO.fullmatch(w)}
+    idx |= {j for j in range(1, len(ws) - 1) if ws[j] == "y" and {j - 1, j + 1} <= idx}  # "cuarenta y dos"
+    idx |= {j for j in range(1, len(ws) - 1) if ws[j] == "por" and ws[j + 1] == "ciento" and j - 1 in idx}
+    for frase in destacar:
+        partes = [_norm(p) for p in frase.split() if _norm(p)]
+        for j in range(len(ws) - len(partes) + 1):
+            if partes and all(ws[j + k] == p or (k == len(partes) - 1 and ws[j + k].startswith(p))
+                              for k, p in enumerate(partes)):
+                idx.update(range(j, j + len(partes)))
+                break
+    return sorted(idx)
 
 
 def estimar(lineas: list[dict]) -> tuple[list, list]:
@@ -82,7 +113,7 @@ def renderizar(g: dict, duracion: float, vol: np.ndarray, salida: Path, audio: P
     from playwright.sync_api import sync_playwright
 
     datos = {"fps": FPS, "titulo": g["titulo"], "vol": [round(float(v), 3) for v in vol],
-             "lineas": [{k: l[k] for k in ("texto", "escena", "chip", "poses", "grupos", "ini", "fin", "palabras")}
+             "lineas": [{k: l[k] for k in ("texto", "escena", "chip", "poses", "grupos", "clave", "ini", "fin", "palabras")}
                         for l in g["lineas"]]}
     with sync_playwright() as pw:
         # NQV_CHROMIUM: para usar un Chromium ya instalado en vez del que baja Playwright
@@ -112,7 +143,7 @@ def renderizar(g: dict, duracion: float, vol: np.ndarray, salida: Path, audio: P
         entrada = ["-i", str(audio)] if audio else ["-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono"]
         ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", str(FPS), "-i", "-",
                                *entrada, "-map", "0:v", "-map", "1:a",
-                               "-af", "dynaudnorm=f=250:g=15:p=0.9,loudnorm=I=-14:TP=-1.5,apad",
+                               "-af", "apad",
                                "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
                                "-c:a", "aac", "-b:a", "160k", "-t", f"{total / FPS:.3f}", "-movflags", "+faststart",
                                str(salida)], stdin=subprocess.PIPE)
@@ -150,8 +181,21 @@ def armar(carpeta: Path, anterior: Path | None = None, sin_voz: bool = False,
     if cuadros is not None:
         renderizar(g, duracion, vol, trabajo / "cuadros", audio, cuadros)
         return trabajo / "cuadros"
+    # la mezcla final: voz + música del tema + efectos en los cambios de escena, carteles nuevos y el botón Seguir
+    eventos = []
+    for k, l in enumerate(lineas[1:], 1):
+        eventos.append((l["ini"] - 0.25, "whoosh"))
+        if l["chip"] != lineas[k - 1]["chip"]:
+            eventos.append((l["ini"] + 0.05, "pop"))
+        if l["escena"] == "seguir":
+            ws = [_norm(w) for w in l["texto"].split(" ")]
+            j = next((j for j, w in enumerate(ws) if w.startswith("sigueme")), len(ws) - 1)
+            eventos.append((l["palabras"][j], "seguir"))
+    tema = sonido.elegir_tema(g)
+    print(f"Música: {tema}", flush=True)
+    mezcla = sonido.mezclar(audio, duracion, tema, carpeta.name, eventos, trabajo / "mezcla.wav")
     video = SALIDA / f"animado-{carpeta.name}.mp4"
-    renderizar(g, duracion, vol, video, audio)
+    renderizar(g, duracion, vol, video, mezcla)
     print(f"Video listo: {video} ({video.stat().st_size / 1e6:.1f} MB, {duracion:.1f} s)", flush=True)
     return video
 

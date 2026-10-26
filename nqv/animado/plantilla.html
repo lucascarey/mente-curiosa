@@ -320,13 +320,16 @@ function subtitulo(i, T) {
   let actual = 0;
   l.palabras.forEach((t, j) => { if (t <= T + 0.05) actual = j; });
   const grupo = l.grupos.find(g => g.includes(actual)) || l.grupos[0];
-  const tam = 54, maxAncho = 470, cx = 690;
+  // las palabras clave (números y las de "destacar" del guion) van más grandes y en amarillo
+  const tam = 54, maxAncho = 470, cx = 690, clave = new Set(l.clave || []);
+  const fuente = j => `850 ${clave.has(j) ? Math.round(tam * 1.18) : tam}px Inter`;
+  const medir = j => { ctx.font = fuente(j); return ctx.measureText(ws[j]).width; };
   ctx.font = `850 ${tam}px Inter`;
   const esp = ctx.measureText(" ").width;
   const renglones = [[]];
   let ancho = 0;
   for (const j of grupo) {
-    const w = ctx.measureText(ws[j]).width;
+    const w = medir(j);
     if (renglones.at(-1).length && ancho + esp + w > maxAncho) { renglones.push([]); ancho = 0; }
     ancho += (renglones.at(-1).length ? esp : 0) + w;
     renglones.at(-1).push(j);
@@ -334,14 +337,28 @@ function subtitulo(i, T) {
   let y = 1290 - (renglones.length - 1) * 70 / 2;
   ctx.textBaseline = "middle"; ctx.textAlign = "left"; ctx.lineJoin = "round";
   for (const r of renglones) {
-    const total = r.reduce((a, j) => a + ctx.measureText(ws[j]).width, 0) + esp * (r.length - 1);
+    const total = r.reduce((a, j) => a + medir(j), 0) + esp * (r.length - 1);
     let x = cx - total / 2;
     for (const j of r) {
+      ctx.font = fuente(j);
       ctx.lineWidth = 9; ctx.strokeStyle = "#05060c"; ctx.strokeText(ws[j], x, y);
-      ctx.fillStyle = j === actual ? CELESTE : "#fff"; ctx.fillText(ws[j], x, y);
+      ctx.fillStyle = j === actual ? CELESTE : clave.has(j) ? AMARILLO : "#fff"; ctx.fillText(ws[j], x, y);
       x += ctx.measureText(ws[j]).width + esp;
     }
     y += 70;
+  }
+}
+
+// barra finita arriba que muestra cuánto falta (debajo de los íconos de Reels/TikTok)
+function progreso(T) {
+  const fin = DATOS.lineas[DATOS.lineas.length - 1].fin + 1.5;
+  const x = 90, w = 900, y = 214;
+  caja(x, y, w, 8, 4, "rgba(255,255,255,0.15)");
+  const k = clamp(T / fin);
+  if (k > 0) {
+    ctx.save(); ctx.shadowColor = CELESTE; ctx.shadowBlur = 10;
+    caja(x, y, Math.max(8, w * k), 8, 4, CELESTE);
+    ctx.restore();
   }
 }
 
@@ -353,6 +370,7 @@ function dibujar(T) {
   if (k < 1) escena(i - 1, DATOS.lineas[i].ini - 0.001, 1 - k);
   escena(i, T, k);
   cabecera(i, T);
+  progreso(T);
   neuron(i, T, n);
   subtitulo(i, T);
 }

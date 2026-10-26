@@ -1,60 +1,108 @@
 {
  "titulo": "¿A QUÉ DISTANCIA CAYÓ EL RAYO?",
  "caption": "Cuenta los segundos entre el relámpago y el trueno y divide por 3: son los kilómetros a los que cayó el rayo. ⚡\n\nLa luz llega casi al instante, pero el sonido tarda unos 3 segundos por kilómetro. Y si oyes el trueno, ya estás a distancia de rayo: busca refugio.\n\n#datoscuriosos #ciencia #tormenta #rayos #fisica #curiosidades #nadaquever",
+ "musica": "ciencia",
  "lineas": [
   {
    "dice": "Cuenta los segundos entre el relámpago y el trueno, divide por tres, y sabrás a cuántos kilómetros cayó el rayo.",
    "escena": "hook",
    "chip": "¿A qué distancia?",
-   "poses": ["habla", "canchero"]
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "divide por tres"
+   ]
   },
   {
    "dice": "Hoy vamos a ver por qué funciona este truco, y por qué un rayo hace tanto ruido.",
    "escena": "intro",
    "chip": "¿A qué distancia?",
-   "poses": ["explica", "idea"]
+   "poses": [
+    "explica",
+    "idea"
+   ],
+   "destacar": [
+    "truco"
+   ]
   },
   {
    "dice": "Un rayo calienta el aire a unos treinta mil grados. Es cinco veces más caliente que la superficie del Sol.",
    "escena": "calor",
    "chip": "1 El calor",
-   "poses": ["explica", "senala"]
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "más caliente"
+   ]
   },
   {
    "dice": "Ese aire se expande tan rápido que explota. Esa explosión es el trueno.",
    "escena": "explosion",
    "chip": "2 El trueno",
-   "poses": ["senala", "idea"]
+   "poses": [
+    "senala",
+    "idea"
+   ],
+   "destacar": [
+    "explota",
+    "trueno"
+   ]
   },
   {
    "dice": "La luz del rayo te llega casi al instante. Pero el sonido es lento: tarda unos tres segundos en recorrer un kilómetro.",
    "escena": "carrera",
    "chip": "3 La carrera",
-   "poses": ["explica", "listo"]
+   "poses": [
+    "explica",
+    "listo"
+   ],
+   "destacar": [
+    "lento"
+   ]
   },
   {
    "dice": "Por eso, si cuentas nueve segundos, la tormenta está a unos tres kilómetros.",
    "escena": "cuenta",
    "chip": "3 La carrera",
-   "poses": ["habla", "senala"]
+   "poses": [
+    "habla",
+    "senala"
+   ]
   },
   {
    "dice": "Y ojo: si llegas a oír el trueno, ya estás lo bastante cerca como para que te caiga un rayo. Busca refugio.",
    "escena": "refugio",
    "chip": "4 Cuidado",
-   "poses": ["atento", "senala"]
+   "poses": [
+    "atento",
+    "senala"
+   ],
+   "destacar": [
+    "Busca refugio"
+   ]
   },
   {
    "dice": "O sea, el trueno es aire explotando, y contar segundos te dice qué tan cerca está la tormenta.",
    "escena": "cierre",
    "chip": "¿A qué distancia?",
-   "poses": ["canchero"]
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "aire explotando"
+   ]
   },
   {
    "dice": "Para más datos curiosos como este, sígueme.",
    "escena": "seguir",
    "chip": "Sígueme",
-   "poses": ["festeja"]
+   "poses": [
+    "festeja"
+   ]
   }
  ]
 }

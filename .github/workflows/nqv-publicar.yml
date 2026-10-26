@@ -2,9 +2,11 @@ name: Nada Que Ver - publicar
 
 on:
   schedule:
-    # 13 y 20 h de Argentina (UTC-3). GitHub puede atrasarse unos minutos.
-    - cron: "0 16 * * *"
-    - cron: "0 23 * * *"
+    # Horarios: 13 y 20 h de Argentina (16 y 23 UTC). GitHub atrasa (¡horas!) o saltea las corridas programadas,
+    # así que se prueba cada 20 minutos desde la hora del horario y el paso "Decidir" publica solo si el video de
+    # ese horario todavía no salió.
+    - cron: "*/20 16-23 * * *"
+    - cron: "*/20 0-3 * * *"
   # Vista previa sin publicar: cambiar nqv/vista.txt (primera línea: guion a armar, vacía = el próximo).
   # El video queda en la rama nqv-vista.
   push:
@@ -37,15 +39,34 @@ jobs:
           fetch-depth: 30
       # Formato que publica el horario automático, según nqv/formato.txt: "animado" = Neurón solo con gráficos
       # (nqv/animados/pendientes); cualquier otra cosa = elenco con fotos (nqv/guiones/pendientes).
+      # Publica si todavía no salió el video del último horario (16 o 23 UTC) y pasaron 2 h del anterior.
+      # Mira origin/main recién bajado: una corrida que esperó en la cola puede tener un main viejo.
+      - name: Decidir
+        run: |
+          if [ "${{ github.event_name }}" = push ]; then echo "PUBLICAR=1" >> "$GITHUB_ENV"; exit 0; fi
+          git fetch -q origin main && git reset -q --hard origin/main
+          ahora=$(date -u +%s); hoy=$(date -u +%F)
+          horario=$(date -u -d "$(date -u -d "$hoy -1 day" +%F) 23:00" +%s)
+          for h in 16:00 23:00; do t=$(date -u -d "$hoy $h" +%s); [ "$t" -le "$ahora" ] && horario=$t; done
+          ultimo=$(git log -1 --format=%ct -- nqv/guiones/publicados nqv/animados/publicados); ultimo=${ultimo:-0}
+          echo "Horario: $(date -u -d @$horario '+%F %H:%M') UTC. Último publicado: $(date -u -d @$ultimo '+%F %H:%M') UTC."
+          if [ "${{ inputs.forzar }}" = "true" ]; then p=1; echo "Publicación forzada a mano."
+          elif [ "$ultimo" -ge "$horario" ]; then p=0; echo "El video de este horario ya salió."
+          elif [ $((ahora - ultimo)) -lt 7200 ]; then p=0; echo "Salió otro hace menos de 2 horas: espera a la próxima corrida."
+          else p=1; fi
+          echo "PUBLICAR=$p" >> "$GITHUB_ENV"
       - name: Formato
+        if: env.PUBLICAR == '1'
         run: |
           f=elenco
           if [ "${{ github.event_name }}" != push ] && grep -qx animado nqv/formato.txt 2>/dev/null; then f=animado; fi
           echo "FORMATO=$f" >> "$GITHUB_ENV"; echo "Formato: $f"
       - uses: actions/setup-python@v5
+        if: env.PUBLICAR == '1'
         with:
           python-version: "3.12"
       - name: Instalar
+        if: env.PUBLICAR == '1'
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests numpy pillow faster-whisper
@@ -53,10 +74,11 @@ jobs:
             pip install -q playwright && python -m playwright install --with-deps chromium
           fi
       - name: Revisar guiones
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && env.PUBLICAR == '1'
         run: |
           if [ "$FORMATO" = animado ]; then python -m nqv.animado.armar --validar; else python -m nqv.main --validar; fi
       - name: Armar y publicar
+        if: env.PUBLICAR == '1'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -70,8 +92,6 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             python -u -m nqv.main --vista "$(head -1 nqv/vista.txt | tr -d '\r')"
-          elif [ "${{ inputs.forzar }}" != "true" ] && [ -n "$(git log --since='6 hours ago' --format=%H -- nqv/guiones/publicados nqv/animados/publicados | head -1)" ]; then
-            echo "Ya se publicó un video hace menos de 6 horas: esta corrida no publica otro."
           elif [ "$FORMATO" = animado ]; then
             git fetch -q origin nqv-animado && git worktree add /tmp/vista-animado origin/nqv-animado || mkdir -p /tmp/vista-animado
             python -u -m nqv.animado.armar --publicar /tmp/vista-animado
@@ -109,7 +129,7 @@ jobs:
           fi
           for f in "$dir"/*; do gh secret set "$(basename "$f")" --repo "$GITHUB_REPOSITORY" < "$f"; done
       - name: Marcar guion como publicado
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && env.PUBLICAR == '1'
         run: |
           git config user.name "mente-curiosa-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -30,8 +30,10 @@ tamaño o cantidad, procesos paso a paso, curvas y proporciones.
 {
  "titulo": "¿POR QUÉ FLOTA EL HIELO?",
  "caption": "Texto del post con el dato y #hashtags (#datoscuriosos ... #nadaquever)",
+ "musica": "ciencia",
  "lineas": [
-  {"dice": "lo que lee la voz", "escena": "vasos", "chip": "¿Por qué flota?", "poses": ["habla", "senala"]},
+  {"dice": "lo que lee la voz", "escena": "vasos", "chip": "¿Por qué flota?", "poses": ["habla", "senala"],
+   "destacar": ["al revés", "flota"]},
   {"dice": "Hoy vamos a ver...", "escena": "intro", "chip": "¿Por qué flota?", "poses": ["explica"]},
   ...
   {"dice": "Para más datos curiosos como este, sígueme.", "escena": "seguir", "chip": "Sígueme", "poses": ["festeja"]}
@@ -43,6 +45,13 @@ tamaño o cantidad, procesos paso a paso, curvas y proporciones.
   sale en naranja. Hook, intro y conclusión llevan la pregunta corta del tema.
 - `poses` de Neurón: habla, canchero, explica, escucha, piensa, atento, frustrado, festeja, senala, listo, idea
   (ver `GESTOS` en `nqv/guion.py`). Con 2, cambia a mitad de la línea.
+- `musica`: el clima de la música de fondo, según el tema: `espacio` (lento, misterioso), `ciencia` (alegre, con
+  ritmo suave), `historia` (solemne, con tambores), `naturaleza` (cálido, tipo marimba) o `tecnologia` (más
+  electrónico). Se sintetiza sola (sin derechos de autor) y baja cuando habla Neurón. Si falta, se adivina por los
+  hashtags. Los efectos (whoosh al cambiar de escena, pop en carteles nuevos, clic en "sígueme") van solos.
+- `destacar` (opcional, por línea): 1 o 2 palabras o frases cortas de lo que dice, las que tienen que quedar
+  grabadas; el subtítulo las muestra más grandes y en amarillo. Los números dichos ("ocho minutos") se destacan
+  solos. No destacar más de 3 palabras por línea, ni en la intro ni en el "sígueme".
 - Números en `dice` escritos en palabras ("veintitrés") para que la voz los lea bien; en los gráficos van en cifras.
 
 ## escenas.js

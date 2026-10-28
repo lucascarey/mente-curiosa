@@ -1,0 +1,106 @@
+{
+ "titulo": "LA CARA OCULTA DE LA LUNA",
+ "caption": "Desde la Tierra siempre vemos la misma cara de la Luna. 🌕\n\nNo es que no gire: tarda lo mismo en girar sobre sí misma que en dar la vuelta a la Tierra, unos 27 días. La gravedad de la Tierra la fue frenando hasta dejarla así.\n\n#datoscuriosos #espacio #luna #astronomia #ciencia #curiosidades #nadaquever",
+ "musica": "espacio",
+ "lineas": [
+  {
+   "dice": "Desde la Tierra, siempre vemos la misma cara de la Luna. La otra mitad nunca se ve desde aquí.",
+   "escena": "hook",
+   "chip": "¿La otra cara?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "misma cara"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver por qué la Luna nos esconde su otra mitad.",
+   "escena": "intro",
+   "chip": "¿La otra cara?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Mucha gente cree que la Luna no gira. Pero sí gira sobre sí misma.",
+   "escena": "gira",
+   "chip": "1 Sí gira",
+   "poses": [
+    "piensa",
+    "senala"
+   ],
+   "destacar": [
+    "sí gira"
+   ]
+  },
+  {
+   "dice": "El truco es que tarda lo mismo en girar sobre sí misma que en dar una vuelta alrededor de la Tierra: unos veintisiete días.",
+   "escena": "orbita",
+   "chip": "2 El truco",
+   "poses": [
+    "explica",
+    "listo"
+   ],
+   "destacar": [
+    "lo mismo"
+   ]
+  },
+  {
+   "dice": "No es casualidad. La gravedad de la Tierra estira un poco a la Luna, y ese tirón la fue frenando durante millones de años.",
+   "escena": "freno",
+   "chip": "3 El freno",
+   "poses": [
+    "senala",
+    "explica"
+   ],
+   "destacar": [
+    "frenando"
+   ]
+  },
+  {
+   "dice": "Los astrónomos lo llaman rotación sincrónica, y les pasa a muchas lunas del sistema solar.",
+   "escena": "sincronica",
+   "chip": "4 Sincrónica",
+   "poses": [
+    "habla",
+    "idea"
+   ],
+   "destacar": [
+    "rotación sincrónica"
+   ]
+  },
+  {
+   "dice": "Y el lado oculto no es oscuro: recibe tanta luz del Sol como el nuestro. La primera foto la sacó una sonda soviética en mil novecientos cincuenta y nueve.",
+   "escena": "oculto",
+   "chip": "5 El lado oculto",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "no es oscuro"
+   ]
+  },
+  {
+   "dice": "Así que la Luna sí gira, solo que al ritmo justo para mirarnos siempre de frente.",
+   "escena": "cierre",
+   "chip": "¿La otra cara?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "de frente"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

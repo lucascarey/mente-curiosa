@@ -1,0 +1,95 @@
+{
+ "titulo": "¿CUÁNTO PESA UNA NUBE?",
+ "caption": "Una nube común, de esas blancas y esponjosas, pesa unas 500 toneladas. ☁️\n\nFlota porque ese peso está repartido en gotitas diminutas que caen lentísimo, dentro de un montón de aire que pesa muchísimo más.\n\n#datoscuriosos #ciencia #nubes #clima #naturaleza #curiosidades #nadaquever",
+ "musica": "naturaleza",
+ "lineas": [
+  {
+   "dice": "Una nube común, de esas blancas y esponjosas, pesa unas quinientas toneladas. Lo mismo que unos cien elefantes.",
+   "escena": "hook",
+   "chip": "¿Cuánto pesa?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "elefantes"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver cómo algo tan pesado puede quedarse flotando en el cielo.",
+   "escena": "intro",
+   "chip": "¿Cuánto pesa?",
+   "poses": [
+    "explica"
+   ],
+   "destacar": [
+    "flotando"
+   ]
+  },
+  {
+   "dice": "Una nube de este tipo puede medir un kilómetro de ancho, de largo y de alto. Es un cubo de mil millones de metros cúbicos.",
+   "escena": "cubo",
+   "chip": "1 El tamaño",
+   "poses": [
+    "explica",
+    "senala"
+   ]
+  },
+  {
+   "dice": "En cada metro cúbico hay apenas medio gramo de agua, en gotitas diminutas. Pero multiplica eso por mil millones.",
+   "escena": "gramos",
+   "chip": "2 El agua",
+   "poses": [
+    "habla",
+    "listo"
+   ],
+   "destacar": [
+    "medio gramo"
+   ]
+  },
+  {
+   "dice": "Cada gotita es tan pequeña que cae lentísimo, y el aire tibio que sube desde el suelo alcanza para sostenerla.",
+   "escena": "gotitas",
+   "chip": "3 Las gotitas",
+   "poses": [
+    "piensa",
+    "explica"
+   ],
+   "destacar": [
+    "lentísimo"
+   ]
+  },
+  {
+   "dice": "Además, el aire que ocupa ese mismo espacio pesa más de un millón de toneladas. Al lado de eso, el agua de la nube es casi nada.",
+   "escena": "aire",
+   "chip": "4 El aire",
+   "poses": [
+    "senala",
+    "atento"
+   ],
+   "destacar": [
+    "casi nada"
+   ]
+  },
+  {
+   "dice": "Así que las nubes no flotan porque no pesen: flotan porque su peso está repartido en gotitas diminutas dentro de un montón de aire.",
+   "escena": "cierre",
+   "chip": "¿Cuánto pesa?",
+   "poses": [
+    "canchero",
+    "idea"
+   ],
+   "destacar": [
+    "repartido"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

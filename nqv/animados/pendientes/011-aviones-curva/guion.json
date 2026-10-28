@@ -1,0 +1,94 @@
+{
+ "titulo": "¿POR QUÉ LOS AVIONES VUELAN EN CURVA?",
+ "caption": "En el mapa, los vuelos largos hacen una curva rara hacia el norte. Y sin embargo es el camino más corto. ✈️\n\nSobre una esfera, la ruta más corta es un arco de círculo máximo. El que se tuerce es el mapa plano.\n\n#datoscuriosos #aviones #mapas #geografia #ciencia #curiosidades #nadaquever",
+ "musica": "tecnologia",
+ "lineas": [
+  {
+   "dice": "En el mapa, el vuelo de Madrid a Nueva York hace una curva rara hacia el norte. Y aun así es el camino más corto.",
+   "escena": "hook",
+   "chip": "¿Por qué en curva?",
+   "poses": [
+    "habla",
+    "piensa"
+   ],
+   "destacar": [
+    "más corto"
+   ]
+  },
+  {
+   "dice": "Hoy te explico por qué los aviones no vuelan en línea recta.",
+   "escena": "intro",
+   "chip": "¿Por qué en curva?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "El problema es el mapa. La Tierra es una esfera, y para aplanarla en un papel hay que estirarla, sobre todo cerca de los polos.",
+   "escena": "mapa",
+   "chip": "1 El mapa",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "estirarla"
+   ]
+  },
+  {
+   "dice": "Sobre una esfera, el camino más corto entre dos puntos es un arco del círculo más grande que puedes dibujar alrededor de ella.",
+   "escena": "esfera",
+   "chip": "2 La esfera",
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "círculo más grande"
+   ]
+  },
+  {
+   "dice": "Puedes comprobarlo con un globo terráqueo y un hilo: estíralo bien tenso entre dos ciudades y verás que pasa más al norte.",
+   "escena": "hilo",
+   "chip": "3 El hilo",
+   "poses": [
+    "idea",
+    "explica"
+   ],
+   "destacar": [
+    "hilo"
+   ]
+  },
+  {
+   "dice": "Al pasar esa ruta al mapa plano, se ve torcida. Por eso muchos vuelos de Europa a Estados Unidos pasan cerca de Groenlandia.",
+   "escena": "ruta",
+   "chip": "4 La ruta",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "Groenlandia"
+   ]
+  },
+  {
+   "dice": "Así que el avión sí va derecho. El que se tuerce es el mapa.",
+   "escena": "cierre",
+   "chip": "¿Por qué en curva?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "el mapa"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

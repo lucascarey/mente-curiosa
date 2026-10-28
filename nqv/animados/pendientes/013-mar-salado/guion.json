@@ -1,0 +1,94 @@
+{
+ "titulo": "¿POR QUÉ EL MAR ES SALADO?",
+ "caption": "Un litro de agua de mar tiene unos 35 gramos de sal. 🌊\n\nLa lluvia desgasta las rocas, los ríos llevan esos minerales al mar, el fondo marino suma más, y el Sol evapora el agua pero deja la sal. Así durante millones de años.\n\n#datoscuriosos #mar #oceano #naturaleza #ciencia #curiosidades #nadaquever",
+ "musica": "naturaleza",
+ "lineas": [
+  {
+   "dice": "Si evaporas un litro de agua de mar, quedan unos treinta y cinco gramos de sal. Pero los ríos que llegan al mar son de agua dulce.",
+   "escena": "hook",
+   "chip": "¿Por qué salado?",
+   "poses": [
+    "habla",
+    "piensa"
+   ],
+   "destacar": [
+    "agua dulce"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver de dónde sale toda esa sal.",
+   "escena": "intro",
+   "chip": "¿Por qué salado?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Todo empieza con la lluvia. Es apenas ácida, y al caer sobre las rocas las va desgastando de a poco.",
+   "escena": "lluvia",
+   "chip": "1 La lluvia",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "desgastando"
+   ]
+  },
+  {
+   "dice": "Así se sueltan minerales, como el sodio, y los ríos los llevan hasta el mar. Llevan tan poca sal que su agua parece dulce.",
+   "escena": "rios",
+   "chip": "2 Los ríos",
+   "poses": [
+    "habla",
+    "listo"
+   ],
+   "destacar": [
+    "minerales"
+   ]
+  },
+  {
+   "dice": "En el fondo del mar, los volcanes y las fuentes de agua caliente aportan más minerales, como el cloro.",
+   "escena": "fondo",
+   "chip": "3 El fondo",
+   "poses": [
+    "senala",
+    "explica"
+   ],
+   "destacar": [
+    "cloro"
+   ]
+  },
+  {
+   "dice": "Después, el Sol evapora el agua del mar, pero la sal no se evapora: se queda. Y así, durante millones de años, se fue juntando.",
+   "escena": "evaporar",
+   "chip": "4 El Sol",
+   "poses": [
+    "idea",
+    "explica"
+   ],
+   "destacar": [
+    "se queda"
+   ]
+  },
+  {
+   "dice": "Así que el mar es salado porque es el final del camino: el agua se va, pero la sal se queda.",
+   "escena": "cierre",
+   "chip": "¿Por qué salado?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "final del camino"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

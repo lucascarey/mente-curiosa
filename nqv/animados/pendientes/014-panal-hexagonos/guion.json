@@ -1,0 +1,106 @@
+{
+ "titulo": "¿POR QUÉ LAS ABEJAS HACEN HEXÁGONOS?",
+ "caption": "Las celdas del panal son hexágonos, y no es casualidad. 🐝\n\nEl hexágono cubre todo sin dejar huecos y encierra más espacio con menos borde, o sea, con menos cera. Se sospechaba desde la antigua Grecia y Thomas Hales lo demostró en 1999.\n\n#datoscuriosos #abejas #matematica #naturaleza #ciencia #curiosidades #nadaquever",
+ "musica": "naturaleza",
+ "lineas": [
+  {
+   "dice": "Las abejas construyen sus panales con hexágonos casi perfectos. Y a los matemáticos les llevó siglos demostrar por qué es la mejor forma.",
+   "escena": "hook",
+   "chip": "¿Por qué hexágonos?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "hexágonos"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver qué tiene de especial el hexágono.",
+   "escena": "intro",
+   "chip": "¿Por qué hexágonos?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Las celdas tienen que encajar sin dejar huecos. Los círculos, por ejemplo, desperdician espacio entre ellos.",
+   "escena": "circulos",
+   "chip": "1 Sin huecos",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "huecos"
+   ]
+  },
+  {
+   "dice": "Solo tres figuras regulares cubren un plano sin huecos: el triángulo, el cuadrado y el hexágono.",
+   "escena": "tres",
+   "chip": "2 Solo tres",
+   "poses": [
+    "listo",
+    "explica"
+   ],
+   "destacar": [
+    "Solo tres"
+   ]
+  },
+  {
+   "dice": "De esas tres, el hexágono es la que encierra más espacio con menos borde. Y menos borde significa menos cera.",
+   "escena": "borde",
+   "chip": "3 Menos cera",
+   "poses": [
+    "idea",
+    "senala"
+   ],
+   "destacar": [
+    "menos cera"
+   ]
+  },
+  {
+   "dice": "Y la cera es cara: para fabricarla, las abejas tienen que comer mucha miel.",
+   "escena": "miel",
+   "chip": "4 El costo",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "mucha miel"
+   ]
+  },
+  {
+   "dice": "Se sospechaba desde la antigua Grecia, pero recién en mil novecientos noventa y nueve el matemático Thomas Hales lo demostró.",
+   "escena": "prueba",
+   "chip": "5 La prueba",
+   "poses": [
+    "habla",
+    "listo"
+   ],
+   "destacar": [
+    "Thomas Hales"
+   ]
+  },
+  {
+   "dice": "Así que el panal no es solo bonito: es la forma más económica de guardar miel.",
+   "escena": "cierre",
+   "chip": "¿Por qué hexágonos?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "más económica"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

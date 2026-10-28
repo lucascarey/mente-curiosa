@@ -1,0 +1,85 @@
+{
+ "titulo": "TU CORAZÓN LATE 100.000 VECES POR DÍA",
+ "caption": "Tu corazón late unas 100.000 veces por día y bombea más de 7.000 litros de sangre. ❤️\n\nEn una vida de 80 años son unos 3.000 millones de latidos, con un músculo del tamaño de un puño.\n\n#datoscuriosos #cuerpohumano #corazon #ciencia #salud #curiosidades #nadaquever",
+ "musica": "ciencia",
+ "lineas": [
+  {
+   "dice": "Tu corazón late unas cien mil veces por día, sin que tengas que pensarlo ni una sola vez.",
+   "escena": "hook",
+   "chip": "¿Cuánto trabaja?",
+   "poses": [
+    "habla",
+    "senala"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver cuánto trabaja este músculo del tamaño de un puño.",
+   "escena": "intro",
+   "chip": "¿Cuánto trabaja?",
+   "poses": [
+    "explica"
+   ],
+   "destacar": [
+    "un puño"
+   ]
+  },
+  {
+   "dice": "En reposo late entre sesenta y cien veces por minuto. Multiplica eso por todos los minutos del día y llegas a unas cien mil.",
+   "escena": "latidos",
+   "chip": "1 Los latidos",
+   "poses": [
+    "explica",
+    "listo"
+   ]
+  },
+  {
+   "dice": "En cada latido bombea unos setenta mililitros de sangre. Al día, eso suma más de siete mil litros.",
+   "escena": "sangre",
+   "chip": "2 La sangre",
+   "poses": [
+    "senala",
+    "explica"
+   ]
+  },
+  {
+   "dice": "Es como llenar unas cuarenta bañeras por día, con un músculo que pesa unos trescientos gramos.",
+   "escena": "baneras",
+   "chip": "3 Comparación",
+   "poses": [
+    "atento",
+    "habla"
+   ],
+   "destacar": [
+    "bañeras"
+   ]
+  },
+  {
+   "dice": "En una vida de ochenta años, son unos tres mil millones de latidos. Y solo descansa un instante entre latido y latido.",
+   "escena": "vida",
+   "chip": "4 Toda la vida",
+   "poses": [
+    "piensa",
+    "idea"
+   ],
+   "destacar": [
+    "un instante"
+   ]
+  },
+  {
+   "dice": "Así que mientras veías este video, tu corazón ya latió unas cincuenta veces. Sin pedirte permiso.",
+   "escena": "cierre",
+   "chip": "¿Cuánto trabaja?",
+   "poses": [
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

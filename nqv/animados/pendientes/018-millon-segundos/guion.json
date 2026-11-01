@@ -1,0 +1,103 @@
+{
+ "titulo": "UN MILLÓN DE SEGUNDOS VS MIL MILLONES",
+ "caption": "Un millón de segundos son unos 11 días y medio. Mil millones de segundos son casi 32 años. ⏱️\n\nSuenan parecidos, pero uno es mil veces el otro. Y un billón de segundos serían unos 31.700 años.\n\n#datoscuriosos #matematica #numeros #ciencia #curiosidades #nadaquever",
+ "musica": "ciencia",
+ "lineas": [
+  {
+   "dice": "Un millón de segundos son unos once días. Mil millones de segundos son casi treinta y dos años.",
+   "escena": "hook",
+   "chip": "¿Cuánto es?",
+   "poses": [
+    "habla",
+    "senala"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver por qué estos números grandes nos engañan tanto.",
+   "escena": "intro",
+   "chip": "¿Cuánto es?",
+   "poses": [
+    "explica"
+   ],
+   "destacar": [
+    "nos engañan"
+   ]
+  },
+  {
+   "dice": "Un millón suena a muchísimo. Pero en segundos, es poco más de una semana y media.",
+   "escena": "millon",
+   "chip": "1 Un millón",
+   "poses": [
+    "explica",
+    "listo"
+   ]
+  },
+  {
+   "dice": "Mil millones es mil veces un millón. No el doble ni el triple: mil veces.",
+   "escena": "mil",
+   "chip": "2 Mil veces",
+   "poses": [
+    "senala",
+    "explica"
+   ],
+   "destacar": [
+    "mil veces"
+   ]
+  },
+  {
+   "dice": "Si un millón de segundos fuera un paso, mil millones serían mil pasos.",
+   "escena": "pasos",
+   "chip": "2 Mil veces",
+   "poses": [
+    "idea",
+    "habla"
+   ],
+   "destacar": [
+    "mil pasos"
+   ]
+  },
+  {
+   "dice": "Y si sigues: un billón de segundos son unos treinta y un mil setecientos años. Más tiempo del que llevamos escribiendo.",
+   "escena": "billon",
+   "chip": "3 Un billón",
+   "poses": [
+    "atento",
+    "senala"
+   ],
+   "destacar": [
+    "llevamos escribiendo"
+   ]
+  },
+  {
+   "dice": "Nuestro cerebro no está hecho para imaginar estas cantidades, por eso las comparaciones ayudan tanto.",
+   "escena": "cerebro",
+   "chip": "4 El cerebro",
+   "poses": [
+    "piensa",
+    "explica"
+   ],
+   "destacar": [
+    "comparaciones"
+   ]
+  },
+  {
+   "dice": "Así que la próxima vez que escuches millones o miles de millones, acuérdate: la diferencia es enorme.",
+   "escena": "cierre",
+   "chip": "¿Cuánto es?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "enorme"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

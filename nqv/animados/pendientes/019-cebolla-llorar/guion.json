@@ -1,0 +1,107 @@
+{
+ "titulo": "¿POR QUÉ LLORAS CON LA CEBOLLA?",
+ "caption": "La cebolla no te hace llorar hasta que la cortas. 🧅\n\nAl romper sus células, se mezclan sustancias que forman un gas irritante. El gas llega a tus ojos y ellos se defienden con lágrimas. Un cuchillo bien afilado y la cebolla fría ayudan.\n\n#datoscuriosos #ciencia #cocina #quimica #curiosidades #nadaquever",
+ "musica": "ciencia",
+ "lineas": [
+  {
+   "dice": "Una cebolla entera no te hace llorar. Pero apenas la cortas, empieza un pequeño ataque químico.",
+   "escena": "hook",
+   "chip": "¿Por qué lloras?",
+   "poses": [
+    "habla",
+    "atento"
+   ],
+   "destacar": [
+    "ataque químico"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver qué pasa cuando cortas una cebolla.",
+   "escena": "intro",
+   "chip": "¿Por qué lloras?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "La cebolla guarda sustancias con azufre dentro de sus células, separadas de unas enzimas.",
+   "escena": "celulas",
+   "chip": "1 Las células",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "azufre"
+   ]
+  },
+  {
+   "dice": "Cuando el cuchillo rompe las células, todo se mezcla y se forma un gas irritante.",
+   "escena": "corte",
+   "chip": "2 El corte",
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "gas irritante"
+   ]
+  },
+  {
+   "dice": "Ese gas flota hasta tus ojos y activa unos nervios que avisan: algo me está irritando.",
+   "escena": "ojos",
+   "chip": "3 Tus ojos",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "nervios"
+   ]
+  },
+  {
+   "dice": "Los ojos responden con lágrimas, para lavar el gas y sacarlo.",
+   "escena": "lagrimas",
+   "chip": "4 Las lágrimas",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "lágrimas"
+   ]
+  },
+  {
+   "dice": "Un truco: un cuchillo bien afilado rompe menos células, y si la cebolla está fría, suelta menos gas.",
+   "escena": "trucos",
+   "chip": "5 Los trucos",
+   "poses": [
+    "idea",
+    "canchero"
+   ],
+   "destacar": [
+    "bien afilado",
+    "fría"
+   ]
+  },
+  {
+   "dice": "Así que no lloras por la cebolla: lloras porque tus ojos se están defendiendo.",
+   "escena": "cierre",
+   "chip": "¿Por qué lloras?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "defendiendo"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

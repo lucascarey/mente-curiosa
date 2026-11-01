@@ -1,0 +1,103 @@
+{
+ "titulo": "¿POR QUÉ NOS DA HIPO?",
+ "caption": "El hipo es un espasmo del diafragma seguido de un cierre rápido de las cuerdas vocales: de ahí el \"hic\". 😮\n\nNadie sabe bien para qué sirve. Y el récord lo tiene Charles Osborne, que tuvo hipo durante 68 años.\n\n#datoscuriosos #cuerpohumano #hipo #ciencia #curiosidades #nadaquever",
+ "musica": "ciencia",
+ "lineas": [
+  {
+   "dice": "Un hombre en Estados Unidos tuvo hipo durante sesenta y ocho años seguidos.",
+   "escena": "hook",
+   "chip": "¿Qué es el hipo?",
+   "poses": [
+    "habla",
+    "atento"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver qué pasa en tu cuerpo cuando te da hipo.",
+   "escena": "intro",
+   "chip": "¿Qué es el hipo?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Debajo de los pulmones tienes el diafragma, el músculo que usas para respirar. Normalmente baja y sube con ritmo.",
+   "escena": "diafragma",
+   "chip": "1 El diafragma",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "diafragma"
+   ]
+  },
+  {
+   "dice": "En el hipo, el diafragma se contrae de golpe, sin que tú lo decidas, y el aire entra rápido.",
+   "escena": "espasmo",
+   "chip": "2 El espasmo",
+   "poses": [
+    "senala",
+    "atento"
+   ],
+   "destacar": [
+    "de golpe"
+   ]
+  },
+  {
+   "dice": "Una fracción de segundo después, las cuerdas vocales se cierran y frenan ese aire. Ese choque es el sonido del hipo.",
+   "escena": "cuerdas",
+   "chip": "3 El sonido",
+   "poses": [
+    "explica",
+    "listo"
+   ],
+   "destacar": [
+    "se cierran"
+   ]
+  },
+  {
+   "dice": "Lo puede disparar comer muy rápido, las bebidas con gas o un cambio brusco de temperatura.",
+   "escena": "causas",
+   "chip": "4 Las causas",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "comer muy rápido"
+   ]
+  },
+  {
+   "dice": "Y lo más raro: nadie sabe bien para qué sirve. Charles Osborne lo tuvo desde mil novecientos veintidós hasta mil novecientos noventa.",
+   "escena": "record",
+   "chip": "5 El récord",
+   "poses": [
+    "piensa",
+    "idea"
+   ],
+   "destacar": [
+    "Charles Osborne"
+   ]
+  },
+  {
+   "dice": "Así que el hipo es un reflejo antiguo que tu cuerpo sigue haciendo, aunque ya nadie recuerde para qué.",
+   "escena": "cierre",
+   "chip": "¿Qué es el hipo?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "reflejo antiguo"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "titulo": "¿CÓMO SABE EL GPS DÓNDE ESTÁS?",
+ "caption": "Tu celular sabe dónde estás midiendo cuánto tarda en llegarle la señal de varios satélites. 🛰️\n\nCon cuatro satélites alcanza. Y como los relojes de los satélites se adelantan unos 38 microsegundos por día por la relatividad, se corrigen; si no, el error crecería kilómetros por día.\n\n#datoscuriosos #tecnologia #gps #espacio #fisica #curiosidades #nadaquever",
+ "musica": "tecnologia",
+ "lineas": [
+  {
+   "dice": "Tu celular sabe dónde estás gracias a relojes que flotan a veinte mil kilómetros de altura.",
+   "escena": "hook",
+   "chip": "¿Cómo te encuentra?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "relojes"
+   ]
+  },
+  {
+   "dice": "Hoy te explico cómo funciona el GPS.",
+   "escena": "intro",
+   "chip": "¿Cómo te encuentra?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Hay unos treinta satélites GPS girando alrededor de la Tierra. Cada uno lleva un reloj atómico muy preciso y transmite la hora todo el tiempo.",
+   "escena": "satelites",
+   "chip": "1 Los satélites",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "reloj atómico"
+   ]
+  },
+  {
+   "dice": "Tu celular recibe esa señal y mide cuánto tardó en llegar. Como viaja a la velocidad de la luz, eso le dice a qué distancia está el satélite.",
+   "escena": "distancia",
+   "chip": "2 La distancia",
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "cuánto tardó"
+   ]
+  },
+  {
+   "dice": "Con la distancia a tres satélites, solo hay un punto posible donde puedes estar. El cuarto satélite sirve para corregir el reloj de tu celular.",
+   "escena": "cruce",
+   "chip": "3 El cruce",
+   "poses": [
+    "idea",
+    "explica"
+   ],
+   "destacar": [
+    "un punto"
+   ]
+  },
+  {
+   "dice": "Y hay un detalle de película: por la relatividad, los relojes de los satélites se adelantan unos treinta y ocho microsegundos por día.",
+   "escena": "relatividad",
+   "chip": "4 La relatividad",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "relatividad"
+   ]
+  },
+  {
+   "dice": "Parece nada, pero si no se corrigiera, el error crecería unos diez kilómetros por día.",
+   "escena": "error",
+   "chip": "4 La relatividad",
+   "poses": [
+    "habla",
+    "senala"
+   ]
+  },
+  {
+   "dice": "Así que cada vez que abres el mapa, estás usando la teoría de Einstein sin darte cuenta.",
+   "escena": "cierre",
+   "chip": "¿Cómo te encuentra?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "Einstein"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "titulo": "¿CUÁNTAS TIERRAS CABEN EN EL SOL?",
+ "caption": "En el Sol cabrían más de un millón de Tierras. ☀️\n\nSu diámetro es unas 109 veces el de la Tierra, y como el volumen crece al cubo, eso da unos 1,3 millones de planetas como el nuestro. Además, tiene el 99,8% de toda la masa del sistema solar.\n\n#datoscuriosos #espacio #sol #astronomia #ciencia #curiosidades #nadaquever",
+ "musica": "espacio",
+ "lineas": [
+  {
+   "dice": "Dentro del Sol cabrían más de un millón de Tierras. Y no es una exageración.",
+   "escena": "hook",
+   "chip": "¿Cuántas caben?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "un millón"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver qué tan grande es el Sol de verdad.",
+   "escena": "intro",
+   "chip": "¿Cuántas caben?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Si pones Tierras en fila de un lado al otro del Sol, necesitas unas ciento nueve.",
+   "escena": "fila",
+   "chip": "1 De lado a lado",
+   "poses": [
+    "explica",
+    "senala"
+   ]
+  },
+  {
+   "dice": "Pero el Sol no es una línea: es una esfera. Y el espacio de adentro crece mucho más rápido que el ancho.",
+   "escena": "esfera",
+   "chip": "2 El volumen",
+   "poses": [
+    "idea",
+    "explica"
+   ],
+   "destacar": [
+    "mucho más rápido"
+   ]
+  },
+  {
+   "dice": "Ciento nueve por ciento nueve por ciento nueve da más de un millón. Por eso cabrían unas un millón trescientas mil Tierras.",
+   "escena": "cuenta",
+   "chip": "3 La cuenta",
+   "poses": [
+    "listo",
+    "senala"
+   ]
+  },
+  {
+   "dice": "Y además pesa muchísimo: el Sol tiene casi toda la masa del sistema solar, el noventa y nueve coma ocho por ciento.",
+   "escena": "masa",
+   "chip": "4 La masa",
+   "poses": [
+    "atento",
+    "explica"
+   ]
+  },
+  {
+   "dice": "Todos los planetas, lunas y asteroides juntos son apenas el resto.",
+   "escena": "resto",
+   "chip": "4 La masa",
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "apenas el resto"
+   ]
+  },
+  {
+   "dice": "Así que, al lado del Sol, la Tierra es un granito de arena flotando junto a una pelota de playa.",
+   "escena": "cierre",
+   "chip": "¿Cuántas caben?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "granito de arena"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

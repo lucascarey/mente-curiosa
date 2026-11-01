@@ -1,0 +1,106 @@
+{
+ "titulo": "¿POR QUÉ EL ARCOÍRIS ES CURVO?",
+ "caption": "El arcoíris en realidad es un círculo. 🌈\n\nCada gota de lluvia devuelve los colores en un ángulo de unos 42 grados, y todas las gotas que te mandan luz forman un círculo alrededor de la sombra de tu cabeza. El suelo tapa la parte de abajo; desde un avión se puede ver completo.\n\n#datoscuriosos #ciencia #arcoiris #luz #fisica #curiosidades #nadaquever",
+ "musica": "ciencia",
+ "lineas": [
+  {
+   "dice": "Spoiler: el arcoíris no es un arco. Es un círculo completo, y casi nunca lo ves entero.",
+   "escena": "hook",
+   "chip": "¿Por qué curvo?",
+   "poses": [
+    "habla",
+    "canchero"
+   ],
+   "destacar": [
+    "círculo completo"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver por qué el arcoíris tiene esa forma.",
+   "escena": "intro",
+   "chip": "¿Por qué curvo?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Cuando la luz del Sol entra en una gota de lluvia, se dobla, rebota adentro y vuelve a salir, separada en colores.",
+   "escena": "gota",
+   "chip": "1 La gota",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "separada en colores"
+   ]
+  },
+  {
+   "dice": "Y sale siempre con el mismo ángulo: unos cuarenta y dos grados respecto de la luz que entró.",
+   "escena": "angulo",
+   "chip": "2 El ángulo",
+   "poses": [
+    "senala",
+    "listo"
+   ],
+   "destacar": [
+    "mismo ángulo"
+   ]
+  },
+  {
+   "dice": "Entonces, las gotas que te mandan color son las que están a cuarenta y dos grados de la sombra de tu cabeza. Y todas juntas forman un círculo.",
+   "escena": "circulo",
+   "chip": "3 El círculo",
+   "poses": [
+    "explica",
+    "idea"
+   ],
+   "destacar": [
+    "sombra de tu cabeza"
+   ]
+  },
+  {
+   "dice": "El suelo tapa la parte de abajo. Pero desde un avión, a veces se ve el círculo entero.",
+   "escena": "avion",
+   "chip": "4 El suelo",
+   "poses": [
+    "atento",
+    "senala"
+   ],
+   "destacar": [
+    "círculo entero"
+   ]
+  },
+  {
+   "dice": "Por eso cada persona ve su propio arcoíris: sus gotas son distintas a las tuyas.",
+   "escena": "propio",
+   "chip": "5 Tu arcoíris",
+   "poses": [
+    "piensa",
+    "habla"
+   ],
+   "destacar": [
+    "propio arcoíris"
+   ]
+  },
+  {
+   "dice": "Así que el arcoíris es curvo porque en realidad es un círculo, y tú siempre estás en su centro.",
+   "escena": "cierre",
+   "chip": "¿Por qué curvo?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "en su centro"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+ "titulo": "¿POR QUÉ NO SE CAE LA TORRE DE PISA?",
+ "caption": "La Torre de Pisa empezó a inclinarse mientras la construían, en el siglo XII. 🏛️\n\nNo se cae porque su centro de gravedad sigue cayendo dentro de la base. Llegó a unos 5,5 grados de inclinación, y entre 1990 y 2001 la enderezaron hasta unos 4 sacando tierra de un costado.\n\n#datoscuriosos #historia #italia #pisa #fisica #curiosidades #nadaquever",
+ "musica": "historia",
+ "lineas": [
+  {
+   "dice": "La Torre de Pisa lleva más de ochocientos años inclinada y todavía no se cayó.",
+   "escena": "hook",
+   "chip": "¿Por qué no se cae?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "inclinada"
+   ]
+  },
+  {
+   "dice": "Hoy vamos a ver por qué sigue de pie.",
+   "escena": "intro",
+   "chip": "¿Por qué no se cae?",
+   "poses": [
+    "explica"
+   ]
+  },
+  {
+   "dice": "Empezaron a construirla en mil ciento setenta y tres, sobre un suelo blando de arcilla y arena.",
+   "escena": "suelo",
+   "chip": "1 El suelo",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "suelo blando"
+   ]
+  },
+  {
+   "dice": "Cuando iban por el tercer piso, el suelo de un lado se hundió más que el otro, y la torre empezó a inclinarse.",
+   "escena": "inclina",
+   "chip": "2 La inclinación",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "tercer piso"
+   ]
+  },
+  {
+   "dice": "No se cae porque la línea vertical que baja desde su centro de gravedad sigue cayendo dentro de la base.",
+   "escena": "gravedad",
+   "chip": "3 El equilibrio",
+   "poses": [
+    "idea",
+    "senala"
+   ],
+   "destacar": [
+    "dentro de la base"
+   ]
+  },
+  {
+   "dice": "Pero llegó a estar en peligro: en mil novecientos noventa tenía unos cinco grados y medio de inclinación, y la cerraron al público.",
+   "escena": "peligro",
+   "chip": "4 El peligro",
+   "poses": [
+    "frustrado",
+    "explica"
+   ],
+   "destacar": [
+    "cinco grados y medio"
+   ]
+  },
+  {
+   "dice": "Durante once años sacaron tierra de debajo del lado alto, de a poco, y la torre se enderezó hasta unos cuatro grados.",
+   "escena": "arreglo",
+   "chip": "5 El arreglo",
+   "poses": [
+    "listo",
+    "habla"
+   ],
+   "destacar": [
+    "sacaron tierra"
+   ]
+  },
+  {
+   "dice": "Así que la Torre de Pisa no se cae porque su peso todavía apunta a su propia base. Y la cuidan para que siga así.",
+   "escena": "cierre",
+   "chip": "¿Por qué no se cae?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "su propia base"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

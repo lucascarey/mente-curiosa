@@ -1,0 +1,104 @@
+{
+ "titulo": "¿POR QUÉ LOS GATOS CAEN DE PIE?",
+ "caption": "Los gatos pueden girar en el aire sin apoyarse en nada. 🐱\n\nPrimero giran la mitad de adelante con las patas recogidas, después la de atrás, y arquean la espalda para amortiguar. Los gatitos lo aprenden entre las 3 y las 7 semanas de vida.\n\n#datoscuriosos #gatos #animales #ciencia #fisica #curiosidades #nadaquever",
+ "musica": "naturaleza",
+ "lineas": [
+  {
+   "dice": "Un gato que cae de espaldas puede darse vuelta en el aire, sin apoyarse en nada, en menos de medio segundo.",
+   "escena": "hook",
+   "chip": "¿Cómo giran?",
+   "poses": [
+    "habla",
+    "senala"
+   ],
+   "destacar": [
+    "sin apoyarse"
+   ]
+  },
+  {
+   "dice": "Hoy te explico el truco que usan los gatos para caer de pie.",
+   "escena": "intro",
+   "chip": "¿Cómo giran?",
+   "poses": [
+    "explica",
+    "canchero"
+   ]
+  },
+  {
+   "dice": "Primero, el oído interno le avisa hacia dónde está el suelo. Ahí arranca el giro.",
+   "escena": "oido",
+   "chip": "1 El oído",
+   "poses": [
+    "explica",
+    "senala"
+   ],
+   "destacar": [
+    "oído interno"
+   ]
+  },
+  {
+   "dice": "Después se dobla por la cintura y gira la mitad de adelante, con las patas delanteras recogidas para girar más rápido.",
+   "escena": "adelante",
+   "chip": "2 Adelante",
+   "poses": [
+    "senala",
+    "explica"
+   ],
+   "destacar": [
+    "recogidas"
+   ]
+  },
+  {
+   "dice": "Recién entonces gira la mitad de atrás. Como cada mitad gira por separado, no necesita apoyarse en nada.",
+   "escena": "atras",
+   "chip": "3 Atrás",
+   "poses": [
+    "idea",
+    "listo"
+   ],
+   "destacar": [
+    "por separado"
+   ]
+  },
+  {
+   "dice": "Al final estira las patas y arquea la espalda para amortiguar el golpe.",
+   "escena": "aterriza",
+   "chip": "4 El aterrizaje",
+   "poses": [
+    "atento",
+    "explica"
+   ],
+   "destacar": [
+    "amortiguar"
+   ]
+  },
+  {
+   "dice": "Los gatitos aprenden este reflejo entre las tres y las siete semanas de vida. Y necesitan algo de altura: desde muy bajo no les da el tiempo.",
+   "escena": "gatitos",
+   "chip": "5 El reflejo",
+   "poses": [
+    "habla",
+    "piensa"
+   ]
+  },
+  {
+   "dice": "Así que el gato no tiene suerte: tiene un cuerpo que gira por partes.",
+   "escena": "cierre",
+   "chip": "¿Cómo giran?",
+   "poses": [
+    "canchero"
+   ],
+   "destacar": [
+    "por partes"
+   ]
+  },
+  {
+   "dice": "Para más datos curiosos como este, sígueme.",
+   "escena": "seguir",
+   "chip": "Sígueme",
+   "poses": [
+    "festeja"
+   ]
+  }
+ ]
+}

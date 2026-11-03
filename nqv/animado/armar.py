@@ -106,14 +106,21 @@ def estimar(lineas: list[dict]) -> tuple[list, list]:
     return tiempos, palabras
 
 
+def estilo() -> str:
+    """Estilo visual: NQV_ESTILO o nqv/estilo.txt ("oscuro", el de siempre, o "cuaderno": birome en hoja rayada)."""
+    archivo = RAIZ / "nqv" / "estilo.txt"
+    return (os.environ.get("NQV_ESTILO") or (archivo.read_text().strip() if archivo.exists() else "") or "oscuro")
+
+
 def renderizar(g: dict, duracion: float, vol: np.ndarray, salida: Path, audio: Path | None,
                solo: list[float] | None = None) -> None:
     """Abre la plantilla en Chromium y graba un cuadro por captura. Un error de JavaScript corta todo."""
     import subprocess
     from playwright.sync_api import sync_playwright
 
-    datos = {"fps": FPS, "titulo": g["titulo"], "vol": [round(float(v), 3) for v in vol],
-             "lineas": [{k: l[k] for k in ("texto", "escena", "chip", "poses", "grupos", "clave", "ini", "fin", "palabras")}
+    datos = {"fps": FPS, "titulo": g["titulo"], "estilo": estilo(), "vol": [round(float(v), 3) for v in vol],
+             "lineas": [{**{k: l[k] for k in ("texto", "escena", "chip", "poses", "grupos", "clave", "ini", "fin", "palabras")},
+                         **({"neuron": l["neuron"]} if "neuron" in l else {})}
                         for l in g["lineas"]]}
     with sync_playwright() as pw:
         # NQV_CHROMIUM: para usar un Chromium ya instalado en vez del que baja Playwright

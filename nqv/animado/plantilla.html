@@ -15,6 +15,8 @@ los botones: ahí no va nada importante.
 <style>
 @font-face { font-family: "Mono"; src: url("../../assets/fonts/JetBrainsMono.ttf"); font-weight: 100 900; }
 @font-face { font-family: "Inter"; src: url("../../assets/fonts/Inter.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Fredoka"; src: url("../../assets/fonts/Fredoka-700.woff2"); font-weight: 700; }
+@font-face { font-family: "Gloria Hallelujah"; src: url("../../assets/fonts/GloriaHallelujah.woff2"); font-weight: 400; }
 html, body { margin: 0; background: #0b0e1c; overflow: hidden; }
 canvas { display: block; }
 </style>
@@ -29,7 +31,7 @@ const CELESTE = "#6ed2eb";  // color de Neurón: la palabra que se está diciend
 const NARANJA = "#ff7a45", AMARILLO = "#ffd166", AZUL = "#4ea8ff", ROJO = "#ff4d5e", VIOLETA = "#a66bff", VERDE = "#5ee08a";
 const ARCOIRIS = ["#ff4d5e", "#ff8c42", "#ffd166", "#5ee08a", "#4ea8ff", "#5b6cff", "#a66bff"];
 const ESCENAS = {};
-const ctx = document.getElementById("c").getContext("2d");
+let ctx = document.getElementById("c").getContext("2d");  // "let": el estilo cuaderno lo cambia por la birome
 let DATOS = null;  // lo carga animado.py: líneas con tiempos, volumen de la voz, etc.
 const POSES = {};
 
@@ -386,7 +388,9 @@ async function preparar(datos) {
     im.onerror = mal;
     im.src = `../../assets/elenco/neuron/${String(k).padStart(2, "0")}.png`;
   })));
+  if (datos.estilo === "cuaderno") await activarCuaderno();
 }
 </script>
+<script src="cuaderno.js"></script>
 </body>
 </html>

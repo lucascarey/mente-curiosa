@@ -152,7 +152,10 @@ def musica(tema: str, dur: float, semilla: str) -> np.ndarray:
 
 
 def efectos(dur: float, eventos: list[tuple[float, str]]) -> np.ndarray:
-    """eventos: (segundo, "whoosh" | "pop" | "seguir")."""
+    """eventos: (segundo, "whoosh" | "pop" | "seguir" | "hoja" | "birome" | "birome_largo" | "tachon").
+
+    Los del estilo cuaderno: "hoja" (la página que baja: roce de papel), "birome" (rayitas de lapicera sobre el
+    papel, ~0,35 s), "birome_largo" (Neurón dibujándose, ~0,8 s) y "tachon" (dos rayas fuertes, lo que está mal)."""
     rng = np.random.default_rng(7)
     out = np.zeros(int((dur + 1) * SR))
     for t0, tipo in eventos:
@@ -175,6 +178,47 @@ def efectos(dur: float, eventos: list[tuple[float, str]]) -> np.ndarray:
             t = np.arange(n) / SR
             x = 0.3 * rng.standard_normal(n) * np.exp(-t * 400)
             x += 0.25 * (np.sin(2 * np.pi * 1318.5 * t) + 0.5 * np.sin(2 * np.pi * 1975.5 * t)) * np.exp(-t * 5) * (t > 0.06)
+        elif tipo == "hoja":  # roce de papel: ruido grave-medio que barre, con crujidos sueltos
+            n = int(0.6 * SR)
+            t = np.arange(n) / SR
+            ruido = rng.standard_normal(n)
+            x, y = np.zeros(n), np.zeros(n)
+            corte = 0.04 + 0.18 * np.sin(np.linspace(0, np.pi, n)) ** 1.5
+            for i in range(1, n):
+                x[i] = x[i - 1] + corte[i] * (ruido[i] - x[i - 1])
+                y[i] = y[i - 1] + 0.6 * (x[i] - y[i - 1])
+            x = (x - y) * np.sin(np.linspace(0, np.pi, n)) ** 1.2
+            for c in rng.uniform(0.05, 0.5, 9):  # crujidos
+                k = int(c * SR)
+                m = min(n - k, int(0.012 * SR))
+                x[k:k + m] += 0.5 * rng.standard_normal(m) * np.exp(-np.arange(m) / (0.003 * SR))
+            x *= 0.3 / (np.abs(x).max() + 1e-9)
+        elif tipo in ("birome", "birome_largo", "tachon"):  # bolita rodando: ruido agudo en golpecitos irregulares
+            dur_t = {"birome": 0.35, "birome_largo": 0.8, "tachon": 0.3}[tipo]
+            n = int(dur_t * SR)
+            t = np.arange(n) / SR
+            ruido = rng.standard_normal(n)
+            # pasaaltos + pasabajos: banda de 1,5 a 5 kHz (raspado de birome)
+            hp = np.zeros(n); lp = np.zeros(n)
+            for i in range(1, n):
+                hp[i] = 0.82 * (hp[i - 1] + ruido[i] - ruido[i - 1])
+                lp[i] = lp[i - 1] + 0.45 * (hp[i] - lp[i - 1])
+            # trazos: cada uno 40-110 ms, con presión que sube y baja
+            env = np.zeros(n)
+            if tipo == "tachon":
+                golpes = [(0.0, 0.11), (0.15, 0.12)]
+            else:
+                golpes, c = [], 0.0
+                while c < dur_t - 0.03:
+                    largo = rng.uniform(0.04, 0.11)
+                    golpes.append((c, largo)); c += largo + rng.uniform(0.01, 0.04)
+            for c0, largo in golpes:
+                a, b = int(c0 * SR), min(n, int((c0 + largo) * SR))
+                if b > a:
+                    env[a:b] = np.sin(np.linspace(0, np.pi, b - a)) ** 0.7 * rng.uniform(0.6, 1.0)
+            x = lp * env
+            fuerza = 0.5 if tipo == "tachon" else 0.22
+            x *= fuerza / (np.abs(x).max() + 1e-9)
         else:
             raise ValueError(tipo)
         i = max(0, int(t0 * SR))

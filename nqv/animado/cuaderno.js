@@ -825,18 +825,10 @@
   function seguirC(inf) {
     const t = inf.t, m = REAL.getTransform();
     const p = (x, y) => [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f], e = escalaDe(m);
-    // círculo con la cara de Neurón
-    const b = boceto(DATOS.lineas.at(-1).poses[0]);
+    // sello redondo con las iniciales (Neurón ya está dibujado abajo)
     const kc = clamp(t / 0.6);
-    pantalla(() => {
-      const [cx, cy] = p(540, 450);
-      REAL.save(); REAL.beginPath(); REAL.arc(cx, cy, 118 * e, 0, 7); REAL.clip();
-      REAL.beginPath(); REAL.rect(cx - 140 * e, cy - 140 * e, 280 * e, 280 * e * kc); REAL.clip();
-      const h = 560 * e, w = b.width * h / b.height;
-      REAL.drawImage(b, cx - w / 2, cy - 110 * e, w, h);
-      REAL.restore();
-      rayar(window.__circ(cx, cy, 128 * e, 124 * e), 1401, 3.4, 0.95, AZULT, kc, 2);
-    });
+    pantalla(() => { const [cx, cy] = p(540, 450); rayar(window.__circ(cx, cy, 128 * e, 124 * e), 1401, 3.4, 0.95, AZULT, kc, 2); rayar(window.__circ(cx, cy, 108 * e, 104 * e), 1405, 2.4, 0.8, ROJOT, clamp(kc * 1.5 - 0.3)); });
+    REAL.save(); REAL.translate(540, 455); REAL.rotate(-0.06); escribir("NQV", 0, 0, fuenteGlobo(92), "center", "middle", { tipo: "tinta", rgb: AZULT, a: 1 }, entre(t, 0.15, 0.6)); REAL.restore();
     REAL.save(); escribir("@nqv.tv", 540, 650, fuenteGlobo(72), "center", "middle", { tipo: "tinta", rgb: AZULT, a: 1 }, entre(t, 0.2, 0.7)); REAL.restore();
     REAL.save(); escribir("Nada Que Ver", 540, 730, fuenteMano(38), "center", "middle", { tipo: "tinta", rgb: AZULT, a: 0.8 }, entre(t, 0.4, 0.8)); REAL.restore();
     const tS = inf.cuando("sigueme"), apretado = entre(t, tS, tS + 0.25), kb = entre(t, 0.5, 0.9);

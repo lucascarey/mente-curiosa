@@ -106,6 +106,14 @@ def estimar(lineas: list[dict]) -> tuple[list, list]:
     return tiempos, palabras
 
 
+def con_neuron(lineas: list[dict], k: int) -> bool:
+    """En el estilo cuaderno, Neurón sale en el gancho, la intro y el cierre (o donde la línea diga "neuron")."""
+    l = lineas[k]
+    if isinstance(l.get("neuron"), bool):
+        return l["neuron"]
+    return k <= 1 or k >= len(lineas) - 1 or l["escena"] in ("intro", "seguir")
+
+
 def estilo() -> str:
     """Estilo visual: NQV_ESTILO o nqv/estilo.txt ("oscuro", el de siempre, o "cuaderno": birome en hoja rayada)."""
     archivo = RAIZ / "nqv" / "estilo.txt"
@@ -190,10 +198,23 @@ def armar(carpeta: Path, anterior: Path | None = None, sin_voz: bool = False,
         return trabajo / "cuadros"
     # la mezcla final: voz + música del tema + efectos en los cambios de escena, carteles nuevos y el botón Seguir
     eventos = []
+    cuaderno = estilo() == "cuaderno"
+    if cuaderno:  # birome sobre papel: la hoja que baja, rayitas cuando se dibuja algo nuevo
+        eventos.append((0.05, "birome"))
     for k, l in enumerate(lineas[1:], 1):
-        eventos.append((l["ini"] - 0.25, "whoosh"))
-        if l["chip"] != lineas[k - 1]["chip"]:
-            eventos.append((l["ini"] + 0.05, "pop"))
+        nueva_escena = l["escena"] != lineas[k - 1]["escena"]
+        if not cuaderno:
+            eventos.append((l["ini"] - 0.25, "whoosh"))
+            if l["chip"] != lineas[k - 1]["chip"]:
+                eventos.append((l["ini"] + 0.05, "pop"))
+        else:
+            if nueva_escena:
+                eventos.append((l["ini"] - 0.05, "hoja"))
+            eventos.append((l["ini"] + (0.45 if nueva_escena else 0.1), "birome"))
+            if l["chip"] != lineas[k - 1]["chip"]:
+                eventos.append((l["ini"] + 0.15, "birome"))
+            if con_neuron(lineas, k) and not con_neuron(lineas, k - 1):
+                eventos.append((l["ini"] + 0.05, "pop"))
         if l["escena"] == "seguir":
             ws = [_norm(w) for w in l["texto"].split(" ")]
             j = next((j for j, w in enumerate(ws) if w.startswith("sigueme")), len(ws) - 1)

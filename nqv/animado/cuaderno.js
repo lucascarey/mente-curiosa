@@ -11,7 +11,7 @@
 // Los colores se pasan a biromes de colores; el blanco es la birome azul y el amarillo es resaltador.
 //
 // Neurón ya no está siempre: aparece en el gancho, la intro y el cierre (o donde la línea diga "neuron": true),
-// dibujado con birome a partir de sus poses. Sin Neurón la escena se agranda y ocupa la hoja.
+// en su estilo original (en color), con una sombrita tramada. Sin Neurón la escena se agranda y ocupa la hoja.
 // Todo depende solo de T: el mismo T da el mismo cuadro.
 
 (() => {
@@ -547,92 +547,6 @@
     });
   }
 
-  // ---------- Neurón dibujado con birome ----------
-  const BOCETO = {};
-  function boceto(k) {
-    if (BOCETO[k]) return BOCETO[k];
-    const im = POSES[k], alto = 640, ancho = Math.round(im.width * alto / im.height);
-    const c = capa(ancho, alto), g = c.getContext("2d", { willReadFrequently: true });
-    g.drawImage(im, 0, 0, ancho, alto);
-    const d = g.getImageData(0, 0, ancho, alto).data;
-    const A = new Float32Array(ancho * alto), L = new Float32Array(ancho * alto), Rj = new Uint8Array(ancho * alto);
-    for (let i = 0; i < A.length; i++) {
-      const r = d[i * 4], gg = d[i * 4 + 1], b = d[i * 4 + 2];
-      A[i] = d[i * 4 + 3] / 255; L[i] = (0.3 * r + 0.59 * gg + 0.11 * b) / 255;
-      Rj[i] = r > 150 && r > gg * 1.3 && r > b * 1.05 ? 1 : 0;  // el cerebro rosado va con birome roja
-    }
-    // suavizar un poco el tono para que el tramado no siga cada detalle
-    const tono = (x, y) => {
-      x |= 0; y |= 0; if (x < 1 || y < 1 || x >= ancho - 1 || y >= alto - 1) return 0;
-      const i = y * ancho + x; if (A[i] < 0.5) return 0;
-      return Math.pow(1 - (L[i] + L[i - 1] + L[i + 1] + L[i - ancho] + L[i + ancho]) / 5, 1.15);
-    };
-    const out = capa(ancho, alto), o = out.getContext("2d");
-    const real = REAL;
-    // dibujar con las mismas primitivas sobre otra capa
-    const dibujarEn = fn => { const guarda = BIROME_REAL.c; BIROME_REAL.c = o; try { fn(); } finally { BIROME_REAL.c = guarda; } };
-    dibujarEn(() => {
-      o.lineCap = "round"; o.lineJoin = "round";
-      // tramado según el tono, en pasadas con distinto ángulo y umbral (como la referencia)
-      const pasada = (ang, sp, umbral, semilla, alfa) => {
-        const rr = rng(semilla), ca = Math.cos(ang), sa = Math.sin(ang), mx = ancho / 2, my = alto / 2, ext = Math.hypot(ancho, alto) / 2;
-        for (let off = -ext; off < ext; off += sp * (0.85 + rr() * 0.3)) {
-          const ox = mx - sa * off, oy = my + ca * off;
-          let run = [], rojo = 0;
-          const vaciar = () => {
-            let i = 0;
-            while (i < run.length - 3) {
-              const len = Math.floor(rr.range(8, 22)), parte = run.slice(i, i + len);
-              if (parte.length > 2) {
-                const roja = parte.filter(p => p[2]).length > parte.length / 2;
-                bplEn(o, parte, semilla * 31 + i + (off | 0) * 7, rr.range(1.0, 1.35), alfa * rr.range(0.75, 1.1), roja ? ROJOT : AZULT);
-              }
-              i += len;
-            }
-            run = [];
-          };
-          for (let s = -ext; s < ext; s += 2.5) {
-            const x = ox + ca * s, y = oy + sa * s;
-            if (x < 0 || y < 0 || x >= ancho || y >= alto) { vaciar(); continue; }
-            const v = tono(x, y) + nz.n2(x * 0.03, y * 0.03) * 0.05;
-            if (v > umbral) run.push([x, y, Rj[(y | 0) * ancho + (x | 0)]]); else vaciar();
-          }
-          vaciar();
-        }
-      };
-      pasada(-0.85, 5.2, 0.18, 1, 0.55);
-      pasada(0.72, 5.0, 0.38, 2, 0.6);
-      pasada(-0.12, 4.4, 0.55, 3, 0.65);
-      pasada(1.32, 4.0, 0.7, 4, 0.7);
-      pasada(-0.5, 3.4, 0.82, 5, 0.75);
-      // contornos: borde de la silueta y bordes fuertes de adentro
-      const ed = (x, y) => {
-        const i = y * ancho + x;
-        const ga = Math.abs(A[i + 1] - A[i - 1]) + Math.abs(A[i + ancho] - A[i - ancho]);
-        const gl = A[i] > 0.5 ? Math.abs(L[i + 1] - L[i - 1]) + Math.abs(L[i + ancho] - L[i - ancho]) : 0;
-        return [ga, gl];
-      };
-      const rr = rng(77);
-      for (let y = 1; y < alto - 1; y++) for (let x = 1; x < ancho - 1; x++) {
-        const [ga, gl] = ed(x, y);
-        const i = y * ancho + x;
-        if (ga > 0.5) { o.fillStyle = rgba(Rj[i] ? ROJOT : AZULT, 0.8); o.fillRect(x - 1.1 + rr() * 0.4, y - 1.1 + rr() * 0.4, 2.4, 2.4); }
-        else if (gl > 0.32) { o.fillStyle = rgba(Rj[i] ? ROJOT : AZULT, Math.min(0.75, gl)); o.fillRect(x - 0.7, y - 0.7, 1.6, 1.6); }
-      }
-    });
-    BOCETO[k] = out;
-    return out;
-  }
-  const BIROME_REAL = { c: null };
-  // como bpl, pero sobre otra capa (para el boceto de Neurón)
-  function bplEn(c, pts, seed, w, a, rgb) {
-    const n = pts.length; if (n < 2) return;
-    c.strokeStyle = rgba(rgb, a * (0.7 + 0.3 * nz.n2(seed * 0.13, 1.7))); c.lineWidth = w;
-    c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
-    for (let i = 1; i < n; i++) c.lineTo(pts[i][0], pts[i][1]);
-    c.stroke();
-  }
-
   // ---------- qué líneas tienen a Neurón ----------
   function conNeuron(i) {
     const l = DATOS.lineas[i];
@@ -704,25 +618,40 @@
     // cuánto se ve: entra dibujándose de arriba abajo, sale corriéndose a la izquierda
     const ahora = conNeuron(i), antes = i ? conNeuron(i - 1) : false;
     let revela = 1, corre = 0;
-    if (ahora && !antes) revela = clamp((T - l.ini) / 0.7);
+    if (ahora && !antes) revela = clamp((T - l.ini) / 0.45);
     if (!ahora && antes) corre = eio((T - l.ini) / 0.4);
     if (!ahora && (!antes || corre >= 1)) return;
     const inf = info(ahora ? i : i - 1, T), poses = DATOS.lineas[ahora ? i : i - 1].poses;
     const pk = poses[Math.min(poses.length - 1, Math.floor(clamp(inf.p) * poses.length))];
-    const b = boceto(pk);
+    const b = original(pk);
     const vol = DATOS.vol[Math.min(n, DATOS.vol.length - 1)] || 0;
     const habla = T < DATOS.lineas.at(-1).fin + 0.3;
-    const alto = 620 * (1 + (habla ? 0.03 * vol : 0.008 * Math.sin(T * 2))), ancho = b.width * alto / b.height;
-    const x = 270 - 560 * corre, base = 1700;
-    REAL.save(); REAL.globalCompositeOperation = "multiply";
-    REAL.beginPath(); REAL.rect(0, base - alto - 10, W, (alto + 20) * revela + 2); REAL.clip();
-    REAL.drawImage(b, x - ancho / 2, base - alto, ancho, alto);
-    REAL.restore();
-    // una sombrita tramada en el piso
+    const entra = salto(revela);
+    const alto = 620 * (1 + (habla ? 0.035 * vol : 0.008 * Math.sin(T * 2))), ancho = b.width * alto / b.height;
+    const x = 260 - 560 * corre, base = 1700;
+    // sombrita tramada en el piso (lo único a birome: Neurón queda como es, en color)
     pantalla(() => {
-      const p = new Path2D(); p.ellipse(x, base - 8, ancho * 0.4, 16, 0, 0, 7);
-      tramar(p, [x - ancho * 0.4, base - 24, x + ancho * 0.4, base + 8], AZULT, 0.5, revela, 9);
+      const p = new Path2D(); p.ellipse(x, base - 30, ancho * 0.42, 18, 0, 0, 7);
+      tramar(p, [x - ancho * 0.42, base - 48, x + ancho * 0.42, base - 12], AZULT, 0.5, clamp(revela * 2), 9);
     });
+    REAL.save();
+    REAL.globalAlpha = clamp(revela * 3);
+    REAL.translate(x, base); REAL.scale(entra, entra);
+    REAL.drawImage(b, -ancho / 2, -alto, ancho, alto);
+    REAL.restore();
+  }
+
+  // Neurón tal cual (su estilo original), con los pies que se funden con el papel
+  const ORIGINAL = {};
+  function original(k) {
+    if (ORIGINAL[k]) return ORIGINAL[k];
+    const im = POSES[k], c = capa(im.width, im.height), g = c.getContext("2d");
+    g.drawImage(im, 0, 0);
+    g.globalCompositeOperation = "destination-out";
+    const f = g.createLinearGradient(0, im.height * 0.86, 0, im.height);
+    f.addColorStop(0, "rgba(0,0,0,0)"); f.addColorStop(1, "rgba(0,0,0,1)");
+    g.fillStyle = f; g.fillRect(0, im.height * 0.86, im.width, im.height * 0.14);
+    return (ORIGINAL[k] = c);
   }
 
   function subtituloC(i, T) {
@@ -930,8 +859,8 @@
       escribir(r, 0, 0, fuenteGlobo(tam), "center", "middle", { tipo: "tinta", rgb: k === renglones.length - 1 ? ROJOT : AZULT, a: 1 }, 1);
       REAL.restore();
     });
-    const b = boceto(h.poses[0]), hn = 620, wn = b.width * hn / b.height;
-    REAL.save(); REAL.globalCompositeOperation = "multiply"; REAL.drawImage(b, 250 - wn / 2, 1680 - hn, wn, hn); REAL.restore();
+    const b = original(h.poses[0]), hn = 640, wn = b.width * hn / b.height;
+    REAL.drawImage(b, 250 - wn / 2, 1680 - hn, wn, hn);
     terminar(0);
   }
 
@@ -945,7 +874,5 @@
     window.chip = chipC;
     ESCENAS.intro = introC;
     ESCENAS.seguir = seguirC;
-    // precalcular los bocetos de Neurón (tardan un poco)
-    for (const k of Object.keys(POSES)) boceto(k);
   };
 })();

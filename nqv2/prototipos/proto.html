@@ -1,0 +1,236 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Titulo;src:url(fuentes/SquadaOne.ttf)}
+@font-face{font-family:Destaque;src:url(fuentes/Shrikhand.ttf)}
+@font-face{font-family:Mano;src:url(fuentes/PatrickHandSC.ttf)}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#FBF4E6}
+svg{display:block}
+</style></head>
+<body>
+<svg id="v" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+// ===== Paleta NQV =====
+const C={crema:'#FBF4E6',crema2:'#F3E8D2',mostaza:'#EEA513',bordo:'#8E0028',verde:'#2BB191',naranja:'#DD4111',tinta:'#2A1E1A',blanco:'#FFFFFF'};
+let ESTILO='plano'; // 'plano' | 'contorno'
+const DUR=12.5;
+
+// ===== Easing =====
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lin=(t,a,b)=>cl((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3);
+const eInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const eElastic=x=>x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1;
+const mix=(a,b,k)=>a+(b-a)*k;
+
+// trazo según estilo
+const st=(w=6)=>ESTILO==='contorno'?`stroke="${C.tinta}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"`:'';
+// sombra plana (desplazada) según estilo
+const sombra=(svg,dx=10,dy=12)=>ESTILO==='plano'?`<g opacity=".16" transform="translate(${dx},${dy})" filter="url(#negro)">${svg}</g>${svg}`:svg;
+
+// ===== Palabras cinéticas =====
+// palabras: [{t, txt, f:'Titulo'|'Destaque'|'Mano', c, s(tamaño)}] en una línea centrada
+function linea(t, y, palabras, salida=99, cx=540){
+  const ow=salida<99?eInOut(lin(t,salida,salida+.25)):0;
+  let ancho=0; const med=palabras.map(p=>{MED.font=`${p.s}px ${p.f}`;const w=MED.measureText(p.txt).width+(p.f==='Titulo'?p.txt.length*2:0)+34;ancho+=w;return w});
+  ancho-=34; let x=cx-ancho/2, out='';
+  linea.pos={};
+  palabras.forEach((p,i)=>{
+    const k=lin(t,p.t,p.t+.32); if(k<=0){x+=med[i];return;}
+    const sc=eBack(k)*(1-ow), op=cl(k*3)*(1-ow);
+    const px=x+(med[i]-34)/2; linea.pos[p.txt]={x:x,w:med[i]-34}; const rot=(p.r||0)*(1-eOut(k));
+    out+=`<g transform="translate(${px},${y+(1-eOut(k))*40}) rotate(${rot}) scale(${sc})" opacity="${op}">
+      <text text-anchor="middle" dominant-baseline="middle" font-family="${p.f}" font-size="${p.s}" fill="${p.c}"
+       ${p.f==='Titulo'?'letter-spacing="2"':''} ${p.borde?`stroke="${C.crema}" stroke-width="14" paint-order="stroke"`:''}>${p.txt}</text></g>`;
+    x+=med[i];
+  });
+  return out;
+}
+
+// ===== Neurón con aura =====
+const POSES={}; const MED=document.createElement('canvas').getContext('2d');
+function neuron(t, pose, x, y, h, entra, habla, sale=99){
+  const k=eElastic(lin(t,entra,entra+.9)), ks=1-eInOut(lin(t,sale,sale+.3));
+  if(k<=0||ks<=0) return '';
+  // "habla": envolvente simulada (sin voz)
+  let a=.35; if(habla.some(([a0,b0])=>t>=a0&&t<=b0)) a=.55+.35*Math.abs(Math.sin(t*11.3)*Math.sin(t*4.1+1));
+  const bob=Math.sin(t*2.2)*6, img=POSES[pose];
+  const w=h*img.w/img.h, s=k*ks;
+  return `<g transform="translate(${x},${y+bob}) scale(${s})">
+    <ellipse cx="0" cy="${-h*.55}" rx="${h*.42}" ry="${h*.5}" fill="url(#aura)" opacity="${a}"/>
+    <ellipse cx="0" cy="-6" rx="${w*.36}" ry="16" fill="${C.tinta}" opacity=".12"/>
+    <image href="${img.src}" x="${-w/2}" y="${-h}" width="${w}" height="${h}"/></g>`;
+}
+
+// ===== Logo NQV (vectorial, letras en bloque) =====
+function logo(s){
+  const pl=ESTILO==='contorno'?st(8):'';
+  return `<g transform="scale(${s})">
+   <path d="M-260,-100 H260 V40 L190,100 H45 L0,150 L-45,100 H-260 Z" fill="${C.mostaza}" ${pl}/>
+   <path d="M-238,-80 L-182,-78 L-122,2 L-124,-78 L-84,-78 L-86,64 L-126,63 L-188,-22 L-190,64 L-232,63 Z" fill="${C.bordo}"/>
+   <path d="M-74,-79 L76,-82 L75,64 L28,64 L33,86 L-4,89 L-14,63 L-76,64 Z M-42,-44 L-44,30 L-6,30 L-9,12 L24,10 L30,30 L42,30 L43,-46 Z" fill="${C.verde}" fill-rule="evenodd"/>
+   <path d="M88,-79 L136,-81 L181,24 L222,-77 L262,-74 L205,64 L156,64 Z" fill="${C.naranja}"/></g>`;
+}
+function logoAnim(t, t0){
+  if(t<t0) return '';
+  const kin=eElastic(lin(t,t0,t0+.7)), kmov=eInOut(lin(t,t0+1.0,t0+1.5));
+  const x=mix(540,150,kmov), y=mix(900,190,kmov), s=mix(1.35*kin,.42,kmov);
+  const flash=kmov<1&&kin>0?`<circle cx="540" cy="900" r="${(1-kmov)*eOut(lin(t,t0,t0+.5))*520}" fill="${C.mostaza}" opacity="${.12*(1-lin(t,t0,t0+.9))}"/>`:'';
+  return flash+`<g transform="translate(${x},${y}) rotate(${(1-kin)*-14})">${logo(s)}</g>`;
+}
+
+// ===== Ilustraciones planas =====
+function sol(cx,cy,r,t,k){
+  let rayos='';
+  for(let i=0;i<12;i++){const an=i*30+t*14, L=r*.5*(1+.12*Math.sin(t*5+i));
+    rayos+=`<rect x="${-14}" y="${-r-26-L}" width="28" height="${L}" rx="14" fill="${C.mostaza}" ${st(5)} transform="rotate(${an})"/>`;}
+  const cara=`<circle r="${r}" fill="${C.mostaza}" ${st(7)}/><circle r="${r*.72}" fill="#F6BE3A"/>`;
+  return `<g transform="translate(${cx},${cy}) scale(${eBack(k)})">${sombra(rayos+cara)}</g>`;
+}
+function prisma(cx,cy,k){
+  const tri=`<path d="M0,-150 L140,110 L-140,110 Z" fill="#CFEFE6" ${st(7)} opacity=".95"/><path d="M0,-150 L40,110 L-140,110 Z" fill="#FFFFFF" opacity=".45"/>`;
+  return `<g transform="translate(${cx},${cy}) scale(${eBack(k)})">${sombra(tri)}</g>`;
+}
+function haz(x1,y1,x2,y2,k,color,w){
+  const x=mix(x1,x2,k), y=mix(y1,y2,k);
+  return k>0?`<line x1="${x1}" y1="${y1}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="${w}" stroke-linecap="round"/>`:'';
+}
+function tierra(t,k){
+  // horizonte curvo con atmósfera
+  const yy=mix(2200,1600,eOut(k));
+  return `<g transform="translate(540,${yy})">
+    <circle r="1150" cy="1050" fill="#9FE3FF" opacity=".35"/>
+    <circle r="1060" cy="1050" fill="#7FD3F5" opacity=".45"/>
+    <circle r="980" cy="1050" fill="${C.verde}" ${st(8)}/>
+    <clipPath id="planeta"><circle r="980" cy="1050"/></clipPath>
+    <g clip-path="url(#planeta)"><ellipse cx="-330" cy="150" rx="300" ry="110" fill="#1F8A70"/><ellipse cx="330" cy="110" rx="220" ry="80" fill="#1F8A70"/><ellipse cx="40" cy="260" rx="160" ry="60" fill="#1F8A70"/></g></g>`;
+}
+function particulas(t,t0,n,color,amp,seed){
+  if(t<t0) return ''; let o='';
+  for(let i=0;i<n;i++){
+    const ph=(i*137.5+seed)%360, sp=.6+((i*53)%10)/10;
+    const k=eOut(lin(t,t0+i*.03,t0+i*.03+.5));
+    const x=540+Math.cos(ph)*amp*k+Math.sin(t*sp*3+i)*30, y=930+Math.sin(ph*1.7)*amp*.6*k+Math.cos(t*sp*2.4+i)*30;
+    o+=`<circle cx="${x}" cy="${y}" r="${(10+(i%3)*5)*k}" fill="${color}" ${ESTILO==='contorno'?st(4):''}/>`;
+  }
+  return o;
+}
+
+// Luz entrando al aire: los colores pasan derecho, el azul rebota en las moléculas
+function dispersion(t){
+  let o='';
+  // moléculas de aire
+  const MOL=[[900,700],[760,840],[930,980],[700,1080],[880,1240],[620,1290],[180,760],[330,900],[150,1040],[300,1180],[470,720],[560,960],[1000,860],[430,1060],[1010,1120],[420,1400],[760,1380],[520,1180]];
+  for(let i=0;i<MOL.length;i++){const [x,y]=MOL[i];
+    const k=eBack(lin(t,7.9+i*.02,8.3+i*.02)); if(k<=0)continue;
+    o+=`<circle cx="${x+Math.sin(t*2+i)*8}" cy="${y+Math.cos(t*1.7+i)*8}" r="${16*k}" fill="#E9FFF8" opacity=".9" ${ESTILO==='contorno'?st(4):''}/>`;}
+  // rayos rojo/amarillo: derecho hacia abajo
+  [['#E8432E',470],[C.mostaza,560]].forEach(([c,x],i)=>{o+=haz(x+60,640,x,1500,eOut(lin(t,8.3+i*.1,8.9+i*.1)),c,16)});
+  // rayo azul: zigzag rebotando de molécula en molécula
+  const pts=[[1000,620],[900,700],[760,840],[930,980],[700,1080],[880,1240],[1010,1120],[1000,860]];
+  const k=lin(t,8.6,9.9)*(pts.length-1); let d=`M${pts[0][0]},${pts[0][1]}`;
+  for(let i=1;i<pts.length;i++){const f=cl(k-(i-1)); if(f<=0)break; const a=pts[i-1],b=pts[i];
+    d+=` L${mix(a[0],b[0],eOut(f))},${mix(a[1],b[1],eOut(f))}`;
+    if(f>=1&&i<pts.length-1) o+=`<circle cx="${b[0]}" cy="${b[1]}" r="${26+8*Math.sin(t*9)}" fill="#7FD3F5" opacity=".55"/>`;}
+  o+=`<path d="${d}" fill="none" stroke="#2F7FD8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>`;
+  return o;
+}
+
+// ===== Fondo y transición a color pleno =====
+function fondo(t){
+  let o=`<rect width="1080" height="1920" fill="${C.crema}"/>`;
+  // textura sutil de puntos
+  o+=`<rect width="1080" height="1920" fill="url(#puntos)" opacity=".5"/>`;
+  // escena fuerte: barrido circular en verde (7.4 → 10.4)
+  const kin=eInOut(lin(t,7.35,7.85)), kout=eInOut(lin(t,10.35,10.8));
+  if(kin>0&&kout<1){
+    const r=kin*1500;
+    o+=`<circle cx="540" cy="900" r="${r}" fill="${C.verde}"/>`;
+    if(kout>0) o+=`<circle cx="540" cy="900" r="${kout*1500}" fill="${C.crema}"/>`;
+  }
+  return o;
+}
+
+// ===== Marco: barra de progreso + esquinas =====
+function marco(t){
+  const k=t/DUR;
+  return `<rect x="60" y="1868" width="960" height="8" rx="4" fill="${C.tinta}" opacity=".1"/>
+          <rect x="60" y="1868" width="${960*k}" height="8" rx="4" fill="${C.naranja}"/>`;
+}
+
+// ===== Escena =====
+function dibujar(t){
+  let o=`<defs>
+    <radialGradient id="aura"><stop offset="0" stop-color="#FFE7A3" stop-opacity="1"/><stop offset=".55" stop-color="${C.mostaza}" stop-opacity=".55"/><stop offset="1" stop-color="${C.mostaza}" stop-opacity="0"/></radialGradient>
+    <pattern id="puntos" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="${C.crema2}"/></pattern>
+    <filter id="negro"><feColorMatrix type="matrix" values="0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 1 0"/></filter>
+  </defs>`;
+  o+=fondo(t);
+
+  // --- 1. GANCHO (0 - 2.6): Neurón grande + frase
+  if(t<2.9){
+    const so=2.55;
+    o+=neuron(t,'01',540,1640,980,0.05,[[0.3,2.4]],so);
+    o+=linea(t,330,[{t:.25,txt:'LA',f:'Titulo',c:C.tinta,s:150},{t:.4,txt:'LUZ',f:'Titulo',c:C.tinta,s:150},{t:.55,txt:'DEL',f:'Titulo',c:C.tinta,s:150},{t:.7,txt:'SOL',f:'Titulo',c:C.naranja,s:150}],so);
+    o+=linea(t,500,[{t:1.0,txt:'NO',f:'Titulo',c:C.tinta,s:150},{t:1.15,txt:'ES',f:'Mano',c:C.tinta,s:110},{t:1.35,txt:'amarilla',f:'Destaque',c:C.mostaza,s:115,r:-8}],so);
+    // tachado a mano
+    const kt=eOut(lin(t,1.85,2.15));
+    const pa=linea.pos['amarilla'];
+    if(kt>0&&pa) o+=`<path d="M${pa.x-10},${505} q${pa.w/2},-30 ${pa.w+20},6" fill="none" stroke="${C.bordo}" stroke-width="20" stroke-linecap="round" opacity="${1-eInOut(lin(t,so,so+.2))}" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${100*(1-kt)}"/>`;
+  }
+
+  // --- 2. LOGO (2.6 - 4.1) y queda en la esquina
+  o+=logoAnim(t,2.6);
+
+  // --- 3. EXPLICACIÓN 1 (3.9 - 7.4): sol → haz blanco → prisma → colores
+  if(t>3.8&&t<7.6){
+    const so=7.2, ko=1-eInOut(lin(t,so,so+.3));
+    o+=`<g opacity="${ko}">`;
+    o+=sol(230,520,120,t,lin(t,3.9,4.5));
+    o+=haz(330,590,480,720,eOut(lin(t,4.4,4.9)),'#FFFFFF',40);
+    o+=haz(330,590,480,720,eOut(lin(t,4.4,4.9)),'#FFF7D6',20);
+    o+=prisma(560,760,lin(t,4.2,4.7)*1.25);
+    const cols=['#E8432E','#F08A24',C.mostaza,'#5DBB4C',C.verde,'#2F7FD8','#6B4BC8'];
+    cols.forEach((c,i)=>{o+=haz(650,760,1040,600+i*52,eOut(lin(t,5.0+i*.06,5.6+i*.06)),c,20)});
+    o+=`</g>`;
+    o+=linea(t,1090,[{t:4.5,txt:'ES',f:'Mano',c:C.tinta,s:120},{t:4.65,txt:'BLANCA',f:'Titulo',c:C.tinta,s:180,borde:1}],5.9);
+    o+=linea(t,1090,[{t:6.0,txt:'TIENE',f:'Mano',c:C.tinta,s:110},{t:6.15,txt:'TODOS',f:'Titulo',c:C.tinta,s:150},{t:6.3,txt:'LOS',f:'Mano',c:C.tinta,s:110}],so)+linea(t,1220,[{t:6.45,txt:'colores',f:'Destaque',c:C.naranja,s:140}],so);
+  }
+
+  // --- 4. MOMENTO FUERTE (7.4 - 10.4): fondo verde, atmósfera, el azul rebota
+  if(t>7.5&&t<10.6){
+    const so=10.25;
+    o+=`<g opacity="${1-eInOut(lin(t,so,so+.2))}">`;
+    o+=tierra(t,lin(t,7.7,8.4));
+    o+=dispersion(t);
+    o+=`</g>`;
+    o+=linea(t,330,[{t:8.0,txt:'EL',f:'Mano',c:C.crema,s:130},{t:8.15,txt:'AZUL',f:'Titulo',c:'#FFFFFF',s:200}],so);
+    o+=linea(t,500,[{t:8.6,txt:'rebota',f:'Destaque',c:C.mostaza,s:140,r:6},{t:8.85,txt:'MÁS',f:'Titulo',c:'#FFFFFF',s:180}],so);
+  }
+
+  // Neurón chico abajo a la izquierda durante la explicación
+  if(t>3.9&&t<10.6) o+=neuron(t,t<7.4?'03':'11',190,1640,430,3.95,[[4.3,7.0],[8.0,10.0]],10.3);
+
+  // --- 5. CIERRE (10.5 - 12.5)
+  if(t>10.5){
+    o+=neuron(t,'08',540,1600,900,10.55,[[10.9,12.4]]);
+    o+=linea(t,360,[{t:10.9,txt:'seguime',f:'Destaque',c:C.verde,s:160,r:-6}]);
+    o+=linea(t,500,[{t:11.15,txt:'PARA',f:'Titulo',c:C.tinta,s:140},{t:11.3,txt:'MÁS',f:'Titulo',c:C.naranja,s:140},{t:11.45,txt:'DATOS',f:'Mano',c:C.tinta,s:120}]);
+  }
+
+  o+=marco(t);
+  document.getElementById('v').innerHTML=o;
+}
+
+async function preparar(estilo){
+  ESTILO=estilo;
+  for(const p of ['01','03','08','11']){
+    const im=new Image(); im.src=`../personajes/neuron/${p}.png`; await im.decode();
+    POSES[p]={src:im.src,w:im.naturalWidth,h:im.naturalHeight,im};
+  }
+  await document.fonts.load('100px Titulo'); await document.fonts.load('100px Destaque'); await document.fonts.load('100px Mano');
+  await document.fonts.ready;
+  return true;
+}
+</script></body></html>

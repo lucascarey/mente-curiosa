@@ -1,12 +1,13 @@
 name: Nada Que Ver - publicar
 
 on:
-  schedule:
+  # PAUSADO 2026-11-04 por pedido de Lucas (se rehace casi de cero). Para reactivar, descomentar el schedule.
+  # schedule:
     # Horarios: 13 y 20 h de Argentina (16 y 23 UTC). GitHub atrasa (¡horas!) o saltea las corridas programadas,
     # así que se prueba cada 20 minutos desde la hora del horario y el paso "Decidir" publica solo si el video de
     # ese horario todavía no salió.
-    - cron: "*/20 16-23 * * *"
-    - cron: "*/20 0-3 * * *"
+    # - cron: "*/20 16-23 * * *"
+    # - cron: "*/20 0-3 * * *"
   # Vista previa sin publicar: cambiar nqv/vista.txt (primera línea: guion a armar, vacía = el próximo).
   # El video queda en la rama nqv-vista.
   push:

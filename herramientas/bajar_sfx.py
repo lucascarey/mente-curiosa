@@ -17,7 +17,9 @@ import requests
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
 KENNEY = ["interface-sounds", "ui-audio", "impact-sounds", "digital-audio", "casino-audio"]
 MIXKIT = ["whoosh", "transition", "swoosh", "pop", "click", "impact", "glitch", "notification", "magic", "bubbles",
-          "camera", "tick-tock", "typing", "pen", "paper", "falling", "hit", "boing", "slide", "cinematic"]
+          "camera", "tick-tock", "typing", "pen", "paper", "falling", "hit", "boing", "slide", "cinematic",
+          "glass", "wood", "bass", "drum", "riser", "sweep", "explosion", "laser", "beep", "game"]
+MUSICA = ["electronic", "upbeat", "tech", "energetic", "hip-hop", "dance"]
 
 
 def kenney(dest: Path, log: list) -> None:
@@ -65,14 +67,37 @@ def mixkit(dest: Path, log: list) -> None:
             log.append(f"mixkit {cat}: ERROR {e}")
 
 
+def musica(dest: Path, log: list) -> None:
+    vistos = set()
+    for tag in MUSICA:
+        try:
+            html = requests.get(f"https://mixkit.co/free-stock-music/tag/{tag}/", headers=UA, timeout=60).text
+            urls = sorted(set(re.findall(r'https://assets\.mixkit\.co/[^"\']+?\.mp3', html)))
+            n = 0
+            for u in urls[:20]:
+                if u in vistos:
+                    continue
+                vistos.add(u)
+                r = requests.get(u, headers=UA, timeout=120)
+                if r.ok and len(r.content) > 10000:
+                    out = dest / "musica" / tag / Path(u).name
+                    out.parent.mkdir(parents=True, exist_ok=True)
+                    out.write_bytes(r.content); n += 1
+                time.sleep(0.2)
+            log.append(f"musica {tag}: {n} temas")
+        except Exception as e:
+            log.append(f"musica {tag}: ERROR {e}")
+
+
 def main(dest: Path) -> None:
     dest.mkdir(parents=True, exist_ok=True)
     log: list[str] = []
-    kenney(dest, log)
     mixkit(dest, log)
+    musica(dest, log)
     (dest / "LICENCIAS.txt").write_text(
         "kenney/: Kenney (kenney.nl), licencia CC0 1.0 (dominio público).\n"
-        "mixkit/: Mixkit (mixkit.co), Mixkit Sound Effects Free License: uso comercial permitido, sin atribución.\n\n"
+        "mixkit/: Mixkit (mixkit.co), Mixkit Sound Effects Free License: uso comercial permitido, sin atribución.\n"
+        "musica/: Mixkit (mixkit.co), Mixkit Stock Music Free License: uso en videos, también comerciales, sin atribución.\n\n"
         + "\n".join(log) + "\n", encoding="utf-8")
     print("\n".join(log))
 

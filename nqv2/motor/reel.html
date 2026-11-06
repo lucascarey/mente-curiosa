@@ -1,0 +1,331 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Titulo;src:url(../prototipos/fuentes/SquadaOne.ttf)}
+@font-face{font-family:Destaque;src:url(../prototipos/fuentes/Shrikhand.ttf)}
+@font-face{font-family:Mano;src:url(../prototipos/fuentes/PatrickHandSC.ttf)}
+:root{--bg:#EAF4F2;--ink:#14252C;--acc:#EF6F8E;--prin:#27879B;--prof:#185669;--suave:#6CB6B9;--blanco:#FFFFFF}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+svg{position:absolute;left:0;top:0}
+.t{position:absolute;left:0;width:1080px;text-align:center;line-height:1;white-space:nowrap;transform:translateY(-50%)}
+.titulo{font-family:Titulo;letter-spacing:3px}
+.destaque{font-family:Destaque}
+.mano{font-family:Mano}
+.lm{padding:.22em 0 .12em;margin:-.22em 0 -.12em}
+.pj{position:absolute;transform-origin:50% 100%}
+.pj img{position:absolute;left:0;bottom:0;width:100%}
+.aura{position:absolute;left:50%;border-radius:50%;transform:translate(-50%,0);
+  background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(108,182,185,.55) 45%,rgba(108,182,185,0) 100%)}
+.sombra{position:absolute;left:50%;bottom:-14px;height:34px;border-radius:50%;background:#14252C;opacity:.14;transform:translateX(-50%)}
+#grano{position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:multiply}
+</style></head>
+<body>
+<div id="stage">
+  <div id="bg" style="position:absolute;inset:0;background:var(--bg)"></div>
+  <svg id="ill" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <defs>
+      <radialGradient id="glow"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".4" stop-color="#FFE3EA" stop-opacity=".8"/><stop offset="1" stop-color="#EF6F8E" stop-opacity="0"/></radialGradient>
+      <clipPath id="clipTierra"><circle cx="0" cy="0" r="64"/></clipPath>
+      <clipPath id="clipTierra2"><circle cx="0" cy="0" r="58"/></clipPath>
+    </defs>
+    <!-- barridos de fondo -->
+    <circle id="wipeMostaza" cx="540" cy="900" r="0" fill="#EEA513"/>
+    <circle id="wipePetroleo" cx="200" cy="900" r="0" fill="#27879B"/>
+    <circle id="wipeClaro" cx="540" cy="880" r="0" fill="#EAF4F2"/>
+    <!-- estrellas (parallax) -->
+    <g id="estrellas" opacity="0"></g>
+    <!-- cámara -->
+    <g id="cam">
+      <path id="rayo" d="M290,900 L800,900" stroke="#14252C" stroke-width="6" stroke-dasharray="2 22" stroke-linecap="round" fill="none"/>
+      <g id="foton" opacity="0"><ellipse rx="70" ry="22" fill="url(#glow)"/><circle r="15" fill="#fff"/></g>
+      <g id="tierra" transform="translate(880,900)">
+        <circle r="64" fill="#27879B"/>
+        <g clip-path="url(#clipTierra)"><ellipse cx="-18" cy="-14" rx="34" ry="20" fill="#185669"/><ellipse cx="26" cy="22" rx="26" ry="14" fill="#185669"/><circle cx="-24" cy="-26" r="70" fill="none" stroke="#6CB6B9" stroke-width="10" opacity=".5"/></g>
+      </g>
+      <g id="solG" transform="translate(200,900)">
+        <circle id="solHalo" r="150" fill="url(#glow)" opacity=".7"/>
+        <path id="sol" fill="#EF6F8E"/>
+        <circle id="solCentro" r="58" fill="#F7A1B4"/>
+      </g>
+    </g>
+    <!-- reloj -->
+    <g id="reloj" transform="translate(540,860)" opacity="0">
+      <g id="marcas"></g>
+      <line id="minutero" x1="0" y1="20" x2="0" y2="-200" stroke="#14252C" stroke-width="22" stroke-linecap="round"/>
+      <line id="segundero" x1="0" y1="30" x2="0" y2="-225" stroke="#EF6F8E" stroke-width="9" stroke-linecap="round"/>
+      <circle r="22" fill="#14252C"/>
+    </g>
+    <!-- órbita -->
+    <g id="orbitaG" transform="translate(540,880)">
+      <circle id="fantasma" r="60" fill="none" stroke="#EF6F8E" stroke-width="8" stroke-dasharray="14 16" opacity="0"/>
+      <path id="orbita" d="M0,-330 A330,330 0 1,1 -0.1,-330" fill="none" stroke="#14252C" stroke-width="5" stroke-dasharray="3 20" stroke-linecap="round"/>
+      <line id="tangente" x1="0" y1="0" x2="0" y2="0" stroke="#EF6F8E" stroke-width="10" stroke-linecap="round" stroke-dasharray="1 26"/>
+      <g id="tierra2" opacity="0">
+        <circle r="58" fill="#27879B"/>
+        <g clip-path="url(#clipTierra2)"><ellipse cx="-16" cy="-12" rx="30" ry="18" fill="#185669"/><ellipse cx="22" cy="20" rx="24" ry="12" fill="#185669"/></g>
+      </g>
+    </g>
+    <g id="burst" transform="translate(540,900)"></g>
+    <!-- logo NQV -->
+    <g id="logo" transform="translate(540,900)">
+      <g id="logoIn">
+        <path id="lgBurbuja" d="M-262,-102 H262 V34 L196,96 H48 L0,150 L-48,96 H-262 Z" fill="#EEA513"/>
+        <path id="lgN" d="M-236,-78 L-180,-80 L-122,-2 L-124,-78 L-84,-78 L-86,64 L-126,63 L-186,-20 L-190,64 L-232,63 Z" fill="#8E0028"/>
+        <path id="lgQ" d="M-74,-79 L76,-82 L75,64 L28,64 L33,86 L-4,89 L-14,63 L-76,64 Z M-42,-44 L-44,30 L-6,30 L-9,12 L24,10 L30,30 L42,30 L43,-46 Z" fill="#2BB191" fill-rule="evenodd"/>
+        <path id="lgV" d="M88,-79 L136,-81 L181,24 L222,-77 L262,-74 L205,64 L156,64 Z" fill="#DD4111"/>
+      </g>
+    </g>
+    <!-- HUD -->
+    <g id="hud" opacity="0" stroke="#14252C" stroke-width="4" fill="none" stroke-linecap="round">
+      <path d="M44,330 V292 M44,1650 V1690 H84 M1036,1650 V1690 H996"/>
+    </g>
+  </svg>
+
+  <!-- personajes -->
+  <div id="nb" class="pj" style="left:290px;top:770px;width:500px;height:870px">
+    <div class="aura" id="nbAura" style="width:760px;height:900px;top:-40px"></div>
+    <div class="sombra" style="width:340px"></div><img id="nbImg">
+  </div>
+  <div id="ns" class="pj" style="left:60px;top:1240px;width:250px;height:420px">
+    <div class="aura" id="nsAura" style="width:420px;height:470px;top:-30px"></div>
+    <div class="sombra" style="width:170px;bottom:-8px;height:18px"></div><img id="nsImg">
+  </div>
+
+  <!-- textos -->
+  <div id="textos"></div>
+  <div id="seccion" class="t titulo" style="top:198px;left:auto;right:56px;width:auto;font-size:40px;color:var(--ink);letter-spacing:8px;opacity:0">CIENCIA<span style="color:var(--acc)"> ●</span></div>
+
+  <svg id="grano" width="1080" height="1920"><filter id="ruido"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .1  0 0 0 0 .1  0 0 0 0 .1  0 0 0 1.6 -.3"/></filter><rect width="1080" height="1920" filter="url(#ruido)"/></svg>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/MorphSVGPlugin.min.js"></script>
+<script src="vendor/DrawSVGPlugin.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/MotionPathPlugin.min.js"></script>
+<script src="vendor/CustomEase.min.js"></script>
+<script>
+gsap.registerPlugin(MorphSVGPlugin,DrawSVGPlugin,SplitText,MotionPathPlugin,CustomEase);
+const DUR=20;
+const C={bg:'#EAF4F2',ink:'#14252C',acc:'#EF6F8E',prin:'#27879B',prof:'#185669',suave:'#6CB6B9',bl:'#FFFFFF'};
+const SONIDOS=[]; // [t, tipo]
+const snd=(t,tipo)=>SONIDOS.push([t,tipo]);
+const $=id=>document.getElementById(id);
+const tl=gsap.timeline({paused:true,defaults:{ease:'power3.out'}});
+CustomEase.create('golpe','M0,0 C0.1,0 0.15,1.25 0.4,1.06 0.62,0.95 0.8,1 1,1');
+
+// ---------- utilidades ----------
+function estrella(n,r1,r2){ // sol con rayos redondeados, un solo path (para el morph)
+  let d=''; const pasos=n*2;
+  for(let i=0;i<=pasos;i++){
+    const a=-Math.PI/2+i*Math.PI/n, r=i%2?r1:r2;
+    const x=Math.cos(a)*r, y=Math.sin(a)*r;
+    if(i===0) d+=`M${x.toFixed(1)},${y.toFixed(1)}`;
+    else{const am=a-Math.PI/(2*n), rm=(i%2?r2:r1)*0.98; // control redondeado
+      d+=` Q${(Math.cos(am)*rm).toFixed(1)},${(Math.sin(am)*rm).toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`;}
+  }
+  return d+'Z';
+}
+const circuloPath=r=>`M0,${-r} A${r},${r} 0 1,1 -0.1,${-r} Z`;
+$('sol').setAttribute('d',estrella(12,92,124));
+
+function texto(html,y,cls,size,color,extra=''){
+  const el=document.createElement('div'); el.className='t '+cls;
+  el.style.cssText=`top:${y}px;font-size:${size}px;color:${color};${extra}`; el.innerHTML=html;
+  $('textos').appendChild(el); return el;
+}
+// entra por letras con máscara + rebote; devuelve el split
+function entra(el,t,{st=.03,dur=.6,rot=8,ease='back.out(2.2)'}={}){
+  const sp=SplitText.create(el,{type:'lines,chars',mask:'lines',linesClass:'ln',charsClass:'ch'});
+  sp.masks&&sp.masks.forEach(m=>m.classList.add('lm'));
+  tl.from(sp.chars,{yPercent:115,rotate:rot,duration:dur,ease,stagger:st},t);
+  el._sp=sp; return el;
+}
+function sale(el,t,{st=.012}={}){
+  tl.to(el._sp.chars,{yPercent:-115,duration:.32,ease:'power3.in',stagger:st},t);
+}
+function golpe(el,t,s=1.18){ tl.fromTo(el,{scale:s},{scale:1,duration:.5,ease:'elastic.out(1,0.45)',immediateRender:false},t); }
+
+// fondo: cambia el color del stage de golpe (los barridos tapan el corte)
+function fondo(t,col){ tl.set('#bg',{backgroundColor:col},t); }
+
+// ---------- Neurón ----------
+const POSE=p=>`../personajes/neuron/${p}.png`;
+function entraPj(id,t,pose){
+  tl.set(`#${id}Img`,{attr:{src:POSE(pose)}},t);
+  tl.fromTo(`#${id}`,{y:BAJO[id],scaleY:1.3,scaleX:.75,opacity:1},{y:0,scaleY:1,scaleX:1,duration:.9,ease:'elastic.out(1,0.55)',immediateRender:false},t);
+  snd(t+.05,'whoosh');
+}
+function salePj(id,t){ tl.to(`#${id}`,{y:BAJO[id],scaleY:1.2,scaleX:.85,duration:.45,ease:'back.in(1.6)'},t); }
+function pose(id,t,p){
+  tl.to(`#${id}`,{scaleY:.9,scaleX:1.06,duration:.08,ease:'power2.in'},t-.08);
+  tl.set(`#${id}Img`,{attr:{src:POSE(p)}},t);
+  tl.to(`#${id}`,{scaleY:1,scaleX:1,duration:.5,ease:'elastic.out(1.2,0.4)'},t);
+}
+const BAJO={nb:1300,ns:800};
+gsap.set('#nb',{y:1300});gsap.set('#ns',{y:800});
+gsap.set(['#logo','#logoIn','#solG','#tierra','#reloj'],{transformOrigin:'50% 50%'});
+// Neurón "habla" (sin voz todavía): ventanas donde el aura late
+const HABLA=[[.2,3.0],[4.7,9.2],[9.6,13.2],[13.8,17.2],[17.6,19.6]];
+
+// ================== GUION VISUAL ==================
+// HUD y etiqueta de sección
+tl.to('#hud',{opacity:.25,duration:.6},.1).to('#seccion',{opacity:1,duration:.5},.3);
+
+// ---- 1. GANCHO (0 - 3.2)
+entraPj('nb',.05,'01');
+const g1=entra(texto('SI EL SOL',300,'titulo',170,C.ink),.25);
+const g2=entra(texto('DESAPARECIERA',460,'destaque',118,C.acc),.55,{st:.025,rot:-10});
+// sol chiquito arriba a la derecha que se apaga
+tl.set('#solG',{x:860,y:680,scale:.55},0);
+tl.from('#solG',{scale:0,rotation:-90,duration:.8,ease:'back.out(2.5)'},.9); snd(.95,'pop');
+tl.to('#sol',{rotation:30,duration:1.2,ease:'none',transformOrigin:'50% 50%'},.9);
+tl.to('#solG',{scale:.7,duration:.12,ease:'power2.out'},1.75)
+  .to('#sol',{morphSVG:circuloPath(58),duration:.25,ease:'power3.in'},1.8)
+  .to('#solG',{scale:0,duration:.25,ease:'back.in(3)'},1.95); snd(2.0,'pop');
+sale(g1,1.9); sale(g2,1.95);
+const g3=entra(texto('NO TE ENTERARÍAS',300,'titulo',128,C.ink),2.2,{st:.018});
+const g4=entra(texto('por 8 minutos',470,'mano',120,C.ink),2.45,{st:.02});
+salePj('nb',3.0); sale(g3,3.0); sale(g4,3.05);
+
+// ---- 2. LOGO (3.2 - 4.4)
+tl.set('#logo',{x:540,y:900},0); tl.set('#logoIn',{scale:0},0);
+tl.to('#wipeMostaza',{attr:{r:1400},duration:.55,ease:'expo.inOut'},3.1); snd(3.12,'whoosh');
+tl.fromTo('#logoIn',{scale:0,rotation:-25},{scale:1.5,rotation:0,duration:.7,ease:'elastic.out(1,0.5)',immediateRender:false},3.35);
+tl.from(['#lgN','#lgQ','#lgV'],{y:-260,opacity:0,duration:.5,ease:'bounce.out',stagger:.08},3.45);
+tl.set('#lgBurbuja',{fill:'#FBF4E6'},3.35); // burbuja crema sobre fondo mostaza
+snd(3.5,'pop'); snd(3.58,'pop'); snd(3.66,'pop');
+// estallido de formas con los colores de marca
+(function(){const cols=['#8E0028','#2BB191','#DD4111','#FBF4E6'];let h='';
+  for(let i=0;i<14;i++){const c=cols[i%4], k=i%3;
+    h+=k===0?`<circle class="bz" r="${18+i%3*8}" fill="${c}"/>`:k===1?`<rect class="bz" x="-20" y="-20" width="40" height="40" rx="9" fill="${c}"/>`:`<path class="bz" d="M0,-26 L24,18 L-24,18 Z" fill="${c}"/>`;}
+  $('burst').innerHTML=h;
+  document.querySelectorAll('.bz').forEach((el,i)=>{const a=i/14*Math.PI*2+.3, d=380+(i%4)*90;
+    tl.fromTo(el,{x:0,y:0,scale:0,rotation:0},{x:Math.cos(a)*d,y:Math.sin(a)*d*1.2,scale:1,rotation:(i%2?1:-1)*220,duration:.8,ease:'expo.out',immediateRender:true},3.38);
+    tl.to(el,{scale:0,duration:.3,ease:'back.in(2)'},4.2+(i%5)*.03);});})();
+fondo(4.0,C.bg);
+tl.to('#wipeMostaza',{attr:{r:0,cx:150,cy:190},duration:.6,ease:'expo.inOut'},4.0);
+tl.to('#logo',{x:150,y:190,duration:.6,ease:'expo.inOut'},4.0); tl.to('#logoIn',{scale:.4,duration:.6,ease:'expo.inOut'},4.0);
+tl.set('#lgBurbuja',{fill:'#EEA513'},4.3); snd(4.02,'whoosh');
+
+// ---- 3. LA LUZ VIAJA (4.4 - 9.3)
+tl.set('#solG',{x:200,y:900,scale:1},4.35);
+tl.set('#sol',{morphSVG:estrella(12,92,124)},4.35);
+tl.set('#cam',{scale:2.4,x:60,y:-1260,transformOrigin:'0 0'},4.35); // zoom sobre el sol
+tl.fromTo('#solG',{scale:0},{scale:1,duration:.7,ease:'back.out(2)',immediateRender:false},4.4); snd(4.42,'pop');
+tl.to('#sol',{rotation:120,duration:5,ease:'none',transformOrigin:'50% 50%'},4.4);
+tl.to('#cam',{scale:1,x:0,y:0,duration:1.1,ease:'expo.inOut'},5.0); snd(5.05,'whoosh');
+tl.to('#estrellas',{opacity:1,duration:.6},5.0);
+tl.fromTo('#estrellas',{x:-60},{x:40,duration:5,ease:'none'},4.4);
+tl.fromTo('#tierra',{scale:0},{scale:1,duration:.7,ease:'back.out(2.4)',immediateRender:false},5.6); tl.set('#tierra',{scale:0},0); snd(5.65,'pop');
+tl.fromTo('#rayo',{drawSVG:'0%'},{drawSVG:'100%',duration:.6,ease:'power2.inOut'},5.8);
+entraPj('ns',4.8,'03');
+const t1=entra(texto('LA LUZ DEL SOL',300,'titulo',140,C.ink),5.3,{st:.02});
+const t2=entra(texto('tarda en llegar',450,'mano',110,C.ink),5.6,{st:.018});
+// fotón viajando + contador de km
+const KM={v:0};
+tl.set('#foton',{opacity:1,x:290,y:900},6.4);
+tl.to('#foton',{x:800,duration:2.0,ease:'power1.inOut'},6.4);
+tl.to(KM,{v:150000000,duration:2.0,ease:'power1.inOut'},6.4);
+tl.to('#foton',{opacity:0,scale:2,duration:.25},8.4);
+tl.fromTo('#tierra',{scale:1.25},{scale:1,duration:.6,ease:'elastic.out(1,0.4)',immediateRender:false},8.4); snd(8.42,'pop');
+const km=texto('<span id="kmN">0</span> <span style="color:var(--acc)">KM</span>',1110,'titulo',150,C.ink);
+tl.from(km,{yPercent:60,opacity:0,duration:.5,ease:'back.out(2)'},6.3);
+sale(t1,8.6); sale(t2,8.62);
+tl.to(km,{scale:.6,opacity:0,duration:.3,ease:'power3.in'},9.0);
+tl.to(['#rayo','#tierra','#estrellas'],{opacity:0,duration:.3},9.0);
+
+// ---- 4. MOMENTO FUERTE: 8 MIN 20 S (9.3 - 13.4)
+tl.to('#solG',{x:540,y:860,scale:1.25,duration:.6,ease:'expo.inOut'},9.1); snd(9.15,'whoosh');
+tl.to('#wipePetroleo',{attr:{r:2100,cx:540,cy:860},duration:.7,ease:'expo.inOut'},9.2);
+fondo(9.9,C.prin);
+tl.set('#ns .aura',{background:'radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,.35) 45%,rgba(255,255,255,0) 100%)'},9.5);
+pose('ns',9.6,'11');
+tl.to('#solHalo',{opacity:0,duration:.3},9.4);
+tl.to('#solCentro',{attr:{r:0},duration:.3,ease:'power3.in'},9.5);
+tl.to('#sol',{morphSVG:circuloPath(260),fill:'#EAF4F2',duration:.7,ease:'expo.inOut'},9.5); snd(9.55,'whoosh');
+tl.to('#solG',{scale:1,duration:.7,ease:'expo.inOut'},9.5);
+tl.set('#reloj',{opacity:1},10.15);
+// marcas del reloj dibujándose
+const marcas=$('marcas');
+for(let i=0;i<12;i++){const a=i*30*Math.PI/180, r1=i%3?222:200, r2=244;
+  marcas.innerHTML+=`<line x1="${Math.sin(a)*r1}" y1="${-Math.cos(a)*r1}" x2="${Math.sin(a)*r2}" y2="${-Math.cos(a)*r2}" stroke="#14252C" stroke-width="${i%3?8:14}" stroke-linecap="round"/>`;}
+tl.from('#marcas line',{drawSVG:'50% 50%',duration:.35,ease:'power2.out',stagger:.03},10.15);
+tl.from(['#minutero','#segundero'],{scaleY:0,transformOrigin:'50% 90%',duration:.5,ease:'back.out(2)',stagger:.08},10.3);
+const RL={s:0};
+tl.to(RL,{s:500,duration:2.4,ease:'power2.inOut'},10.6);
+const h1=entra(texto('8 MINUTOS',300,'titulo',170,C.bl),10.0,{st:.03});
+const h2=entra(texto('y 20 segundos',460,'destaque',100,'#F7A1B4'),10.3,{st:.025,rot:-8});
+const reloj=texto('<span id="rlN">00:00</span>',1260,'titulo',230,C.bl,'letter-spacing:12px');
+tl.from(reloj,{yPercent:60,opacity:0,duration:.5,ease:'back.out(2)'},10.5);
+golpe(reloj,13.0,1.35); tl.to('#stage',{keyframes:[{x:-14,y:8},{x:12,y:-10},{x:-8,y:6},{x:5,y:-3},{x:0,y:0}],duration:.35,ease:'none'},13.0); golpe('#reloj',13.0,1.12); snd(13.0,'seguir');
+sale(h1,13.2); sale(h2,13.22);
+tl.to(reloj,{opacity:0,yPercent:30,duration:.3,ease:'power3.in'},13.3);
+// el reloj se achica: queda el lugar vacío del sol (match cut)
+tl.to('#reloj',{scale:.23,opacity:0,duration:.45,ease:'expo.in'},13.3);
+tl.to('#sol',{morphSVG:circuloPath(60),duration:.45,ease:'expo.in'},13.3);
+tl.to('#solG',{opacity:0,duration:.1},13.75);
+tl.to('#wipeClaro',{attr:{r:2100},duration:.7,ease:'expo.inOut'},13.45); snd(13.5,'whoosh');
+fondo(14.15,C.bg);
+tl.set('#ns .aura',{clearProps:'background'},13.8);
+
+// ---- 5. LA TIERRA SIGUE GIRANDO (13.8 - 17.3)
+tl.to('#fantasma',{opacity:1,duration:.3},13.8);
+tl.fromTo('#fantasma',{scale:.5,transformOrigin:'50% 50%'},{scale:1,duration:.6,ease:'back.out(2)'},13.8);
+tl.to('#fantasma',{rotation:90,duration:4,ease:'none',transformOrigin:'50% 50%'},13.8);
+tl.fromTo('#orbita',{drawSVG:'0%'},{drawSVG:'100%',duration:.8,ease:'power2.inOut'},13.9);
+tl.set('#tierra2',{opacity:1},14.2);
+tl.from('#tierra2',{scale:0,duration:.5,ease:'back.out(2.5)'},14.2); snd(14.22,'pop');
+tl.to('#tierra2',{motionPath:{path:'#orbita',align:'#orbita',alignOrigin:[.5,.5],start:0,end:.42},duration:2.0,ease:'none'},14.2);
+pose('ns',14.0,'01');
+const o1=entra(texto('Y LA TIERRA',300,'titulo',150,C.ink),14.1,{st:.025});
+const o2=entra(texto('seguiría girando',460,'destaque',100,C.acc),14.4,{st:.022,rot:-8});
+sale(o1,15.9); sale(o2,15.92);
+const o3=entra(texto('LA GRAVEDAD',300,'titulo',150,C.ink),16.1,{st:.025});
+const o4=entra(texto('también tarda',460,'mano',110,C.ink),16.35,{st:.02});
+// a los 8:20, la Tierra sale disparada en línea recta (tangente)
+tl.to('#tierra2',{x:'-=1000',y:'+=553',duration:.9,ease:'power2.in'},16.3);
+tl.fromTo('#tangente',{attr:{x1:160,y1:289,x2:160,y2:289}},{attr:{x2:-840,y2:842},duration:.9,ease:'power2.in'},16.3); snd(16.35,'whoosh');
+tl.to(['#orbita','#fantasma','#tangente','#tierra2'],{opacity:0,duration:.35},17.0);
+sale(o3,17.1); sale(o4,17.12);
+salePj('ns',17.1);
+
+// ---- 6. CIERRE (17.4 - 20)
+entraPj('nb',17.35,'08');
+const c1=entra(texto('seguime',390,'destaque',170,C.acc),17.7,{st:.04,rot:-12});
+const c2=entra(texto('PARA MÁS DATOS',560,'titulo',120,C.ink),17.95,{st:.02});
+tl.to('#logo',{x:540,y:175,duration:.7,ease:'expo.inOut'},17.5); tl.to('#logoIn',{scale:.5,duration:.7,ease:'expo.inOut'},17.5); snd(18.25,'whoosh');
+tl.to('#logoIn',{scale:.68,duration:.12,ease:'power2.out'},18.75).to('#logoIn',{scale:.5,duration:.6,ease:'elastic.out(1.2,0.35)'},18.87); snd(18.9,'seguir');
+
+// relleno hasta DUR
+tl.set({},{},DUR);
+
+// ---------- estrellas ----------
+(function(){let s='';for(let i=0;i<46;i++){const x=(i*233.7)%1080, y=620+((i*151.3)%640), r=2+(i%4);
+  s+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r}" fill="#6CB6B9" opacity="${.35+(i%3)*.2}"/>`;}
+  $('estrellas').innerHTML=s;})();
+
+// ---------- por cuadro: cosas que dependen solo de t ----------
+function fmtKm(v){return Math.round(v).toLocaleString('es-AR');}
+function porCuadro(t){
+  const k=$('kmN'); if(k) k.textContent=fmtKm(KM.v);
+  const r=$('rlN'); if(r){const s=Math.round(RL.s); r.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+  // agujas del reloj según el contador
+  gsap.set('#minutero',{rotation:RL.s/60*30*3,transformOrigin:'50% 90%'}); // 3x para que se note el giro
+  gsap.set('#segundero',{rotation:RL.s*36,transformOrigin:'50% 88%'});
+  // aura: late cuando "habla"
+  const habla=HABLA.some(([a,b])=>t>=a&&t<=b);
+  const env=habla?.55+.45*Math.abs(Math.sin(t*10.7)*Math.sin(t*3.9+1.3)):.3;
+  gsap.set(['#nbAura','#nsAura'],{opacity:env,scale:.92+env*.12});
+  // respiración
+  const resp=1+.012*Math.sin(t*2.4);
+  gsap.set(['#nb img','#ns img'],{scaleY:resp,transformOrigin:'50% 100%'});
+}
+window.seek=t=>{tl.seek(t,false);porCuadro(t);};
+window.preparar=async()=>{
+  for(const p of ['01','03','08','11']){const im=new Image();im.src=POSE(p);await im.decode();}
+  await document.fonts.load('100px Titulo');await document.fonts.load('100px Destaque');await document.fonts.load('100px Mano');
+  return {dur:DUR,sonidos:SONIDOS};
+};
+</script></body></html>

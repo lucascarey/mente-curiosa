@@ -71,6 +71,33 @@ SINTY = dict(
 )
 
 
+SINTY_NEUTRA = [
+    ("doblaje", "Actuá como una presentadora de noticiero joven, cálida y profesional. Hablá en español latino NEUTRO de "
+     "doblaje, el que se usa en series dobladas para toda Latinoamérica: sin acento argentino, sin voseo, sin 'sh' en la "
+     "ll ni en la y, sin entonación rioplatense; pronunciación clara y estándar. Ritmo de noticiero moderno. Decí:"),
+    ("cnn", "Actuá como una conductora de un noticiero internacional en español para toda Latinoamérica, como las de "
+     "las cadenas de noticias de Miami o México: voz femenina joven, cálida y creíble, acento latino neutro y "
+     "estándar, nada regional, ni argentino ni español de España. Dicción impecable, ritmo ágil. Decí:"),
+    ("mexico", "Actuá como una presentadora de noticias joven de la Ciudad de México, con acento mexicano suave y neutro, "
+     "el más estándar posible, cálida, amable y profesional, ritmo de noticiero moderno. Decí:"),
+]
+
+
+def ronda2(destino: Path) -> None:
+    """Ronda 2 (Lucas 2026-11-06): Neurón = Charon. Sinty: Erinome pero en español neutro, no argentino."""
+    destino.mkdir(parents=True, exist_ok=True)
+    base.FRASE = SINTY["frase"]
+    for n, (nombre, estilo) in enumerate(SINTY_NEUTRA, 1):
+        base.ESTILO = estilo
+        try:
+            base.sintetizar("Erinome", destino / f"sinty-erinome-{n}-{nombre}.mp3")
+            print("erinome", nombre, "ok", flush=True)
+        except Exception as e:
+            print("erinome", nombre, "FALLÓ:", e, flush=True)
+        if n < len(SINTY_NEUTRA):
+            time.sleep(base.PAUSA)
+
+
 def main(destino: Path) -> None:
     destino.mkdir(parents=True, exist_ok=True)
     pedidos = [("neuron", NEURON, v) for v in NEURON["voces"]] + [("sinty", SINTY, v) for v in SINTY["voces"]]
@@ -87,4 +114,4 @@ def main(destino: Path) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]))
+    ronda2(Path(sys.argv[1]))

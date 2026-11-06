@@ -167,5 +167,52 @@ def ronda4(destino: Path) -> None:
             time.sleep(base.PAUSA)
 
 
+# Episodios finales (Lucas 2026-11-06): Neurón = Charon, Sinty = Achernar porteña.
+PAUSAS = " Hacé una pausa breve y natural entre cada frase (después de cada punto). Decí:"
+NEURON_SOL = [
+    "Si el Sol desapareciera ahora mismo... no te enterarías.",
+    "Durante ocho minutos, todo seguiría igual.",
+    "El Sol está a ciento cincuenta millones de kilómetros.",
+    "Y su luz, aunque es lo más rápido del universo, tarda ocho minutos y veinte segundos en llegar hasta acá.",
+    "Así que seguirías viendo un Sol... que ya no existe.",
+    "¿Y la Tierra? Seguiría girando, como si nada.",
+    "Porque la gravedad también viaja a la velocidad de la luz.",
+    "Recién después de esos ocho minutos, saldríamos disparados en línea recta, hacia la oscuridad.",
+    "Mirar el cielo es mirar el pasado.",
+    "Para más datos curiosos, sígueme.",
+]
+SINTY_SEMANA = [
+    "¡Hola! Soy Sinty Wave, y estas son las tres noticias de la semana.",
+    "Primera: Cristiano Ronaldo se despide de la selección de Portugal.",
+    "Lo anunció el jueves en un video: a los cuarenta y un años, devuelve la camiseta siete.",
+    "Se va con ciento cuarenta y seis goles en doscientos treinta y cuatro partidos.",
+    "Segunda: la Estación Espacial Internacional terminó de renovar su energía.",
+    "Dos astronautas pasaron casi siete horas afuera, para instalar el último panel solar nuevo.",
+    "Con eso, la estación tiene un tercio más de energía.",
+    "Tercera: la NASA presentó el X setenta Fractal, su nuevo avión experimental.",
+    "Es tripulado, y sus controles se pueden reconfigurar para probar tecnologías nuevas.",
+    "Esas fueron las noticias de la semana. Seguime para no perderte nada.",
+]
+
+
+def episodios(destino: Path) -> None:
+    import json
+    destino.mkdir(parents=True, exist_ok=True)
+    pedidos = [
+        ("neuron-sol", "Charon", NEURON["estilo"].removesuffix(" Decí:") + PAUSAS, NEURON_SOL),
+        ("sinty-semana", "Achernar", ARGENTINA[0][1].removesuffix(" Decí:") + PAUSAS, SINTY_SEMANA),
+    ]
+    for n, (nombre, voz, estilo, frases) in enumerate(pedidos, 1):
+        base.ESTILO, base.FRASE = estilo, " ".join(frases)
+        try:
+            base.sintetizar(voz, destino / f"{nombre}.mp3")
+            (destino / f"{nombre}.json").write_text(json.dumps(frases, ensure_ascii=False, indent=1))
+            print(nombre, "ok", flush=True)
+        except Exception as e:
+            print(nombre, "FALLÓ:", e, flush=True)
+        if n < len(pedidos):
+            time.sleep(base.PAUSA)
+
+
 if __name__ == "__main__":
-    ronda4(Path(sys.argv[1]))
+    episodios(Path(sys.argv[1]))

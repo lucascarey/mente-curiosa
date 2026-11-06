@@ -19,7 +19,9 @@ KENNEY = ["interface-sounds", "ui-audio", "impact-sounds", "digital-audio", "cas
 MIXKIT = ["whoosh", "transition", "swoosh", "pop", "click", "impact", "glitch", "notification", "magic", "bubbles",
           "camera", "tick-tock", "typing", "pen", "paper", "falling", "hit", "boing", "slide", "cinematic",
           "glass", "wood", "bass", "drum", "riser", "sweep", "explosion", "laser", "beep", "game"]
-MUSICA = ["electronic", "upbeat", "tech", "energetic", "hip-hop", "dance"]
+MUSICA = ["electronic", "upbeat", "tech", "energetic", "hip-hop", "dance",
+          # tranquilos (pedido de Lucas 2026-11-06: música mucho más lenta)
+          "ambient", "chill", "lo-fi", "lofi", "chill-out", "relaxing", "calm", "documentary", "corporate", "piano", "inspiring"]
 
 
 def kenney(dest: Path, log: list) -> None:

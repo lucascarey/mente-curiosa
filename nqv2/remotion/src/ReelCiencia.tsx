@@ -17,14 +17,14 @@ const CAP = [
 
 const W = 1080;
 const H = 1920;
-const Lienzo: React.FC<{children: React.ReactNode}> = ({children}) => (
+export const Lienzo: React.FC<{children: React.ReactNode}> = ({children}) => (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{position: 'absolute', inset: 0}}>
     {children}
   </svg>
 );
 
 // temblor que decae
-const temblor = (f: number, golpes: number[], fuerza = 18) => {
+export const temblor = (f: number, golpes: number[], fuerza = 18) => {
   let x = 0;
   let y = 0;
   for (const g of golpes) {
@@ -38,7 +38,7 @@ const temblor = (f: number, golpes: number[], fuerza = 18) => {
   return `${x}px ${y}px`;
 };
 
-const puntos = (n: number) => n.toLocaleString('es-AR').replace(/,/g, '.');
+export const puntos = (n: number) => n.toLocaleString('es-AR').replace(/,/g, '.');
 
 // ---------- Neurón ----------
 const Neuron: React.FC<{pose: string; desde: number; x: number; base: number; alto: number; hasta?: number; aura?: boolean}> = ({
@@ -128,7 +128,7 @@ const LOGO = {
   q: 'M-74,-79 L76,-82 L75,64 L28,64 L33,86 L-4,89 L-14,63 L-76,64 Z M-42,-44 L-44,30 L-6,30 L-9,12 L24,10 L30,30 L42,30 L43,-46 Z',
   v: 'M88,-79 L136,-81 L181,24 L222,-77 L262,-74 L205,64 L156,64 Z',
 };
-const Logo: React.FC<{f: number; armado: number}> = ({f, armado}) => {
+export const Logo: React.FC<{f: number; armado: number}> = ({f, armado}) => {
   const b = kf(f, [[armado, 0], [armado + 14, 1, E.backFuerte]]);
   const n = ip(f, [armado + 8, armado + 18], [1, 0], E.snap);
   const q = ip(f, [armado + 11, armado + 21], [1, 0], E.snap);

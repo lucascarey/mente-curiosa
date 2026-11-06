@@ -139,5 +139,33 @@ def ronda3(destino: Path) -> None:
             time.sleep(base.PAUSA)
 
 
+# Ronda 4 (Lucas 2026-11-06): Achernar pero argentina, a ver si suena más natural.
+ARGENTINA = [
+    ("portena", "Sos una periodista porteña de 27 años, de Buenos Aires, contando las noticias de la semana a la cámara "
+     "como si le hablaras a una amiga, no leyendo. Acento rioplatense natural, con voseo y la 'sh' típica en la ll y la "
+     "y, pero sin exagerar. Sonás humana: respirás, el ritmo es irregular, remarcás lo importante, sonreís al decir tu "
+     "nombre. Nada de voz de locutora ni de asistente virtual. Decí:"),
+    ("suave", "Sos una conductora argentina joven de un canal de noticias de streaming, cercana y canchera pero "
+     "creíble. Acento argentino suave y natural, con voseo, como se habla en la tele argentina actual. Ritmo de "
+     "charla real, con respiraciones y micro pausas, nada de locutora. Decí:"),
+]
+FRASE_AR = ("Hola, ¿qué tal? Soy Sinty Wave, y estas son las tres noticias de la semana. La primera... es increíble: "
+            "un telescopio encontró agua en un planeta que está fuera del sistema solar. Sí, agua. Vamos con los detalles.")
+
+
+def ronda4(destino: Path) -> None:
+    destino.mkdir(parents=True, exist_ok=True)
+    base.FRASE = FRASE_AR
+    for n, (nombre, estilo) in enumerate(ARGENTINA, 1):
+        base.ESTILO = estilo
+        try:
+            base.sintetizar("Achernar", destino / f"sinty-achernar-ar-{n}-{nombre}.mp3")
+            print(nombre, "ok", flush=True)
+        except Exception as e:
+            print(nombre, "FALLÓ:", e, flush=True)
+        if n < len(ARGENTINA):
+            time.sleep(base.PAUSA)
+
+
 if __name__ == "__main__":
-    ronda3(Path(sys.argv[1]))
+    ronda4(Path(sys.argv[1]))

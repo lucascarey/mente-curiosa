@@ -1,0 +1,33 @@
+name: Biblioteca de efectos de sonido (NQV)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - herramientas/bajar_sfx.py
+      - .github/workflows/sfx-biblioteca.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sfx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Bajar efectos
+        run: python -u herramientas/bajar_sfx.py /tmp/sfx
+      - name: Subir a la rama sfx-biblioteca
+        if: always()
+        run: |
+          mkdir -p /tmp/sfx && cd /tmp/sfx && touch .keep
+          git init -q -b sfx-biblioteca
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -qm "Biblioteca de efectos de sonido (Kenney CC0 + Mixkit)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" sfx-biblioteca

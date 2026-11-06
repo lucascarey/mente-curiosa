@@ -113,5 +113,31 @@ def main(destino: Path) -> None:
             time.sleep(base.PAUSA)
 
 
+# Ronda 3 (Lucas 2026-11-06: "demasiado IA"): dirección HUMANA, que funcionó con el elenco viejo.
+HUMANO = ("Sos una periodista joven de 27 años, real, contando las noticias de la semana a la cámara como si le "
+          "hablaras a una amiga, no leyendo un guion. Sonás humana: respirás antes de arrancar las frases, el ritmo "
+          "es irregular (a veces más rápido, a veces frenás para remarcar algo), sonreís un poco al decir tu nombre, "
+          "hay micro pausas naturales y una leve emoción genuina cuando contás el dato. Nada de voz de locutora, nada "
+          "de entonación de comercial ni de asistente virtual. Español latinoamericano neutro, sin acento regional, "
+          "sin voseo. Decí:")
+FRASE_HUMANA = ("Hola, ¿qué tal? Soy Sinty Wave, y estas son las tres noticias de la semana. La primera... es "
+                "increíble: un telescopio encontró agua en un planeta que está fuera del sistema solar. Sí, agua. "
+                "Vamos con los detalles.")
+VOCES_R3 = ["Aoede", "Callirrhoe", "Achernar", "Erinome"]
+
+
+def ronda3(destino: Path) -> None:
+    destino.mkdir(parents=True, exist_ok=True)
+    base.ESTILO, base.FRASE = HUMANO, FRASE_HUMANA
+    for n, voz in enumerate(VOCES_R3, 1):
+        try:
+            base.sintetizar(voz, destino / f"sinty-r3-{n}-{voz.lower()}.mp3")
+            print(voz, "ok", flush=True)
+        except Exception as e:
+            print(voz, "FALLÓ:", e, flush=True)
+        if n < len(VOCES_R3):
+            time.sleep(base.PAUSA)
+
+
 if __name__ == "__main__":
-    ronda2(Path(sys.argv[1]))
+    ronda3(Path(sys.argv[1]))

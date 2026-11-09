@@ -159,17 +159,26 @@ const Escena: React.FC = () => {
     t.colorSpace = THREE.SRGBColorSpace;
     return t;
   }, []);
-  const solMat = useMemo(() => new THREE.ShaderMaterial({
-    uniforms: {centro: {value: new THREE.Color('#FFD9E2')}, borde: {value: new THREE.Color('#E0446B')}},
-    vertexShader: 'varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix*vec4(position,1.0); vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix*mv; }',
-    fragmentShader: 'uniform vec3 centro; uniform vec3 borde; varying vec3 vN; varying vec3 vV; void main(){ float k = clamp(dot(vN, vV), 0.0, 1.0); float b = smoothstep(0.0, 1.0, pow(k, 0.9)); gl_FragColor = vec4(mix(borde, centro, b * 0.9), 1.0); }',
-  }), []);
-
+  // superficie del Sol pintada (mismo lenguaje que los continentes de la Tierra)
+  const mapaSol = useMemo(() => {
+    const c = document.createElement('canvas');
+    c.width = 1024; c.height = 512;
+    const g = c.getContext('2d')!;
+    g.fillStyle = C.acento; g.fillRect(0, 0, 1024, 512);
+    for (let i = 0; i < 70; i++) {
+      g.fillStyle = i % 3 === 0 ? '#F89AB0' : '#E25578';
+      g.beginPath();
+      g.ellipse(rnd(i, 11) * 1024, 40 + rnd(i, 12) * 432, 18 + rnd(i, 13) * 46, 12 + rnd(i, 14) * 26, rnd(i, 15) * 3, 0, Math.PI * 2);
+      g.fill();
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, []);
   const nace = kf(f, [[s(0.05), 0], [s(0.55), 1, E.backFuerte]]);
   const apaga = ip(f, [s(2.2), s(2.42)], [0, 1], E.in);
   const sol = nace * (1 - apaga);
   const destello = Math.max(0, 1 - Math.abs(f - s(2.42)) / 9);
-  const onda = ip(f, [s(2.42), s(3.4)], [0, 1]);
   const fantasma = ip(f, [s(2.6), s(3.0)], [0, 1]);
   // frente de luz que viaja hasta la Tierra (los 8 minutos)
   const frente = ip(f, [s(4.25), s(6.95)], [0, 1], E.lin);
@@ -205,60 +214,84 @@ const Escena: React.FC = () => {
         <pointsMaterial size={0.12} color={C.suave} transparent opacity={0.55} sizeAttenuation />
       </points>
 
-      {/* el Sol */}
+      {/* luz de modelado solo para el Sol (no llega a la Tierra) */}
+      <pointLight position={[-2.2, 2.4, 4.2]} intensity={40} distance={7.5} decay={1.2} color={'#FFFFFF'} />
+      {/* el Sol: esfera con sombreado plano, gira */}
       {sol > 0.001 && (
-        <group scale={sol} rotation={[0.2, f / 140, 0.1]}>
-          <mesh geometry={solGeo} material={solMat} />
-          <mesh scale={1.004}>
-            <icosahedronGeometry args={[1, 3]} />
-            <meshBasicMaterial color={'#FFC2D1'} wireframe transparent opacity={0.18} />
+        <group scale={sol} rotation={[0.25, f / 70, 0.15]}>
+          <mesh>
+            <sphereGeometry args={[1, 64, 64]} />
+            <meshToonMaterial map={mapaSol} gradientMap={tonos} emissive={C.acento} emissiveIntensity={0.25} />
           </mesh>
         </group>
       )}
       {sol > 0.001 && (
-        <sprite scale={[5.2 * sol, 5.2 * sol, 1]}>
-          <spriteMaterial map={resplandor} color={C.acento} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <sprite scale={[4.2 * sol, 4.2 * sol, 1]}>
+          <spriteMaterial map={resplandor} color={C.acento} transparent opacity={0.35} blending={THREE.AdditiveBlending} depthWrite={false} />
         </sprite>
       )}
-      {/* rayos que giran alrededor del Sol */}
+      {/* llamaradas: conos 3D que giran alrededor */}
       {sol > 0.001 &&
-        Array.from({length: 12}).map((_, i) => {
-          const a = (i / 12) * Math.PI * 2 + f / 120;
-          const k = ip(f, [s(0.3) + i * 2, s(0.7) + i * 2], [0, 1]) * sol;
+        Array.from({length: 10}).map((_, i) => {
+          const a = (i / 10) * Math.PI * 2 + f / 100;
+          const k = kf(f, [[s(0.25) + i * 2, 0], [s(0.6) + i * 2, 1, E.backFuerte]]) * sol;
+          const lat = Math.sin(i * 1.7) * 0.5;
+          const dir = new THREE.Vector3(Math.cos(a) * Math.cos(lat), Math.sin(lat) + Math.sin(a) * 0.35, Math.sin(a) * Math.cos(lat)).normalize();
+          const largo = 0.32 + 0.08 * Math.sin(f / 9 + i);
           return (
-            <mesh key={i} position={[Math.cos(a) * 1.75, Math.sin(a) * 1.75, 0]} rotation={[0, 0, a]} scale={[0.5 * k, 0.09 * k, 0.09 * k]}>
-              <boxGeometry args={[1, 1, 1]} />
-              <meshBasicMaterial color={C.acento} />
+            <mesh key={i} position={dir.clone().multiplyScalar(1.12 + largo * 0.5).toArray()}
+              quaternion={new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir)} scale={[k, k * (largo / 0.32), k]}>
+              <coneGeometry args={[0.13, 0.32, 24]} />
+              <meshToonMaterial color={'#F7869F'} gradientMap={tonos} emissive={C.acento} emissiveIntensity={0.2} />
             </mesh>
           );
         })}
-      {/* destello y onda al apagarse */}
+      {/* al apagarse: se rompe en pedazos 3D que salen girando */}
+      {f >= s(2.3) && f < s(3.6) &&
+        Array.from({length: 16}).map((_, i) => {
+          const t = ip(f, [s(2.3), s(3.6)], [0, 1], E.snap);
+          const dir = new THREE.Vector3(rnd(i, 21) - 0.5, rnd(i, 22) - 0.5, rnd(i, 23) - 0.5).normalize();
+          const sc = (0.16 + rnd(i, 24) * 0.14) * (1 - ip(f, [s(2.9), s(3.6)], [0, 1], E.in));
+          return (
+            <mesh key={i} position={dir.multiplyScalar(0.4 + t * (2.6 + rnd(i, 25) * 2.2)).toArray()} rotation={[f / 8 + i, f / 11, i]} scale={sc}>
+              <icosahedronGeometry args={[1, 0]} />
+              <meshToonMaterial color={i % 2 ? C.acento : '#F89AB0'} gradientMap={tonos} emissive={C.acento} emissiveIntensity={0.3} />
+            </mesh>
+          );
+        })}
       {destello > 0 && (
-        <sprite scale={[9 * destello, 9 * destello, 1]}>
-          <spriteMaterial map={resplandor} color={'#FFFFFF'} transparent opacity={destello} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <sprite scale={[7 * destello, 7 * destello, 1]}>
+          <spriteMaterial map={resplandor} color={'#FFE3EA'} transparent opacity={destello * 0.8} blending={THREE.AdditiveBlending} depthWrite={false} />
         </sprite>
       )}
-      {onda > 0 && onda < 1 && (
-        <mesh scale={0.6 + onda * 6}>
-          <torusGeometry args={[1, 0.02, 8, 96]} />
-          <meshBasicMaterial color={C.acento} transparent opacity={1 - onda} />
-        </mesh>
-      )}
-      {/* el Sol que todavía ves: contorno fantasma */}
+      {/* el Sol que todavía ves: el mismo Sol, transparente, que late */}
       {fantasma > 0 && (
-        <group scale={fantasma} rotation={[0.3, f / 200, 0]}>
-          <lineSegments>
-            <edgesGeometry args={[new THREE.IcosahedronGeometry(1, 1)]} />
-            <lineBasicMaterial color={C.acento} transparent opacity={0.85 * (1 - sombra * 0.6)} />
-          </lineSegments>
+        <group scale={fantasma * (1 + Math.sin(f / 7) * 0.03)} rotation={[0.25, f / 70, 0.15]}>
+          <mesh>
+            <sphereGeometry args={[1, 48, 48]} />
+            <meshToonMaterial map={mapaSol} gradientMap={tonos} emissive={C.acento} emissiveIntensity={0.25} transparent opacity={0.32 * (1 - sombra * 0.7)} depthWrite={false} />
+          </mesh>
         </group>
       )}
-      {/* frente de luz: un anillo que se agranda desde el Sol hasta la Tierra */}
+      {/* la luz viajando: una bola de luz con su estela, del Sol a la Tierra */}
+      {frente > 0 && !llega &&
+        Array.from({length: 12}).map((_, i) => {
+          const q = Math.max(0, frente - i * 0.022);
+          if (q <= 0) return null;
+          const pos = TIERRA.clone().multiplyScalar(q * 0.88);
+          pos.x += Math.sin(q * 9) * 0.25;
+          const sc = i === 0 ? 0.26 + Math.sin(f / 4) * 0.02 : 0.15 * (1 - i / 12);
+          return (
+            <mesh key={i} position={pos.toArray()} scale={sc} rotation={[f / 10, f / 13, 0]}>
+              <sphereGeometry args={[1, 32, 32]} />
+              <meshToonMaterial color={'#FFF1F4'} gradientMap={tonos} emissive={'#FFC2D1'} emissiveIntensity={i === 0 ? 0.9 : 0.6} transparent opacity={i === 0 ? 1 : 0.85} />
+            </mesh>
+          );
+        })}
       {frente > 0 && !llega && (
-        <mesh scale={0.5 + frente * (dist - 0.5)}>
-          <torusGeometry args={[1, 0.006, 8, 200]} />
-          <meshBasicMaterial color={C.blanco} transparent opacity={0.9} />
-        </mesh>
+        <sprite position={TIERRA.clone().multiplyScalar(frente * 0.88).toArray()} scale={[1.4, 1.4, 1]}>
+          <spriteMaterial map={resplandor} color={'#FFE3EA'} transparent opacity={0.5} blending={THREE.AdditiveBlending} depthWrite={false} />
+        </sprite>
       )}
       {/* la Tierra */}
       {tierraNace > 0 && (

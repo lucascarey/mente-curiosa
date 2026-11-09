@@ -181,6 +181,22 @@ NEURON_SOL = [
     "Mirar el cielo es mirar el pasado.",
     "Para más datos curiosos, sígueme.",
 ]
+NEURON_SEMAFORO = [
+    "Tres de la mañana. Semáforo en rojo, ni un auto... y de repente, verde. Solo para ti.",
+    "¿Cómo supo que llegaste?",
+    "No hay nadie mirando una cámara.",
+    "El chivato está debajo de tu auto.",
+    "Mira el asfalto: hay un corte en forma de rectángulo.",
+    "Abajo hay un cable enrollado, una bobina, con corriente todo el tiempo.",
+    "Eso crea un campo magnético invisible.",
+    "Cuando frenas encima, el metal de tu auto lo deforma.",
+    "La bobina lo nota... y el semáforo te da verde.",
+    "Pero una bici tiene tan poco metal, que a veces ni la detecta.",
+    "¿Y el botón para cruzar?",
+    "En Nueva York revisaron: más de dos mil quinientos no hacían absolutamente nada.",
+    "Así que la próxima vez que estés en rojo a las tres de la mañana... frena encima del rectángulo.",
+    "Para más datos así, sígueme.",
+]
 SINTY_SEMANA = [
     "¡Hola! Soy Sinty Wave, y estas son las tres noticias de la semana.",
     "Primera: Cristiano Ronaldo se despide de la selección de Portugal.",
@@ -199,8 +215,7 @@ def episodios(destino: Path) -> None:
     import json
     destino.mkdir(parents=True, exist_ok=True)
     pedidos = [
-        ("neuron-sol", "Charon", NEURON["estilo"].removesuffix(" Decí:") + PAUSAS, NEURON_SOL),
-        ("sinty-semana", "Achernar", ARGENTINA[0][1].removesuffix(" Decí:") + PAUSAS, SINTY_SEMANA),
+        ("neuron-semaforo", "Charon", NEURON["estilo"].removesuffix(" Decí:") + PAUSAS, NEURON_SEMAFORO),
     ]
     for n, (nombre, voz, estilo, frases) in enumerate(pedidos, 1):
         base.ESTILO, base.FRASE = estilo, " ".join(frases)

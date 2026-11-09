@@ -1,0 +1,38 @@
+name: Tiempos por palabra NQV (whisper)
+
+# Transcribe las voces de la rama voces-casting con tiempos por palabra (para los subtítulos karaoke).
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/nqv-palabras.yml
+      - herramientas/palabras_nqv.py
+
+permissions:
+  contents: write
+
+jobs:
+  palabras:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install faster-whisper==1.1.1
+      - name: Bajar voces
+        run: |
+          git fetch -q origin voces-casting
+          mkdir -p /tmp/voces && cd /tmp/voces
+          for f in $(git -C $GITHUB_WORKSPACE ls-tree --name-only FETCH_HEAD | grep '\.mp3$'); do git -C $GITHUB_WORKSPACE show FETCH_HEAD:$f > $f; done
+          ls -la
+      - name: Transcribir
+        run: python -u herramientas/palabras_nqv.py /tmp/voces /tmp/palabras
+      - name: Subir a la rama voces-palabras
+        run: |
+          cd /tmp/palabras
+          git init -q -b voces-palabras
+          git config user.name "mente-curiosa-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "Tiempos por palabra"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" voces-palabras

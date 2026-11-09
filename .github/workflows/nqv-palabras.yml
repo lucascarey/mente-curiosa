@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install faster-whisper==1.1.1 requests
+      - run: pip install faster-whisper==1.1.1 requests numpy && sudo apt-get install -y -qq ffmpeg
       - name: Bajar voces
         run: |
           git fetch -q origin voces-casting

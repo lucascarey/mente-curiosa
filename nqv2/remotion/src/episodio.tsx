@@ -42,12 +42,12 @@ export const Subtitulo: React.FC<{
 
 export const hablando = (f: number, frases: Frase[]) => frases.some((p) => f >= s2f(p.d) && f <= s2f(p.h));
 
-// Personaje recortado con aura plana que brilla más cuando habla, entrada con rebote y golpecito al cambiar de pose.
+// Personaje recortado, sin círculo/aura de fondo (Lucas 2026-11-09), entrada con rebote y golpecito al cambiar de pose.
 export const Personaje: React.FC<{
   carpeta: string; poses: Array<[number, string]>; // [cuadro, pose]
   desde: number; hasta?: number; x: number; base: number; alto: number; ancho?: number;
-  frases: Frase[]; aura: string; aura2: string; voltear?: boolean;
-}> = ({carpeta, poses, desde, hasta, x, base, alto, ancho = 0.7, frases, aura, aura2, voltear}) => {
+  frases: Frase[]; aura?: string; aura2?: string; voltear?: boolean; // aura/aura2 ya no se dibujan
+}> = ({carpeta, poses, desde, hasta, x, base, alto, ancho = 0.7, frases, voltear}) => {
   const f = useCurrentFrame();
   if (f < desde || (hasta !== undefined && f > hasta + 12)) return null;
   let pose = poses[0][1];
@@ -61,21 +61,11 @@ export const Personaje: React.FC<{
   const tc = f - cambio;
   const golpe = tc >= 0 && tc < 12 && cambio > desde ? Math.sin((tc / 12) * Math.PI) * 0.06 : 0;
   const habla = hablando(f, frases);
-  // brillo suavizado
-  let brillo = 0;
-  for (let k = 0; k < 10; k++) brillo += hablando(f - k, frases) ? 0.1 : 0;
   const resp = 1 + Math.sin(f / 11) * 0.01 + (habla ? Math.abs(Math.sin(f / 4)) * 0.006 : 0);
   const dy = (1 - ent) * (alto + 300) + sal * (alto + 300);
   const W = alto * ancho;
   return (
     <div style={{position: 'absolute', left: x - W / 2, top: base - alto + dy, width: W, height: alto}}>
-      <svg width={alto * 1.4} height={alto * 1.4} style={{position: 'absolute', left: W / 2 - alto * 0.7, top: -alto * 0.32, overflow: 'visible'}}>
-        {[0, 1, 2].map((i) => {
-          const p = ((f - desde) / 70 + i / 3) % 1;
-          return <circle key={i} cx={alto * 0.7} cy={alto * 0.62} r={alto * (0.3 + p * 0.32)} fill="none" stroke={aura} strokeWidth={8} opacity={(1 - p) * (0.15 + brillo * 0.55)} />;
-        })}
-        <circle cx={alto * 0.7} cy={alto * 0.62} r={alto * (0.36 + brillo * 0.03) * ent} fill={aura2} opacity={0.55 + brillo * 0.45} />
-      </svg>
       <Img src={staticFile(`${carpeta}/${pose}.png`)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'bottom', scale: `${(voltear ? -1 : 1) * (resp + golpe)} ${resp + golpe}`, transformOrigin: '50% 100%'}} />
     </div>
   );

@@ -386,10 +386,6 @@ const Capa: React.FC = () => {
   );
 };
 
-const NeuronChico: React.FC = () => (
-  <Personaje carpeta="neuron" poses={[[fr(K.dist), '01'], [fr(K.viaje), '11'], [fr(K.fantasma), '03'], [fr(K.grav), '11'], [fr(K.cielo), '01']]}
-    desde={fr(K.dist) + 10} hasta={fr(K.cierre) - 14} x={170} base={1850} alto={380} frases={F} aura={C.suave} aura2={C.profundo} />
-);
 
 export type Cue = {f: number; src: string; vol?: number};
 const c = (s: number, n: string, vol = 0.5): Cue => ({f: fr(s), src: `sfx/${n}.mp3`, vol});
@@ -417,7 +413,6 @@ export const EpisodioSol: React.FC<{cues: Cue[]}> = ({cues}) => {
       <Fondo d={K.escape} h={K.cielo} color={C.oscuro}><Escape /></Fondo>
       <Fondo d={K.cielo} h={K.cierre} color={C.oscuro}><Cielo /></Fondo>
       <Fondo d={K.cierre} h={60} color={C.oscuro}><Cierre /></Fondo>
-      <NeuronChico />
       <Capa />
       <Audio src={staticFile('voz/neuron-sol.mp3')} volume={1} />
       <Audio src={staticFile('musica/ciencia-chill.mp3')} volume={(x) => interpolate(x, [0, 30, fr(45), fr(45.6), DUR_SOL - 40, DUR_SOL], [0, 0.13, 0.13, 0.32, 0.32, 0], {extrapolateRight: 'clamp'})} />
